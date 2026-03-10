@@ -13,6 +13,9 @@
 - **ID:** `https://promptops.apastra.com/schemas/evaluator.schema.json`
   - **Version:** 0.4.0
   - **Description:** Scoring definition (deterministic checks, schema validation, rubric/judge config).
+- **ID:** `https://apastra.com/schemas/promptops/suite.schema.json`
+  - **Version:** 0.5.0
+  - **Description:** Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-prompt-spec.sh`
@@ -24,6 +27,9 @@
 - **Validator:** `validate-evaluator.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-evaluator.sh <evaluator-spec.json|yaml>`
   - **Validates:** JSON or YAML files against the `evaluator.schema.json` schema.
+- **Validator:** `validate-suite.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-suite.sh <suite.json|yaml>`
+  - **Validates:** JSON or YAML files against the `suite.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**
@@ -39,6 +45,10 @@
   - Naming: `evaluator.yaml` or `evaluator.json`
   - Structure: Lives in `promptops/evaluators/<evaluator-id>/`
   - Required fields: `id` (string), `type` (string: "deterministic", "schema", "judge"), `metrics` (array of strings).
+- **Suites:**
+  - Naming: `suite.yaml` or `suite.json`
+  - Structure: Lives in `promptops/suites/<suite-id>/`
+  - Required fields: `id` (string), `name` (string), `datasets` (array), `evaluators` (array), `model_matrix` (array).
 
 ## Section D: Digest Convention
 - Computed across the canonicalized JSON of the file.
