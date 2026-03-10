@@ -32,6 +32,7 @@ No two roles write to the same file. Shared files (e.g., `README.md`) are **read
 | **RUNTIME** | Git-first resolver, manifest consumption, and prompt loading runtime | `planning-runtime.md` | `execution-runtime.md` |
 | **EVALUATION** | Harness execution, run artifacts, baselines, and regression reports | `planning-evaluation.md` | `execution-evaluation.md` |
 | **GOVERNANCE** | Policy gates, delivery targets, GitHub workflows, CODEOWNERS, and release/promotion controls | `planning-governance.md` | `execution-governance.md` |
+| **DOCS** | Full repository documentation — daily comprehensive sweep of guides, API refs, ADRs, and dashboards | `docs.md` (single prompt) | — |
 
 ---
 
@@ -57,14 +58,20 @@ No two roles write to the same file. Shared files (e.g., `README.md`) are **read
 | `derived-index/promotions/**` | GOVERNANCE |
 | `.github/workflows/**` | GOVERNANCE |
 | `.github/CODEOWNERS` | GOVERNANCE |
+| `docs/guides/**` | DOCS |
+| `docs/api/**` | DOCS |
+| `docs/decisions/**` | DOCS |
+| `docs/dashboards/**` | DOCS |
 | `docs/status/CONTRACTS.md` | CONTRACTS (planner writes; executor appends) |
 | `docs/status/RUNTIME.md` | RUNTIME (planner writes; executor appends) |
 | `docs/status/EVALUATION.md` | EVALUATION (planner writes; executor appends) |
 | `docs/status/GOVERNANCE.md` | GOVERNANCE (planner writes; executor appends) |
+| `docs/status/DOCS.md` | DOCS (planner writes; executor appends) |
 | `docs/progress/CONTRACTS.md` | CONTRACTS executor only |
 | `docs/progress/RUNTIME.md` | RUNTIME executor only |
 | `docs/progress/EVALUATION.md` | EVALUATION executor only |
 | `docs/progress/GOVERNANCE.md` | GOVERNANCE executor only |
+| `docs/progress/DOCS.md` | DOCS executor only |
 | `.sys/plans/YYYY-MM-DD-CONTRACTS-*.md` | CONTRACTS planner only |
 | `.sys/plans/YYYY-MM-DD-RUNTIME-*.md` | RUNTIME planner only |
 | `.sys/plans/YYYY-MM-DD-EVALUATION-*.md` | EVALUATION planner only |
@@ -73,11 +80,13 @@ No two roles write to the same file. Shared files (e.g., `README.md`) are **read
 | `.sys/llmdocs/context-runtime.md` | RUNTIME executor only |
 | `.sys/llmdocs/context-evaluation.md` | EVALUATION executor only |
 | `.sys/llmdocs/context-governance.md` | GOVERNANCE executor only |
+| `.sys/llmdocs/context-docs.md` | DOCS executor only |
 | `.sys/llmdocs/context-system.md` | All roles (read-only by default; append milestone/boundary summaries only) |
 | `.jules/CONTRACTS.md` | CONTRACTS (planner and executor share journal; critical learnings only) |
 | `.jules/RUNTIME.md` | RUNTIME journal |
 | `.jules/EVALUATION.md` | EVALUATION journal |
 | `.jules/GOVERNANCE.md` | GOVERNANCE journal |
+| `.jules/DOCS.md` | DOCS journal |
 | `README.md` | **Read-only for all roles** (vision source of truth) |
 
 ---
