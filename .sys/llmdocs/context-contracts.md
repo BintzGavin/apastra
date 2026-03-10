@@ -16,6 +16,9 @@
 - **ID:** `https://apastra.com/schemas/promptops/suite.schema.json`
   - **Version:** 0.5.0
   - **Description:** Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
+- **ID:** `https://apastra.com/schemas/promptops/consumption-manifest.schema.json`
+  - **Version:** 0.7.0
+  - **Description:** Schema for the apastra PromptOps consumption manifest.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-prompt-spec.sh`
@@ -30,6 +33,9 @@
 - **Validator:** `validate-suite.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-suite.sh <suite.json|yaml>`
   - **Validates:** JSON or YAML files against the `suite.schema.json` schema.
+- **Validator:** `validate-consumption-manifest.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-consumption-manifest.sh <consumption-manifest.json|yaml>`
+  - **Validates:** JSON or YAML files against the `consumption-manifest.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**

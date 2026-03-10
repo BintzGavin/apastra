@@ -1,0 +1,4 @@
+version: "1.0.0"
+prompts:
+  my-prompt:
+    pin: "v1.2.3"
