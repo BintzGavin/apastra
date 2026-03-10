@@ -1,0 +1,9 @@
+promptops/prompts/ @apastra/prompt-engineers
+promptops/schemas/ @apastra/governance-admins
+promptops/policies/ @apastra/governance-admins
+promptops/evaluators/ @apastra/evaluation-team
+promptops/suites/ @apastra/evaluation-team
+promptops/delivery/ @apastra/governance-admins
+derived-index/promotions/ @apastra/governance-admins
+.github/workflows/ @apastra/infrastructure
+.github/CODEOWNERS @apastra/governance-admins
