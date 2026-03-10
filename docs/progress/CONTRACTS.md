@@ -3,3 +3,6 @@
 
 ### CONTRACTS v0.3.0
 - ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
+
+### CONTRACTS v0.4.0
+- ✅ Completed: evaluator-schema - Created evaluator.schema.json and validate-evaluator.sh

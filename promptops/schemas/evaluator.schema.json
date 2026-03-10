@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/evaluator.schema.json",
+  "title": "Evaluator Specification",
+  "description": "Scoring definition (deterministic checks, schema validation, rubric/judge config)",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the evaluator."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of the evaluator.",
+      "enum": ["deterministic", "schema", "judge"]
+    },
+    "metrics": {
+      "type": "array",
+      "description": "Array of metrics produced by this evaluator.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional human-readable description of the evaluator."
+    },
+    "config": {
+      "type": "object",
+      "description": "Configuration specific to the evaluator type, such as model details or target values."
+    },
+    "digest": {
+      "type": "string",
+      "description": "SHA-256 hash of the evaluator content.",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  },
+  "required": ["id", "type", "metrics"]
+}
