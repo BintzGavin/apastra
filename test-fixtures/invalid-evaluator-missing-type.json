@@ -1,0 +1,5 @@
+{
+  "id": "helpfulness-judge-v1",
+  "metrics": ["helpfulness"],
+  "description": "Missing type, should fail validation."
+}
