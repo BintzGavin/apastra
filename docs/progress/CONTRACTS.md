@@ -6,3 +6,6 @@
 
 ### CONTRACTS v0.4.0
 - ✅ Completed: evaluator-schema - Created evaluator.schema.json and validate-evaluator.sh
+
+### CONTRACTS v0.5.0
+- ✅ Completed: suite-schema - Created suite.schema.json and validate-suite.sh

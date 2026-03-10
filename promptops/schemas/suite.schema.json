@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apastra.com/schemas/promptops/suite.schema.json",
+  "title": "Benchmark Suite Specification",
+  "description": "Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the suite."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the suite."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional detailed description of the suite's purpose."
+    },
+    "datasets": {
+      "type": "array",
+      "description": "Array of dataset references.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "evaluators": {
+      "type": "array",
+      "description": "Array of evaluator references.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "model_matrix": {
+      "type": "array",
+      "description": "Array of model/provider identifiers to run the suite against.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "trials": {
+      "type": "integer",
+      "description": "Number of times to run the evaluation.",
+      "default": 1,
+      "minimum": 1
+    },
+    "budgets": {
+      "type": "object",
+      "description": "Cost or time limits for the execution.",
+      "properties": {
+        "cost": {
+          "type": "number",
+          "description": "Maximum allowed cost in dollars."
+        },
+        "time": {
+          "type": "integer",
+          "description": "Maximum allowed execution time in seconds."
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "description": "Pass/fail criteria mapped to specific metrics.",
+      "additionalProperties": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "datasets",
+    "evaluators",
+    "model_matrix"
+  ]
+}
