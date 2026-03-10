@@ -1,0 +1,8 @@
+{
+  "id": "my-app/summarize-v1",
+  "variables": {
+    "text": {
+      "type": "string"
+    }
+  }
+}

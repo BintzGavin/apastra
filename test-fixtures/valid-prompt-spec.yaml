@@ -1,0 +1,5 @@
+id: my-app/summarize-v1
+variables:
+  text:
+    type: string
+template: "Please summarize this: {{text}}"

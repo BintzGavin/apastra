@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/prompt-spec.schema.json",
+  "title": "Prompt Specification",
+  "description": "Source-of-truth prompt definition with a stable ID, variable schema, output contract, and metadata.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the prompt (e.g., 'my-app/summarize-v1')."
+    },
+    "variables": {
+      "type": "object",
+      "description": "Map of variable names to their JSON Schema types (e.g., {'text': {'type': 'string'}}).",
+      "additionalProperties": {
+        "type": "object",
+        "description": "JSON Schema defining the type of the variable."
+      }
+    },
+    "template": {
+      "type": ["string", "object", "array"],
+      "description": "The prompt template content (e.g., Jinja2 string, or array of message objects for chat models)."
+    },
+    "output_contract": {
+      "type": "object",
+      "description": "JSON Schema defining the expected output structure from the model."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Arbitrary key-value pairs (e.g., author, intent, tags)."
+    }
+  },
+  "required": ["id", "variables", "template"]
+}

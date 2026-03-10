@@ -1,0 +1,8 @@
+{
+  "variables": {
+    "text": {
+      "type": "string"
+    }
+  },
+  "template": "Please summarize this: {{text}}"
+}

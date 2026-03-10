@@ -1,0 +1,19 @@
+{
+  "id": "my-app/summarize-v1",
+  "variables": {
+    "text": {
+      "type": "string"
+    }
+  },
+  "template": "Please summarize this: {{text}}",
+  "output_contract": {
+    "type": "object",
+    "properties": {
+      "summary": { "type": "string" }
+    }
+  },
+  "metadata": {
+    "author": "jules",
+    "intent": "summarization"
+  }
+}
