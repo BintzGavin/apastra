@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/dataset-case.schema.json",
+  "title": "Dataset Case",
+  "description": "Schema defining a single line of a JSONL dataset for evaluating prompt tests.",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "description": "Stable identifier for the specific test case."
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Map of variable names to values, mapping to the variables required by the prompt spec.",
+      "additionalProperties": true
+    },
+    "expected_outputs": {
+      "type": "object",
+      "description": "Map of expected output values (e.g., exact matches, substrings).",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Arbitrary metadata for the specific test case (e.g., tags, difficulty, domain).",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "case_id",
+    "inputs"
+  ],
+  "additionalProperties": false
+}
