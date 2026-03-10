@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/dataset-manifest.schema.json",
+  "title": "Dataset Manifest",
+  "description": "Schema for a dataset manifest, defining identity, version, schema version, digest, and provenance.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the dataset."
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version or revision of the dataset."
+    },
+    "digest": {
+      "type": "string",
+      "description": "Content digest (e.g., SHA-256) of the associated dataset.jsonl file to ensure reproducibility."
+    },
+    "schema_version": {
+      "type": "string",
+      "description": "Version of the dataset case schema used by the JSONL file."
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "digest",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}
