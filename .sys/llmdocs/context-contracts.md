@@ -51,8 +51,11 @@
   - Required fields: `id` (string), `name` (string), `datasets` (array), `evaluators` (array), `model_matrix` (array).
 
 ## Section D: Digest Convention
-- Computed across the canonicalized JSON of the file.
-- Format: `sha256:<hex>`
+- Computed across the canonical representation of the file.
+- YAML files are converted to JSON and canonicalized.
+- JSON files are canonicalized with sorted keys and insignificant whitespace removed (e.g. `jq -cSM .`).
+- JSONL files are canonicalized line by line and joined with newlines.
+- The output format is `sha256:<hex>`.
 - For dataset cases, the digest is held in the `digest` field of the dataset manifest, which is computed across the `cases.jsonl` file.
 
 ## Section E: Integration Points

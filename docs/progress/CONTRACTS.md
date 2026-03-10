@@ -9,3 +9,6 @@
 
 ### CONTRACTS v0.5.0
 - ✅ Completed: suite-schema - Created suite.schema.json and validate-suite.sh
+
+### CONTRACTS v0.6.0
+- ✅ Completed: content-digest-convention - Created digest-convention.md and compute-digest.sh
