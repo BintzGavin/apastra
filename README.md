@@ -1,6 +1,8 @@
 # apastra
 Prompt versioning, evals, benchmarks, and delivery
 
+## Executive summary
+
 This document proposes a state-of-the-art PromptOps architecture that makes prompts behave like disciplined software assets while keeping day-to-day developer workflow low friction. The system is repo-native and uses entity["company","GitHub","code hosting platform"] as the canonical control plane for versioning, diffs, review, rollback, and auditability via pull requests, required status checks, branch protection, tags, releases, and audit logs. citeturn0search0turn0search1turn1search1turn0search6
 
 It is Black Hole Architecture aligned: file-based durable state is the source of truth; computation is stateless and replaceable; derived results are append-friendly and immutable where possible; end states and transitions are explicit; humans approve at clear checkpoints; autonomous agents can safely operate by generating files and PRs rather than mutating hidden databases. Execution is bring-your-own via a minimal harness contract (“run request in, run artifact out”), so the system does not lock teams into any evaluator framework, agent SDK, provider SDK, runtime, or hosted platform.
