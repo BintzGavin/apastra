@@ -12,3 +12,6 @@
 
 ### CONTRACTS v0.6.0
 - ✅ Completed: content-digest-convention - Created digest-convention.md and compute-digest.sh
+
+### CONTRACTS v0.7.0
+- ✅ Completed: ConsumptionManifestSchema - Created consumption-manifest.schema.json and validate-consumption-manifest.sh

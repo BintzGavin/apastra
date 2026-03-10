@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apastra.com/schemas/promptops/consumption-manifest.schema.json",
+  "title": "Consumption Manifest Schema",
+  "description": "Schema for the apastra PromptOps consumption manifest.",
+  "type": "object",
+  "required": ["version", "prompts"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Version of the consumption manifest."
+    },
+    "prompts": {
+      "type": "object",
+      "description": "Mapping of local names to resolution configurations.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable prompt ID."
+          },
+          "pin": {
+            "type": "string",
+            "description": "A semver or git ref to pin to."
+          },
+          "override": {
+            "type": "string",
+            "description": "Path to a local file overriding the prompt."
+          },
+          "model": {
+            "type": "string",
+            "description": "Model to use for this prompt."
+          }
+        }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "description": "Global fallbacks like default model or provider.",
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Default model."
+        },
+        "provider": {
+          "type": "string",
+          "description": "Default provider."
+        }
+      }
+    }
+  }
+}

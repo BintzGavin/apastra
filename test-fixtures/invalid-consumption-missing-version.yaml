@@ -1,0 +1,4 @@
+prompts:
+  my-prompt:
+    id: "prompt-123"
+    pin: "v1.2.3"
