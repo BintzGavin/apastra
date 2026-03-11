@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-run-artifact-v1",
+  "title": "Run Artifact Specification",
+  "description": "Schema for a minimal BYO harness run artifact output.",
+  "type": "object",
+  "properties": {
+    "manifest": {
+      "type": "object",
+      "description": "Run manifest",
+      "properties": {
+        "input_refs": { "type": "object" },
+        "resolved_digests": { "type": "object" },
+        "timestamps": { "type": "object" },
+        "harness_version": { "type": "string" },
+        "model_ids": { "type": "array", "items": { "type": "string" } },
+        "environment": { "type": "object" },
+        "status": { "type": "string" }
+      },
+      "required": ["input_refs", "resolved_digests", "timestamps", "harness_version", "model_ids", "environment", "status"]
+    },
+    "scorecard": {
+      "type": "object",
+      "description": "Run scorecard",
+      "properties": {
+        "normalized_metrics": { "type": "object" },
+        "metric_definitions": { "type": "object" }
+      },
+      "required": ["normalized_metrics", "metric_definitions"]
+    },
+    "cases": {
+      "type": "array",
+      "description": "Run cases",
+      "items": {
+        "type": "object",
+        "properties": {
+          "case_id": { "type": "string" },
+          "per_trial_outputs": { "type": "array" },
+          "evaluator_outputs": { "type": "array" }
+        },
+        "required": ["case_id", "per_trial_outputs", "evaluator_outputs"]
+      }
+    },
+    "failures": {
+      "type": "array",
+      "description": "Run failures",
+      "items": { "type": "object" }
+    }
+  },
+  "required": ["manifest", "scorecard", "cases", "failures"]
+}

@@ -1,6 +1,12 @@
 # Context: CONTRACTS
 
 ## Section A: Schema Inventory
+- **ID:** `apastra-run-request-v1`
+  - **Version:** 0.9.0
+  - **Description:** Schema for a minimal BYO harness run request.
+- **ID:** `apastra-run-artifact-v1`
+  - **Version:** 0.9.0
+  - **Description:** Schema for a minimal BYO harness run artifact output.
 - **ID:** `https://promptops.apastra.com/schemas/prompt-spec.schema.json`
   - **Version:** 0.4.0
   - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, and metadata.
@@ -24,6 +30,12 @@
   - **Description:** JSON Schema and validation script for `harness-adapter`.
 
 ## Section B: Validator Inventory
+- **Validator:** `validate-run-request.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-request.sh <run-request.json>`
+  - **Validates:** JSON files against the `run-request.schema.json` schema.
+- **Validator:** `validate-run-artifact.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-artifact.sh <run-artifact.json>`
+  - **Validates:** JSON files against the `run-artifact.schema.json` schema.
 - **Validator:** `validate-prompt-spec.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-prompt-spec.sh <prompt-spec.json|yaml>`
   - **Validates:** JSON or YAML files against the `prompt-spec.schema.json` schema.

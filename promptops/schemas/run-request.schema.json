@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-run-request-v1",
+  "title": "Run Request Specification",
+  "description": "Schema for a minimal BYO harness run request.",
+  "type": "object",
+  "properties": {
+    "suite_id": { "type": "string", "description": "The benchmark suite ID" },
+    "revision_ref": { "type": "string", "description": "The revision ref (SHA/tag/digest)" },
+    "model_matrix": { "type": "array", "items": { "type": "string" }, "description": "Model matrix" },
+    "evaluator_refs": { "type": "array", "items": { "type": "string" }, "description": "Evaluator references" },
+    "trials": { "type": "integer", "description": "Number of trials" },
+    "budgets": { "type": "object", "description": "Budgets" },
+    "timeouts": { "type": "object", "description": "Timeouts" },
+    "artifact_backend_config": { "type": "object", "description": "Artifact backend config" }
+  },
+  "required": ["suite_id", "revision_ref", "model_matrix", "evaluator_refs"]
+}

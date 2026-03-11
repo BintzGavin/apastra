@@ -1,4 +1,4 @@
-**Version**: 0.8.0
+**Version**: 0.9.0
 
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
@@ -7,3 +7,4 @@
 [v0.6.0] ✅ Completed: content-digest-convention - Created digest-convention.md and compute-digest.sh
 [v0.7.0] ✅ Completed: ConsumptionManifestSchema - Created consumption-manifest.schema.json and validate-consumption-manifest.sh
 [v0.8.0] ✅ Completed: HarnessAdapterSchema - Created harness-adapter.schema.json and validate-harness-adapter.sh
+[v0.9.0] ✅ Completed: run-request-and-artifact - Created run-request.schema.json, run-artifact.schema.json, validate-run-request.sh, and validate-run-artifact.sh
