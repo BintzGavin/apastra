@@ -26,6 +26,7 @@ Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 
 ## Section B: Validator Inventory
 `promptops/runs/validate-run-request.sh`
+`promptops/runs/establish_baseline.sh`
 
 ## Section C: Source File Conventions
 `promptops/harnesses/`
