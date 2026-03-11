@@ -12,3 +12,5 @@
 - ✅ Completed: RegressionComparisonEngine - Implemented CLI script for regression comparison
 ### EVALUATION v0.6.0
 - ✅ Completed: ScorecardNormalization - Implemented standalone scorecard normalizer
+### EVALUATION v0.7.0
+- ✅ Completed: BaselineEstablishmentWorkflow - Implemented bash script to establish baselines
