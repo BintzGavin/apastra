@@ -66,6 +66,9 @@
 - **ID:** `apastra-run-failures-v1`
   - **Version:** 0.16.0
   - **Description:** Schema defining an array of failure objects.
+- **ID:** `apastra-provider-artifact-v1`
+  - **Version:** 0.17.0
+  - **Description:** Schema for provider artifacts.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-regression-policy.sh`
@@ -130,6 +133,9 @@
 - **Validator:** `validate-run-failures.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-run-failures.sh <run-failures.json>`
   - **Validates:** JSON files against the `run-failures.schema.json` schema.
+- **Validator:** `validate-provider-artifact.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-provider-artifact.sh <provider-artifact.json|yaml>`
+  - **Validates:** JSON or YAML files against the `provider-artifact.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**

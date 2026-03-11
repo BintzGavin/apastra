@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-provider-artifact-v1",
+  "title": "Provider Artifact Manifest",
+  "description": "A distribution wrapper around a prompt package (git ref, release asset, OCI artifact, npm/PyPI wrapper).",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the provider artifact."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["git_ref", "release_asset", "oci_artifact", "npm_wrapper", "pypi_wrapper"],
+      "description": "The distribution type of the wrapper."
+    },
+    "reference": {
+      "type": "string",
+      "description": "The URI, ref, or tag of the wrapper."
+    },
+    "package_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Content digest of the underlying prompt package."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Arbitrary key-value pairs for registry-specific data, provenance, or signatures."
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "reference",
+    "package_digest"
+  ]
+}
