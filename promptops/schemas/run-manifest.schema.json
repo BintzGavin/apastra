@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-run-manifest-v1",
+  "title": "Run Manifest Specification",
+  "description": "Schema for a run manifest.",
+  "type": "object",
+  "properties": {
+    "input_refs": { "type": "object", "description": "Input references" },
+    "resolved_digests": { "type": "object", "description": "Resolved digests" },
+    "timestamps": { "type": "object", "description": "Timestamps" },
+    "harness_version": { "type": "string", "description": "Harness version" },
+    "model_ids": { "type": "array", "items": { "type": "string" }, "description": "Model IDs" },
+    "environment": { "type": "object", "description": "Environment metadata" },
+    "status": { "type": "string", "description": "Run status" }
+  },
+  "required": ["input_refs", "resolved_digests", "timestamps", "harness_version", "model_ids", "environment", "status"]
+}

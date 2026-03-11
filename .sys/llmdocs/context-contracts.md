@@ -57,6 +57,15 @@
 - **ID:** `apastra-approval-state-v1`
   - **Version:** 0.15.0
   - **Description:** Schema for an Approval state record indicating human and machine review results.
+- **ID:** `apastra-run-manifest-v1`
+  - **Version:** 0.16.0
+  - **Description:** Schema for a run manifest.
+- **ID:** `apastra-run-case-v1`
+  - **Version:** 0.16.0
+  - **Description:** Schema for a single case in cases.jsonl.
+- **ID:** `apastra-run-failures-v1`
+  - **Version:** 0.16.0
+  - **Description:** Schema defining an array of failure objects.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-regression-policy.sh`
@@ -112,6 +121,15 @@
 - **Validator:** `validate-approval-state.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-approval-state.sh <approval-state.json>`
   - **Validates:** JSON files against the `approval-state.schema.json` schema.
+- **Validator:** `validate-run-manifest.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-manifest.sh <run-manifest.json>`
+  - **Validates:** JSON files against the `run-manifest.schema.json` schema.
+- **Validator:** `validate-run-case.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-case.sh <run-case.json>`
+  - **Validates:** JSON files against the `run-case.schema.json` schema.
+- **Validator:** `validate-run-failures.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-failures.sh <run-failures.json>`
+  - **Validates:** JSON files against the `run-failures.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**

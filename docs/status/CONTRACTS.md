@@ -1,4 +1,4 @@
-**Version**: 0.15.0
+**Version**: 0.16.0
 
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
@@ -14,3 +14,4 @@
 [v0.13.0] ✅ Completed: PromptPackage - Created prompt-package.schema.json and validate-prompt-package.sh
 [v0.14.0] ✅ Completed: ArtifactRefsSchema - Created artifact-refs.schema.json and validate-artifact-refs.sh
 [v0.15.0] ✅ Completed: ApprovalStateSchema - Created approval-state.schema.json and validate-approval-state.sh
+[v0.16.0] ✅ Completed: RunArtifactFiles - Created schemas and validators for run-manifest, run-case, and run-failures.
