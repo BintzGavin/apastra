@@ -1,4 +1,4 @@
-**Version**: 0.8.0
+**Version**: 0.9.0
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
@@ -9,3 +9,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.6.0] ✅ Completed: ScorecardNormalization - Implemented standalone scorecard normalizer
 [v0.7.0] ✅ Completed: BaselineEstablishmentWorkflow - Implemented bash script to establish baselines
 [v0.8.0] ✅ Completed: RunArtifactGeneration - Implemented script to split monolithic run_artifact.json into distinct, append-friendly files.
+[v0.9.0] ✅ Completed: ScorecardNormalizationRefactor - Refactored normalize.py to read cases.jsonl and output scorecard.json

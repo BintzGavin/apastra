@@ -34,22 +34,23 @@ def normalize_scorecard(cases):
     }
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python normalize.py <run_artifact.json>")
+    if len(sys.argv) != 3:
+        print("Usage: python normalize.py <cases.jsonl> <output_scorecard.json>")
         sys.exit(1)
 
-    artifact_path = sys.argv[1]
+    cases_path = sys.argv[1]
+    scorecard_path = sys.argv[2]
 
-    with open(artifact_path, 'r') as f:
-        artifact = json.load(f)
+    cases = []
+    with open(cases_path, 'r') as f:
+        for line in f:
+            if line.strip():
+                cases.append(json.loads(line))
 
-    cases = artifact.get("cases", [])
     scorecard = normalize_scorecard(cases)
 
-    artifact["scorecard"] = scorecard
-
-    with open(artifact_path, 'w') as f:
-        json.dump(artifact, f, indent=2)
+    with open(scorecard_path, 'w') as f:
+        json.dump(scorecard, f, indent=2)
 
 if __name__ == "__main__":
     main()
