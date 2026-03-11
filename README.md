@@ -3,11 +3,11 @@ Prompt versioning, evals, benchmarks, and delivery
 
 ## Executive summary
 
-This document proposes a state-of-the-art PromptOps architecture that makes prompts behave like disciplined software assets while keeping day-to-day developer workflow low friction. The system is repo-native and uses entity["company","GitHub","code hosting platform"] as the canonical control plane for versioning, diffs, review, rollback, and auditability via pull requests, required status checks, branch protection, tags, releases, and audit logs. citeturn0search0turn0search1turn1search1turn0search6
+This document proposes a state-of-the-art PromptOps architecture that makes prompts behave like disciplined software assets while keeping day-to-day developer workflow low friction. The system is repo-native and uses GitHub as the canonical control plane for versioning, diffs, review, rollback, and auditability via pull requests, required status checks, branch protection, tags, releases, and audit logs.
 
 It is Black Hole Architecture aligned: file-based durable state is the source of truth; computation is stateless and replaceable; derived results are append-friendly and immutable where possible; end states and transitions are explicit; humans approve at clear checkpoints; autonomous agents can safely operate by generating files and PRs rather than mutating hidden databases. Execution is bring-your-own via a minimal harness contract (“run request in, run artifact out”), so the system does not lock teams into any evaluator framework, agent SDK, provider SDK, runtime, or hosted platform.
 
-Consumption is Git-first. Local overrides and git-ref pins (commit SHA or tag, optionally semver) are first-class, and repackaging/publishing is optional for local iteration. When teams want governed releases, optional packaging formats include GitHub Release assets (with optional immutability), OCI artifacts, and ecosystem wrappers (npm/PyPI), all anchored by content digests for reproducibility and provenance. citeturn0search2turn6search0turn6search1turn2search5turn2search3
+Consumption is Git-first. Local overrides and git-ref pins (commit SHA or tag, optionally semver) are first-class, and repackaging/publishing is optional for local iteration. When teams want governed releases, optional packaging formats include GitHub Release assets (with optional immutability), OCI artifacts, and ecosystem wrappers (npm/PyPI), all anchored by content digests for reproducibility and provenance.
 
 ## Landscape research on existing prompt, eval, and packaging architectures
 
@@ -17,16 +17,16 @@ The table below summarizes what exists, the architectural center of gravity, and
 
 | System category | Representative systems | Architectural center | What tends to work well | What breaks for GitHub-native, low-friction teams |
 |---|---|---|---|---|
-| Config-driven eval runners + CI integrations | entity["organization","promptfoo","llm eval tool"] | Repo config files + a runner that posts results to PRs | Easy PR gating via before/after comparisons and CI automation. citeturn3search0turn3search4 | Often not package/consumption-first. Results may be ephemeral unless you build append-only artifacts, lineage, and promotion semantics around it. |
-| Eval frameworks as code libraries | entity["company","OpenAI","ai research company"] Evals, DeepEval, Ragas, DSPy | Language/framework runtime is the primary abstraction | Powerful custom metrics, rich programmatic control, dataset formats like JSONL, and rubric/judge scoring. citeturn3search1turn3search5turn5search2turn5search3 | Couples teams to a runtime and evaluation contract; cross-language adoption can be hard; “control plane” becomes the framework and its conventions instead of GitHub releases and audit. |
-| Prompt management + prompt registry platforms | entity["company","Langfuse","llm observability tool"], entity["company","PromptLayer","prompt management tool"], entity["company","Humanloop","prompt management platform"] | Central registry + SDK retrieval + UI versioning | Decouples prompt changes from app deploys; can support non-engineers; runtime retrieval plus caching patterns. citeturn3search2turn3search6turn3search3turn4search2 | External control plane becomes the “truth”, weakening Git-based review, diff, and release lineage; platform lifecycle churn is real (features deprecate). citeturn4search0 |
-| Observability-first stacks with eval features | entity["company","Arize AI","ai observability company"] Phoenix, entity["company","Weights & Biases","ml tooling company"] Weave, TruLens | Traces/logs + evaluation within an instrumentation platform | Excellent debugging, tracing, and executor behavior (async concurrency, retries). citeturn5search4turn4search3turn5search1 | Results often live in platform state; you still need GitHub-native promotion policies, packaging, and pinning semantics if you want reproducible delivery gates. |
+| Config-driven eval runners + CI integrations | promptfoo | Repo config files + a runner that posts results to PRs | Easy PR gating via before/after comparisons and CI automation. | Often not package/consumption-first. Results may be ephemeral unless you build append-only artifacts, lineage, and promotion semantics around it. |
+| Eval frameworks as code libraries | OpenAI Evals, DeepEval, Ragas, DSPy | Language/framework runtime is the primary abstraction | Powerful custom metrics, rich programmatic control, dataset formats like JSONL, and rubric/judge scoring. | Couples teams to a runtime and evaluation contract; cross-language adoption can be hard; “control plane” becomes the framework and its conventions instead of GitHub releases and audit. |
+| Prompt management + prompt registry platforms | Langfuse, PromptLayer, Humanloop | Central registry + SDK retrieval + UI versioning | Decouples prompt changes from app deploys; can support non-engineers; runtime retrieval plus caching patterns. | External control plane becomes the “truth”, weakening Git-based review, diff, and release lineage; platform lifecycle churn is real (features deprecate). |
+| Observability-first stacks with eval features | Arize AI Phoenix, Weights & Biases Weave, TruLens | Traces/logs + evaluation within an instrumentation platform | Excellent debugging, tracing, and executor behavior (async concurrency, retries). | Results often live in platform state; you still need GitHub-native promotion policies, packaging, and pinning semantics if you want reproducible delivery gates. |
 
 Key architectural takeaways from the landscape:
 
-- CI-native eval runners are good at “PR feedback loops” but usually do not define a complete system of record for prompt assets as importable packages with promotion lineage. citeturn3search0turn3search4
-- Frameworks are legitimate harness implementations, but they should not be the control plane because teams need multiple runtimes and evolving stacks; contract stability matters more than feature richness. citeturn3search1turn5search3
-- Platform prompt registries solve “runtime hot swaps” and collaboration with non-engineers, but shift the source of truth away from GitHub; this complicates audit, diffs, and release gates unless you build a production-grade sync and governance layer. citeturn3search2turn3search3turn4search2
+- CI-native eval runners are good at “PR feedback loops” but usually do not define a complete system of record for prompt assets as importable packages with promotion lineage.
+- Frameworks are legitimate harness implementations, but they should not be the control plane because teams need multiple runtimes and evolving stacks; contract stability matters more than feature richness.
+- Platform prompt registries solve “runtime hot swaps” and collaboration with non-engineers, but shift the source of truth away from GitHub; this complicates audit, diffs, and release gates unless you build a production-grade sync and governance layer.
 - Observability platforms solve “debug what happened” but don’t inherently solve “pin what shipped” in downstream applications, which is a packaging and promotion problem.
 
 This proposal synthesizes the strengths (PR feedback loops, flexible harnesses, append-only run artifacts, and compatible packaging) into a GitHub-native system that stays portable.
@@ -39,15 +39,15 @@ Prompts should be treated like versioned software assets with a declared interfa
 
 **Design principles**
 
-- GitHub is the control plane. PRs and required status checks govern change; tags and releases govern distribution; audit logs govern accountability. citeturn0search0turn0search1turn0search6turn1search1
+- GitHub is the control plane. PRs and required status checks govern change; tags and releases govern distribution; audit logs govern accountability.
 - Developer ergonomics dominates. Consumption must be simpler than authoring. Local iteration must not require publishing artifacts.
-- Git-first consumption is first-class: local overrides and git ref pins (commit SHA, tag, optionally semver tags) are the default, not an escape hatch. npm and pip both support Git/VCS dependency forms, so the design can leverage existing developer muscle memory. citeturn6search0turn6search1
+- Git-first consumption is first-class: local overrides and git ref pins (commit SHA, tag, optionally semver tags) are the default, not an escape hatch. npm and pip both support Git/VCS dependency forms, so the design can leverage existing developer muscle memory.
 - BYO harness is mandatory. The system defines a minimal harness contract and durable artifact formats. Harnesses can be swapped without rewriting source-of-truth concepts.
 - File-based durable state; stateless compute. Runners do work and emit artifacts; they do not own hidden state.
 - Append-friendly immutable artifacts. Runs, reports, and promotions are records. Avoid in-place mutation.
 - Explicit end states and transitions. Human checkpoints are clear and enforceable.
-- Reproducibility is a feature. Content digests and provenance metadata are part of the system’s core output (not optional “enterprise extras”). SemVer rules apply only after declaring a public interface. citeturn2search0
-- Optional packaging for governed releases. When teams want stronger distribution guarantees, use GitHub immutable releases, OCI digests, and SLSA-style provenance attestations. citeturn0search2turn2search5turn2search3
+- Reproducibility is a feature. Content digests and provenance metadata are part of the system’s core output (not optional “enterprise extras”). SemVer rules apply only after declaring a public interface.
+- Optional packaging for governed releases. When teams want stronger distribution guarantees, use GitHub immutable releases, OCI digests, and SLSA-style provenance attestations.
 
 **Concrete end states**
 
@@ -57,7 +57,7 @@ The system is “working” when these outcomes are routine:
 - Prompts can live inside an app repo or in a dedicated prompt repo without changing the conceptual model or consumption contract.
 - Developers can consume prompts by pinning a commit SHA, tag, or semver tag in a consumption manifest, with local override for fast iteration.
 - Any benchmark run has durable inputs and environment metadata recorded (prompt digest, dataset digest, evaluator digest, harness version, model IDs, sampling config) sufficient for replay within the constraints of non-determinism.
-- Regression policies can gate merges and promotions via required status checks and protected branches. citeturn0search1turn0search5turn0search0
+- Regression policies can gate merges and promotions via required status checks and protected branches.
 - Approved prompt versions are promoted via explicit promotion records; rollback is a promotion to a prior digest, not “edit in place”.
 - Autonomous agents can operate safely because the repo contains machine-readable state; no hidden mutable database is required.
 
@@ -65,7 +65,7 @@ The system is “working” when these outcomes are routine:
 
 - Not a monolithic hosted eval platform. No required SaaS control plane.
 - Not a single provider abstraction or agent framework.
-- Not a prompt auto-optimizer (though harnesses may integrate optimization frameworks as an optional strategy). citeturn5search3
+- Not a prompt auto-optimizer (though harnesses may integrate optimization frameworks as an optional strategy).
 - Not a replacement for observability platforms; those can be harness-integrated sinks.
 - Not a system that forces one repo topology; same-repo and separate-repo are equally supported.
 - Not a system that makes publishing mandatory for development; git pins and local overrides are first-class.
@@ -74,7 +74,7 @@ The system is “working” when these outcomes are routine:
 
 - Solo builders: want “prompt unit tests” and pinned prompts without adopting a platform.
 - Product engineers: need PR gating, regression detection, and low-friction consumption.
-- Platform teams: need reusable GitHub workflows, CODEOWNERS, and standardized artifact formats. citeturn1search0turn7search0
+- Platform teams: need reusable GitHub workflows, CODEOWNERS, and standardized artifact formats.
 - Applied AI teams: need dataset discipline, judge calibration, multi-run variance tracking.
 - Agencies: need portable packaging and clear release lineage across client repos.
 
@@ -109,9 +109,9 @@ This system’s Black Hole mapping is intentionally strict.
 
 **Stateless compute (workers):** GitHub Actions jobs, self-hosted runners, internal schedulers, notebooks, CLIs. Workers read run requests and emit run artifacts. Workers are replaceable and should be horizontally scalable.
 
-**Append-friendly immutable artifacts (derived state):** run artifacts, regression reports, promotion records. These should be immutable records. Store small indexes in Git; store large raw outputs (transcripts, traces) in an open-ended artifact backend referenced by digest. GitHub Actions artifacts default to 90-day retention and should not be treated as the long-term archive. citeturn0search3turn0search21
+**Append-friendly immutable artifacts (derived state):** run artifacts, regression reports, promotion records. These should be immutable records. Store small indexes in Git; store large raw outputs (transcripts, traces) in an open-ended artifact backend referenced by digest. GitHub Actions artifacts default to 90-day retention and should not be treated as the long-term archive.
 
-**Human checkpoints:** PR review; explicit approvals for promotion and policy changes via CODEOWNERS and branch protection. citeturn1search0turn0search1
+**Human checkpoints:** PR review; explicit approvals for promotion and policy changes via CODEOWNERS and branch protection.
 
 **Recovery and replay:** re-run a stored run request by resolving the same digested inputs and harness version. Allow for variance due to non-determinism and provider drift.
 
@@ -123,7 +123,7 @@ This system supports three repo shapes without changing the conceptual model:
 - **Separate-repo:** prompts live in a dedicated repo; apps pin git refs or released artifacts.
 - **Local-linked development:** developer uses a local override to a prompt repo checkout while CI resolves via git refs/digests.
 
-Git submodules are a known alternative for embedding a repo at a pinned commit; they work but have operational friction and should be optional. citeturn6search10turn6search2
+Git submodules are a known alternative for embedding a repo at a pinned commit; they work but have operational friction and should be optional.
 
 #### Topology tradeoffs table
 
@@ -172,7 +172,7 @@ Git submodules are a known alternative for embedding a repo at a pinned commit; 
 ```
 
 **Artifacts branch (append-only indices)**
-  
+
 ```text
 # branch: promptops-artifacts
 artifacts/
@@ -193,16 +193,16 @@ This “artifacts branch” pattern reduces merge conflicts and keeps derived ar
 
 This system makes GitHub the control plane because GitHub already solves the core governance loop for software changes and provides APIs for automation feedback:
 
-- **Status checks and required checks:** Branch protections can require checks to pass before merging to protected branches. citeturn0search1turn0search5turn0search0
-- **Rulesets can require status checks for branches and tags:** Useful for enforcing policies across repos and environments. citeturn0search9
-- **Checks API:** You can create check runs via GitHub Apps to provide rich feedback and annotations in PRs; write access for checks is limited to GitHub Apps (not OAuth apps). citeturn1search2turn1search6turn7search17
-- **Commit Status API:** Useful when you’re not building a GitHub App; supports creating statuses per SHA, with documented limits. citeturn7search1
-- **CODEOWNERS:** Define who must review which parts of the repo (prompts, policies, harness specs). citeturn1search0
-- **Tags and releases:** Releases are based on Git tags and mark points in history; releases can carry assets. citeturn0search6turn0search20
-- **Immutable releases:** Assets and the associated tag cannot be changed after publication, hardening distribution semantics for release assets. citeturn0search2turn0search13
-- **Actions artifacts retention:** Default 90-day retention; configurable. This matters for where you store long-lived run outputs. citeturn0search3turn0search21
-- **Audit logs:** Org admins can review actions, including who did what and when. citeturn1search1turn1search12
-- **Reusable workflows (`workflow_call`):** Lets platform teams standardize PromptOps workflows across many repos. citeturn7search0turn7search8
+- **Status checks and required checks:** Branch protections can require checks to pass before merging to protected branches.
+- **Rulesets can require status checks for branches and tags:** Useful for enforcing policies across repos and environments.
+- **Checks API:** You can create check runs via GitHub Apps to provide rich feedback and annotations in PRs; write access for checks is limited to GitHub Apps (not OAuth apps).
+- **Commit Status API:** Useful when you’re not building a GitHub App; supports creating statuses per SHA, with documented limits.
+- **CODEOWNERS:** Define who must review which parts of the repo (prompts, policies, harness specs).
+- **Tags and releases:** Releases are based on Git tags and mark points in history; releases can carry assets.
+- **Immutable releases:** Assets and the associated tag cannot be changed after publication, hardening distribution semantics for release assets.
+- **Actions artifacts retention:** Default 90-day retention; configurable. This matters for where you store long-lived run outputs.
+- **Audit logs:** Org admins can review actions, including who did what and when.
+- **Reusable workflows (`workflow_call`):** Lets platform teams standardize PromptOps workflows across many repos.
 
 **Design implication**
 
@@ -229,20 +229,20 @@ Publishing artifacts (OCI/npm/PyPI/release asset) is a governed release behavior
 
 The system uses a consumption manifest and a resolver with this precedence:
 
-1) **Local override** (local path)  
-2) **Workspace path** (same-repo prompts under `promptops/`)  
-3) **Git ref** (tag or commit SHA)  
+1) **Local override** (local path)
+2) **Workspace path** (same-repo prompts under `promptops/`)
+3) **Git ref** (tag or commit SHA)
 4) **Packaged artifact** (release asset / OCI digest / registry wrapper)
 
 This is implementable today because standard ecosystems already support Git-based dependencies:
 
-- npm can install from git URLs pinned by `#<commit-ish>` and can resolve tags using `#semver:<range>`. citeturn6search0
-- pip supports VCS requirements in the form `ProjectName @ VCS_URL` and supports multiple git URL schemes. citeturn6search1
+- npm can install from git URLs pinned by `#<commit-ish>` and can resolve tags using `#semver:<range>`.
+- pip supports VCS requirements in the form `ProjectName @ VCS_URL` and supports multiple git URL schemes.
 
 ### Package identity: digest-first, semver-optional
 
 - **Content digests are the canonical identity.** Digests are used for reproducibility and to guarantee “what exactly ran” and “what exactly shipped”.
-- **SemVer is supported when (and only when) the prompt package declares a public interface.** SemVer explicitly requires that software declare a public API. citeturn2search0  
+- **SemVer is supported when (and only when) the prompt package declares a public interface.** SemVer explicitly requires that software declare a public API.
   For prompt packages, the “public API” should mean: prompt ID, variables schema, output contract/schema, and (if relevant) tool schema/contract.
 
 ### Governed release packaging options
@@ -256,17 +256,17 @@ When teams want governed distribution, allow more structure without sacrificing 
 | OCI artifact | `name@sha256:...` | Digest-addressed; supports tag + digest; supports associated artifacts/referrers | Registry complexity | Org-wide artifact distribution |
 | npm/PyPI wrapper | semver in ecosystem | Best app ergonomics | Publishing pipeline overhead | Mature orgs, broad consumer base |
 
-For OCI, the distribution spec explicitly defines that a manifest reference must be either a digest or a tag, which maps cleanly to “pin by digest for immutability” and “use tags for human-friendly references”. citeturn2search5
+For OCI, the distribution spec explicitly defines that a manifest reference must be either a digest or a tag, which maps cleanly to “pin by digest for immutability” and “use tags for human-friendly references”.
 
-OCI is operated by entity["organization","Open Container Initiative","container standards org"] as an open governance structure creating open standards. citeturn2search9
+OCI is operated by Open Container Initiative as an open governance structure creating open standards.
 
 ### Provenance, signing, and supply-chain posture
 
 This system should support provenance without requiring it in phase one:
 
-- SLSA provenance defines provenance as an attestation that a builder produced artifacts by executing an invocation using materials (inputs). citeturn2search3
-- GitHub provides artifact attestations to establish build provenance for artifacts produced in Actions, for consumers to verify where and how software was built. citeturn6search3
-- GitHub immutable releases harden release asset distribution by preventing changes after publication. citeturn0search2
+- SLSA provenance defines provenance as an attestation that a builder produced artifacts by executing an invocation using materials (inputs).
+- GitHub provides artifact attestations to establish build provenance for artifacts produced in Actions, for consumers to verify where and how software was built.
+- GitHub immutable releases harden release asset distribution by preventing changes after publication.
 
 Practical recommendation: start by recording digests and workflow run IDs in manifests; add attestations and signature verification later as an optional “governed release profile”.
 
@@ -274,7 +274,7 @@ Practical recommendation: start by recording digests and workflow run IDs in man
 
 ### Minimal BYO harness contract
 
-The system supports any harness, including scripts, notebooks, internal schedulers, or wrappers around existing tools (such as promptfoo or a framework like OpenAI Evals). citeturn3search0turn3search5
+The system supports any harness, including scripts, notebooks, internal schedulers, or wrappers around existing tools (such as promptfoo or a framework like OpenAI Evals).
 
 **Contract: run request in → run artifact out**
 
@@ -307,7 +307,7 @@ This section is intentionally opinionated because weak eval discipline produces 
 **Treat eval as a measurement system, not a dashboard**
 
 - Systematically catch regressions and compare prompt changes as part of shipping confidence, not post-hoc debugging.
-- Retain raw outputs for audit and diagnosis; do not rely only on aggregated scores. This is consistent with practical eval guidance that emphasizes inspecting transcripts to validate graders and understand failures. citeturn5search0
+- Retain raw outputs for audit and diagnosis; do not rely only on aggregated scores. This is consistent with practical eval guidance that emphasizes inspecting transcripts to validate graders and understand failures.
 
 **Suite tiers (recommended default)**
 
@@ -350,7 +350,7 @@ Regression detection is a deterministic function of:
 - Tradeoff surfacing: explicitly show quality vs cost vs latency changes in the regression report.
 
 **GitHub gating**
-- Regression policy results should be surfaced as a required status check for protected branches. Branch protection can require passing checks before merge. citeturn0search1turn0search5
+- Regression policy results should be surfaced as a required status check for protected branches. Branch protection can require passing checks before merge.
 
 ### Delivery and promotion model
 
@@ -388,25 +388,25 @@ flowchart TD
   P --> Q[Rollback = promote prior digest]
 ```
 
-Releases are based on Git tags. citeturn0search6  
-Immutable releases can prevent release assets and tags from being modified after publication. citeturn0search2
+Releases are based on Git tags.
+Immutable releases can prevent release assets and tags from being modified after publication.
 
 ### Lifecycle walkthroughs
 
 **Walkthrough: low-friction prompt edit with no publishing**
-A developer edits a prompt spec in the app repo and runs a smoke suite locally using their harness. They open a PR, and CI triggers regression suites. A regression report check is posted; if it fails, merge is blocked on the protected branch by required status checks. Publishing is not involved. citeturn0search1turn0search0
+A developer edits a prompt spec in the app repo and runs a smoke suite locally using their harness. They open a PR, and CI triggers regression suites. A regression report check is posted; if it fails, merge is blocked on the protected branch by required status checks. Publishing is not involved.
 
 **Walkthrough: separate prompt repo with commit pin consumption**
-A prompt repo releases no formal packages yet. The consuming app pins a commit SHA in its consumption manifest and means “ship exactly this”. Local-linked dev is enabled by a local override path. npm and pip both support Git/VCS dependency forms, so language-specific wrappers remain optional. citeturn6search0turn6search1
+A prompt repo releases no formal packages yet. The consuming app pins a commit SHA in its consumption manifest and means “ship exactly this”. Local-linked dev is enabled by a local override path. npm and pip both support Git/VCS dependency forms, so language-specific wrappers remain optional.
 
 **Walkthrough: release candidate and governed promotion**
-After regression suites pass on main, the system triggers a release-candidate run. A tag and GitHub Release are created, optionally using immutable releases for stronger supply-chain posture. The promotion record binds release digest to “prod”, then a delivery worker opens PRs to update downstream apps’ consumption manifests. citeturn0search2turn0search6
+After regression suites pass on main, the system triggers a release-candidate run. A tag and GitHub Release are created, optionally using immutable releases for stronger supply-chain posture. The promotion record binds release digest to “prod”, then a delivery worker opens PRs to update downstream apps’ consumption manifests.
 
 **Walkthrough: multi-harness comparisons without changing system nouns**
 The team runs the same suite through two harness adapters: a Python harness and an internal scheduler harness. The run artifacts are comparable because the contract is the same. Only the `harness_version` and environment metadata differ. The regression policy applies identically.
 
 **Walkthrough: audit replay**
-An incident requires replay. The team retrieves a past run request and resolved digests, re-runs the harness, and compares variance. This is only possible because artifacts are durable and content-addressed, rather than buried in an ephemeral CI log with 90-day retention. citeturn0search3turn0search21
+An incident requires replay. The team retrieves a past run request and resolved digests, re-runs the harness, and compares variance. This is only possible because artifacts are durable and content-addressed, rather than buried in an ephemeral CI log with 90-day retention.
 
 ### Agentic workflow compatibility and safe agent interactions
 
@@ -417,8 +417,8 @@ Agents can safely operate when state is explicit and file-based:
 - Agents summarize regression reports and attach evidence to PR discussions.
 - Agents prepare promotion record PRs, but humans approve promotions.
 
-If you want richer PR feedback, checks APIs allow GitHub Apps to create check runs and annotate commits. citeturn1search2turn1search6  
-Reusable workflows allow platform teams to standardize automation across many repos. citeturn7search0turn7search8
+If you want richer PR feedback, checks APIs allow GitHub Apps to create check runs and annotate commits.
+Reusable workflows allow platform teams to standardize automation across many repos.
 
 ### Risks and mitigations
 
@@ -428,8 +428,8 @@ Reusable workflows allow platform teams to standardize automation across many re
 | False confidence | Narrow suites miss real failures | Tiered suites + capability tagging + forcing release-candidate gates |
 | Flaky evals | Noise causes churn or hides regressions | Trials + variance-aware gating + flake quarantine |
 | Artifact sprawl | Repo becomes unusable | Store only indices in Git; raw artifacts in backend; enforce retention |
-| Platform/tool churn | Features disappear (vendor churn is real) | Keep core: files + git refs + digests; harnesses are adapters. Feature deprecations in platforms are documented realities. citeturn4search0 |
-| Supply-chain tampering | Modified release assets or tags | Immutable releases; attestations; digest pinning. citeturn0search2turn6search3 |
+| Platform/tool churn | Features disappear (vendor churn is real) | Keep core: files + git refs + digests; harnesses are adapters. Feature deprecations in platforms are documented realities. |
+| Supply-chain tampering | Modified release assets or tags | Immutable releases; attestations; digest pinning. |
 | Overgrown harness contract | Lock-in by another name | Keep contract minimal; treat harnesses as replaceable compute |
 | Confusing metrics | Teams don’t know what “score” means | Metric definitions and versions embedded in scorecard schema |
 
@@ -442,13 +442,13 @@ Reusable workflows allow platform teams to standardize automation across many re
 | Deterministic digest tooling | Canonicalization + digests for prompts/datasets | Reproducibility and meaningful lineage |
 | Harness adapter runner | Run request → harness → run artifact | BYO compute becomes real |
 | Regression policy engine | Baselines + blockers/warnings + diff reports | Merge gating on real quality evidence |
-| GitHub integration | Checks/status reporting, reusable workflows, CODEOWNERS patterns | Org-wide PromptOps standardization. citeturn1search2turn7search0turn1search0 |
-| Release + promotion | Tags/releases, immutable release option, promotion records | Governed distribution and rollback. citeturn0search6turn0search2 |
-| Optional hardening | OCI artifacts, attestations, verification UX | Supply-chain integrity and scalable distribution. citeturn2search5turn2search3 |
+| GitHub integration | Checks/status reporting, reusable workflows, CODEOWNERS patterns | Org-wide PromptOps standardization. |
+| Release + promotion | Tags/releases, immutable release option, promotion records | Governed distribution and rollback. |
+| Optional hardening | OCI artifacts, attestations, verification UX | Supply-chain integrity and scalable distribution. |
 
 ### Open questions
 
-- Which artifact backend(s) are the default recommendation for long-lived raw outputs (OCI registry vs object storage vs release assets), given Actions artifacts are 90-day retention by default? citeturn0search3turn0search21
+- Which artifact backend(s) are the default recommendation for long-lived raw outputs (OCI registry vs object storage vs release assets), given Actions artifacts are 90-day retention by default?
 - What is the canonical “public interface” for semver decisions (variable schema, output schema, tool contract)?
 - How strict should deterministic packaging be (canonical JSON ordering, YAML normalization)?
 - How will you model evaluator evolution and metric versioning to preserve long-term comparability?
@@ -456,7 +456,7 @@ Reusable workflows allow platform teams to standardize automation across many re
 
 ### Final recommendation
 
-Build PromptOps as a GitHub-native protocol and workflow layer, not a platform. Make Git-first consumption and local overrides first-class so developers can iterate without publishing artifacts. Use content digests as the primary identity for reproducibility. Keep the harness contract thin but non-negotiable. Store derived artifacts as append-only records; do not rely on ephemeral CI logs. Use GitHub required checks and branch protections to gate merges and promotions, and use tags/releases (optionally immutable) as the release boundary. citeturn0search0turn0search1turn0search6turn0search2
+Build PromptOps as a GitHub-native protocol and workflow layer, not a platform. Make Git-first consumption and local overrides first-class so developers can iterate without publishing artifacts. Use content digests as the primary identity for reproducibility. Keep the harness contract thin but non-negotiable. Store derived artifacts as append-only records; do not rely on ephemeral CI logs. Use GitHub required checks and branch protections to gate merges and promotions, and use tags/releases (optionally immutable) as the release boundary.
 
 ## Public prompt library registry v2 primitive with single-custodian model
 
@@ -530,7 +530,7 @@ The public API should be minimal and stable:
 SDKs should support:
 
 - Resolve by semver/tag/SHA-like ref to a digest, then fetch.
-- Local caching and offline fallback (mirroring the caching posture that platform prompt registries use for low-latency retrieval). citeturn3search6
+- Local caching and offline fallback (mirroring the caching posture that platform prompt registries use for low-latency retrieval).
 - Verify signatures/attestations optionally.
 - Emit a consumption manifest entry for Git-first teams (so SDK is additive, not mandatory).
 
@@ -542,16 +542,16 @@ SDKs should support:
 - Registry verifies provenance attestations if provided; otherwise marks provenance as “unsigned/unverified”.
 
 This design leans on established supply-chain ideas:
-- SLSA provenance describes builder/invocation/materials, explicitly stating that you ultimately trust the builder to record provenance correctly. citeturn2search3
-- OCI distribution supports pulling manifests by tag or digest, enabling content-addressed pinning and verifiable resolution. citeturn2search5
-- GitHub artifact attestations can be a default mechanism for provenance in early phases if the custodian uses GitHub Actions as its build system. citeturn6search3
+- SLSA provenance describes builder/invocation/materials, explicitly stating that you ultimately trust the builder to record provenance correctly.
+- OCI distribution supports pulling manifests by tag or digest, enabling content-addressed pinning and verifiable resolution.
+- GitHub artifact attestations can be a default mechanism for provenance in early phases if the custodian uses GitHub Actions as its build system.
 
 ### Moderation, governance, and legal/ToU considerations
 
 A public registry is a content platform as much as a developer tool. You need explicit governance and moderation.
 
-- GitHub’s Terms of Service and Acceptable Use Policies are an example of the types of content and conduct constraints a platform must define and enforce (safety, IP, privacy, authenticity). citeturn8search4turn8search0
-- GitHub also publishes community guidelines describing investigation of abuse reports and moderation of public content, reinforcing that public hosting requires moderation procedures. citeturn8search8
+- GitHub’s Terms of Service and Acceptable Use Policies are an example of the types of content and conduct constraints a platform must define and enforce (safety, IP, privacy, authenticity).
+- GitHub also publishes community guidelines describing investigation of abuse reports and moderation of public content, reinforcing that public hosting requires moderation procedures.
 
 Concrete recommendations for a custodian registry:
 
@@ -590,14 +590,14 @@ A credible rollout plan should prioritize developer ergonomics and trust-buildin
 
 **Phase 2: Public library as a GitHub-native corpus**
 - Host canonical prompt packs as GitHub repos under custodian org initially to bootstrap trust and transparency.
-- Use releases (optionally immutable) to publish bundles and attach provenance evidence. citeturn0search6turn0search2
+- Use releases (optionally immutable) to publish bundles and attach provenance evidence.
 
 **Phase 3: Registry API as a derived view**
 - Build a registry that indexes the GitHub-hosted corpus and exposes public APIs/SDKs.
 - Keep the “export to Git repo” path first-class so Git-first teams keep their workflow.
 
 **Phase 4: Moderation and governance hardening**
-- Publish Acceptable Use and deprecation policies for the registry, modeled after established platform patterns (ownership disputes, takedowns, appeals). citeturn8search0turn8search4turn8search8
+- Publish Acceptable Use and deprecation policies for the registry, modeled after established platform patterns (ownership disputes, takedowns, appeals).
 - Add provenance requirements for “trusted publisher” badges.
 
 **Phase 5: Federation and mirrors**
@@ -606,7 +606,7 @@ A credible rollout plan should prioritize developer ergonomics and trust-buildin
 
 ## Appendices
 
-**A) One-paragraph product pitch**  
+**A) One-paragraph product pitch**
 Black Hole PromptOps is a GitHub-native PromptOps layer that lets teams ship prompts with the same discipline as code: prompts and eval specs live as versioned files; bring-your-own harnesses execute suites; results are durable, append-only artifacts; regressions gate merges and promotions via required status checks; and approved prompt packages can be promoted to delivery targets with safe rollback. Local iteration stays frictionless because repackaging/publishing is optional and Git-first pins plus local overrides are the default.
 
 **B) Ten design decisions to lock early (recommended)**
@@ -622,7 +622,7 @@ Black Hole PromptOps is a GitHub-native PromptOps layer that lets teams ship pro
 | Suite spec model (matrix, trials, budgets) | Controls cost and determinism tradeoffs |
 | Regression policy language | Determines whether gating is trusted or ignored |
 | Promotion record semantics and channels | Enables stable delivery and rollback |
-| Artifact storage strategy (open-ended but specified) | Prevents accidental reliance on 90-day retention artifacts. citeturn0search3 |
+| Artifact storage strategy (open-ended but specified) | Prevents accidental reliance on 90-day retention artifacts. |
 
 **C) Ten mistakes to avoid**
 
@@ -631,7 +631,7 @@ Black Hole PromptOps is a GitHub-native PromptOps layer that lets teams ship pro
 | Mandating publishing for every prompt tweak | Developers bypass the system |
 | Coupling core concepts to one eval framework | Lock-in and churn pain |
 | Letting consumption require the authoring stack | bloated runtime and poor adoption |
-| Treating CI logs as the archive | Loss of auditability after retention expires. citeturn0search3 |
+| Treating CI logs as the archive | Loss of auditability after retention expires. |
 | Ignoring variance and trials | Flaky gates and false confidence |
 | Using a single aggregate score as truth | Hidden regressions and safety failures |
 | Not versioning evaluator logic | Historical comparisons become meaningless |
@@ -664,12 +664,12 @@ Black Hole PromptOps is a GitHub-native PromptOps layer that lets teams ship pro
 
 Build in this order:
 
-1) Define schemas + validators for prompt spec, suite, run request, run manifest, scorecard, regression policy.  
-2) Implement the resolver: local override → workspace → git ref retrieval (tag/SHA) → packaged artifact.  
-3) Implement deterministic digest computation for prompts and datasets (canonicalization rules).  
-4) Implement minimal consumption runtime: resolve prompt ID → render template → return structured prompt + metadata.  
-5) Implement runner shim: invoke harness adapter with run request; collect run artifact directory.  
-6) Implement regression engine: compare scorecards, emit regression report, and publish a GitHub check/status result via the appropriate API surface. citeturn1search2turn7search1
+1) Define schemas + validators for prompt spec, suite, run request, run manifest, scorecard, regression policy.
+2) Implement the resolver: local override → workspace → git ref retrieval (tag/SHA) → packaged artifact.
+3) Implement deterministic digest computation for prompts and datasets (canonicalization rules).
+4) Implement minimal consumption runtime: resolve prompt ID → render template → return structured prompt + metadata.
+5) Implement runner shim: invoke harness adapter with run request; collect run artifact directory.
+6) Implement regression engine: compare scorecards, emit regression report, and publish a GitHub check/status result via the appropriate API surface.
 
 **F) Topology recommendation matrix**
 
