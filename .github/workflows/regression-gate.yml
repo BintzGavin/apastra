@@ -7,19 +7,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
       - name: Check Regression Report Status
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           REPORT="derived-index/regressions/regression_report.json"
           if [ ! -f "$REPORT" ]; then
-            echo "Regression report missing!"
-            exit 1
-          fi
-          STATUS=$(jq -r .status "$REPORT")
-          if [ "$STATUS" = "pass" ]; then
-            echo "Regression passed."
-            exit 0
+            echo "Regression report missing. Edge case handled without failing workflow job."
+            gh api --method POST -H "Accept: application/vnd.github+json" \
+              /repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
+              -f state="failure" \
+              -f context="Regression Gate" \
+              -f description="Regression report missing."
           else
-            echo "Regression failed or warning."
-            exit 1
+            STATUS=$(jq -r .status "$REPORT")
+            if [ "$STATUS" = "pass" ]; then
+              echo "Regression passed."
+              gh api --method POST -H "Accept: application/vnd.github+json" \
+                /repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
+                -f state="success" \
+                -f context="Regression Gate" \
+                -f description="Regression passed."
+            else
+              echo "Regression failed or warning."
+              gh api --method POST -H "Accept: application/vnd.github+json" \
+                /repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
+                -f state="failure" \
+                -f context="Regression Gate" \
+                -f description="Regression failed or warning."
+              exit 1
+            fi
           fi
