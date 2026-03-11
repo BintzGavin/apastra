@@ -1,6 +1,7 @@
 **Section A: Architecture**
 Gate Enforcement Flow:
 - Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `derived-index/regressions/regression_report.json`.
+- Rulesets / Branch Protection: Enforces required status checks (e.g., `gate` check) on pull requests to the `main` branch, and immutability (no updates/deletions) on tags.
 
 **Section B: File Tree**
 - `.github/workflows/deliver.yml`
@@ -8,6 +9,8 @@ Gate Enforcement Flow:
 - `.github/workflows/regression-gate.yml`
 - `.github/workflows/immutable-release.yml`
 - `.github/CODEOWNERS`
+- `.github/rulesets/main-protection.json`
+- `.github/rulesets/tag-immutability.json`
 - `promptops/policies/regression.yaml`
 - `promptops/delivery/prod-target.yaml`
 
@@ -29,9 +32,10 @@ Gate Enforcement Flow:
 - `promptops/prompts/` @apastra/prompt-engineers
 - `promptops/schemas/` @apastra/governance-admins
 - `promptops/policies/` @apastra/governance-admins
-- `promptops/evaluators/` @apastra/evaluation-team
+- `promptops/evaluator/` @apastra/evaluation-team
 - `promptops/suites/` @apastra/evaluation-team
 - `promptops/delivery/` @apastra/governance-admins
 - `derived-index/promotions/` @apastra/governance-admins
 - `.github/workflows/` @apastra/infrastructure
 - `.github/CODEOWNERS` @apastra/governance-admins
+- `.github/rulesets/` @apastra/governance-admins
