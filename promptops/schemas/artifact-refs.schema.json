@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apastra.com/schemas/promptops/artifact-refs.schema.json",
+  "type": "object",
+  "properties": {
+    "references": {
+      "type": "object",
+      "patternProperties": {
+        "^.*$": {
+          "type": "object",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "description": "URI to the location of the raw artifact."
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$",
+              "description": "SHA-256 digest matching ^sha256:[a-f0-9]{64}$."
+            },
+            "mime_type": {
+              "type": "string",
+              "description": "Optional MIME type of the artifact."
+            }
+          },
+          "required": ["uri", "digest"]
+        }
+      },
+      "description": "Mapping of stable reference IDs to object metadata."
+    }
+  },
+  "required": ["references"]
+}
