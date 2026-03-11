@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-regression-policy-v1",
+  "title": "Regression Policy Specification",
+  "description": "Schema for regression policy definition.",
+  "type": "object",
+  "properties": {
+    "baseline": { "type": "string", "description": "Baseline reference rules, e.g., 'prod current'" },
+    "rules": {
+      "type": "array",
+      "description": "List of per-metric rules",
+      "items": {
+        "type": "object",
+        "properties": {
+          "metric": { "type": "string", "description": "Metric to evaluate" },
+          "floor": { "type": "number", "description": "Absolute floor value" },
+          "allowed_delta": { "type": "number", "description": "Allowed delta from baseline" },
+          "direction": { "type": "string", "description": "Directionality, e.g., 'higher_is_better'" },
+          "severity": { "type": "string", "enum": ["blocker", "warning"], "description": "Severity of rule failure" }
+        },
+        "required": ["metric", "severity"]
+      }
+    }
+  },
+  "required": ["baseline", "rules"]
+}

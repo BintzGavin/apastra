@@ -1,6 +1,15 @@
 # Context: CONTRACTS
 
 ## Section A: Schema Inventory
+- **ID:** `apastra-regression-policy-v1`
+  - **Version:** 0.11.0
+  - **Description:** Schema for regression policy definition.
+- **ID:** `apastra-promotion-record-v1`
+  - **Version:** 0.11.0
+  - **Description:** Schema for append-only binding records.
+- **ID:** `apastra-delivery-target-v1`
+  - **Version:** 0.11.0
+  - **Description:** Schema for delivery target config.
 - **ID:** `apastra-run-request-v1`
   - **Version:** 0.9.0
   - **Description:** Schema for a minimal BYO harness run request.
@@ -37,6 +46,15 @@
   - **Description:** Schema for a regression report output.
 
 ## Section B: Validator Inventory
+- **Validator:** `validate-regression-policy.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-regression-policy.sh <regression-policy.json|yaml>`
+  - **Validates:** JSON or YAML files against the `regression-policy.schema.json` schema.
+- **Validator:** `validate-promotion-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-promotion-record.sh <promotion-record.json|yaml>`
+  - **Validates:** JSON or YAML files against the `promotion-record.schema.json` schema.
+- **Validator:** `validate-delivery-target.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-delivery-target.sh <delivery-target.json|yaml>`
+  - **Validates:** JSON or YAML files against the `delivery-target.schema.json` schema.
 - **Validator:** `validate-run-request.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-run-request.sh <run-request.json>`
   - **Validates:** JSON files against the `run-request.schema.json` schema.

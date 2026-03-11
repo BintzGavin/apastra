@@ -24,3 +24,6 @@
 
 ### CONTRACTS v0.10.0
 - ✅ Completed: ScorecardAndRegressionReport - Created scorecard.schema.json, regression-report.schema.json, and validators
+
+### CONTRACTS v0.11.0
+- ✅ Completed: GovernanceSchemas - Created regression-policy.schema.json, promotion-record.schema.json, delivery-target.schema.json and validators
