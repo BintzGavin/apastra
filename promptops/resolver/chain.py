@@ -1,5 +1,6 @@
 from promptops.resolver.local import LocalResolver
 from promptops.resolver.workspace import WorkspaceResolver
+from promptops.resolver.git_ref import GitRefResolver
 
 class ResolverChain:
     def resolve(self, prompt_id, manifest):
@@ -11,4 +12,7 @@ class ResolverChain:
         if workspace_result is not None:
             return workspace_result
 
-        raise NotImplementedError("Git ref resolution not yet implemented")
+        if rules and 'pin' in rules:
+            return GitRefResolver().resolve(prompt_id, rules['pin'])
+
+        raise NotImplementedError("Resolution fallback not yet implemented")
