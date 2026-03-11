@@ -21,3 +21,6 @@
 
 ### CONTRACTS v0.9.0
 - ✅ Completed: run-request-and-artifact - Created run-request.schema.json, run-artifact.schema.json, validate-run-request.sh, and validate-run-artifact.sh
+
+### CONTRACTS v0.10.0
+- ✅ Completed: ScorecardAndRegressionReport - Created scorecard.schema.json, regression-report.schema.json, and validators

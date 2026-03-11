@@ -29,6 +29,13 @@
   - **Version:** 0.8.0
   - **Description:** JSON Schema and validation script for `harness-adapter`.
 
+- **ID:** `apastra-scorecard-v1`
+  - **Version:** 0.10.0
+  - **Description:** Schema for the run artifact scorecard.
+- **ID:** `apastra-regression-report-v1`
+  - **Version:** 0.10.0
+  - **Description:** Schema for a regression report output.
+
 ## Section B: Validator Inventory
 - **Validator:** `validate-run-request.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-run-request.sh <run-request.json>`
@@ -54,6 +61,13 @@
 - **Validator:** `validate-harness-adapter.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-harness-adapter.sh <harness-adapter.json|yaml>`
   - **Validates:** JSON or YAML files against the `harness-adapter.schema.json` schema.
+
+- **Validator:** `validate-scorecard.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-scorecard.sh <scorecard.json>`
+  - **Validates:** JSON files against the `scorecard.schema.json` schema.
+- **Validator:** `validate-regression-report.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-regression-report.sh <regression-report.json>`
+  - **Validates:** JSON files against the `regression-report.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**

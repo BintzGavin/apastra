@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-scorecard-v1",
+  "title": "Scorecard Specification",
+  "description": "Schema for the run artifact scorecard.",
+  "type": "object",
+  "properties": {
+    "normalized_metrics": { "type": "object", "description": "Mapping of metric names to their values" },
+    "metric_definitions": { "type": "object", "description": "Metadata like metric version and description" },
+    "variance": { "type": "object", "description": "Optional variance details if trials were run" }
+  },
+  "required": ["normalized_metrics", "metric_definitions"]
+}
