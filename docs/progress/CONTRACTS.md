@@ -15,3 +15,6 @@
 
 ### CONTRACTS v0.7.0
 - ✅ Completed: ConsumptionManifestSchema - Created consumption-manifest.schema.json and validate-consumption-manifest.sh
+
+### CONTRACTS v0.8.0
+- ✅ Completed: HarnessAdapterSchema - Created harness-adapter.schema.json and validate-harness-adapter.sh

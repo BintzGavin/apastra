@@ -19,6 +19,9 @@
 - **ID:** `https://apastra.com/schemas/promptops/consumption-manifest.schema.json`
   - **Version:** 0.7.0
   - **Description:** Schema for the apastra PromptOps consumption manifest.
+- **ID:** `https://apastra.com/schemas/harness-adapter.schema.json`
+  - **Version:** 0.8.0
+  - **Description:** JSON Schema and validation script for `harness-adapter`.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-prompt-spec.sh`
@@ -36,6 +39,9 @@
 - **Validator:** `validate-consumption-manifest.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-consumption-manifest.sh <consumption-manifest.json|yaml>`
   - **Validates:** JSON or YAML files against the `consumption-manifest.schema.json` schema.
+- **Validator:** `validate-harness-adapter.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-harness-adapter.sh <harness-adapter.json|yaml>`
+  - **Validates:** JSON or YAML files against the `harness-adapter.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**
