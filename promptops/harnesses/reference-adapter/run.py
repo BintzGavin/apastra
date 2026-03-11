@@ -52,14 +52,6 @@ def main():
             },
             "status": status
         },
-        "scorecard": {
-            "normalized_metrics": {
-                "accuracy": 0.95
-            },
-            "metric_definitions": {
-                "accuracy": {"type": "float", "range": [0, 1]}
-            }
-        },
         "cases": [
             {
                 "case_id": "case-1",
@@ -70,10 +62,16 @@ def main():
         "failures": failures
     }
 
-    with open(os.path.join(output_dir, 'run_artifact.json'), 'w') as f:
+    artifact_path = os.path.join(output_dir, 'run_artifact.json')
+    with open(artifact_path, 'w') as f:
         json.dump(run_artifact, f, indent=2)
 
-    print(f"Artifact written to {output_dir}/run_artifact.json")
+    # Run scorecard normalizer
+    import subprocess
+    normalize_script = os.path.join(os.path.dirname(__file__), '../../runs/normalize.py')
+    subprocess.run([sys.executable, normalize_script, artifact_path], check=True)
+
+    print(f"Artifact written to {artifact_path}")
 
 if __name__ == "__main__":
     main()
