@@ -14,6 +14,7 @@ promptops/
 ├── runtime/
 │   ├── __init__.py
 │   ├── resolve.py
+│   ├── digest.py
 ├── resolver/
 │   ├── __init__.py
 │   ├── chain.py
@@ -32,6 +33,10 @@ class ResolverChain:
     def resolve(self, prompt_id, manifest)
 
 def resolve(prompt_id, ref_context=None)
+
+def compute_digest(file_path: str) -> str:
+
+def compute_digest_from_dict(data: dict) -> str:
 ```
 
 ## Section D: Manifest Format

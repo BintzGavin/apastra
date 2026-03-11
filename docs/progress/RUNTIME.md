@@ -14,3 +14,6 @@
 
 ### RUNTIME v0.7.0
 - ✅ Completed: RunnerShim - Implemented runner shim script
+
+### RUNTIME v0.8.0
+- ✅ Completed: DeterministicDigestTooling - Implemented canonicalization and digest computation for prompts and datasets
