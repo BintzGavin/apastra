@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "baseline_ref": "test-fixtures/baseline.json",
+  "candidate_ref": "test-fixtures/candidate.json",
+  "evidence": [
+    {
+      "metric": "exact_match",
+      "candidate_value": 0.85,
+      "baseline_value": 0.82,
+      "delta": 0.030000000000000027,
+      "status": "pass",
+      "message": ""
+    },
+    {
+      "metric": "latency_ms",
+      "candidate_value": 1800,
+      "baseline_value": 1900,
+      "delta": -100,
+      "status": "pass",
+      "message": ""
+    }
+  ]
+}
