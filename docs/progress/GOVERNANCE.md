@@ -12,3 +12,6 @@
 
 ### GOVERNANCE v0.6.0
 - ✅ Completed: Delivery Target Specs - Implemented delivery target schema configs and a workflow to sync downstream.
+
+### GOVERNANCE v0.7.0
+- ✅ Completed: Rulesets - Configured conceptual rulesets for main branch protection and tag immutability.
