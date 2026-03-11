@@ -9,9 +9,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Fetch Artifacts Branch
+        run: |
+          git fetch origin promptops-artifacts || true
+          git checkout origin/promptops-artifacts -- reports/regression_report.json || true
       - name: Check Regression Report Status
         run: |
-          REPORT="derived-index/regressions/regression_report.json"
+          REPORT="reports/regression_report.json"
           if [ ! -f "$REPORT" ]; then
             echo "::warning::Regression report missing (engine unimplemented). Skipping check."
             exit 0

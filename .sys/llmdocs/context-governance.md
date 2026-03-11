@@ -1,8 +1,9 @@
 **Section A: Architecture**
 Gate Enforcement Flow:
-- Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `derived-index/regressions/regression_report.json` (gracefully skipping if missing).
+- Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `reports/regression_report.json` retrieved from the `promptops-artifacts` branch (gracefully skipping if missing).
 - Reusable workflows: `regression-gate.yml` and `immutable-release.yml` can be invoked via `workflow_call` by other repositories.
 - Rulesets / Branch Protection: Enforces required status checks (e.g., `gate` check) on pull requests to the `main` branch, and immutability (no updates/deletions) on tags.
+- Artifacts Branch Topology: All derived, machine-generated artifacts (run artifacts, regression reports, and promotion records) are isolated on the `promptops-artifacts` branch instead of the main branch to reduce repo bloat and avoid merge conflicts.
 
 **Section B: File Tree**
 - `.github/workflows/deliver.yml`
@@ -36,7 +37,6 @@ Gate Enforcement Flow:
 - `promptops/evaluator/` @apastra/evaluation-team
 - `promptops/suites/` @apastra/evaluation-team
 - `promptops/delivery/` @apastra/governance-admins
-- `derived-index/promotions/` @apastra/governance-admins
 - `.github/workflows/` @apastra/infrastructure
 - `.github/CODEOWNERS` @apastra/governance-admins
 - `.github/rulesets/` @apastra/governance-admins
