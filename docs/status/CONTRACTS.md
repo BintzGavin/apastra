@@ -1,4 +1,4 @@
-**Version**: 0.12.0
+**Version**: 0.13.0
 
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
@@ -11,3 +11,4 @@
 [v0.10.0] ✅ Completed: ScorecardAndRegressionReport - Created scorecard.schema.json, regression-report.schema.json, and validators
 [v0.11.0] ✅ Completed: GovernanceSchemas - Created regression-policy.schema.json, promotion-record.schema.json, delivery-target.schema.json and validators
 [v0.12.0] ✅ Completed: BaselineSchema - Created baseline.schema.json and validate-baseline.sh
+[v0.13.0] ✅ Completed: PromptPackage - Created prompt-package.schema.json and validate-prompt-package.sh
