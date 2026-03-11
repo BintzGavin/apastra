@@ -18,3 +18,6 @@
 
 ### GOVERNANCE v0.8.0
 - ✅ Completed: Reusable Workflows - Standardized workflows with workflow_call and checkout@v4, gracefully bypassed missing regression engine.
+
+### GOVERNANCE v0.9.0
+- ✅ Completed: Artifacts Branch - Spec designed to isolate derived data on promptops-artifacts branch.
