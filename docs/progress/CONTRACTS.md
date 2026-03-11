@@ -27,3 +27,6 @@
 
 ### CONTRACTS v0.11.0
 - ✅ Completed: GovernanceSchemas - Created regression-policy.schema.json, promotion-record.schema.json, delivery-target.schema.json and validators
+
+### CONTRACTS v0.12.0
+- ✅ Completed: BaselineSchema - Created baseline.schema.json and validate-baseline.sh

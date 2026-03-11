@@ -45,6 +45,10 @@
   - **Version:** 0.10.0
   - **Description:** Schema for a regression report output.
 
+- **ID:** `apastra-baseline-v1`
+  - **Version:** 0.12.0
+  - **Description:** Schema definition for baseline references to unblock Evaluation.
+
 ## Section B: Validator Inventory
 - **Validator:** `validate-regression-policy.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-regression-policy.sh <regression-policy.json|yaml>`
@@ -86,6 +90,10 @@
 - **Validator:** `validate-regression-report.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-regression-report.sh <regression-report.json>`
   - **Validates:** JSON files against the `regression-report.schema.json` schema.
+
+- **Validator:** `validate-baseline.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-baseline.sh <baseline.json|yaml>`
+  - **Validates:** JSON or YAML files against the `baseline.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**

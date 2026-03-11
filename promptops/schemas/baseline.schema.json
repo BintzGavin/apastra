@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-baseline-v1",
+  "title": "Baseline Specification",
+  "description": "Schema definition for baseline references to unblock Evaluation.",
+  "type": "object",
+  "properties": {
+    "baseline_id": { "type": "string", "description": "The baseline ID" },
+    "run_digest": { "type": "string", "description": "The run digest" },
+    "created_at": { "type": "string", "format": "date-time", "description": "The creation time" },
+    "metadata": { "type": "object", "description": "The metadata" },
+    "description": { "type": "string", "description": "The description" }
+  },
+  "required": ["baseline_id", "run_digest", "created_at"]
+}
