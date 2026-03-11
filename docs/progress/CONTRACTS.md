@@ -45,3 +45,6 @@
 
 ### CONTRACTS v0.17.0
 - ✅ Completed: ProviderArtifactSchema - Created provider-artifact.schema.json and validate-provider-artifact.sh
+
+### CONTRACTS v0.18.0
+- ✅ Completed: InitialPromptSpec - Created first prompt instance promptops/prompts/test-prompt/prompt.yaml
