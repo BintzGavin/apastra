@@ -18,3 +18,12 @@
 
 **Section D: Digest Convention**
 - N/A
+
+**Section E: Integration Points**
+Promotion Record Format:
+- `id`: Unique promotion event ID
+- `timestamp`: ISO-8601 timestamp of promotion
+- `digest`: The content digest of the promoted prompt package
+- `channel`: Target distribution channel (e.g., "prod", "staging")
+- `approver`: GitHub actor who approved/triggered the promotion
+- `evidence_refs`: Array of URIs linking to regression reports or run artifacts
