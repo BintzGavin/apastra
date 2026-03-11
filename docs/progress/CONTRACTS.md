@@ -42,3 +42,6 @@
 
 ### CONTRACTS v0.16.0
 - ✅ Completed: RunArtifactFiles - Created schemas and validators for run-manifest, run-case, and run-failures.
+
+### CONTRACTS v0.17.0
+- ✅ Completed: ProviderArtifactSchema - Created provider-artifact.schema.json and validate-provider-artifact.sh
