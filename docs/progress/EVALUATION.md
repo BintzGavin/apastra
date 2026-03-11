@@ -10,3 +10,5 @@
 - ✅ Completed: BaselineEstablishment - Verified schema availability and created baselines directory structure
 ### EVALUATION v0.5.0
 - ✅ Completed: RegressionComparisonEngine - Implemented CLI script for regression comparison
+### EVALUATION v0.6.0
+- ✅ Completed: ScorecardNormalization - Implemented standalone scorecard normalizer
