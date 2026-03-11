@@ -15,6 +15,8 @@
   - `derived-index/promotions/` @apastra/governance-admins
   - `.github/workflows/` @apastra/infrastructure
   - `.github/CODEOWNERS` @apastra/governance-admins
+- `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
+- `.github/workflows/regression-gate.yml`: GitHub Actions workflow gating pull requests on regression outcomes.
 
 **Section D: Digest Convention**
 - N/A
@@ -32,3 +34,5 @@ Immutable Release Workflow:
 - Packages `promptops/` into a `tar.gz` archive.
 - Computes SHA256 digest of the archive.
 - Creates an immutable GitHub Release using `gh release create`.
+Gate Enforcement Flow:
+- Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `derived-index/regressions/regression_report.json`.
