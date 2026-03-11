@@ -22,3 +22,9 @@ Follows the overall apastra PromptOps content digest convention (`sha256:<hex>`)
 ## Section E: Integration Points
 GOVERNANCE reads regression reports and baseline digests to evaluate policy gates.
 Currently blocked waiting for CONTRACTS baseline.schema.json and GOVERNANCE regression.yaml.
+
+## Section F: Architecture
+Harness execution flow:
+- Run request generated and stored in `promptops/runs/<run-id>/run_request.json`
+- Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
+- Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates `run_artifact.json`

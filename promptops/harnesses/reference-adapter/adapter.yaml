@@ -1,0 +1,7 @@
+id: "reference-adapter"
+type: "harness_adapter"
+capabilities:
+  - "run_suite"
+entrypoint: "python promptops/harnesses/reference-adapter/run.py"
+description: "Reference BYO Harness Adapter"
+env_vars: []
