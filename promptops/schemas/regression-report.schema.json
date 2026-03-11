@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-regression-report-v1",
+  "title": "Regression Report Specification",
+  "description": "Schema for a regression report output.",
+  "type": "object",
+  "properties": {
+    "status": { "type": "string", "description": "Pass, fail, warning status" },
+    "baseline_ref": { "type": "string", "description": "The reference digest or ID" },
+    "candidate_ref": { "type": "string", "description": "The digest or ID being tested" },
+    "evidence": { "type": "array", "description": "A list of metric deltas and comparisons", "items": { "type": "object" } }
+  },
+  "required": ["status", "baseline_ref", "candidate_ref", "evidence"]
+}
