@@ -36,3 +36,6 @@
 
 ### CONTRACTS v0.14.0
 - ✅ Completed: ArtifactRefsSchema - Created artifact-refs.schema.json and validate-artifact-refs.sh
+
+### CONTRACTS v0.15.0
+- ✅ Completed: ApprovalStateSchema - Created approval-state.schema.json and validate-approval-state.sh
