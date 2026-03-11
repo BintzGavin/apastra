@@ -8,3 +8,5 @@
 - ✅ Completed: RunRequestValidation - Implemented run request validation script
 ### EVALUATION v0.4.0
 - ✅ Completed: BaselineEstablishment - Verified schema availability and created baselines directory structure
+### EVALUATION v0.5.0
+- ✅ Completed: RegressionComparisonEngine - Implemented CLI script for regression comparison

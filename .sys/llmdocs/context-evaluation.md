@@ -30,6 +30,7 @@ Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 ## Section C: Source File Conventions
 `promptops/harnesses/`
 `promptops/runs/`
+`promptops/runs/compare.py`
 `derived-index/baselines/`
 `derived-index/regressions/`
 
@@ -46,3 +47,4 @@ Harness execution flow:
 - Run request validated via `promptops/runs/validate-run-request.sh`
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates `run_artifact.json`
+- Regression report generated via `python promptops/runs/compare.py <candidate> <baseline> <policy> <output>`
