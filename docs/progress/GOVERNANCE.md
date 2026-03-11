@@ -15,3 +15,6 @@
 
 ### GOVERNANCE v0.7.0
 - ✅ Completed: Rulesets - Configured conceptual rulesets for main branch protection and tag immutability.
+
+### GOVERNANCE v0.8.0
+- ✅ Completed: Reusable Workflows - Standardized workflows with workflow_call and checkout@v4, gracefully bypassed missing regression engine.

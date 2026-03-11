@@ -1,6 +1,7 @@
 **Section A: Architecture**
 Gate Enforcement Flow:
-- Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `derived-index/regressions/regression_report.json`.
+- Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `derived-index/regressions/regression_report.json` (gracefully skipping if missing).
+- Reusable workflows: `regression-gate.yml` and `immutable-release.yml` can be invoked via `workflow_call` by other repositories.
 - Rulesets / Branch Protection: Enforces required status checks (e.g., `gate` check) on pull requests to the `main` branch, and immutability (no updates/deletions) on tags.
 
 **Section B: File Tree**
