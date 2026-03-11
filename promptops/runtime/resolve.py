@@ -30,12 +30,7 @@ class PinManifest:
         return {"pin": self.pin_ref}
 
 
-def compute_digest(prompt_spec):
-    if not isinstance(prompt_spec, dict):
-        return None
-    canonical_json = json.dumps(prompt_spec, separators=(',', ':'), sort_keys=True)
-    digest = hashlib.sha256(canonical_json.encode('utf-8')).hexdigest()
-    return f"sha256:{digest}"
+from promptops.runtime.digest import compute_digest_from_dict
 
 def load_manifest(ref_context):
     if not ref_context:
@@ -68,7 +63,7 @@ def resolve(prompt_id, ref_context=None):
         prompt_spec = {"template": prompt_spec}
 
     metadata = {
-        "prompt_digest": compute_digest(prompt_spec),
+        "prompt_digest": compute_digest_from_dict(prompt_spec),
     }
 
     template = prompt_spec.get('template') if isinstance(prompt_spec, dict) else prompt_spec
