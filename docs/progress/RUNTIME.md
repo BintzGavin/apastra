@@ -11,3 +11,6 @@
 
 ### RUNTIME v0.6.0
 - ✅ Completed: PackagedArtifactResolution - Implemented packaged artifact fallback in resolver chain
+
+### RUNTIME v0.7.0
+- ✅ Completed: RunnerShim - Implemented runner shim script
