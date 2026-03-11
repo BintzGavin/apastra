@@ -1,36 +1,34 @@
 #### 1. Context & Goal
-- **Objective**: Spec the minimal harness adapter interface (input: run request; output: run artifact), plugin discovery, and error contract.
-- **Trigger**: `README.md` describes a harness adapter contract (run request in → run artifact out), but `promptops/harnesses/` is empty.
-- **Impact**: Unlocks the foundation for evaluation execution; GOVERNANCE gates depend on reproducible run artifacts produced by this contract.
+- **Objective**: Define the Harness Adapter Contract implementation spec to bridge run requests to run artifacts.
+- **Trigger**: `README.md` mandates a minimal BYO harness interface (run request in → run artifact out), but `promptops/harnesses/` only contains an empty directory, and no reference implementation or execution protocol exists.
+- **Impact**: Unlocks the ability to execute benchmark suites by providing a concrete, schema-compliant adapter implementation. This enables the Run Artifact generation phase, which is required for scorecard normalization and regression reporting.
 
 #### 2. File Inventory
-- **Create**: []
-- **Modify**: []
-- **Read-Only**:
-  - `promptops/schemas/`
-  - `README.md`
+- **Create**: A reference harness adapter configuration file (YAML) declaring capabilities and entrypoint.
+- **Create**: A minimal reference adapter script to process a run request, resolve prompts using RUNTIME, and emit a compliant run artifact.
+- **Modify**: None
+- **Read-Only**: `promptops/schemas/harness-adapter.schema.json`, `promptops/schemas/run-request.schema.json`, `promptops/schemas/run-artifact.schema.json`, `promptops/runtime/resolve.py`, `README.md`
 
 #### 3. Implementation Spec
-- **Harness Architecture**:
-  - The adapter must take a run request file and an output directory as inputs.
-  - The adapter must output a structured run artifact directory.
-  - The adapter must exit with a non-zero status code and emit structured failures if the run fails.
-  - Plugin discovery is handled via a harness adapter definition file that specifies the invocation command and capabilities.
-- **Run Request Format**: Must capture suite ID, revision reference (SHA/tag/digest), model matrix, trials, budgets, timeouts, evaluator references, and artifact backend configuration.
-- **Run Artifact Format**: Must include a manifest (resolved digests, timestamps, status, harness version, model IDs, sampling config), a scorecard (normalized metrics, metric definitions, metric versioning, variance), per-case records with stable case IDs, raw artifact references (URIs and digests), and structured failures.
+- **Harness Architecture**: The harness adapter is invoked as a stateless worker. It receives a path to a run request and an output directory. It must declare its capabilities in a YAML configuration (e.g., `run_suite`). Errors must be caught and recorded in the `failures` array of the run artifact rather than crashing silently.
+- **Run Request Format**: Consumes `suite_id`, `revision_ref`, `model_matrix`, and `evaluator_refs` as defined in `promptops/schemas/run-request.schema.json`.
+- **Run Artifact Format**: Produces `manifest`, `scorecard`, `cases`, and `failures` objects matching `promptops/schemas/run-artifact.schema.json` within the specified output directory.
 - **Pseudo-Code**:
-  1. Parse input run request and output directory.
-  2. Invoke RUNTIME resolver to resolve prompt package digest.
-  3. Execute benchmark suite across datasets and model matrix.
-  4. Collect metrics, raw text/traces, and evaluator outputs.
-  5. Emit run artifact directory containing manifest, scorecard, per-case records, and artifact references.
-  6. Return exit code 0 on success, or non-zero on failure with structured errors.
-- **Baseline and Regression Flow**: Not applicable for this task.
-- **Dependencies**:
-  - CONTRACTS domain schemas: `harness-adapter.schema.json`, `run-request.schema.json`, `run-artifact.schema.json`.
-  - RUNTIME domain: `promptops/resolver/chain.py`
+  1. Parse the run request JSON from input args.
+  2. Invoke `promptops/runtime/resolve.py` for the `revision_ref` to materialize the prompt.
+  3. Initialize output directory structures.
+  4. Iterate through `model_matrix` and test cases.
+  5. Write `manifest`, `scorecard`, `cases`, and `failures` JSON data to the output directory.
+- **Baseline and Regression Flow**: N/A for this scope (handled post-run).
+- **Dependencies**: CONTRACTS schemas (`promptops/schemas/run-request.schema.json`, `promptops/schemas/run-artifact.schema.json`, `promptops/schemas/harness-adapter.schema.json`), RUNTIME resolver (`promptops/runtime/resolve.py`).
 
 #### 4. Test Plan
-- **Verification**: `ls -al promptops/harnesses/`
-- **Success Criteria**: The harness adapter contract is defined and allows CONTRACTS to build required schemas.
-- **Edge Cases**: Missing RUNTIME resolver, invalid run request, evaluator failure.
+- **Verification**: Verify the implementation logic produces a schema-compliant artifact.
+  `mkdir -p test-fixtures/harness-test`
+  `echo '{"suite_id":"test-suite","revision_ref":"main","model_matrix":["model-1"],"evaluator_refs":["eval-1"]}' > test-fixtures/harness-test/request.json`
+  `# The executor must replace [YOUR_ADAPTER_COMMAND] with the entrypoint command for their created adapter`
+  `[YOUR_ADAPTER_COMMAND] test-fixtures/harness-test/request.json test-fixtures/harness-test/out.json`
+  `npx ajv-cli validate -s promptops/schemas/run-artifact.schema.json -d test-fixtures/harness-test/out.json --spec=draft2020 --strict=false`
+- **Success Criteria**:
+  `[ $? -eq 0 ]`
+- **Edge Cases**: Empty test cases, resolver failures, schema validation of outputs.
