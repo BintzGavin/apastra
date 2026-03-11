@@ -13,6 +13,7 @@ The runtime resolver processes prompt resolution in the following order:
 promptops/
 ├── runtime/
 │   ├── __init__.py
+│   ├── resolve.py
 ├── resolver/
 │   ├── __init__.py
 │   ├── chain.py
@@ -28,6 +29,8 @@ Currently implemented:
 ```python
 class ResolverChain:
     def resolve(self, prompt_id, manifest)
+
+def resolve(prompt_id, ref_context=None)
 ```
 
 ## Section D: Manifest Format
@@ -41,4 +44,4 @@ prompts:
 ```
 
 ## Section E: Integration Points
-Harnesses and other domains should interact with the runtime via `ResolverChain.resolve(prompt_id, manifest)`.
+Harnesses and other domains should interact with the runtime via `ResolverChain.resolve(prompt_id, manifest)` and `resolve(prompt_id, ref_context=None)`.
