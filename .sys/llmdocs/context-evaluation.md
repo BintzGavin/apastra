@@ -7,8 +7,18 @@ Run Artifact Schema (from CONTRACTS) `promptops/schemas/run-artifact.schema.json
 - `cases`: array of objects (case_id, per_trial_outputs, evaluator_outputs)
 - `failures`: array of objects
 
+Run Request Schema (from CONTRACTS) `promptops/schemas/run-request.schema.json`:
+- `suite_id`: The benchmark suite ID
+- `revision_ref`: The revision ref (SHA/tag/digest)
+- `model_matrix`: Model matrix
+- `evaluator_refs`: Evaluator references
+- `trials`: Number of trials
+- `budgets`: Budgets
+- `timeouts`: Timeouts
+- `artifact_backend_config`: Artifact backend config
+
 ## Section B: Validator Inventory
-No validators defined locally; delegates to CONTRACTS domain validators.
+`promptops/runs/validate-run-request.sh`
 
 ## Section C: Source File Conventions
 `promptops/harnesses/`
@@ -26,5 +36,6 @@ Currently blocked waiting for CONTRACTS baseline.schema.json and GOVERNANCE regr
 ## Section F: Architecture
 Harness execution flow:
 - Run request generated and stored in `promptops/runs/<run-id>/run_request.json`
+- Run request validated via `promptops/runs/validate-run-request.sh`
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates `run_artifact.json`
