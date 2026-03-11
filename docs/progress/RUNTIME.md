@@ -17,3 +17,6 @@
 
 ### RUNTIME v0.8.0
 - ✅ Completed: DeterministicDigestTooling - Implemented canonicalization and digest computation for prompts and datasets
+
+### RUNTIME v0.9.0
+- ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest

@@ -2,6 +2,9 @@ import json
 import os
 import yaml
 import hashlib
+import subprocess
+import tempfile
+import shlex
 
 from promptops.resolver.chain import ResolverChain
 
@@ -44,8 +47,23 @@ def load_manifest(ref_context):
                 else:
                     data = json.load(f)
 
-            if isinstance(data, dict) and "prompts" in data and "version" in data:
-                return ManifestWrapper(data)
+            if isinstance(data, dict):
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as tmp:
+                    json.dump(data, tmp)
+                    tmp_path = tmp.name
+
+                try:
+                    current_dir = os.path.dirname(os.path.abspath(__file__))
+                    schema_path = os.path.abspath(os.path.join(current_dir, "..", "schemas", "consumption-manifest.schema.json"))
+                    cmd = ["npx", "--yes", "ajv-cli", "validate", "-s", schema_path, "-d", tmp_path, "--spec=draft2020", "--strict=false", "-c", "ajv-formats"]
+                    result = subprocess.run(cmd, shell=False, capture_output=True, text=True)
+                    if result.returncode != 0:
+                        raise RuntimeError(f"Manifest schema validation failed: {result.stderr or result.stdout}")
+                finally:
+                    os.remove(tmp_path)
+
+                if "prompts" in data and "version" in data:
+                    return ManifestWrapper(data)
 
             return OverrideManifest(ref_context)
         else:
