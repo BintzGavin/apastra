@@ -78,7 +78,20 @@ def resolve(prompt_id, ref_context=None):
         raise RuntimeError(f"Failed to resolve prompt '{prompt_id}'")
 
     if isinstance(prompt_spec, str):
-        prompt_spec = {"template": prompt_spec}
+        prompt_spec = {"id": prompt_id, "variables": {}, "template": prompt_spec}
+
+    import jsonschema
+
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    schema_path = os.path.abspath(os.path.join(current_dir, "..", "schemas", "prompt-spec.schema.json"))
+
+    with open(schema_path, 'r') as sf:
+        schema = json.load(sf)
+
+    try:
+        jsonschema.validate(instance=prompt_spec, schema=schema)
+    except jsonschema.exceptions.ValidationError as e:
+        raise RuntimeError(f"Resolved prompt failed schema validation: {e.message}")
 
     metadata = {
         "prompt_digest": compute_digest_from_dict(prompt_spec),

@@ -23,3 +23,6 @@
 
 ### RUNTIME v1.0.0
 - ✅ Completed: ConsumptionManifestFormat - Re-wrote consumption manifest format to be more realistic and validate
+
+### RUNTIME v1.1.0
+- ✅ Completed: PromptSpecValidation - Implemented schema validation for resolved prompt specifications against prompt-spec.schema.json
