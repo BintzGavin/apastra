@@ -1,0 +1,6 @@
+{
+  "status": "pass",
+  "baseline_ref": "baseline_digest",
+  "candidate_ref": "candidate_digest",
+  "evidence": []
+}
