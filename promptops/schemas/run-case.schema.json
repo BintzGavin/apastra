@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-run-case-v1",
+  "title": "Run Case Specification",
+  "description": "Schema for a single case in cases.jsonl.",
+  "type": "object",
+  "properties": {
+    "case_id": { "type": "string", "description": "Case ID" },
+    "per_trial_outputs": { "type": "array", "description": "Per trial outputs" },
+    "evaluator_outputs": { "type": "array", "description": "Evaluator outputs" },
+    "pointers": { "type": "object", "description": "Pointers to raw text/traces" }
+  },
+  "required": ["case_id", "per_trial_outputs", "evaluator_outputs", "pointers"]
+}

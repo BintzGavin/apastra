@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-run-failures-v1",
+  "title": "Run Failures Specification",
+  "description": "Schema defining an array of failure objects.",
+  "type": "array",
+  "items": { "type": "object", "description": "Failure object" }
+}

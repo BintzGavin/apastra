@@ -39,3 +39,6 @@
 
 ### CONTRACTS v0.15.0
 - ✅ Completed: ApprovalStateSchema - Created approval-state.schema.json and validate-approval-state.sh
+
+### CONTRACTS v0.16.0
+- ✅ Completed: RunArtifactFiles - Created schemas and validators for run-manifest, run-case, and run-failures.
