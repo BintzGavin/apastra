@@ -1,6 +1,7 @@
 from promptops.resolver.local import LocalResolver
 from promptops.resolver.workspace import WorkspaceResolver
 from promptops.resolver.git_ref import GitRefResolver
+from promptops.resolver.packaged import PackagedResolver
 
 class ResolverChain:
     def resolve(self, prompt_id, manifest):
@@ -13,6 +14,10 @@ class ResolverChain:
             return workspace_result
 
         if rules and 'pin' in rules:
-            return GitRefResolver().resolve(prompt_id, rules['pin'])
+            pin = rules['pin']
+            if pin.startswith('sha256:') or pin.startswith('https://') or pin.startswith('oci://'):
+                return PackagedResolver().resolve(prompt_id, pin)
+            else:
+                return GitRefResolver().resolve(prompt_id, pin)
 
         raise NotImplementedError("Resolution fallback not yet implemented")
