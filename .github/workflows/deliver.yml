@@ -1,0 +1,31 @@
+name: Delivery Sync
+on:
+  push:
+    paths:
+      - 'derived-index/promotions/*.json'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        with:
+          fetch-depth: 2
+
+      - name: Sync to Targets
+        run: |
+          for record in $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep 'derived-index/promotions/'); do
+            CHANNEL=$(jq -r .channel "$record")
+            DIGEST=$(jq -r .digest "$record")
+            echo "Promoted digest $DIGEST to channel $CHANNEL"
+
+            for target in promptops/delivery/*.yaml; do
+              TARGET_CHANNEL=$(yq .channel "$target" 2>/dev/null || echo "")
+              if [ "$TARGET_CHANNEL" == "$CHANNEL" ]; then
+                 TYPE=$(yq .type "$target")
+                 REPO=$(yq .repo "$target")
+                 echo "Executing sync for $TYPE to $REPO"
+              fi
+            done
+          done

@@ -6,5 +6,9 @@
 
 ### GOVERNANCE v0.4.0
 - ✅ Completed: Immutable Release Workflow - Created .github/workflows/immutable-release.yml to package prompts, compute digest, and create a GitHub Release when tags are pushed.
+
 ### GOVERNANCE v0.5.0
 - ✅ Completed: Required Status Check - Created regression gate workflow and base regression policy.
+
+### GOVERNANCE v0.6.0
+- ✅ Completed: Delivery Target Specs - Implemented delivery target schema configs and a workflow to sync downstream.
