@@ -1,0 +1,9 @@
+{
+  "revision_ref": "sha256:example123",
+  "checks_passed": true,
+  "human_review": {
+    "reviewer": "Alice",
+    "timestamp": "2024-10-25T12:00:00Z"
+  },
+  "decision": "approved"
+}

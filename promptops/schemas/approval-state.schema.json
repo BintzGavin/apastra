@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-approval-state-v1",
+  "type": "object",
+  "description": "Schema for an Approval state record indicating human and machine review results.",
+  "properties": {
+    "revision_ref": {
+      "type": "string",
+      "description": "Target digest or ID of the revision or package."
+    },
+    "checks_passed": {
+      "type": "boolean",
+      "description": "Whether the required machine checks have passed."
+    },
+    "human_review": {
+      "type": "object",
+      "description": "Details of the manual human review.",
+      "properties": {
+        "reviewer": {
+          "type": "string",
+          "description": "The identity of the reviewer."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time when the review occurred."
+        }
+      },
+      "required": ["reviewer", "timestamp"]
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["approved", "rejected", "abstained"],
+      "description": "The final decision of the review."
+    },
+    "digest": {
+      "type": "string",
+      "description": "The computed content digest (e.g., sha256:<hex>)."
+    }
+  },
+  "required": ["revision_ref", "checks_passed", "human_review", "decision"]
+}
