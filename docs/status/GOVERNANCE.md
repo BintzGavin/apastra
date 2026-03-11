@@ -1,4 +1,4 @@
-**Version**: 0.9.0
+**Version**: 1.0.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -13,3 +13,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v0.7.0] ✅ Completed: Rulesets - Configured conceptual rulesets for main branch protection and tag immutability.
 [v0.8.0] ✅ Completed: Reusable Workflows - Standardized workflows with workflow_call and checkout@v4, gracefully bypassed missing regression engine.
 [v0.9.0] ✅ Completed: Artifacts Branch - Spec designed to isolate derived data on promptops-artifacts branch.
+[v1.0.0] ✅ Completed: Artifacts Branch Implementation - Configured workflows to isolate derived artifacts on promptops-artifacts branch.

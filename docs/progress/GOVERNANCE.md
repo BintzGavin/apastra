@@ -21,3 +21,6 @@
 
 ### GOVERNANCE v0.9.0
 - ✅ Completed: Artifacts Branch - Spec designed to isolate derived data on promptops-artifacts branch.
+
+### GOVERNANCE v1.0.0
+- ✅ Completed: Artifacts Branch Implementation - Configured workflows to isolate derived artifacts on promptops-artifacts branch.
