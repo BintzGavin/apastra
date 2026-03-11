@@ -30,3 +30,6 @@
 
 ### CONTRACTS v0.12.0
 - ✅ Completed: BaselineSchema - Created baseline.schema.json and validate-baseline.sh
+
+### CONTRACTS v0.13.0
+- ✅ Completed: PromptPackage - Created prompt-package.schema.json and validate-prompt-package.sh

@@ -48,6 +48,9 @@
 - **ID:** `apastra-baseline-v1`
   - **Version:** 0.12.0
   - **Description:** Schema definition for baseline references to unblock Evaluation.
+- **ID:** `apastra-prompt-package-v1`
+  - **Version:** 0.13.0
+  - **Description:** Schema for Prompt Package manifest.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-regression-policy.sh`
@@ -94,6 +97,9 @@
 - **Validator:** `validate-baseline.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-baseline.sh <baseline.json|yaml>`
   - **Validates:** JSON or YAML files against the `baseline.schema.json` schema.
+- **Validator:** `validate-prompt-package.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-prompt-package.sh <prompt-package.json|yaml>`
+  - **Validates:** JSON or YAML files against the `prompt-package.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**
