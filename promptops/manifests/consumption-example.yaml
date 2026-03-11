@@ -1,0 +1,8 @@
+version: "1.0"
+prompts:
+  my-prompt:
+    id: "prompt-123"
+    override: "./local-override.yaml"
+  another-prompt:
+    id: "prompt-456"
+    pin: "v1.2.3"
