@@ -1,4 +1,4 @@
-**Version**: 0.3.0
+**Version**: 0.4.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -7,3 +7,4 @@ Blocked: waiting for CONTRACTS regression policy schema
 [v0.3.0] ✅ Completed: Promotion Record Workflow - Created automated workflow to append promotion records upon governed releases.
 Blocked: waiting for CONTRACTS delivery target schema
 Blocked: waiting for CONTRACTS promotion record schema
+[v0.4.0] ✅ Completed: Immutable Release Workflow - Created .github/workflows/immutable-release.yml to package prompts, compute digest, and create a GitHub Release when tags are pushed.
