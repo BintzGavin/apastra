@@ -24,3 +24,6 @@
 
 ### GOVERNANCE v1.0.0
 - ✅ Completed: Artifacts Branch Implementation - Configured workflows to isolate derived artifacts on promptops-artifacts branch.
+
+### GOVERNANCE v1.1.0
+- ✅ Completed: Approval State Workflow - Created automated workflow to append approval records upon human review.

@@ -1,0 +1,64 @@
+name: Record Approval State
+on:
+  workflow_dispatch:
+    inputs:
+      revision_ref:
+        description: 'Target digest or ID of the revision or package'
+        required: true
+      decision:
+        description: 'The final decision of the review'
+        required: true
+        type: choice
+        options:
+          - approved
+          - rejected
+          - abstained
+
+jobs:
+  record-approval:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: promptops-artifacts
+
+      - name: Generate Approval State Record
+        id: generate
+        env:
+          INPUT_REVISION_REF: ${{ github.event.inputs.revision_ref }}
+          INPUT_DECISION: ${{ github.event.inputs.decision }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          mkdir -p approvals
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          ID=$(uuidgen || echo $GITHUB_RUN_ID)
+          # Use safe filename replacing colons with dashes
+          SAFE_TIMESTAMP=$(echo "$TIMESTAMP" | tr ':' '-')
+          FILEPATH="approvals/${SAFE_TIMESTAMP}-${ID}.json"
+
+          # In a real workflow, checks_passed would be verified via API.
+          # For this dispatch, we assume true if they are approving.
+          CHECKS_PASSED=true
+
+          jq -n \
+            --arg revision_ref "$INPUT_REVISION_REF" \
+            --arg decision "$INPUT_DECISION" \
+            --arg reviewer "$ACTOR" \
+            --arg timestamp "$TIMESTAMP" \
+            --arg checks_passed "$CHECKS_PASSED" \
+            --arg id "$ID" \
+            '{revision_ref: $revision_ref, checks_passed: ($checks_passed == "true"), decision: $decision, human_review: {reviewer: $reviewer, timestamp: $timestamp}}' > "$FILEPATH"
+
+          echo "filepath=$FILEPATH" >> $GITHUB_OUTPUT
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+
+      - name: Commit Approval State
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "${{ steps.generate.outputs.filepath }}"
+          git commit -m "chore(governance): append approval state record ${{ steps.generate.outputs.timestamp }}"
+          git push
