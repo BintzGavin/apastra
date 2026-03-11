@@ -48,3 +48,6 @@
 
 ### CONTRACTS v0.18.0
 - ✅ Completed: InitialPromptSpec - Created first prompt instance promptops/prompts/test-prompt/prompt.yaml
+
+### CONTRACTS v0.19.0
+- ✅ Completed: InitialDataset - Created first dataset instance test-dataset

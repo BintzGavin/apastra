@@ -1,0 +1,2 @@
+{"case_id": "case-1", "inputs": {"text": "hello world"}, "expected_outputs": {"summary": "hello"}, "metadata": {"tags": ["basic"]}}
+{"case_id": "case-2", "inputs": {"text": "goodbye world"}, "expected_outputs": {"summary": "goodbye"}, "metadata": {"tags": ["basic"]}}

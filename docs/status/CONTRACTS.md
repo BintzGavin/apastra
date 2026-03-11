@@ -1,4 +1,4 @@
-**Version**: 0.18.0
+**Version**: 0.19.0
 
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
@@ -17,3 +17,4 @@
 [v0.16.0] ✅ Completed: RunArtifactFiles - Created schemas and validators for run-manifest, run-case, and run-failures.
 [v0.17.0] ✅ Completed: ProviderArtifactSchema - Created provider-artifact.schema.json and validate-provider-artifact.sh
 [v0.18.0] ✅ Completed: InitialPromptSpec - Created first prompt instance prompt.yaml
+[v0.19.0] ✅ Completed: InitialDataset - Created first dataset instance test-dataset
