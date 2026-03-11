@@ -8,3 +8,6 @@
 
 ### RUNTIME v0.5.0
 - ✅ Completed: MinimalResolveInterface - Implemented resolve() function as minimal runtime interface
+
+### RUNTIME v0.6.0
+- ✅ Completed: PackagedArtifactResolution - Implemented packaged artifact fallback in resolver chain
