@@ -17,6 +17,7 @@ promptops/
 │   ├── __init__.py
 │   ├── chain.py
 │   ├── local.py
+│   ├── workspace.py
 └── manifests/
     └── consumption-example.yaml
 ```
