@@ -1,0 +1,32 @@
+name: Immutable Release
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+      - name: Package Prompts
+        id: package
+        run: |
+          tar -czvf promptops.tar.gz promptops/
+          DIGEST=$(sha256sum promptops.tar.gz | awk '{print $1}')
+          echo "digest=$DIGEST" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+          DIGEST: ${{ steps.package.outputs.digest }}
+        run: |
+          gh release create "$TAG_NAME" promptops.tar.gz \
+            --title "Release $TAG_NAME" \
+            --notes "Immutable release for $TAG_NAME. Digest: $DIGEST" \
+            --generate-notes

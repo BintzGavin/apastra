@@ -3,3 +3,6 @@
 
 ### GOVERNANCE v0.3.0
 - ✅ Completed: Promotion Record Workflow - Created automated workflow to append promotion records upon governed releases.
+
+### GOVERNANCE v0.4.0
+- ✅ Completed: Immutable Release Workflow - Created .github/workflows/immutable-release.yml to package prompts, compute digest, and create a GitHub Release when tags are pushed.

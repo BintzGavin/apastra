@@ -27,3 +27,8 @@ Promotion Record Format:
 - `channel`: Target distribution channel (e.g., "prod", "staging")
 - `approver`: GitHub actor who approved/triggered the promotion
 - `evidence_refs`: Array of URIs linking to regression reports or run artifacts
+Immutable Release Workflow:
+- Triggers on tag push events (`refs/tags/*`)
+- Packages `promptops/` into a `tar.gz` archive.
+- Computes SHA256 digest of the archive.
+- Creates an immutable GitHub Release using `gh release create`.
