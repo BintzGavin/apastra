@@ -16,6 +16,7 @@ promptops/
 ├── resolver/
 │   ├── __init__.py
 │   ├── chain.py
+│   ├── git_ref.py
 │   ├── local.py
 │   ├── workspace.py
 └── manifests/
@@ -36,6 +37,7 @@ prompts:
   my-prompt:
     id: "prompt-123"
     override: "./local-override.yaml"
+    pin: "v1.0.0"
 ```
 
 ## Section E: Integration Points

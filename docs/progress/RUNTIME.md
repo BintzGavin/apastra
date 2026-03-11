@@ -3,3 +3,5 @@
 - ✅ Completed: LocalOverrideResolution - Implemented local override step in python resolver chain
 ### RUNTIME v0.3.0
 - ✅ Completed: WorkspacePathResolution - Implemented workspace path lookup in resolver chain
+### RUNTIME v0.4.0
+- ✅ Completed: GitRefResolution - Implemented git ref resolution in python resolver chain
