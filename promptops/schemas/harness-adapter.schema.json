@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apastra.com/schemas/harness-adapter.schema.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the harness adapter."
+    },
+    "type": {
+      "type": "string",
+      "const": "harness_adapter",
+      "description": "Must be 'harness_adapter'."
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of capabilities (e.g., ['run_suite', 'trials', 'model_matrix'])."
+    },
+    "entrypoint": {
+      "type": "string",
+      "description": "The CLI command or script to invoke the harness."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description of the harness adapter."
+    },
+    "env_vars": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Required environment variables (e.g., 'OPENAI_API_KEY')."
+    },
+    "digest": {
+      "type": "string",
+      "description": "Content digest stored inline."
+    }
+  },
+  "required": ["id", "type", "capabilities", "entrypoint"]
+}
