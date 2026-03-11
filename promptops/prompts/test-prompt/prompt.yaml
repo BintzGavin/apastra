@@ -1,0 +1,14 @@
+id: 'test-prompt'
+variables:
+  text:
+    type: 'string'
+template: 'Please summarize the following text: {{text}}'
+output_contract:
+  type: 'object'
+  properties:
+    summary:
+      type: 'string'
+  required: ['summary']
+metadata:
+  author: 'CONTRACTS Executor'
+  intent: 'Summarization'
