@@ -1,4 +1,4 @@
-**Version**: 1.1.0
+**Version**: 1.2.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -15,3 +15,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v0.9.0] ✅ Completed: Artifacts Branch - Spec designed to isolate derived data on promptops-artifacts branch.
 [v1.0.0] ✅ Completed: Artifacts Branch Implementation - Configured workflows to isolate derived artifacts on promptops-artifacts branch.
 [v1.1.0] ✅ Completed: Approval State Workflow - Created automated workflow to append approval records upon human review.
+[v1.2.0] ✅ Completed: Promotion Approval Enforcement - Enforced that promotions require a matching approved Approval State record in promote.yml.

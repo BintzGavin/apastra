@@ -27,3 +27,6 @@
 
 ### GOVERNANCE v1.1.0
 - ✅ Completed: Approval State Workflow - Created automated workflow to append approval records upon human review.
+
+### GOVERNANCE v1.2.0
+- ✅ Completed: Promotion Approval Enforcement - Enforced that promotions require a matching approved Approval State record in promote.yml.
