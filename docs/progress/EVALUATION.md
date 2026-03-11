@@ -16,3 +16,5 @@
 - ✅ Completed: BaselineEstablishmentWorkflow - Implemented bash script to establish baselines
 ### EVALUATION v0.8.0
 - ✅ Completed: RunArtifactGeneration - Implemented bash script to split monolithic run_artifact.json into distinct, append-friendly index files for the artifacts branch.
+### EVALUATION v0.9.0
+- ✅ Completed: ScorecardNormalizationRefactor - Refactored normalize.py to read cases.jsonl and output scorecard.json

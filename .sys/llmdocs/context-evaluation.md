@@ -49,5 +49,5 @@ Harness execution flow:
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates `run_artifact.json`
 - Artifact generation splits `run_artifact.json` into `run_manifest.json`, `scorecard.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` via `promptops/runs/split_artifact.sh`
-- Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs to update `scorecard.json` in `run_artifact.json`
+- Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file
 - Regression report generated via `python promptops/runs/compare.py <candidate> <baseline> <policy> <output>`
