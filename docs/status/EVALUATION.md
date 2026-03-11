@@ -1,3 +1,5 @@
-**Version**: 0.1.0
+**Version**: 0.1.1
 
-Blocked: waiting for CONTRACTS schema run-request.schema.json, run-artifact.schema.json, baseline.schema.json
+[v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
+Blocked: waiting for CONTRACTS schema baseline.schema.json
+Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
