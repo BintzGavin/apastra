@@ -17,6 +17,13 @@ Run Request Schema (from CONTRACTS) `promptops/schemas/run-request.schema.json`:
 - `timeouts`: Timeouts
 - `artifact_backend_config`: Artifact backend config
 
+Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
+- `baseline_id`: The baseline ID
+- `run_digest`: The run digest
+- `created_at`: The creation time
+- `metadata`: The metadata
+- `description`: The description
+
 ## Section B: Validator Inventory
 `promptops/runs/validate-run-request.sh`
 
@@ -31,7 +38,7 @@ Follows the overall apastra PromptOps content digest convention (`sha256:<hex>`)
 
 ## Section E: Integration Points
 GOVERNANCE reads regression reports and baseline digests to evaluate policy gates.
-Currently blocked waiting for CONTRACTS baseline.schema.json and GOVERNANCE regression.yaml.
+Currently blocked waiting for GOVERNANCE regression.yaml.
 
 ## Section F: Architecture
 Harness execution flow:
