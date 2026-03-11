@@ -5,3 +5,6 @@
 - ✅ Completed: WorkspacePathResolution - Implemented workspace path lookup in resolver chain
 ### RUNTIME v0.4.0
 - ✅ Completed: GitRefResolution - Implemented git ref resolution in python resolver chain
+
+### RUNTIME v0.5.0
+- ✅ Completed: MinimalResolveInterface - Implemented resolve() function as minimal runtime interface
