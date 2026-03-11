@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-delivery-target-v1",
+  "title": "Delivery Target Specification",
+  "description": "Schema for delivery target config.",
+  "type": "object",
+  "properties": {
+    "type": { "type": "string", "description": "Type of delivery target, e.g., 'github_pr', 'oci_registry'" },
+    "repo": { "type": "string", "description": "Target repository if type is 'github_pr'" }
+  },
+  "required": ["type", "repo"]
+}

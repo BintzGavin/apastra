@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-promotion-record-v1",
+  "title": "Promotion Record Specification",
+  "description": "Schema for append-only binding records.",
+  "type": "object",
+  "properties": {
+    "version": { "type": "string", "description": "The approved version" },
+    "channel": { "type": "string", "description": "The channel to bind to, e.g., 'prod'" },
+    "digest": { "type": "string", "description": "The content digest of the version" },
+    "evidence": {
+      "type": "object",
+      "description": "Links to evidence",
+      "properties": {
+        "run_id": { "type": "string", "description": "Release candidate run ID" }
+      }
+    },
+    "timestamp": { "type": "string", "format": "date-time", "description": "Timestamp of the promotion" }
+  },
+  "required": ["version", "channel", "digest"]
+}
