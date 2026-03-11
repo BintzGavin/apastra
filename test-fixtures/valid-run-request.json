@@ -1,0 +1,6 @@
+{
+  "suite_id": "suite-1",
+  "revision_ref": "sha256:123",
+  "model_matrix": ["model-a", "model-b"],
+  "evaluator_refs": ["eval-1"]
+}

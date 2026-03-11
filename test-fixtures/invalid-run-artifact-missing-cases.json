@@ -1,0 +1,16 @@
+{
+  "manifest": {
+    "input_refs": {},
+    "resolved_digests": {},
+    "timestamps": {},
+    "harness_version": "1.0",
+    "model_ids": ["model-a"],
+    "environment": {},
+    "status": "success"
+  },
+  "scorecard": {
+    "normalized_metrics": {},
+    "metric_definitions": {}
+  },
+  "failures": []
+}

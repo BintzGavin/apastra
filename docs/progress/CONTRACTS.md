@@ -18,3 +18,6 @@
 
 ### CONTRACTS v0.8.0
 - ✅ Completed: HarnessAdapterSchema - Created harness-adapter.schema.json and validate-harness-adapter.sh
+
+### CONTRACTS v0.9.0
+- ✅ Completed: run-request-and-artifact - Created run-request.schema.json, run-artifact.schema.json, validate-run-request.sh, and validate-run-artifact.sh
