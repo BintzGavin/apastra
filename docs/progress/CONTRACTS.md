@@ -33,3 +33,6 @@
 
 ### CONTRACTS v0.13.0
 - ✅ Completed: PromptPackage - Created prompt-package.schema.json and validate-prompt-package.sh
+
+### CONTRACTS v0.14.0
+- ✅ Completed: ArtifactRefsSchema - Created artifact-refs.schema.json and validate-artifact-refs.sh

@@ -51,6 +51,9 @@
 - **ID:** `apastra-prompt-package-v1`
   - **Version:** 0.13.0
   - **Description:** Schema for Prompt Package manifest.
+- **ID:** `https://apastra.com/schemas/promptops/artifact-refs.schema.json`
+  - **Version:** 0.14.0
+  - **Description:** Schema for artifact_refs.json mapping stable reference IDs to object metadata.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-regression-policy.sh`
@@ -100,6 +103,9 @@
 - **Validator:** `validate-prompt-package.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-prompt-package.sh <prompt-package.json|yaml>`
   - **Validates:** JSON or YAML files against the `prompt-package.schema.json` schema.
+- **Validator:** `validate-artifact-refs.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-artifact-refs.sh <artifact-refs.json>`
+  - **Validates:** JSON files against the `artifact-refs.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**
