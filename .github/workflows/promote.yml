@@ -25,6 +25,27 @@ jobs:
         with:
           ref: promptops-artifacts
 
+      - name: Enforce Approval
+        env:
+          INPUT_DIGEST: ${{ github.event.inputs.digest }}
+          RELEASE_TAG: release-tag:${{ github.event.release.tag_name }}
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            TARGET_DIGEST="$INPUT_DIGEST"
+          else
+            TARGET_DIGEST="$RELEASE_TAG"
+          fi
+          echo "Checking for approval record matching digest: $TARGET_DIGEST"
+          APPROVED=""
+          if [ -d "approvals" ]; then
+            APPROVED=$(jq -r --arg digest "$TARGET_DIGEST" 'select(.revision_ref == $digest and .decision == "approved" and .checks_passed == true) | .decision' approvals/*.json 2>/dev/null | head -n 1)
+          fi
+          if [ "$APPROVED" != "approved" ]; then
+            echo "::error::Promotion denied: No matching approval state record found for $TARGET_DIGEST."
+            exit 1
+          fi
+          echo "Approval verified."
+
       - name: Generate Promotion Record
         id: generate
         env:
