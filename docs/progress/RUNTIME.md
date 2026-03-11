@@ -20,3 +20,6 @@
 
 ### RUNTIME v0.9.0
 - ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest
+
+### RUNTIME v1.0.0
+- ✅ Completed: ConsumptionManifestFormat - Re-wrote consumption manifest format to be more realistic and validate
