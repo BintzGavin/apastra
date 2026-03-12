@@ -15,3 +15,7 @@
 ## 0.8.0 - Scorecard Normalization Architecture Mismatch
 **Learning:** Discovered that the Scorecard Normalizer (`promptops/runs/normalize.py`) currently injects a scorecard object back into a monolithic artifact JSON file, modifying it in place. This violates the new append-friendly artifacts branch architecture.
 **Action:** The Scorecard Normalizer must be refactored to read from `cases.jsonl` and output a separate, distinct `scorecard.json` file.
+
+## 0.11.0 - Harness Adapter Inconsistency
+**Learning:** The reference harness adapter (`promptops/harnesses/reference-adapter/run.py`) outputs a monolithic `run_artifact.json` and incorrectly calls the refactored `normalize.py`. This causes an inconsistency with the new append-friendly split-artifact architecture expected by the RUNTIME runner shim.
+**Action:** The reference adapter must be refactored to write `run_manifest.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` directly, and pass the correct file paths to the normalizer.
