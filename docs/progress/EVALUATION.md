@@ -24,3 +24,6 @@
 
 ### EVALUATION v0.11.0
 - ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
+
+### EVALUATION v0.12.0
+- ✅ Completed: ReferenceAdapterRefactor - Refactored reference adapter to natively support split artifacts and updated scorecard normalizer execution
