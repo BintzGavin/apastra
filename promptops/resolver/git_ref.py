@@ -8,7 +8,7 @@ class GitRefResolver:
         try:
             # Try to resolve yaml first
             result = subprocess.run(
-                ["git", "show", f"{pin}:promptops/{prompt_id}.yaml"],
+                ["git", "show", f"{pin}:promptops/prompts/{prompt_id}.yaml"],
                 capture_output=True,
                 text=True,
                 check=False
@@ -18,7 +18,7 @@ class GitRefResolver:
 
             # If yaml fails, try json
             result_json = subprocess.run(
-                ["git", "show", f"{pin}:promptops/{prompt_id}.json"],
+                ["git", "show", f"{pin}:promptops/prompts/{prompt_id}.json"],
                 capture_output=True,
                 text=True,
                 check=False

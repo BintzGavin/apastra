@@ -14,11 +14,11 @@ def load_prompt_package(path):
 class WorkspaceResolver:
     def resolve(self, prompt_id):
         """Resolves a prompt package from a workspace path."""
-        workspace_path_yaml = f"promptops/{prompt_id}.yaml"
+        workspace_path_yaml = f"promptops/prompts/{prompt_id}.yaml"
         if os.path.exists(workspace_path_yaml):
             return load_prompt_package(workspace_path_yaml)
 
-        workspace_path_json = f"promptops/{prompt_id}.json"
+        workspace_path_json = f"promptops/prompts/{prompt_id}.json"
         if os.path.exists(workspace_path_json):
             return load_prompt_package(workspace_path_json)
 
