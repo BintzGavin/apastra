@@ -36,3 +36,6 @@
 
 ### GOVERNANCE v1.4.0
 - ✅ Completed: Delivery Sync Refactor - Fixed delivery target sync to operate within the promptops-artifacts branch topology.
+
+### GOVERNANCE v1.5.0
+- ✅ Completed: Conditional Regression Gate - Bypassed regression check for PRs modifying non-evaluable files using tj-actions/changed-files.
