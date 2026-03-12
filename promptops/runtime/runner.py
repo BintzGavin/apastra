@@ -3,6 +3,8 @@ import os
 import subprocess
 import shlex
 import yaml
+import json
+import jsonschema
 
 def main():
     if len(sys.argv) != 4:
@@ -46,12 +48,64 @@ def main():
         sys.exit(result.returncode)
 
     # Validate output
-    artifact_path = os.path.join(output_dir, "run_artifact.json")
-    if not os.path.exists(artifact_path):
-        print(f"Error: Expected run artifact not found at {artifact_path}")
-        sys.exit(1)
+    schema_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "schemas")
 
-    print(f"Success: Run artifact generated at {artifact_path}")
+    required_files = {
+        "run_manifest.json": "run-manifest.schema.json",
+        "scorecard.json": "scorecard.schema.json",
+        "cases.jsonl": "run-case.schema.json",
+        "artifact_refs.json": "artifact-refs.schema.json"
+    }
+
+    for filename, schema_file in required_files.items():
+        filepath = os.path.join(output_dir, filename)
+        schema_path = os.path.join(schema_dir, schema_file)
+
+        if not os.path.exists(filepath):
+            print(f"Error: Required output file not found: {filepath}")
+            sys.exit(1)
+
+        with open(schema_path, 'r') as sf:
+            schema = json.load(sf)
+
+        try:
+            if filename.endswith(".jsonl"):
+                with open(filepath, 'r') as f:
+                    for line_num, line in enumerate(f, 1):
+                        line = line.strip()
+                        if not line:
+                            continue
+                        instance = json.loads(line)
+                        jsonschema.validate(instance=instance, schema=schema)
+            else:
+                with open(filepath, 'r') as f:
+                    instance = json.load(f)
+                jsonschema.validate(instance=instance, schema=schema)
+        except jsonschema.ValidationError as e:
+            print(f"Error: Schema validation failed for {filename}: {e.message}")
+            sys.exit(1)
+        except json.JSONDecodeError as e:
+            print(f"Error: Invalid JSON in {filename}: {str(e)}")
+            sys.exit(1)
+
+    # Optional failures.json
+    failures_path = os.path.join(output_dir, "failures.json")
+    if os.path.exists(failures_path):
+        failures_schema_path = os.path.join(schema_dir, "run-failures.schema.json")
+        with open(failures_schema_path, 'r') as sf:
+            failures_schema = json.load(sf)
+        try:
+            with open(failures_path, 'r') as f:
+                failures_instance = json.load(f)
+            jsonschema.validate(instance=failures_instance, schema=failures_schema)
+        except jsonschema.ValidationError as e:
+            print(f"Error: Schema validation failed for failures.json: {e.message}")
+            sys.exit(1)
+        except json.JSONDecodeError as e:
+            print(f"Error: Invalid JSON in failures.json: {str(e)}")
+            sys.exit(1)
+
+    print(f"Success: Run artifacts generated and validated at {output_dir}")
 
 if __name__ == "__main__":
     main()

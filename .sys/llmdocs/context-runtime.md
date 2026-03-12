@@ -15,6 +15,7 @@ promptops/
 │   ├── __init__.py
 │   ├── resolve.py
 │   ├── digest.py
+│   ├── runner.py
 ├── resolver/
 │   ├── __init__.py
 │   ├── chain.py
@@ -51,3 +52,4 @@ prompts:
 
 ## Section E: Integration Points
 Harnesses and other domains should interact with the runtime via `ResolverChain.resolve(prompt_id, manifest)` and `resolve(prompt_id, ref_context=None)`.
+`runner.py` executes BYO harness adapters and strictly validates output artifacts against CONTRACT schemas.
