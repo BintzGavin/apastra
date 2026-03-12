@@ -27,6 +27,7 @@ Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 ## Section B: Validator Inventory
 `promptops/runs/validate-run-request.sh`
 `promptops/runs/establish_baseline.sh`
+`promptops/runs/generate_regression_report.sh`
 
 ## Section C: Source File Conventions
 `promptops/harnesses/`
@@ -50,4 +51,4 @@ Harness execution flow:
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates `run_artifact.json`
 - Artifact generation splits `run_artifact.json` into `run_manifest.json`, `scorecard.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` via `promptops/runs/split_artifact.sh`
 - Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file
-- Regression report generated via `python promptops/runs/compare.py <candidate> <baseline> <policy> <output>`
+- Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> <baseline> <policy> <report_id>`

@@ -1,4 +1,4 @@
-**Version**: 0.10.0
+**Version**: 0.11.0
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
@@ -12,3 +12,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.9.0] ✅ Completed: ScorecardNormalizationRefactor - Refactored normalize.py to read cases.jsonl and output scorecard.json
 
 [v0.10.0] ✅ Completed: RegressionComparisonRefactor - Refactored Regression Engine to read split scorecard.json files
+[v0.11.0] ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
