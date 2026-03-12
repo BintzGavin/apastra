@@ -30,3 +30,6 @@
 
 ### GOVERNANCE v1.2.0
 - ✅ Completed: Promotion Approval Enforcement - Enforced that promotions require a matching approved Approval State record in promote.yml.
+
+### GOVERNANCE v1.3.0
+- ✅ Completed: Enforce Regression Gate - Removed bypass in regression-gate.yml to block merges when regression report is missing.
