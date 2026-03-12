@@ -33,3 +33,6 @@
 
 ### GOVERNANCE v1.3.0
 - ✅ Completed: Enforce Regression Gate - Removed bypass in regression-gate.yml to block merges when regression report is missing.
+
+### GOVERNANCE v1.4.0
+- ✅ Completed: Delivery Sync Refactor - Fixed delivery target sync to operate within the promptops-artifacts branch topology.

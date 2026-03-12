@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      filepath: ${{ steps.generate.outputs.filepath }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -92,3 +94,9 @@ jobs:
           git add "${{ steps.generate.outputs.filepath }}"
           git commit -m "chore(governance): append promotion record ${{ steps.generate.outputs.timestamp }}"
           git push
+
+  deliver:
+    needs: record-promotion
+    uses: ./.github/workflows/deliver.yml
+    with:
+      promotion_record_path: ${{ needs.record-promotion.outputs.filepath }}

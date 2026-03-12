@@ -1,8 +1,8 @@
 **Section A: Architecture**
 Gate Enforcement Flow:
 - Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `reports/regression_report.json` retrieved from the `promptops-artifacts` branch (fails if missing).
-- Promotions enforce that a matching Approval State record with decision="approved" and checks_passed=true exists on the `promptops-artifacts` branch before generating a promotion record.
-- Reusable workflows: `regression-gate.yml` and `immutable-release.yml` can be invoked via `workflow_call` by other repositories.
+- Promotions enforce that a matching Approval State record with decision="approved" and checks_passed=true exists on the `promptops-artifacts` branch before generating a promotion record. A successful promotion record triggers a delivery target sync via `deliver.yml`.
+- Reusable workflows: `regression-gate.yml`, `immutable-release.yml`, and `deliver.yml` can be invoked via `workflow_call`.
 - Rulesets / Branch Protection: Enforces required status checks (e.g., `gate` check) on pull requests to the `main` branch, and immutability (no updates/deletions) on tags.
 - Artifacts Branch Topology: All derived, machine-generated artifacts (run artifacts, regression reports, and promotion records, and approval states) are isolated on the `promptops-artifacts` branch instead of the main branch to reduce repo bloat and avoid merge conflicts.
 
