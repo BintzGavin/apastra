@@ -47,3 +47,6 @@
 
 ### RUNTIME v1.6.0
 - ✅ Completed: DirectoryResolver - Update WorkspaceResolver and GitRefResolver to support resolving prompts packaged in a <prompt_id> directory.
+
+### RUNTIME v1.7.0
+- ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
