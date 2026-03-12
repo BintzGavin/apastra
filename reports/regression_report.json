@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "baseline_ref": "baseline_scorecard.json",
+  "candidate_ref": "candidate_scorecard.json",
+  "evidence": [
+    {
+      "metric": "exact_match",
+      "candidate_value": 0.95,
+      "baseline_value": 0.9,
+      "delta": 0.04999999999999993,
+      "status": "pass",
+      "message": ""
+    },
+    {
+      "metric": "latency_ms",
+      "candidate_value": 1400,
+      "baseline_value": 1500,
+      "delta": -100,
+      "status": "pass",
+      "message": ""
+    }
+  ]
+}
