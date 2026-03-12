@@ -1,8 +1,15 @@
 import os
+import json
+import yaml
 
 def load_prompt_package(path):
-    # Stub for loading a prompt package
-    return f"Loaded prompt from {path}"
+    if path.endswith('.yaml') or path.endswith('.yml'):
+        with open(path, 'r') as f:
+            return yaml.safe_load(f)
+    elif path.endswith('.json'):
+        with open(path, 'r') as f:
+            return json.load(f)
+    return None
 
 class LocalResolver:
     def resolve(self, prompt_id, override_path):
