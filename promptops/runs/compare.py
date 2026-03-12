@@ -33,8 +33,8 @@ def main():
 
     policy = load_yaml(policy_path)
 
-    candidate_metrics = candidate.get("scorecard", {}).get("normalized_metrics", {})
-    baseline_metrics = baseline.get("scorecard", {}).get("normalized_metrics", {})
+    candidate_metrics = candidate.get("normalized_metrics", {})
+    baseline_metrics = baseline.get("normalized_metrics", {})
 
     status = "pass"
     evidence = []
