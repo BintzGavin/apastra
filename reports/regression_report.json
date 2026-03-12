@@ -1,0 +1,6 @@
+{
+  "status": "pass",
+  "baseline_ref": "derived-index/baselines/test-suite-test-baseline.json",
+  "candidate_ref": "derived-index/baselines/test-suite-test-baseline.json",
+  "evidence": []
+}
