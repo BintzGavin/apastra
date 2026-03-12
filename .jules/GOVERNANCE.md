@@ -15,3 +15,7 @@
 ## 1.3.0 - Delivery Sync Artifact Branch Topology Mismatch
 **Learning:** Workflows configured to trigger on `push` events for paths like `derived-index/promotions/` on the main branch completely break when artifacts are relocated to an isolated `promptops-artifacts` branch, because the push event happens on a branch without workflows, and the path has changed to `promotions/`.
 **Action:** Use `workflow_call` to chain governance workflows (like triggering `deliver.yml` directly from `promote.yml`) to reliably pass artifact paths across branch boundaries while retaining access to main branch configuration specs.
+
+## 1.4.0 - Delivery Sync Refactored
+**Learning:** Outputs mapped from github action jobs need to be specifically defined at the job level in order to be referenced in a dependent job via `needs.<job_name>.outputs.<output_name>`.
+**Action:** Add the `outputs:` block mapping to `record-promotion` job before calling `deliver.yml` in `promote.yml`.

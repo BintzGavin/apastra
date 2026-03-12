@@ -1,4 +1,4 @@
-**Version**: 1.3.0
+**Version**: 1.4.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -17,3 +17,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.1.0] ✅ Completed: Approval State Workflow - Created automated workflow to append approval records upon human review.
 [v1.2.0] ✅ Completed: Promotion Approval Enforcement - Enforced that promotions require a matching approved Approval State record in promote.yml.
 [v1.3.0] ✅ Completed: Enforce Regression Gate - Removed bypass in regression-gate.yml to block merges when regression report is missing.
+[v1.4.0] ✅ Completed: Delivery Sync Refactor - Fixed delivery target sync to operate within the promptops-artifacts branch topology.
