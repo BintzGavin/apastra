@@ -21,3 +21,6 @@
 
 ### EVALUATION v0.10.0
 - ✅ Completed: RegressionComparisonRefactor - Refactored Regression Engine to read split scorecard.json files
+
+### EVALUATION v0.11.0
+- ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
