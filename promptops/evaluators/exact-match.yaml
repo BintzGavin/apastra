@@ -1,0 +1,6 @@
+id: exact-match-v1
+type: deterministic
+metrics:
+  - exact_match_score
+description: Checks for an exact string match between candidate and expected output.
+digest: "sha256:3ca874b25ac298b51ebc377988bf4e7ec09b61b1534fe202f12796701e32fdb7"

@@ -51,3 +51,6 @@
 
 ### CONTRACTS v0.19.0
 - ✅ Completed: InitialDataset - Created first dataset instance test-dataset
+
+### CONTRACTS v0.20.0
+- ✅ Completed: InitialEvaluator - Created first evaluator instance exact-match.yaml
