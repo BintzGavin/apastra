@@ -12,3 +12,6 @@
 ## 0.8.0 - CI Workflow Refinement
 **Learning:** Required status checks fail and block merges if they expect an artifact (like regression_report.json) from an engine that is unimplemented by another domain.
 **Action:** Always verify if a dependency's engine is implemented before enforcing a hard failure on missing artifacts; gracefully bypass with a warning if unimplemented.
+## 1.3.0 - Delivery Sync Artifact Branch Topology Mismatch
+**Learning:** Workflows configured to trigger on `push` events for paths like `derived-index/promotions/` on the main branch completely break when artifacts are relocated to an isolated `promptops-artifacts` branch, because the push event happens on a branch without workflows, and the path has changed to `promotions/`.
+**Action:** Use `workflow_call` to chain governance workflows (like triggering `deliver.yml` directly from `promote.yml`) to reliably pass artifact paths across branch boundaries while retaining access to main branch configuration specs.
