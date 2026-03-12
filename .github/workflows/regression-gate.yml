@@ -13,8 +13,8 @@ jobs:
           fetch-depth: 2
       - name: Fetch Artifacts Branch
         run: |
-          git fetch origin promptops-artifacts || true
-          git checkout origin/promptops-artifacts -- reports/regression_report.json || true
+          git fetch origin promptops-artifacts 2>/dev/null || true
+          git checkout origin/promptops-artifacts -- reports/regression_report.json 2>/dev/null || true
       - name: Check Regression Report Status
         run: |
           REPORT="reports/regression_report.json"
