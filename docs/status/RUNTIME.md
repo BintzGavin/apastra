@@ -1,4 +1,5 @@
-**Version**: 1.4.1
+**Version**: 1.5.0
+[v1.5.0] ✅ Completed: ReferenceCLI - Implemented reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
 [v1.4.1] ✅ Completed: LocalOverrideFix - Fix the LocalResolver in the resolver chain to parse prompt packages instead of returning stub strings.
 [v1.4.0] ✅ Completed: ReferenceCLI - Spec the reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
 [v1.3.1] ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
