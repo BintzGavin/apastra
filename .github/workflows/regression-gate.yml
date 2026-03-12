@@ -36,6 +36,14 @@ jobs:
             echo "::error::Regression report missing. Merges are blocked."
             exit 1
           fi
+
+          echo "## Regression Report Evidence" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Status | Candidate | Baseline | Delta | Message |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
+          jq -r '.evidence[]? | "| \(.metric) | \(.status) | \(.candidate) | \(.baseline) | \(.delta) | \(.message) |"' "$REPORT" >> $GITHUB_STEP_SUMMARY
+
+          jq -r '.evidence[]? | select(.status == "fail") | "::error title=Regression Failed::Metric \(.metric): \(.message)"' "$REPORT"
+
           STATUS=$(jq -r .status "$REPORT")
           if [ "$STATUS" = "pass" ]; then
             echo "Regression passed."
