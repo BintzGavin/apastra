@@ -36,3 +36,6 @@
 
 ### GOVERNANCE v1.4.0
 - ✅ Completed: Delivery Sync Refactor - Fixed delivery target sync to operate within the promptops-artifacts branch topology.
+
+### GOVERNANCE v1.4.1
+- ✅ Completed: Regression Gate Edge Cases - Added paths-ignore to regression-gate.yml to skip checks for Markdown and configuration-only PRs.

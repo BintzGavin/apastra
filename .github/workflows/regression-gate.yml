@@ -2,6 +2,11 @@ name: Regression Gate
 on:
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - '.github/**'
+      - '.sys/**'
+      - '.jules/**'
   workflow_call:
 jobs:
   gate:
