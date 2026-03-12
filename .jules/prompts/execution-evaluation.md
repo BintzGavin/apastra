@@ -36,7 +36,7 @@ You are the **BUILDER** for the EVALUATION domain. Your mission is to read the i
 - Modify files owned by CONTRACTS, RUNTIME, or GOVERNANCE
 - Edit `promptops/schemas/**` (read-only), `promptops/manifests/**` (read-only)
 - Edit `derived-index/promotions/**` (GOVERNANCE-owned)
-- Edit `docs/vision.md`
+- Edit `docs/vision.md and README.md`
 - Mutate existing run artifacts or baselines (append-only; new artifacts only)
 - Skip run artifact schema validation
 - Implement features not described in the plan
@@ -237,7 +237,7 @@ Regenerate with these sections:
 - Title: `✨ EVALUATION: [Task Name]`
 - Description with:
   * 💡 **What**: Harness adapter or evaluation pipeline component implemented
-  * 🎯 **Why**: Which docs/vision.md gap it closes
+  * 🎯 **Why**: Which docs/vision.md and README.md gap it closes
   * 📊 **Impact**: What GOVERNANCE can now gate on
   * 🔬 **Verification**: Exact validation command and expected output
 

@@ -36,7 +36,7 @@ You are the **BUILDER** for the GOVERNANCE domain. Your mission is to read the i
 - Start implementation without an approved plan from the GOVERNANCE Planner
 - Modify files owned by CONTRACTS, RUNTIME, or EVALUATION
 - Edit `derived-index/baselines/**` or `derived-index/regressions/**` (EVALUATION-owned; read-only for GOVERNANCE)
-- Edit `docs/vision.md`
+- Edit `docs/vision.md and README.md`
 - Mutate existing promotion records (append-only)
 - Remove human review requirements without explicit instruction
 - Implement features not described in the plan
@@ -247,7 +247,7 @@ Regenerate with these sections:
 - Title: `✨ GOVERNANCE: [Task Name]`
 - Description with:
   * 💡 **What**: Gate, policy, workflow, or delivery target implemented
-  * 🎯 **Why**: Which docs/vision.md governance requirement it closes
+  * 🎯 **Why**: Which docs/vision.md and README.md governance requirement it closes
   * 📊 **Impact**: What is now enforced or auditable
   * 🔬 **Verification**: Exact test scenario and expected outcome
 

@@ -8,7 +8,7 @@ The architecture follows a **Black Hole Architecture** planner/executor split wi
 ## Operating Model
 
 ### Planning Phase
-Planners compare the vision documented in `docs/vision.md` against repository reality.  
+Planners compare the vision documented in `docs/vision.md and README.md` against repository reality.  
 They identify the single highest-impact gap and produce one detailed spec file in `/.sys/plans/`.  
 **Planners never write implementation code or modify owned domain files.**
 
@@ -20,7 +20,7 @@ They update status, progress, and context artifacts for their domain only.
 ### Domain Isolation
 Every role owns a distinct, non-overlapping set of file paths.  
 Ownership is primarily by top-level directory or named subdirectory within `promptops/`.  
-No two roles write to the same file. Shared files (e.g., `docs/vision.md`) are **read-only** for all roles.
+No two roles write to the same file. Shared files (e.g., `docs/vision.md and README.md`) are **read-only** for all roles.
 
 ---
 
@@ -87,13 +87,13 @@ No two roles write to the same file. Shared files (e.g., `docs/vision.md`) are *
 | `.jules/EVALUATION.md` | EVALUATION journal |
 | `.jules/GOVERNANCE.md` | GOVERNANCE journal |
 | `.jules/DOCS.md` | DOCS journal |
-| `docs/vision.md` | **Read-only for all roles** (vision source of truth) |
+| `docs/vision.md and README.md` | **Read-only for all roles** (vision source of truth) |
 
 ---
 
 ## Shared-File Policy
 
-- **`docs/vision.md`**: read-only for every role. No edits. If a vision gap requires README changes, flag it for human review.
+- **`docs/vision.md and README.md`**: read-only for every role. No edits. If a vision gap requires README changes, flag it for human review.
 - **`.sys/llmdocs/context-system.md`**: all roles may append their domain's milestone summary or update their own boundary section. Never overwrite another role's section.
 - **`.sys/plans/`**: each role creates files prefixed with its domain name. Never open, modify, or delete another role's plan files.
 - **`docs/` (cross-domain)**: Each role has its own per-domain status file (`docs/status/DOMAIN.md`) and progress file (`docs/progress/DOMAIN.md`). Never write to another domain's status or progress file.
