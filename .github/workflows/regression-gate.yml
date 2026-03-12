@@ -19,8 +19,8 @@ jobs:
         run: |
           REPORT="reports/regression_report.json"
           if [ ! -f "$REPORT" ]; then
-            echo "::warning::Regression report missing (engine unimplemented). Skipping check."
-            exit 0
+            echo "::error::Regression report missing. Merges are blocked."
+            exit 1
           fi
           STATUS=$(jq -r .status "$REPORT")
           if [ "$STATUS" = "pass" ]; then
