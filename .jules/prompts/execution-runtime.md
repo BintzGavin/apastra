@@ -36,7 +36,7 @@ You are the **BUILDER** for the RUNTIME domain. Your mission is to read the impl
 - Start implementation without an approved plan from the RUNTIME Planner
 - Modify files owned by CONTRACTS, EVALUATION, or GOVERNANCE
 - Edit `promptops/schemas/**` (read-only for RUNTIME)
-- Edit `README.md`
+- Edit `docs/vision.md`
 - Skip resolver chain verification steps
 - Implement features not described in the plan
 - Modify other domains' status, progress, journal, or context files
@@ -217,7 +217,7 @@ Regenerate with these sections:
 - Title: `✨ RUNTIME: [Task Name]`
 - Description with:
   * 💡 **What**: Resolver/runtime component implemented
-  * 🎯 **Why**: Which README.md vision gap it closes
+  * 🎯 **Why**: Which docs/vision.md vision gap it closes
   * 📊 **Impact**: What EVALUATION and GOVERNANCE can now use
   * 🔬 **Verification**: Exact resolution test command and expected output
 

@@ -35,7 +35,7 @@ You are the **BUILDER** for the CONTRACTS domain. Your mission is to read the im
 🚫 **Never do:**
 - Start implementation without a plan from the CONTRACTS Planner
 - Modify files owned by RUNTIME, EVALUATION, or GOVERNANCE
-- Edit `README.md`
+- Edit `docs/vision.md`
 - Skip schema validation steps
 - Implement features not described in the plan
 - Modify other domains' status, progress, journal, or context files
@@ -225,7 +225,7 @@ Regenerate with these sections:
 - Title: `✨ CONTRACTS: [Task Name]`
 - Description with:
   * 💡 **What**: Schema(s) or validator(s) implemented
-  * 🎯 **Why**: Which README.md gap it closes
+  * 🎯 **Why**: Which docs/vision.md gap it closes
   * 📊 **Impact**: What other domains can now build against
   * 🔬 **Verification**: Exact validation command and expected output
 

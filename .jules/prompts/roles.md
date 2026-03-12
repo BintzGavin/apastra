@@ -23,7 +23,7 @@ No two roles share writable files. Read-only access is noted explicitly.
 - `.sys/llmdocs/context-contracts.md` (executor writes only)
 
 **Read-Only**:
-- `README.md`
+- `docs/vision.md`
 - `.sys/llmdocs/context-system.md` (may append CONTRACTS milestone/boundary summary only)
 
 **Never Touches**:
@@ -51,7 +51,7 @@ No two roles share writable files. Read-only access is noted explicitly.
 - `.sys/llmdocs/context-runtime.md` (executor writes only)
 
 **Read-Only**:
-- `README.md`
+- `docs/vision.md`
 - `promptops/schemas/**` (reads CONTRACTS schemas to validate manifest)
 - `.sys/llmdocs/context-system.md` (may append RUNTIME milestone/boundary summary only)
 
@@ -81,7 +81,7 @@ No two roles share writable files. Read-only access is noted explicitly.
 - `.sys/llmdocs/context-evaluation.md` (executor writes only)
 
 **Read-Only**:
-- `README.md`
+- `docs/vision.md`
 - `promptops/schemas/**` (reads CONTRACTS schemas for run artifact validation)
 - `promptops/manifests/**` (reads RUNTIME consumption manifest for test fixtures)
 - `.sys/llmdocs/context-system.md` (may append EVALUATION milestone/boundary summary only)
@@ -113,7 +113,7 @@ No two roles share writable files. Read-only access is noted explicitly.
 - `.sys/llmdocs/context-governance.md` (executor writes only)
 
 **Read-Only**:
-- `README.md`
+- `docs/vision.md`
 - `derived-index/baselines/**` (reads EVALUATION baselines to wire regression-gate checks)
 - `derived-index/regressions/**` (reads EVALUATION regression reports for policy evaluation)
 - `.sys/llmdocs/context-system.md` (may append GOVERNANCE milestone/boundary summary only)
@@ -144,7 +144,7 @@ No two roles share writable files. Read-only access is noted explicitly.
 - `.sys/llmdocs/context-docs.md`
 
 **Read-Only** (unique cross-domain read privilege):
-- `README.md`
+- `docs/vision.md`
 - `promptops/**` (all domains — for documenting schemas, source files, contracts)
 - `derived-index/**` (all domains — for documenting baselines, regressions, promotions)
 - `.github/**` (for documenting workflows, CODEOWNERS)
@@ -162,7 +162,7 @@ No two roles share writable files. Read-only access is noted explicitly.
 
 | File | Rule |
 |---|---|
-| `README.md` | **Read-only for all roles.** No role may edit it. Flag vision-vs-README mismatches for human review. |
+| `docs/vision.md` | **Read-only for all roles.** No role may edit it. Flag vision-vs-README mismatches for human review. |
 | `.sys/plans/` | Each role creates/owns files prefixed by its domain (`CONTRACTS-`, `RUNTIME-`, `EVALUATION-`, `GOVERNANCE-`). DOCS does not use the plan system. Never open, modify, or delete another role's plan. |
 | `.sys/llmdocs/context-system.md` | Append-only for each role. Each role may update only its own named section. Never overwrite another role's section. |
 | `docs/status/` | Each domain has its own file (`CONTRACTS.md`, `RUNTIME.md`, `EVALUATION.md`, `GOVERNANCE.md`, `DOCS.md`). No cross-domain writes. DOCS may **read** all status files for dashboards. |
