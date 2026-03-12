@@ -54,3 +54,6 @@
 
 ### CONTRACTS v0.20.0
 - ✅ Completed: InitialEvaluator - Created first evaluator instance exact-match.yaml
+
+### CONTRACTS v0.21.0
+- ✅ Completed: InitialSuite - Created first suite instance test-suite.yaml

@@ -1,0 +1,16 @@
+id: "test-suite-v1"
+name: "Test Suite"
+description: "Initial suite for testing evaluator exact-match and dataset test-dataset."
+datasets:
+  - "test-dataset"
+evaluators:
+  - "exact-match-v1"
+model_matrix:
+  - "gpt-4o-mini"
+trials: 1
+budgets:
+  cost: 1.0
+  time: 60
+thresholds:
+  exact_match_score: 0.8
+digest: "sha256:90594be784fb9f01256f7c38240731474fb4482f0640c15357918f57073a6926"
