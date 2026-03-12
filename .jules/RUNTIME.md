@@ -6,3 +6,7 @@
 ## 0.2.0 - Local override schema key
 **Learning:** The schema uses 'override' instead of 'local_override' for the local path pin.
 **Action:** Use 'override' in the python resolver implementation.
+
+## 1.3.0 - Resolver topology misalignment
+**Learning:** The initial implementations of WorkspaceResolver and GitRefResolver searched for prompts in the root `promptops/` directory instead of the `promptops/prompts/` directory defined in the `README.md` repo topology model.
+**Action:** Always cross-reference directory lookup logic with the Example Repo Trees section in the vision document.
