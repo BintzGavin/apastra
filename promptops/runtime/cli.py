@@ -18,7 +18,7 @@ def main():
         ref_val = args.ref if args.ref else "latest"
         snippet = {"version": "1.0", "prompts": {args.prompt_id: {"id": args.prompt_id, entry_type: ref_val}}}
         print("--- Manifest Entry ---")
-        print(yaml.dump(snippet))
+        print(yaml.dump(snippet, sort_keys=False))
 
 if __name__ == "__main__":
     main()
