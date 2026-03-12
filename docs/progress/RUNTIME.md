@@ -35,3 +35,6 @@
 
 ### RUNTIME v1.3.1
 - ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
+
+### RUNTIME v1.4.0
+- ✅ Completed: ReferenceCLI - Spec the reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
