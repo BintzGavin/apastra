@@ -1,0 +1,1 @@
+entrypoint: python test-fixtures/mock_adapter_broken.py

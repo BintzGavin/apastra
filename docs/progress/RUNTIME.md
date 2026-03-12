@@ -26,3 +26,6 @@
 
 ### RUNTIME v1.1.0
 - ✅ Completed: PromptSpecValidation - Implemented schema validation for resolved prompt specifications against prompt-spec.schema.json
+
+### RUNTIME v1.2.0
+- ✅ Completed: HarnessContractValidation - Implemented runner shim validation against CONTRACTS schemas
