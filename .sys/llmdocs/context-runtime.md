@@ -16,6 +16,7 @@ promptops/
 │   ├── resolve.py
 │   ├── digest.py
 │   ├── runner.py
+│   ├── cli.py
 ├── resolver/
 │   ├── __init__.py
 │   ├── chain.py

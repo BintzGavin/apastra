@@ -1,4 +1,5 @@
-**Version**: 1.3.1
+**Version**: 1.4.0
+[v1.4.0] ✅ Completed: ReferenceCLI - Spec the reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
 [v1.3.1] ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
 [v1.3.0] ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function
 [v0.2.0] ✅ Completed: ConsumptionManifestFormat - Defined schema example format
