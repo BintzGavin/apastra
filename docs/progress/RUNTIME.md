@@ -32,3 +32,6 @@
 
 ### RUNTIME v1.3.0
 - ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function
+
+### RUNTIME v1.3.1
+- ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model

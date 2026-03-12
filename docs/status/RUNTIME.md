@@ -1,4 +1,5 @@
-**Version**: 1.3.0
+**Version**: 1.3.1
+[v1.3.1] ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
 [v1.3.0] ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function
 [v0.2.0] ✅ Completed: ConsumptionManifestFormat - Defined schema example format
 [v0.2.0] ✅ Completed: LocalOverrideResolution - Implemented local override step in python resolver chain
