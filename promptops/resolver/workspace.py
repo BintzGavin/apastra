@@ -22,4 +22,12 @@ class WorkspaceResolver:
         if os.path.exists(workspace_path_json):
             return load_prompt_package(workspace_path_json)
 
+        workspace_path_yaml_dir = f"promptops/prompts/{prompt_id}/prompt.yaml"
+        if os.path.exists(workspace_path_yaml_dir):
+            return load_prompt_package(workspace_path_yaml_dir)
+
+        workspace_path_json_dir = f"promptops/prompts/{prompt_id}/prompt.json"
+        if os.path.exists(workspace_path_json_dir):
+            return load_prompt_package(workspace_path_json_dir)
+
         return None

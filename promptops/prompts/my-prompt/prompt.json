@@ -1,0 +1,5 @@
+{
+  "id": "my-prompt",
+  "template": "Hello World",
+  "variables": {}
+}

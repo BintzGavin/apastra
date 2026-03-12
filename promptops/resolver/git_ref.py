@@ -26,6 +26,26 @@ class GitRefResolver:
             if result_json.returncode == 0:
                 return json.loads(result_json.stdout)
 
+            # If flat files fail, try directory yaml
+            result_dir_yaml = subprocess.run(
+                ["git", "show", f"{pin}:promptops/prompts/{prompt_id}/prompt.yaml"],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            if result_dir_yaml.returncode == 0:
+                return yaml.safe_load(result_dir_yaml.stdout)
+
+            # If directory yaml fails, try directory json
+            result_dir_json = subprocess.run(
+                ["git", "show", f"{pin}:promptops/prompts/{prompt_id}/prompt.json"],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+            if result_dir_json.returncode == 0:
+                return json.loads(result_dir_json.stdout)
+
             raise RuntimeError(f"Failed to resolve prompt '{prompt_id}' at git ref '{pin}'")
 
         except Exception as e:

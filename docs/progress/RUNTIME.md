@@ -44,3 +44,6 @@
 
 ### RUNTIME v1.5.0
 - ✅ Completed: ReferenceCLI - Implemented reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
+
+### RUNTIME v1.6.0
+- ✅ Completed: DirectoryResolver - Update WorkspaceResolver and GitRefResolver to support resolving prompts packaged in a <prompt_id> directory.
