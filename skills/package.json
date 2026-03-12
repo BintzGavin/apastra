@@ -1,0 +1,42 @@
+{
+  "name": "@apastra/skills",
+  "version": "1.0.0",
+  "description": "Agent skills for PromptOps — version, evaluate, and ship AI prompts as disciplined software assets",
+  "keywords": [
+    "apastra",
+    "promptops",
+    "prompts",
+    "evaluation",
+    "benchmarking",
+    "regression",
+    "ai-skills",
+    "agent-skills",
+    "skills.sh",
+    "claude",
+    "cursor",
+    "copilot"
+  ],
+  "homepage": "https://github.com/BintzGavin/apastra",
+  "bugs": {
+    "url": "https://github.com/BintzGavin/apastra/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BintzGavin/apastra.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Gavin Bintz",
+  "type": "module",
+  "files": [
+    "getting-started/**/*",
+    "eval/**/*",
+    "baseline/**/*",
+    "scaffold/**/*",
+    "validate/**/*",
+    "LICENSE",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
