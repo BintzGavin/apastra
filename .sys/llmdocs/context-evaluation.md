@@ -48,7 +48,6 @@ Harness execution flow:
 - Run request generated and stored in `promptops/runs/<run-id>/run_request.json`
 - Run request validated via `promptops/runs/validate-run-request.sh`
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
-- Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates `run_artifact.json`
-- Artifact generation splits `run_artifact.json` into `run_manifest.json`, `scorecard.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` via `promptops/runs/split_artifact.sh`
+- Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`).
 - Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file
 - Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> <baseline> <policy> <report_id>`
