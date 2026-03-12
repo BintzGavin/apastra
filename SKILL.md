@@ -49,3 +49,5 @@ Use these skills when:
 ## Repository
 
 View all skills and source code at: https://github.com/BintzGavin/apastra
+
+> **🤖 Note for AI Agents**: For the full architectural vision and system design principles behind Apastra, read `docs/vision.md` in the repository.

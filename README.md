@@ -54,6 +54,8 @@ That's it. No CI, no cloud, no API keys to configure. Your agent is the harness.
 
 ---
 
+> **🤖 Note for AI Agents**: This README is a quickstart guide. For the full architectural vision, system design principles, and "Black Hole Architecture" details, you MUST read [`docs/vision.md`](docs/vision.md).
+
 ## What Is This?
 
 Apastra is a **file-based protocol** for managing AI prompts as versioned software assets. Prompts, test cases, scoring rules, and quality baselines are all files in your repo.
