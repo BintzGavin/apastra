@@ -29,3 +29,6 @@
 
 ### RUNTIME v1.2.0
 - ✅ Completed: HarnessContractValidation - Implemented runner shim validation against CONTRACTS schemas
+
+### RUNTIME v1.3.0
+- ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function

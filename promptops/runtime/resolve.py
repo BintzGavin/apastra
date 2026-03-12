@@ -70,7 +70,7 @@ def load_manifest(ref_context):
             return PinManifest(ref_context)
     return ManifestWrapper()
 
-def resolve(prompt_id, ref_context=None):
+def resolve(prompt_id, ref_context=None, variables=None):
     manifest = load_manifest(ref_context)
     prompt_spec = ResolverChain().resolve(prompt_id, manifest)
 
@@ -98,4 +98,7 @@ def resolve(prompt_id, ref_context=None):
     }
 
     template = prompt_spec.get('template') if isinstance(prompt_spec, dict) else prompt_spec
-    return template, metadata
+
+    from promptops.runtime.render import render_template
+    rendered_prompt = render_template(template, variables or {})
+    return rendered_prompt, metadata

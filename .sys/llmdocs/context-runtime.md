@@ -33,7 +33,7 @@ Currently implemented:
 class ResolverChain:
     def resolve(self, prompt_id, manifest)
 
-def resolve(prompt_id, ref_context=None)
+def resolve(prompt_id, ref_context=None, variables=None)
 
 def compute_digest(file_path: str) -> str:
 

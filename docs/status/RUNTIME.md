@@ -1,4 +1,5 @@
-**Version**: 1.2.0
+**Version**: 1.3.0
+[v1.3.0] ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function
 [v0.2.0] ✅ Completed: ConsumptionManifestFormat - Defined schema example format
 [v0.2.0] ✅ Completed: LocalOverrideResolution - Implemented local override step in python resolver chain
 [v0.3.0] ✅ Completed: WorkspacePathResolution - Implemented workspace path lookup in resolver chain
