@@ -62,7 +62,6 @@ View all skills and source code at: https://github.com/BintzGavin/apastra
 > - **Durable state lives in Git**: Prompts, test datasets, evaluator scoring rules, benchmark suites, baselines, and regression policies are all defined as flat files (YAML/JSON).
 > - **The Agent is the Harness**: You (the external IDE agent) perform the computation. You read the suites, run the test cases, apply the scoring rules, and compare the results to the baselines.
 > - **Append-only Artifacts**: When you run evaluations, you generate run manifests, scorecards, and evidence records. You never overwrite a baseline; you archive and append.
-> - **Black Hole Architecture**: This system relies on strict separation of files and roles. End states and transitions are explicit.
 > 
 > **Local-First vs. CI Upgrades:**
 > Developers using this project prefer a zero-infrastructure **local-first** approach. They evaluate prompts locally using you as their test runner. However, if they need enterprise-grade governance, they can upgrade to automated pull request gating using the `apastra-setup-ci` skill. The file formats remain exactly the same.

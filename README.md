@@ -54,7 +54,7 @@ That's it. No CI, no cloud, no API keys to configure. Your agent is the harness.
 
 ---
 
-> **🤖 Note for AI Agents**: This README is a quickstart guide. For the full architectural vision, system design principles, and "Black Hole Architecture" details, you MUST read [`docs/vision.md`](docs/vision.md).
+> **🤖 Note for AI Agents**: This README is a quickstart guide. For the full architectural vision and system design principles, read [`docs/vision.md`](docs/vision.md).
 
 ## What Is This?
 
@@ -186,9 +186,9 @@ Five pre-built workflows gate merges and automate promotions:
 | `immutable-release.yml` | Tag push | Creates immutable GitHub releases |
 | `auto-merge.yml` | CI pass | Auto-merges PRs that pass all checks |
 
-### Autonomous Agent Loops (Jules / Black Hole Architecture)
+### Autonomous Agent Loops
 
-For teams running autonomous coding agents, apastra includes a full [Black Hole Architecture](https://agnt.one/blog/black-hole-architecture) agent system with 5 domain roles (CONTRACTS, RUNTIME, EVALUATION, GOVERNANCE, DOCS), each with planner/executor prompts and strict file ownership. See `.jules/prompts/` for the full agent prompt library.
+For teams running autonomous coding agents, apastra includes a full agent system with 5 domain roles (CONTRACTS, RUNTIME, EVALUATION, GOVERNANCE, DOCS), each with planner/executor prompts and strict file ownership. See `.jules/prompts/` for the full agent prompt library. The architectural approach is described in [this blog post](https://agnt.one/blog/black-hole-architecture).
 
 ### Git-First Consumption
 
