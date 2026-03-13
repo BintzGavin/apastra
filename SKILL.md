@@ -35,6 +35,7 @@ npx skills add BintzGavin/apastra --all
 - [skills/baseline](skills/baseline) — Establish and manage evaluation baselines for regression detection.
 - [skills/scaffold](skills/scaffold) — Generate new prompt specs, datasets, evaluators, and suites from templates.
 - [skills/validate](skills/validate) — Validate all promptops files against JSON schemas.
+- [skills/setup-ci](skills/setup-ci) — Upgrade from local-first evaluation to automated GitHub Actions CI.
 
 ## When to Use
 
@@ -50,4 +51,20 @@ Use these skills when:
 
 View all skills and source code at: https://github.com/BintzGavin/apastra
 
-> **🤖 Note for AI Agents**: For the full architectural vision and system design principles behind Apastra, read `docs/vision.md` in the repository.
+---
+
+> **🤖 OVERARCHING CONTEXT FOR AI AGENTS**
+> 
+> You are operating within **Apastra**, a state-of-the-art PromptOps architecture.
+> 
+> **The Core Philosophy:**
+> Prompts must be treated like disciplined software assets. Apastra is a **file-based protocol**. There is no hidden database, no mandatory SaaS platform, and no forced framework. 
+> - **Durable state lives in Git**: Prompts, test datasets, evaluator scoring rules, benchmark suites, baselines, and regression policies are all defined as flat files (YAML/JSON).
+> - **The Agent is the Harness**: You (the external IDE agent) perform the computation. You read the suites, run the test cases, apply the scoring rules, and compare the results to the baselines.
+> - **Append-only Artifacts**: When you run evaluations, you generate run manifests, scorecards, and evidence records. You never overwrite a baseline; you archive and append.
+> - **Black Hole Architecture**: This system relies on strict separation of files and roles. End states and transitions are explicit.
+> 
+> **Local-First vs. CI Upgrades:**
+> Developers using this project prefer a zero-infrastructure **local-first** approach. They evaluate prompts locally using you as their test runner. However, if they need enterprise-grade governance, they can upgrade to automated pull request gating using the `apastra-setup-ci` skill. The file formats remain exactly the same.
+> 
+> As an external agent using these skills, your job is to enforce this discipline. Never mutate a file ad-hoc if there is a structured prompt spec for it. If you are told to "evaluate a prompt", follow the exact file-based pipeline defined in the `apastra-eval` skill.

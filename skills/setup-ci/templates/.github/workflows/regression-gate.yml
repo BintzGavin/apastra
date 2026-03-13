@@ -1,0 +1,54 @@
+name: Regression Gate
+on:
+  pull_request:
+    branches: [main]
+  workflow_call:
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            promptops/harnesses/**
+            promptops/prompts/**
+            promptops/datasets/**
+            promptops/policies/**
+      - name: Skip Regression Gate
+        if: steps.changed-files.outputs.any_changed == 'false'
+        run: echo "Skipping regression gate for non-evaluable changes."
+      - name: Fetch Artifacts Branch
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          git fetch origin promptops-artifacts || true
+          git checkout origin/promptops-artifacts -- reports/regression_report.json || true
+      - name: Check Regression Report Status
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          REPORT="reports/regression_report.json"
+          if [ ! -f "$REPORT" ]; then
+            echo "::error::Regression report missing. Merges are blocked."
+            exit 1
+          fi
+
+          echo "## Regression Report Evidence" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Status | Candidate | Baseline | Delta | Message |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
+          jq -r '.evidence[]? | "| \(.metric) | \(.status) | \(.candidate) | \(.baseline) | \(.delta) | \(.message) |"' "$REPORT" >> $GITHUB_STEP_SUMMARY
+
+          jq -r '.evidence[]? | select(.status == "fail") | "::error title=Regression Failed::Metric \(.metric): \(.message)"' "$REPORT"
+
+          STATUS=$(jq -r .status "$REPORT")
+          if [ "$STATUS" = "pass" ]; then
+            echo "Regression passed."
+            exit 0
+          else
+            echo "Regression failed or warning."
+            exit 1
+          fi

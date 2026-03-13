@@ -151,6 +151,7 @@ derived-index/
 2. Install the **baseline** skill to establish your first baseline
 3. Install the **scaffold** skill to quickly generate new prompt specs
 4. Install the **validate** skill to check file formatting
+5. **Upgrade to CI**: Ready to automate pull request gating and releases with GitHub Actions? Install the **setup-ci** skill (`npx skills add BintzGavin/apastra/skills/setup-ci`).
 
 ## Checklist
 
