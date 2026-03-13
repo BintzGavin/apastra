@@ -336,6 +336,105 @@ This section is intentionally opinionated because weak eval discipline produces 
 
 ### Policy-driven regression detection model
 
+### Inline assertions (inspired by promptfoo)
+
+For low-friction evaluation, assertions can be embedded directly on dataset cases instead of requiring a separate evaluator file. This removes the need to create a standalone evaluator for simple checks.
+
+**Inline assertion format (on dataset cases):**
+
+```jsonl
+{"case_id": "greeting", "inputs": {"text": "Hello"}, "assert": [{"type": "contains", "value": "Bonjour"}, {"type": "icontains", "value": "monde"}]}
+```
+
+When an agent encounters `assert` on a dataset case, it applies those checks directly to the model output for that case. This is a shorthand; the full evaluator file format remains available for complex, reusable, or parameterized scoring rules.
+
+**Precedence:** If a suite references evaluators AND dataset cases contain inline `assert` blocks, both apply. Inline assertions are per-case; evaluator files are per-suite.
+
+### Built-in assertion types
+
+The system supports a rich vocabulary of assertion types. These are deterministic checks that any agent or harness can implement without external dependencies:
+
+**Deterministic assertions:**
+
+| Type | Description | Example value |
+|---|---|---|
+| `equals` | Exact string match | `"Hello, World!"` |
+| `contains` | Substring check (case-sensitive) | `"Bonjour"` |
+| `icontains` | Substring check (case-insensitive) | `"bonjour"` |
+| `contains-any` | Contains at least one of the values | `["hello", "hi", "hey"]` |
+| `contains-all` | Contains all of the values | `["name", "age", "email"]` |
+| `regex` | Regular expression match | `"\\d{3}-\\d{4}"` |
+| `starts-with` | Output starts with value | `"Dear "` |
+| `is-json` | Output is valid JSON | — |
+| `contains-json` | Output contains a JSON block | — |
+| `is-valid-json-schema` | Output matches a JSON Schema | `{schema object}` |
+
+**Negation:** Every assertion type can be negated by prepending `not-`. For example, `not-contains` or `not-regex`.
+
+**Model-assisted assertions:**
+
+| Type | Description |
+|---|---|
+| `similar` | Semantic similarity to a reference value (threshold: 0-1) |
+| `llm-rubric` | AI-graded evaluation using a rubric prompt |
+| `factuality` | Checks output against reference facts |
+| `answer-relevance` | Rates relevance of the output to the input |
+
+**Performance assertions:**
+
+| Type | Description |
+|---|---|
+| `latency` | Response time in milliseconds (threshold-based) |
+| `cost` | Token cost in dollars (threshold-based) |
+
+### Quick eval mode
+
+For rapid iteration, the system supports a single-file "quick eval" format that combines prompt, cases, and assertions into one file. This eliminates the need to create four separate files for simple evaluations.
+
+**Quick eval format** (`promptops/evals/my-eval.yaml`):
+
+```yaml
+id: summarize-quick
+prompt: |
+  Summarize the following text in {{max_length}} or fewer words: {{text}}
+cases:
+  - id: short-article
+    inputs:
+      text: "The quick brown fox jumps over the lazy dog."
+      max_length: "10"
+    assert:
+      - type: icontains
+        value: "fox"
+      - type: not-contains
+        value: "Lorem ipsum"
+  - id: empty-input
+    inputs:
+      text: ""
+      max_length: "10"
+    assert:
+      - type: regex
+        value: ".*"
+thresholds:
+  pass_rate: 1.0
+```
+
+**Resolution:** The agent reads a quick eval file and internally treats it as a prompt spec + dataset + inline assertions + suite. Quick eval files live in `promptops/evals/` and are executed the same way as suite-based evals. This format is ideal for smoke tests and rapid iteration; teams should graduate to the full spec/dataset/evaluator/suite structure as complexity grows.
+
+### Consolidated CI mode
+
+For teams upgrading from local-first to CI, the system offers a simplified two-workflow setup alongside the full six-workflow enterprise setup:
+
+**Basic CI (2 workflows):**
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `prompt-eval.yml` | Pull requests (changes to `promptops/**`) | Runs regression suites against the PR's changes and posts results. Blocks merge if regressions detected. |
+| `prompt-release.yml` | Tag push (e.g., `v1.x.x`) | Creates an immutable release and appends a promotion record. |
+
+**Full CI (6 workflows):** For enterprise teams needing fine-grained control — separate regression gate, auto-merge, promote, deliver, immutable release, and approval recording workflows.
+
+### Policy-driven regression detection model
+
 Regression detection is a deterministic function of:
 
 - candidate scorecard + baseline scorecard + policy spec → regression report.

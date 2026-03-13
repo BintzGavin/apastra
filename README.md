@@ -112,6 +112,33 @@ type: deterministic
 metrics: [keyword_recall]
 ```
 
+### Inline Assertions (Quick Mode)
+For simple checks, skip the evaluator file entirely — put assertions directly on your test cases:
+
+```jsonl
+{"case_id": "case-1", "inputs": {"text": "..."}, "assert": [{"type": "contains", "value": "summary"}, {"type": "is-json"}]}
+```
+
+Built-in assertion types: `equals`, `contains`, `icontains`, `contains-any`, `contains-all`, `regex`, `starts-with`, `is-json`, `contains-json`, `similar`, `llm-rubric`, `factuality`, `latency`, `cost`. Negate any with `not-` prefix (e.g. `not-contains`).
+
+### Quick Eval (Single File)
+For rapid iteration, combine prompt + cases + assertions into one file (`promptops/evals/my-eval.yaml`):
+
+```yaml
+id: summarize-quick
+prompt: "Summarize in {{max_length}} words: {{text}}"
+cases:
+  - id: short
+    inputs: { text: "The fox jumps over the dog.", max_length: "10" }
+    assert:
+      - type: icontains
+        value: "fox"
+thresholds:
+  pass_rate: 1.0
+```
+
+Graduate to the full spec/dataset/evaluator/suite structure as complexity grows.
+
 ### Suite
 A test configuration that ties everything together: which datasets, which evaluators, which models.
 
