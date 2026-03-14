@@ -10,7 +10,8 @@ Validate PromptOps files against the apastra JSON schemas. Catches formatting er
 ## When to Use
 
 Use this skill when you want to:
-- Check that prompt specs, datasets, evaluators, and suites are correctly formatted
+- Check that prompt specs, datasets, evaluators, suites, and quick eval files are correctly formatted
+- Validate inline assertions on dataset cases
 - Validate files after scaffolding or manual edits
 - Debug why an evaluation run is failing
 
@@ -28,6 +29,7 @@ Scan the `promptops/` directory for files to validate:
 | `promptops/datasets/*.jsonl` | Dataset Case (per line) |
 | `promptops/evaluators/*.yaml` or `*.json` | Evaluator |
 | `promptops/suites/*.yaml` or `*.json` | Suite |
+| `promptops/evals/*.yaml` | Quick Eval |
 | `promptops/policies/*.yaml` | Regression Policy |
 
 ### Step 2: Validate Each File
@@ -48,6 +50,11 @@ For each file, check against the corresponding schema rules:
 - ✅ Each line has `inputs` (object, required)
 - ✅ `case_id` values are unique within the file
 - ⚠️ `inputs` keys should match the target prompt spec's `variables`
+- If `assert` is present on a case:
+  - ✅ `assert` is an array
+  - ✅ Each assertion has `type` (string, required)
+  - ✅ `type` is a valid assertion type: `equals`, `contains`, `icontains`, `contains-any`, `contains-all`, `regex`, `starts-with`, `is-json`, `contains-json`, `is-valid-json-schema`, `similar`, `llm-rubric`, `factuality`, `answer-relevance`, `latency`, `cost` (or any `not-` prefixed variant)
+  - ⚠️ Assertions requiring `value` (`equals`, `contains`, `icontains`, `regex`, etc.) should have a `value` field
 
 **Evaluator** (`promptops/evaluators/`):
 - ✅ Has `id` (string, required)
@@ -77,6 +84,17 @@ After individual file validation, check cross-references:
 - Suites reference evaluators that exist
 - Dataset `inputs` keys match prompt spec `variables` keys
 - Evaluator `metrics` match suite `thresholds` keys (if thresholds are defined)
+
+**Quick Eval** (`promptops/evals/*.yaml`):
+- ✅ Has `id` (string, required)
+- ✅ Has `prompt` (string, required)
+- ✅ Has `cases` (array, required, minimum 1)
+- ✅ Each case has `id` (string, required)
+- ✅ Each case has `inputs` (object, required)
+- ✅ Each case has `assert` (array, required, minimum 1)
+- ✅ Each assertion has a valid `type`
+- ⚠️ `prompt` template `{{variable}}` placeholders match case `inputs` keys
+- ⚠️ `thresholds.pass_rate` if present is a number between 0 and 1
 
 ### Step 4: Report
 

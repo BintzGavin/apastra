@@ -124,6 +124,25 @@ Use the **eval** skill:
 
 Or if you have the eval skill installed, your agent already knows how.
 
+### Alternative: Quick Eval (Single File)
+
+If you want to skip creating 4 separate files, use a quick eval instead. Create `promptops/evals/summarize-quick.yaml`:
+
+```yaml
+id: summarize-quick
+prompt: "Summarize in {{max_length}} words: {{text}}"
+cases:
+  - id: short
+    inputs: { text: "The fox jumps over the dog.", max_length: "10" }
+    assert:
+      - type: icontains
+        value: "fox"
+thresholds:
+  pass_rate: 1.0
+```
+
+Then tell your agent: "Run the summarize-quick eval". This is the fastest way to test a prompt.
+
 ## File Structure
 
 After setup, your project should look like:
@@ -133,9 +152,11 @@ promptops/
 ├── prompts/
 │   └── summarize.yaml          # Prompt specs (source of truth)
 ├── datasets/
-│   └── summarize-smoke.jsonl   # Test cases
+│   └── summarize-smoke.jsonl   # Test cases (with optional inline assertions)
 ├── evaluators/
-│   └── contains-keywords.yaml  # Scoring rules
+│   └── contains-keywords.yaml  # Scoring rules (optional if using inline assertions)
+├── evals/
+│   └── summarize-quick.yaml    # Quick eval files (prompt + cases + assertions)
 ├── suites/
 │   └── summarize-smoke.yaml    # Test configurations
 ├── schemas/                    # JSON schemas (from apastra)

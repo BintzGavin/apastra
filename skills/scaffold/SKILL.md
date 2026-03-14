@@ -183,3 +183,70 @@ When asked something like "scaffold a complete PromptOps setup for sentiment ana
 2. `promptops/datasets/sentiment-smoke.jsonl`
 3. `promptops/evaluators/sentiment-accuracy.yaml`
 4. `promptops/suites/sentiment-smoke.yaml`
+
+## Scaffolding a Quick Eval (Single File)
+
+For rapid iteration, scaffold a single quick eval file instead of four separate files.
+
+When asked to create a quick eval (e.g., "scaffold a quick eval for email classification"):
+
+Create `promptops/evals/<id>.yaml`:
+
+```yaml
+id: classify-email-quick
+prompt: |
+  Classify the following email into one of these categories: spam, support, sales, personal.
+  Respond with JSON: {"category": "<category>", "confidence": <0-1>}
+
+  Email: {{email}}
+cases:
+  - id: obvious-spam
+    inputs:
+      email: "CONGRATULATIONS! You've won $1,000,000! Click here NOW!"
+    assert:
+      - type: is-json
+      - type: contains
+        value: "spam"
+  - id: support-request
+    inputs:
+      email: "Hi, I'm having trouble logging in. My password reset isn't working."
+    assert:
+      - type: is-json
+      - type: contains-any
+        value: ["support", "help"]
+  - id: personal-email
+    inputs:
+      email: "Hey! Want to grab lunch on Friday?"
+    assert:
+      - type: is-json
+      - type: contains
+        value: "personal"
+thresholds:
+  pass_rate: 1.0
+```
+
+### When to Use Quick Eval vs Full Suite
+- **Quick eval**: 1-5 test cases, simple assertions, rapid iteration
+- **Full suite**: 10+ cases, reusable evaluators, baseline tracking, regression detection
+
+## Scaffolding a Dataset with Inline Assertions
+
+When the user wants inline assertions on their test cases (skipping the evaluator file), include `assert` arrays directly in the JSONL:
+
+```jsonl
+{"case_id": "case-1", "inputs": {"text": "Hello"}, "assert": [{"type": "contains", "value": "Bonjour"}, {"type": "not-contains", "value": "error"}]}
+{"case_id": "case-2", "inputs": {"text": ""}, "assert": [{"type": "regex", "value": ".*"}]}
+```
+
+Inline assertions work alongside separate evaluator files — they complement each other. Use inline assertions for per-case checks and evaluator files for suite-wide scoring rules.
+
+### Available Assertion Types
+
+Deterministic: `equals`, `contains`, `icontains`, `contains-any`, `contains-all`, `regex`, `starts-with`, `is-json`, `contains-json`, `is-valid-json-schema`.
+
+Model-assisted: `similar`, `llm-rubric`, `factuality`, `answer-relevance`.
+
+Performance: `latency`, `cost`.
+
+Negate any type with `not-` prefix (e.g., `not-contains`, `not-is-json`).
+
