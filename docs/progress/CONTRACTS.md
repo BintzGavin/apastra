@@ -66,3 +66,5 @@
 
 ### CONTRACTS v0.23.0
 - ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
+### CONTRACTS v0.24.0
+- ✅ Completed: QuickEvalAndInlineAssertions - Defined schemas for Quick Eval Mode and Inline Assertions.

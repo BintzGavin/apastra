@@ -69,6 +69,9 @@
 - **ID:** `apastra-provider-artifact-v1`
   - **Version:** 0.17.0
   - **Description:** Schema for provider artifacts.
+- **ID:** `https://promptops.apastra.com/schemas/quick-eval.schema.json`
+  - **Version:** 0.24.0
+  - **Description:** Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-regression-policy.sh`
@@ -136,6 +139,9 @@
 - **Validator:** `validate-provider-artifact.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-provider-artifact.sh <provider-artifact.json|yaml>`
   - **Validates:** JSON or YAML files against the `provider-artifact.schema.json` schema.
+- **Validator:** `validate-quick-eval.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-quick-eval.sh <eval.yaml>`
+  - **Validates:** YAML files against the `quick-eval.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Prompts:**
@@ -147,6 +153,7 @@
   - Structure: Lives in `promptops/datasets/<dataset-id>/`
   - Required fields in manifest: `id`, `version`, `schema_version`, `digest`
   - Required fields in case: `case_id`, `inputs`
+  - Optional fields in case: `assert` (array of assertions with `type` and `value`)
 - **Evaluators:**
   - Naming: `evaluator.yaml` or `evaluator.json`
   - Structure: Lives in `promptops/evaluators/<evaluator-id>/`

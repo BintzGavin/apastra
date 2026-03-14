@@ -7,4 +7,4 @@ v0.6.0: Reached major governance milestone establishing automated promotion reco
 ## RUNTIME Milestone Summary
 v1.0.0: Initialized the RUNTIME domain. Created prompt resolution, local override, workspace resolution, and package artifact resolution. Implemented consumption manifest format.
 ## CONTRACTS Milestone Summary
-v0.22.0: Completed all initial required schemas, validators, and base file structures. Minimal plan exception triggered.
+v0.24.0: Defined schemas for Quick Eval Mode and Inline Assertions, enabling low-friction evaluation setups without full suites.

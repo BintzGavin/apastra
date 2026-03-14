@@ -19,6 +19,23 @@
       "description": "Map of expected output values (e.g., exact matches, substrings).",
       "additionalProperties": true
     },
+    "assert": {
+      "type": "array",
+      "description": "Array of inline assertions to evaluate the case output against.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of assertion (e.g., contains, equals, regex, icontains)."
+          },
+          "value": {
+            "description": "The value or condition the output is asserted against."
+          }
+        },
+        "required": ["type", "value"]
+      }
+    },
     "metadata": {
       "type": "object",
       "description": "Arbitrary metadata for the specific test case (e.g., tags, difficulty, domain).",
