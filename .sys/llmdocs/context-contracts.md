@@ -144,6 +144,10 @@
   - **Validates:** YAML files against the `quick-eval.schema.json` schema.
 
 ## Section C: Source File Conventions
+- **Quick Evals:**
+  - Naming: `*.yaml`
+  - Structure: Lives in `promptops/evals/`
+  - Required fields: `id` (string), `prompt` (string), `cases` (array).
 - **Prompts:**
   - Naming: `prompt.yaml` or `prompt.json`
   - Structure: Lives in `promptops/prompts/<id>/`
