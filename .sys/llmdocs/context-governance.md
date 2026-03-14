@@ -8,6 +8,8 @@ Gate Enforcement Flow:
 
 **Section B: File Tree**
 - `.github/CODEOWNERS`
+- `.github/workflows/prompt-eval.yml`
+- `.github/workflows/prompt-release.yml`
 - `.github/rulesets/main-protection.json`
 - `.github/rulesets/tag-immutability.json`
 - `.github/workflows/auto-merge.yml`

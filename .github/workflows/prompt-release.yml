@@ -1,0 +1,9 @@
+name: Prompt Release
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    uses: ./.github/workflows/immutable-release.yml
