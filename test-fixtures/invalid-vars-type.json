@@ -1,5 +1,0 @@
-{
-  "id": "my-app/summarize-v1",
-  "variables": ["text"],
-  "template": "Please summarize this: {{text}}"
-}

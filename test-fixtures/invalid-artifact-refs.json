@@ -1,8 +1,0 @@
-{
-  "references": {
-    "raw-response-1": {
-      "uri": "s3://my-bucket/run-123/raw-1.json",
-      "digest": "md5:12345"
-    }
-  }
-}
