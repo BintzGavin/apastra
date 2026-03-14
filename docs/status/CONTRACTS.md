@@ -1,4 +1,4 @@
-**Version**: 0.27.0
+**Version**: 0.28.0
 
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
@@ -27,3 +27,4 @@
 [v0.25.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.26.0] ✅ Completed: InitialQuickEval - Created first quick eval instance in promptops/evals/my-eval.yaml
 [v0.27.0] ✅ Completed: InitialPromptPackage - Created first prompt package instance my-prompt-package/package.yaml
+[v0.28.0] ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas, validation scripts, and initial instances have been fully implemented and verified.
