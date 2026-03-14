@@ -68,3 +68,6 @@
 
 ### RUNTIME v1.12.0
 - ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
+
+### RUNTIME v1.13.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
