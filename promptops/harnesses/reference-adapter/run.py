@@ -7,6 +7,10 @@ from datetime import datetime, timezone
 # Add repo root to path to resolve promptops.runtime
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 from promptops.runtime.resolve import resolve
+# Import assertion evaluator
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../runs')))
+from evaluate_assertions import evaluate_assertions
+
 
 def main():
     if len(sys.argv) != 3:
@@ -72,12 +76,16 @@ def main():
         for c in cases_data:
             eval_outputs = []
             asserts = c.get('assert', [])
-            for a in asserts:
-                # Mock evaluation: just assume 1.0 for now, or match some logic
-                eval_outputs.append({f"assert_{a['type']}": 1.0})
+            # Using real evaluation logic
+            mock_output = "mock_output"
+            eval_scores = evaluate_assertions(mock_output, asserts)
+            # evaluate_assertions returns a list of dictionaries [{"assert_<type>": score}, ...]
+            for eval_score in eval_scores:
+                eval_outputs.append(eval_score)
+
             cases.append({
                 "case_id": c.get('id', 'case-X'),
-                "per_trial_outputs": [{"output": "mock_output"}],
+                "per_trial_outputs": [{"output": mock_output}],
                 "evaluator_outputs": eval_outputs,
                 "pointers": {}
             })

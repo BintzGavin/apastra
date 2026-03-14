@@ -1,4 +1,4 @@
-**Version**: 0.13.0
+**Version**: 0.14.0
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
@@ -18,3 +18,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.12.2] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.12.3] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.13.0] ✅ Completed: QuickEvalMode - Implemented quick eval mode pipeline and adapted reference harness
+[v0.14.0] ✅ Completed: InlineAssertions - Implemented deterministic inline assertions evaluation engine.
