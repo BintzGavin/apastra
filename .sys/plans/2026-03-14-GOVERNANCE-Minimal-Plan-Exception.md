@@ -1,6 +1,6 @@
 #### 1. Context & Goal
 - **Objective**: Submit a minimal plan exception because all GOVERNANCE vision gaps have been completed.
-- **Trigger**: Reached version 1.6.0 with all required status checks, promotion workflows, CODEOWNERS, immutable releases, and delivery targets implemented.
+- **Trigger**: Reached version 1.7.0 with all required status checks, promotion workflows, CODEOWNERS, immutable releases, and delivery targets implemented.
 - **Impact**: Signals that the GOVERNANCE domain architecture planning phase is complete and no further gates need enforcing.
 
 #### 2. File Inventory
