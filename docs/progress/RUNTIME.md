@@ -50,3 +50,6 @@
 
 ### RUNTIME v1.7.0
 - ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
+
+### RUNTIME v1.7.1
+- ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
