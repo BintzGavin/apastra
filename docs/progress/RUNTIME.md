@@ -62,3 +62,6 @@
 
 ### RUNTIME v1.10.0
 - ✅ Completed: QuickEvalLocalOverrideResolution - Implement quick eval format resolution in the LocalResolver.
+
+### RUNTIME v1.11.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
