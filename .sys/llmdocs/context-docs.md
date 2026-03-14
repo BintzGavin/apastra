@@ -1,26 +1,50 @@
-# DOCS Context
+# System Context: DOCS Domain
 
-## Section A: Guide Inventory
-- architecture-overview.md
-- getting-started.md
-- repo-topology.md
+## A. Architecture Overview
+The DOCS domain is responsible for maintaining all cross-domain documentation, including user guides, API references, architectural decision records (ADRs), and dashboards. It operates as an observer, analyzing source code, schemas, and domain status files to ensure documentation is synchronized with the actual implementation.
+
+## B. Guide Inventory
 - black-hole-architecture.md
-- harness-contract.md
-- consumption-and-resolution.md
 - promotion-and-delivery.md
+- harness-contract.md
+- getting-started.md
+- architecture-overview.md
+- consumption-and-resolution.md
+- repo-topology.md
 
-## Section B: API Reference Inventory
-- (All schema API refs)
+## C. API Reference Inventory
+- regression-report-reference.md
+- prompt-package-reference.md
+- provider-artifact-reference.md
+- harness-adapter-reference.md
+- dataset-manifest-reference.md
+- promotion-record-reference.md
+- suite-reference.md
+- baseline-reference.md
+- approval-state-reference.md
+- run-request-reference.md
+- prompt-spec-reference.md
+- run-artifact-reference.md
+- scorecard-reference.md
+- evaluator-reference.md
+- dataset-case-reference.md
+- consumption-manifest-reference.md
+- artifact-refs-reference.md
+- delivery-target-reference.md
+- regression-policy-reference.md
+- run-manifest-reference.md
+- run-failures-reference.md
+- run-case-reference.md
 
-## Section C: ADR Inventory
+## D. ADR Inventory
 - adr-001-git-native-control-plane.md
-- adr-002-byo-harnesses.md
 - adr-003-content-digest-identity.md
+- adr-002-byo-harnesses.md
 
-## Section D: Dashboard Inventory
+## E. Dashboard Inventory
+- schema-dependency-graph.md
 - domain-status-overview.md
 - implementation-progress.md
-- schema-dependency-graph.md
 
-## Section E: Coverage Gaps
-- None
+## F. Coverage Gaps
+- TBD

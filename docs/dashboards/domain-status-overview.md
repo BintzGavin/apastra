@@ -2,7 +2,7 @@
 title: "Domain Status Overview"
 description: "Overview of status for all domains"
 audience: "all"
-last_verified: "2026-03-11"
+last_verified: "2026-03-14"
 source_files:
   - "docs/status/CONTRACTS.md"
   - "docs/status/DOCS.md"
@@ -15,7 +15,7 @@ source_files:
 
 ## CONTRACTS
 
-**Version**: 0.21.0
+**Version**: 0.22.0
 
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
@@ -37,18 +37,23 @@ source_files:
 [v0.19.0] ✅ Completed: InitialDataset - Created first dataset instance test-dataset
 [v0.20.0] ✅ Completed: InitialEvaluator - Created first evaluator instance exact-match.yaml
 [v0.21.0] ✅ Completed: InitialSuite - Created first suite instance test-suite.yaml
+[v0.22.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 
 
 ## DOCS
 
-**Version**: 0.1.0
+**Version**: 0.3.0
 
 [v0.1.0] ✅ Completed: Daily Documentation Review - Initialized comprehensive daily documentation review process. Created all required dashboards, generated API references for all existing schemas, and verified documentation completeness against implemented features.
+
+[v0.2.0] ✅ Completed: Daily Documentation Review - Updated API documentation, guides, ADRs, and cross-domain dashboards based on latest implementation.
+
+[v0.3.0] ✅ Completed: Daily Documentation Review - Updated API documentation, dashboards, and domain contexts based on current implementation.
 
 
 ## EVALUATION
 
-**Version**: 0.11.0
+**Version**: 0.12.3
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
@@ -63,11 +68,15 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 
 [v0.10.0] ✅ Completed: RegressionComparisonRefactor - Refactored Regression Engine to read split scorecard.json files
 [v0.11.0] ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
+[v0.12.0] ✅ Completed: ReferenceAdapterRefactor - Refactored reference adapter to natively support split artifacts and updated scorecard normalizer execution
+[v0.12.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
+[v0.12.2] ✅ Completed: Minimal Plan Exception - All plans officially complete
+[v0.12.3] ✅ Completed: Minimal Plan Exception - All plans officially complete
 
 
 ## GOVERNANCE
 
-**Version**: 1.5.0
+**Version**: 1.8.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -88,11 +97,19 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.3.0] ✅ Completed: Enforce Regression Gate - Removed bypass in regression-gate.yml to block merges when regression report is missing.
 [v1.4.0] ✅ Completed: Delivery Sync Refactor - Fixed delivery target sync to operate within the promptops-artifacts branch topology.
 [v1.5.0] ✅ Completed: Conditional Regression Gate - Bypassed regression check for PRs modifying non-evaluable files using tj-actions/changed-files.
+[v1.6.0] ✅ Completed: Rich PR Annotations - Enhanced the regression gate workflow to provide rich PR annotations and a detailed Markdown summary of regression evidence.
+[v1.7.0] ✅ Completed: Minimal Plan Exception - Acknowledged all GOVERNANCE vision gaps are complete.
+[v1.8.0] ✅ Completed: Promotion Approval Enforcement - Fixed jq logic in promote.yml to properly pipe approvals/*.json contents.
 
 
 ## RUNTIME
 
-**Version**: 1.3.1
+**Version**: 1.7.1
+[v1.7.0] ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
+[v1.6.0] ✅ Completed: DirectoryResolver - Update WorkspaceResolver and GitRefResolver to support resolving prompts packaged in a <prompt_id> directory.
+[v1.5.0] ✅ Completed: ReferenceCLI - Implemented reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
+[v1.4.1] ✅ Completed: LocalOverrideFix - Fix the LocalResolver in the resolver chain to parse prompt packages instead of returning stub strings.
+[v1.4.0] ✅ Completed: ReferenceCLI - Spec the reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
 [v1.3.1] ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
 [v1.3.0] ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function
 [v0.2.0] ✅ Completed: ConsumptionManifestFormat - Defined schema example format
@@ -107,3 +124,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.0.0] ✅ Completed: ConsumptionManifestFormat - Re-wrote consumption manifest format to be more realistic and validate
 [v1.1.0] ✅ Completed: PromptSpecValidation - Implemented schema validation for resolved prompt specifications against prompt-spec.schema.json
 [v1.2.0] ✅ Completed: HarnessContractValidation - Implemented runner shim validation against CONTRACTS schemas
+[v1.7.1] ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
