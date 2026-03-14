@@ -74,3 +74,6 @@
 
 ### CONTRACTS v0.26.0
 - ✅ Completed: InitialQuickEval - Created first quick eval instance in promptops/evals/my-eval.yaml
+
+### CONTRACTS v0.27.0
+- ✅ Completed: InitialPromptPackage - Created first prompt package instance my-prompt-package/package.yaml
