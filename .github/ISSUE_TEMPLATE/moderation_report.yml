@@ -1,0 +1,26 @@
+name: Moderation Report
+description: Report a package for violating moderation policies.
+title: "[Moderation Report] "
+labels: ["moderation-report"]
+body:
+  - type: input
+    id: package_name
+    attributes:
+      label: Package Name
+      description: What is the name of the package?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which version(s) of the package are affected?
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason for Report
+      description: Please describe how the package violates the moderation policies.
+    validations:
+      required: true

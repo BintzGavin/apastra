@@ -57,3 +57,6 @@
 
 ### GOVERNANCE v1.11.0
 - ✅ Completed: SecretScan - Implemented automated secret scanning workflow.
+
+### GOVERNANCE v1.12.0
+- ✅ Completed: CommunityReportingWorkflow - Implemented an automated workflow and issue template for handling community moderation reports.
