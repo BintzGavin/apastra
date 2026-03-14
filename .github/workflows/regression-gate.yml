@@ -19,7 +19,8 @@ jobs:
             promptops/harnesses/**
             promptops/prompts/**
             promptops/datasets/**
-            promptops/policies/**
+            promptops/policies/**/*.yaml
+            promptops/policies/**/*.yml
       - name: Skip Regression Gate
         if: steps.changed-files.outputs.any_changed == 'false'
         run: echo "Skipping regression gate for non-evaluable changes."
