@@ -63,3 +63,6 @@
 
 ### GOVERNANCE v1.13.0
 - ✅ Completed: Consolidated CI - Implemented simplified two-workflow setup.
+
+### GOVERNANCE v1.14.0
+- ✅ Completed: Node20DeprecationFix - Injected FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 into GitHub Actions workflows.

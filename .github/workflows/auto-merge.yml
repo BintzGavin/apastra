@@ -12,6 +12,8 @@ permissions:
 jobs:
   resolve-progress-conflicts:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     if: |
       github.event.pull_request.user.login == 'google-labs-jules' ||
       github.event.pull_request.user.login == 'google-labs-jules[bot]' ||
@@ -71,6 +73,8 @@ jobs:
 
   enable-auto-merge:
     runs-on: ubuntu-22.04
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     needs: resolve-progress-conflicts
     if: |
       github.event.pull_request.user.login == 'google-labs-jules' ||
