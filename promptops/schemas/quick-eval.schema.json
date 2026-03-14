@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/quick-eval.schema.json",
+  "title": "Quick Eval",
+  "description": "Schema defining a combined quick evaluation file containing prompt, cases, and assertions.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the quick eval."
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The prompt template."
+    },
+    "cases": {
+      "type": "array",
+      "description": "Array of dataset cases with inputs and inline asserts.",
+      "items": {
+        "$ref": "https://promptops.apastra.com/schemas/dataset-case.schema.json"
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "description": "Optional thresholds for the evaluation.",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "id",
+    "prompt",
+    "cases"
+  ],
+  "additionalProperties": false
+}
