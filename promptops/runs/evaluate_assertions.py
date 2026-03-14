@@ -58,11 +58,13 @@ def extract_json_blocks(text):
 
     return blocks
 
-def evaluate_assertions(output: str, assertions: list) -> list:
+def evaluate_assertions(output: str, assertions: list, metadata: dict = None) -> list:
     """
     Evaluates a list of inline assertions against a string output.
     Returns a list of dictionaries with scores: [{"assert_<type>": 1.0 or 0.0}, ...]
     """
+    if metadata is None:
+        metadata = {}
     results = []
 
     if not isinstance(output, str):
@@ -133,7 +135,11 @@ def evaluate_assertions(output: str, assertions: list) -> list:
                             break
                         except (ValueError, jsonschema.exceptions.ValidationError):
                             continue
-            elif base_type in ("similar", "llm-rubric", "factuality", "answer-relevance", "latency", "cost"):
+            elif base_type == "latency":
+                passed = float(metadata.get("latency", 0)) <= float(assert_value)
+            elif base_type == "cost":
+                passed = float(metadata.get("cost", 0.0)) <= float(assert_value)
+            elif base_type in ("similar", "llm-rubric", "factuality", "answer-relevance"):
                 passed = True
             else:
                 # Unknown assertion type, default to fail

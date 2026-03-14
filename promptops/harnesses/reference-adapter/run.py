@@ -84,7 +84,7 @@ def main():
                 mock_output = f"mock_output_{t}"
                 per_trial_outputs.append({"output": mock_output})
 
-                eval_scores = evaluate_assertions(mock_output, asserts)
+                eval_scores = evaluate_assertions(mock_output, asserts, {"latency": 50, "cost": 0.001})
                 # evaluate_assertions returns a list of dictionaries [{"assert_<type>": score}, ...]
                 for eval_score in eval_scores:
                     eval_outputs.append(eval_score)
