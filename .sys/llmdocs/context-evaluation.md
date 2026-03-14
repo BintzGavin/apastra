@@ -7,15 +7,18 @@ Harness execution flow:
 - Run request validated via `promptops/runs/validate-run-request.sh`
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`).
-- Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file
+- If inline assertions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores.
+- Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file.
 - Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> <baseline> <policy> <report_id>`
 
 ## Section B: File Tree
-`promptops/harnesses/`
-`promptops/runs/`
-`promptops/runs/compare.py`
-`derived-index/baselines/`
-`derived-index/regressions/`
+- `promptops/harnesses/`
+- `promptops/runs/`
+  - `promptops/runs/compare.py`
+  - `promptops/runs/evaluate_assertions.py`
+  - `promptops/runs/normalize.py`
+- `derived-index/baselines/`
+- `derived-index/regressions/`
 
 ## Section C: Run Artifact Format
 Run Artifact Schema (from CONTRACTS) `promptops/schemas/run-artifact.schema.json`:

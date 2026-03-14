@@ -39,3 +39,6 @@
 
 ### EVALUATION v0.13.0
 - ✅ Completed: QuickEvalMode - Implemented quick eval mode pipeline and adapted reference harness
+
+### EVALUATION v0.14.0
+- ✅ Completed: InlineAssertions - Implemented deterministic inline assertions evaluation engine.
