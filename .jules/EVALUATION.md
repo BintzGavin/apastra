@@ -26,3 +26,7 @@
 ## [0.16.0] - TrialsAndVarianceSupport
 **Learning:** Found that `normalize.py` computes an average score across all evaluator outputs without recording variance, and `run.py` ignores the `trials` parameter in the run request. This prevents variance-aware regression gating.
 **Action:** Spec'd the implementation of variance calculation in `normalize.py` and trial looping in `run.py` to support non-deterministic evaluators.
+
+## [0.16.0] - JsonSchemaAssertion
+**Learning:** Found that `evaluate_assertions.py` lacks implementation for `is-valid-json-schema`, causing inline assertions of this type to silently fall through to the default failure case.
+**Action:** Spec'd the implementation of `is-valid-json-schema` evaluation logic, utilizing `extract_json_blocks` and `jsonschema` validation against the provided schema value.
