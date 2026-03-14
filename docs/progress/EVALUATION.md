@@ -51,3 +51,6 @@
 
 ### EVALUATION v0.17.0
 - ✅ Completed: JsonSchemaAssertion - Implemented the is-valid-json-schema assertion type for inline evaluation
+
+### EVALUATION v0.17.1
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
