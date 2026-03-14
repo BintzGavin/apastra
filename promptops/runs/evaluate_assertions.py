@@ -1,5 +1,6 @@
 import json
 import re
+import jsonschema
 
 def extract_json_blocks(text):
     """
@@ -116,6 +117,22 @@ def evaluate_assertions(output: str, assertions: list) -> list:
                         break
                     except ValueError:
                         continue
+            elif base_type == "is-valid-json-schema":
+                schema = assert_value
+                try:
+                    parsed = json.loads(output)
+                    jsonschema.validate(instance=parsed, schema=schema)
+                    passed = True
+                except (ValueError, jsonschema.exceptions.ValidationError):
+                    blocks = extract_json_blocks(output)
+                    for block in blocks:
+                        try:
+                            parsed = json.loads(block)
+                            jsonschema.validate(instance=parsed, schema=schema)
+                            passed = True
+                            break
+                        except (ValueError, jsonschema.exceptions.ValidationError):
+                            continue
             elif base_type in ("similar", "llm-rubric", "factuality", "answer-relevance", "latency", "cost"):
                 passed = True
             else:

@@ -48,3 +48,6 @@
 
 ### EVALUATION v0.16.0
 - ✅ Completed: TrialsAndVarianceSupport - Implemented trials support in reference adapter and variance calculation in scorecard normalizer
+
+### EVALUATION v0.17.0
+- ✅ Completed: JsonSchemaAssertion - Implemented the is-valid-json-schema assertion type for inline evaluation
