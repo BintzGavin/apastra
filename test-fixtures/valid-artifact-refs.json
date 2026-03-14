@@ -1,9 +1,0 @@
-{
-  "references": {
-    "raw-response-1": {
-      "uri": "s3://my-bucket/run-123/raw-1.json",
-      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "mime_type": "application/json"
-    }
-  }
-}

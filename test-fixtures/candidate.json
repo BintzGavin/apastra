@@ -1,9 +1,0 @@
-{
-  "scorecard": {
-    "normalized_metrics": {
-      "exact_match": 0.85,
-      "latency_ms": 1800
-    },
-    "metric_definitions": {}
-  }
-}

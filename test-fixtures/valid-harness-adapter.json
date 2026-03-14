@@ -1,6 +1,0 @@
-{
-  "id": "my-adapter",
-  "type": "harness_adapter",
-  "capabilities": ["run_suite"],
-  "entrypoint": "./run.sh"
-}

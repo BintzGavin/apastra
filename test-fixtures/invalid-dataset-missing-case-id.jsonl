@@ -1,2 +1,0 @@
-{"inputs": {"text": "hello"}, "expected_outputs": {"sentiment": "positive"}, "metadata": {"tags": ["greetings"]}}
-{"case_id": "case-02", "inputs": {"text": "goodbye"}, "expected_outputs": {"sentiment": "negative"}}
