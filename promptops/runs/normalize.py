@@ -5,11 +5,13 @@ def normalize_scorecard(cases):
     if not cases:
         return {
             "normalized_metrics": {},
-            "metric_definitions": {}
+            "metric_definitions": {},
+            "variance": {}
         }
 
     metrics_sum = {}
     metrics_count = {}
+    metrics_values = {}
 
     for case in cases:
         for eval_output in case.get("evaluator_outputs", []):
@@ -17,12 +19,20 @@ def normalize_scorecard(cases):
                 if isinstance(value, (int, float)):
                     metrics_sum[key] = metrics_sum.get(key, 0) + value
                     metrics_count[key] = metrics_count.get(key, 0) + 1
+                    if key not in metrics_values:
+                        metrics_values[key] = []
+                    metrics_values[key].append(value)
 
     normalized_metrics = {}
     metric_definitions = {}
+    variance = {}
 
     for key, count in metrics_count.items():
-        normalized_metrics[key] = metrics_sum[key] / count
+        mean = metrics_sum[key] / count
+        normalized_metrics[key] = mean
+
+        var = sum((x - mean) ** 2 for x in metrics_values[key]) / count
+        variance[key] = var
         metric_definitions[key] = {
             "type": "float",
             "range": [0, 1] if normalized_metrics[key] <= 1.0 else [0, None]
@@ -30,7 +40,8 @@ def normalize_scorecard(cases):
 
     return {
         "normalized_metrics": normalized_metrics,
-        "metric_definitions": metric_definitions
+        "metric_definitions": metric_definitions,
+        "variance": variance
     }
 
 def main():
