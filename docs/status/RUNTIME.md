@@ -1,4 +1,4 @@
-**Version**: 1.7.0
+**Version**: 1.7.1
 [v1.7.0] ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
 [v1.6.0] ✅ Completed: DirectoryResolver - Update WorkspaceResolver and GitRefResolver to support resolving prompts packaged in a <prompt_id> directory.
 [v1.5.0] ✅ Completed: ReferenceCLI - Implemented reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
@@ -18,3 +18,4 @@
 [v1.0.0] ✅ Completed: ConsumptionManifestFormat - Re-wrote consumption manifest format to be more realistic and validate
 [v1.1.0] ✅ Completed: PromptSpecValidation - Implemented schema validation for resolved prompt specifications against prompt-spec.schema.json
 [v1.2.0] ✅ Completed: HarnessContractValidation - Implemented runner shim validation against CONTRACTS schemas
+[v1.7.1] ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
