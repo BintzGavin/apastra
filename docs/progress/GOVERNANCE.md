@@ -42,3 +42,6 @@
 
 ### GOVERNANCE v1.6.0
 - ✅ Completed: Rich PR Annotations - Enhanced the regression gate workflow to provide rich PR annotations and a detailed Markdown summary of regression evidence.
+
+### GOVERNANCE v1.7.0
+- ✅ Completed: Minimal Plan Exception - Acknowledged all GOVERNANCE vision gaps are complete.
