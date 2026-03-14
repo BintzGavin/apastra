@@ -1,4 +1,4 @@
-**Version**: 0.12.1
+**Version**: 0.12.2
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
@@ -15,3 +15,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.11.0] ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
 [v0.12.0] ✅ Completed: ReferenceAdapterRefactor - Refactored reference adapter to natively support split artifacts and updated scorecard normalizer execution
 [v0.12.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
+[v0.12.2] ✅ Completed: Minimal Plan Exception - All plans officially complete

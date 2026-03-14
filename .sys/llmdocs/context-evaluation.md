@@ -30,3 +30,8 @@ Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 - `created_at`: The creation time
 - `metadata`: The metadata
 - `description`: The description
+
+## Section E: Integration Points
+GOVERNANCE reads:
+- `derived-index/regressions/<report-id>.json` to evaluate policy gates (e.g. `status` field for pass/fail/warning decisions).
+- `derived-index/baselines/<baseline-id>.json` to find the `run_digest` needed to locate the baseline's `scorecard.json`.

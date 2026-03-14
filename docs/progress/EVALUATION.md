@@ -30,3 +30,6 @@
 
 ### EVALUATION v0.12.1
 - ✅ Completed: Minimal Plan Exception - All plans officially complete
+
+### EVALUATION v0.12.2
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
