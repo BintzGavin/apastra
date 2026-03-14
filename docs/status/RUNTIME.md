@@ -1,4 +1,5 @@
-**Version**: 1.10.0
+**Version**: 1.11.0
+[v1.11.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.10.0] ✅ Completed: QuickEvalLocalOverrideResolution - Implement quick eval format resolution in the LocalResolver.
 [v1.9.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
 [v1.7.0] ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
