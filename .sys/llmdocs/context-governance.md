@@ -16,10 +16,17 @@ Gate Enforcement Flow:
 - `.github/workflows/promote.yml`
 - `.github/workflows/record-approval.yml`
 - `.github/workflows/regression-gate.yml`
+- `.github/workflows/moderation-scan.yml`
 - `promptops/delivery/prod-target.yaml`
 - `promptops/policies/regression.yaml`
+- `promptops/policies/acceptable-use.md`
+- `promptops/policies/deprecation.md`
+- `promptops/policies/ownership-disputes.md`
 
 **Section C: Policy Inventory**
+- `promptops/policies/acceptable-use.md`: Acceptable use constraints.
+- `promptops/policies/deprecation.md`: Deprecation guidelines.
+- `promptops/policies/ownership-disputes.md`: Ownership and takedown appeal process.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 
 **Section D: Promotion Record Format**

@@ -48,3 +48,6 @@
 
 ### GOVERNANCE v1.8.0
 - ✅ Completed: Promotion Approval Enforcement - Fixed jq logic in promote.yml to properly pipe approvals/*.json contents.
+
+### GOVERNANCE v1.9.0
+- ✅ Completed: ModerationAndGovernancePolicies - Implemented acceptable use, deprecation, and ownership dispute policies and automated moderation scan workflow.
