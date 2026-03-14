@@ -17,4 +17,10 @@ class LocalResolver:
         if not os.path.exists(override_path):
             raise FileNotFoundError(f"Local override path not found: {override_path}")
 
-        return load_prompt_package(override_path)
+        data = load_prompt_package(override_path)
+
+        # Quick eval resolution
+        if data and "prompt" in data:
+            return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+
+        return data

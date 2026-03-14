@@ -59,3 +59,6 @@
 
 ### RUNTIME v1.9.0
 - ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
+
+### RUNTIME v1.10.0
+- ✅ Completed: QuickEvalLocalOverrideResolution - Implement quick eval format resolution in the LocalResolver.
