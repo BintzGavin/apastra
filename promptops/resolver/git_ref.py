@@ -107,6 +107,25 @@ class GitRefResolver:
             if result_dir_json.returncode == 0:
                 return json.loads(result_dir_json.stdout)
 
+            # Quick eval resolution
+            result_eval_yaml = subprocess.run(
+                ["git", "show", f"{pin}:promptops/evals/{prompt_id}.yaml"],
+                capture_output=True, text=True, check=False
+            )
+            if result_eval_yaml.returncode == 0:
+                data = yaml.safe_load(result_eval_yaml.stdout)
+                if data and "prompt" in data:
+                    return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+
+            result_eval_json = subprocess.run(
+                ["git", "show", f"{pin}:promptops/evals/{prompt_id}.json"],
+                capture_output=True, text=True, check=False
+            )
+            if result_eval_json.returncode == 0:
+                data = json.loads(result_eval_json.stdout)
+                if data and "prompt" in data:
+                    return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+
             raise RuntimeError(f"Failed to resolve prompt '{prompt_id}' at git ref '{pin}'")
 
         except Exception as e:

@@ -56,3 +56,6 @@
 
 ### RUNTIME v1.8.0
 - ✅ Completed: QuickEvalWorkspaceResolution - Implement quick eval format resolution in the WorkspaceResolver.
+
+### RUNTIME v1.9.0
+- ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
