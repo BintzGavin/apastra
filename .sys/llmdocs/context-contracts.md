@@ -152,6 +152,10 @@
   - Naming: `prompt.yaml` or `prompt.json`
   - Structure: Lives in `promptops/prompts/<id>/`
   - Required fields: `id` (string), `variables` (object), `template` (string, object, array).
+- **Prompt Packages:**
+  - Naming: `package.yaml` or `package.json`
+  - Structure: Lives in `promptops/prompts/<package-id>/`
+  - Required fields: `id` (string), `digest` (string), `specs` (array).
 - **Datasets:**
   - Naming: `manifest.json` or `manifest.yaml` and `cases.jsonl`
   - Structure: Lives in `promptops/datasets/<dataset-id>/`
