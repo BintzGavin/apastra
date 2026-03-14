@@ -8,6 +8,8 @@ jobs:
   triage-report:
     if: contains(github.event.issue.labels.*.name, 'moderation-report')
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     permissions:
       issues: write
     steps:
