@@ -22,3 +22,7 @@
 ## [0.15.0] - ModelAssistedAssertions
 **Learning:** Deterministic evaluation requires temporary placeholder scores for model-assisted capabilities.
 **Action:** Revisit evaluate_assertions when LLM rubric scoring is fully supported.
+
+## [0.16.0] - TrialsAndVarianceSupport
+**Learning:** Found that `normalize.py` computes an average score across all evaluator outputs without recording variance, and `run.py` ignores the `trials` parameter in the run request. This prevents variance-aware regression gating.
+**Action:** Spec'd the implementation of variance calculation in `normalize.py` and trial looping in `run.py` to support non-deterministic evaluators.
