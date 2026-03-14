@@ -25,8 +25,9 @@ promptops/
 │   ├── local.py
 │   ├── packaged.py
 │   ├── workspace.py
-└── manifests/
-    └── consumption-example.yaml
+├── manifests/
+│   └── consumption-example.yaml
+└── evals/
 ```
 
 ## Section C: Public Interface

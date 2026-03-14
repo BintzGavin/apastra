@@ -53,3 +53,6 @@
 
 ### RUNTIME v1.7.1
 - ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
+
+### RUNTIME v1.8.0
+- ✅ Completed: QuickEvalWorkspaceResolution - Implement quick eval format resolution in the WorkspaceResolver.

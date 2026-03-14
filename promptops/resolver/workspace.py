@@ -30,4 +30,16 @@ class WorkspaceResolver:
         if os.path.exists(workspace_path_json_dir):
             return load_prompt_package(workspace_path_json_dir)
 
+        quick_eval_yaml = f"promptops/evals/{prompt_id}.yaml"
+        if os.path.exists(quick_eval_yaml):
+            data = load_prompt_package(quick_eval_yaml)
+            if data and "prompt" in data:
+                return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+
+        quick_eval_json = f"promptops/evals/{prompt_id}.json"
+        if os.path.exists(quick_eval_json):
+            data = load_prompt_package(quick_eval_json)
+            if data and "prompt" in data:
+                return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+
         return None
