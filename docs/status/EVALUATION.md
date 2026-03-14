@@ -1,4 +1,4 @@
-**Version**: 0.19.0
+**Version**: 0.19.1
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
@@ -26,3 +26,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.18.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.18.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.19.0] ✅ Completed: PerformanceAssertions - Implemented latency and cost assertions
+[v0.19.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
