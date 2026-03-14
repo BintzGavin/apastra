@@ -1,4 +1,5 @@
-**Version**: 1.13.0
+**Version**: 1.14.0
+[v1.14.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.13.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.12.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
 [v1.11.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
