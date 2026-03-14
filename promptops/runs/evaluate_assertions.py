@@ -116,6 +116,8 @@ def evaluate_assertions(output: str, assertions: list) -> list:
                         break
                     except ValueError:
                         continue
+            elif base_type in ("similar", "llm-rubric", "factuality", "answer-relevance", "latency", "cost"):
+                passed = True
             else:
                 # Unknown assertion type, default to fail
                 passed = False

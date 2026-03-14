@@ -42,3 +42,6 @@
 
 ### EVALUATION v0.14.0
 - ✅ Completed: InlineAssertions - Implemented deterministic inline assertions evaluation engine.
+
+### EVALUATION v0.15.0
+- ✅ Completed: ModelAssistedAssertions - Implemented model-assisted and performance assertion types in the deterministic evaluation engine

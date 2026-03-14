@@ -19,3 +19,6 @@
 ## 0.11.0 - Harness Adapter Inconsistency
 **Learning:** The reference harness adapter (`promptops/harnesses/reference-adapter/run.py`) outputs a monolithic `run_artifact.json` and incorrectly calls the refactored `normalize.py`. This causes an inconsistency with the new append-friendly split-artifact architecture expected by the RUNTIME runner shim.
 **Action:** The reference adapter must be refactored to write `run_manifest.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` directly, and pass the correct file paths to the normalizer.
+## [0.15.0] - ModelAssistedAssertions
+**Learning:** Deterministic evaluation requires temporary placeholder scores for model-assisted capabilities.
+**Action:** Revisit evaluate_assertions when LLM rubric scoring is fully supported.
