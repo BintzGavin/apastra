@@ -296,6 +296,98 @@ For each assertion in a case's `assert` array:
 
 ---
 
+## Writing Good Evals
+
+This section teaches you how to write effective evaluations — not just how to run them. These best practices come from Anthropic, Hamel Husain, OpenAI, and production teams running evals at scale.
+
+### The Eval Maturity Ladder
+
+Start at Level 1 and graduate upward as your prompt matures:
+
+| Level | What | When to use | Apastra tools |
+|---|---|---|---|
+| **1. Deterministic checks** | Assertions like `contains`, `is-json`, `regex` | Always — these are fast, free, and run on every change | Inline assertions, quick eval files |
+| **2. AI-graded checks** | `llm-rubric`, `similar`, `factuality` | When deterministic checks can't capture quality (tone, coherence, reasoning) | Judge evaluators, `llm-rubric` assertions |
+| **3. Baseline comparison** | Compare scorecards against a known-good run | When you need regression detection across prompt changes | Baseline skill, regression policies |
+| **4. Human review** | Periodic spot-checks of model outputs | When you need to calibrate AI judges or validate subjective quality | Manual scorecard review |
+
+**Start at Level 1.** Most teams get enormous value from 10-20 deterministic checks before they ever need AI grading.
+
+### Designing Test Cases
+
+**1. Start from real failures, not hypotheticals**
+- Look at actual bad outputs your prompt has produced. Turn each one into a test case.
+- If you don't have failures yet, try the prompt with adversarial inputs and edge cases to find them.
+
+**2. Break your prompt into features and scenarios**
+- Decompose what your prompt does into discrete capabilities.
+- Write separate test cases for each capability. Example for a "classify email" prompt:
+  - ✅ Correctly classifies obvious spam
+  - ✅ Handles ambiguous emails (could be sales or support)
+  - ✅ Returns valid JSON
+  - ✅ Doesn't expose internal IDs or metadata
+  - ✅ Handles empty input gracefully
+
+**3. Cover these categories:**
+
+| Category | Examples |
+|---|---|
+| Happy path | Normal inputs that should work correctly |
+| Edge cases | Empty input, very long input, special characters, Unicode |
+| Adversarial | Prompt injection, jailbreak attempts, off-topic requests |
+| Format compliance | JSON output, length limits, required fields |
+| Safety | Refusal of harmful requests, PII handling |
+
+**4. Use your agent to generate test cases**
+- Ask your IDE agent: "Generate 20 test cases for this prompt, including edge cases and adversarial inputs."
+- Review and curate the generated cases — don't blindly trust synthetic data.
+
+**5. Prioritize volume over perfection** (Anthropic's recommendation)
+- 50 cases with automated grading > 10 cases with careful human review.
+- You can always improve case quality later; you can't retroactively add coverage.
+
+### Choosing the Right Assertion Type
+
+| If you want to check... | Use this assertion | Example |
+|---|---|---|
+| Output contains specific keywords | `contains` / `icontains` | `{"type": "icontains", "value": "summary"}` |
+| Output is valid JSON | `is-json` | `{"type": "is-json"}` |
+| Output matches a specific structure | `is-valid-json-schema` | `{"type": "is-valid-json-schema", "value": {"type": "object", "required": ["category"]}}` |
+| Output doesn't leak internal data | `not-regex` | `{"type": "not-regex", "value": "[0-9a-f]{8}-[0-9a-f]{4}"}` |
+| Output is semantically similar to a reference | `similar` | `{"type": "similar", "value": "expected answer", "threshold": 0.8}` |
+| Output quality requires judgment | `llm-rubric` | `{"type": "llm-rubric", "value": "Is the response helpful, accurate, and concise?"}` |
+| Output mentions at least one of several options | `contains-any` | `{"type": "contains-any", "value": ["yes", "correct", "affirmative"]}` |
+
+### Writing Good Judge Rubrics
+
+When using `llm-rubric` or judge evaluators:
+
+1. **Be specific, not vague.** ❌ "Is the output good?" → ✅ "Does the output mention the company name in the first sentence? Does it use a professional tone? Is it under 100 words?"
+2. **Use binary or numeric scales.** Ask for "correct/incorrect" or a 1-5 scale, not open-ended qualitative feedback.
+3. **Ask the judge to reason first.** "Think step by step about whether this output meets the criteria, then give a score." This improves grading accuracy.
+4. **Version your rubrics.** Changing the rubric text changes what the metric means. Treat rubric edits as new evaluator versions.
+5. **Calibrate against human judgment.** Periodically score 25-50 outputs yourself and compare against the judge. If they diverge, refine the rubric.
+
+### Common Eval Mistakes
+
+| Mistake | Why it's bad | Fix |
+|---|---|---|
+| Only testing happy paths | You miss the failures that matter most | Add edge cases and adversarial inputs |
+| Using `equals` for free-text outputs | LLM output is non-deterministic — exact match almost always fails | Use `contains`, `icontains`, or `similar` instead |
+| Thresholds set too high | Flaky evals erode trust — people start ignoring failures | Start with achievable thresholds (e.g., 0.6), tighten over time |
+| No baseline comparison | You can't tell if a prompt change made things worse | Establish a baseline after your first passing run |
+| Ignoring flaky cases | Random noise masks real regressions | Increase `trials`, quarantine consistently flaky cases |
+| Overfitting to test cases | Prompt works for tests but fails in production | Maintain a holdout set, add cases from real production failures |
+
+### Evolving Your Evals Over Time
+
+1. **Week 1**: Start with a quick eval file — 5 cases, deterministic assertions only.
+2. **Week 2-3**: Graduate to a full suite. Add 20+ cases. Establish your first baseline.
+3. **Month 2+**: Add judge evaluators for subjective quality. Set up regression policies.
+4. **Ongoing**: Promote real production failures into your "never again" regression suite. Periodically calibrate AI judges against human judgment.
+
+---
+
 ## Tips
 
 - Start with small datasets (5-10 cases). You can always add more.
@@ -304,3 +396,5 @@ For each assertion in a case's `assert` array:
 - If a metric is flaky (varies a lot between runs), increase trials and widen `allowed_delta`.
 - Use `thresholds` in the suite for pass/fail. Use `regression.yaml` for comparison against baselines.
 - Inline assertions and evaluator files can both apply to the same case — they complement each other.
+- When stuck on what to test, ask your agent: "What are the failure modes of this prompt?" Use the answer to write cases.
+
