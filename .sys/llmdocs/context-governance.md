@@ -27,11 +27,13 @@ Gate Enforcement Flow:
 - `promptops/policies/acceptable-use.md`
 - `promptops/policies/deprecation.md`
 - `promptops/policies/ownership-disputes.md`
+- `promptops/policies/naming.md`
 
 **Section C: Policy Inventory**
 - `promptops/policies/acceptable-use.md`: Acceptable use constraints.
 - `promptops/policies/deprecation.md`: Deprecation guidelines.
 - `promptops/policies/ownership-disputes.md`: Ownership and takedown appeal process.
+- `promptops/policies/naming.md`: Naming rules for prompts, packages, and metrics.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 
 **Section D: Promotion Record Format**

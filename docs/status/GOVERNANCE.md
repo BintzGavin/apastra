@@ -1,4 +1,4 @@
-**Version**: 1.14.0
+**Version**: 1.15.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -28,3 +28,5 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.12.0] ✅ Completed: CommunityReportingWorkflow - Implemented an automated workflow and issue template for handling community moderation reports.
 [v1.13.0] ✅ Completed: Consolidated CI - Implemented simplified two-workflow setup.
 [v1.14.0] ✅ Completed: Node20DeprecationFix - Injected FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 into GitHub Actions workflows.
+[v1.15.0] ✅ Completed: Minimal Plan Exception Final - Acknowledged all GOVERNANCE vision gaps are complete.
+[v1.15.0] ✅ Completed: Naming Policy - Implemented naming and rename policy.
