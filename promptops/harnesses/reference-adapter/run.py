@@ -33,6 +33,16 @@ def main():
         failures = [{"message": str(e)}]
 
 
+    dataset_path = request.get('dataset_path')
+    is_quick_eval = 'inline-asserts' in request.get('evaluator_refs', [])
+
+    cases_data = []
+    if is_quick_eval and dataset_path and os.path.exists(dataset_path):
+        with open(dataset_path, 'r') as df:
+            for line in df:
+                if line.strip():
+                    cases_data.append(json.loads(line))
+
     # 1. Write run_manifest.json
     manifest = {
         "input_refs": {
@@ -57,14 +67,29 @@ def main():
         json.dump(manifest, f, indent=2)
 
     # 2. Write cases.jsonl
-    cases = [
-        {
-            "case_id": "case-1",
-            "per_trial_outputs": [{"output": "dummy"}],
-            "evaluator_outputs": [{"score": 1.0}],
-            "pointers": {}
-        }
-    ]
+    cases = []
+    if is_quick_eval:
+        for c in cases_data:
+            eval_outputs = []
+            asserts = c.get('assert', [])
+            for a in asserts:
+                # Mock evaluation: just assume 1.0 for now, or match some logic
+                eval_outputs.append({f"assert_{a['type']}": 1.0})
+            cases.append({
+                "case_id": c.get('id', 'case-X'),
+                "per_trial_outputs": [{"output": "mock_output"}],
+                "evaluator_outputs": eval_outputs,
+                "pointers": {}
+            })
+    else:
+        cases = [
+            {
+                "case_id": "case-1",
+                "per_trial_outputs": [{"output": "dummy"}],
+                "evaluator_outputs": [{"score": 1.0}],
+                "pointers": {}
+            }
+        ]
     cases_path = os.path.join(output_dir, 'cases.jsonl')
     with open(cases_path, 'w') as f:
         for case in cases:

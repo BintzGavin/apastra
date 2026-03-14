@@ -2,6 +2,7 @@
 
 ## Section A: Architecture
 Harness execution flow:
+- (Quick Eval Mode) `promptops/runs/quick-eval.sh <yaml>` dynamically constructs a run request and dataset from a yaml file before invoking the harness.
 - Run request generated and stored in `promptops/runs/<run-id>/run_request.json`
 - Run request validated via `promptops/runs/validate-run-request.sh`
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`

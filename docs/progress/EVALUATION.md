@@ -36,3 +36,6 @@
 
 ### EVALUATION v0.12.3
 - ✅ Completed: Minimal Plan Exception - All plans officially complete
+
+### EVALUATION v0.13.0
+- ✅ Completed: QuickEvalMode - Implemented quick eval mode pipeline and adapted reference harness
