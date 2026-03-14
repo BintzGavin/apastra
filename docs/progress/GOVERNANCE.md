@@ -45,3 +45,6 @@
 
 ### GOVERNANCE v1.7.0
 - ✅ Completed: Minimal Plan Exception - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.8.0
+- ✅ Completed: Promotion Approval Enforcement - Fixed jq logic in promote.yml to properly pipe approvals/*.json contents.
