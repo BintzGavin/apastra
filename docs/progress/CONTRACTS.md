@@ -77,3 +77,6 @@
 
 ### CONTRACTS v0.27.0
 - ✅ Completed: InitialPromptPackage - Created first prompt package instance my-prompt-package/package.yaml
+
+### CONTRACTS v0.28.0
+- ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas, validation scripts, and initial instances have been fully implemented and verified.
