@@ -51,3 +51,6 @@
 
 ### GOVERNANCE v1.9.0
 - ✅ Completed: ModerationAndGovernancePolicies - Implemented acceptable use, deprecation, and ownership dispute policies and automated moderation scan workflow.
+
+### GOVERNANCE v1.10.0
+- ✅ Completed: ArtifactAttestations - Added build provenance attestations to immutable-release.yml.

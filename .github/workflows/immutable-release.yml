@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
+      attestations: write
+      artifact-metadata: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,6 +23,11 @@ jobs:
           tar -czvf promptops.tar.gz promptops/
           DIGEST=$(sha256sum promptops.tar.gz | awk '{print $1}')
           echo "digest=$DIGEST" >> $GITHUB_OUTPUT
+
+      - name: Attest Build Provenance
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: 'promptops.tar.gz'
 
       - name: Create GitHub Release
         env:

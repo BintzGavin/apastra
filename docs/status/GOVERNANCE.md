@@ -1,4 +1,4 @@
-**Version**: 1.9.0
+**Version**: 1.10.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -23,3 +23,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.7.0] ✅ Completed: Minimal Plan Exception - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.8.0] ✅ Completed: Promotion Approval Enforcement - Fixed jq logic in promote.yml to properly pipe approvals/*.json contents.
 [v1.9.0] ✅ Completed: ModerationAndGovernancePolicies - Implemented acceptable use, deprecation, and ownership dispute policies and automated moderation scan workflow.
+[v1.10.0] ✅ Completed: ArtifactAttestations - Added build provenance attestations to immutable-release.yml.
