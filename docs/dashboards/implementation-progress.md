@@ -2,7 +2,7 @@
 title: "Implementation Progress"
 description: "Implementation progress across all domains"
 audience: "all"
-last_verified: "2026-03-11"
+last_verified: "2026-03-14"
 source_files:
   - "docs/progress/CONTRACTS.md"
   - "docs/progress/DOCS.md"
@@ -75,6 +75,9 @@ source_files:
 ### CONTRACTS v0.21.0
 - ✅ Completed: InitialSuite - Created first suite instance test-suite.yaml
 
+### CONTRACTS v0.22.0
+- ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
+
 
 ## DOCS
 
@@ -84,6 +87,17 @@ source_files:
   - Updated API documentation for `prompt-spec`, `dataset-case`, `dataset-manifest`, `evaluator`, `harness-adapter`, `run-artifact`, `run-request`, `suite`, and `consumption-manifest`
   - Created and refreshed cross-domain dashboards (`domain-status-overview.md`, `implementation-progress.md`, `schema-dependency-graph.md`)
   - Tracked status and progress updates
+
+### DOCS v0.2.0
+- ✅ Completed: Daily Documentation Review
+  - Updated API documentation for all schemas
+  - Refreshed cross-domain dashboards
+
+### DOCS v0.3.0
+- ✅ Completed: Daily Documentation Review
+  - Updated API documentation for all schemas
+  - Refreshed cross-domain dashboards
+  - Regenerated context-docs.md
 
 
 ## EVALUATION
@@ -114,6 +128,18 @@ source_files:
 
 ### EVALUATION v0.11.0
 - ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
+
+### EVALUATION v0.12.0
+- ✅ Completed: ReferenceAdapterRefactor - Refactored reference adapter to natively support split artifacts and updated scorecard normalizer execution
+
+### EVALUATION v0.12.1
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
+
+### EVALUATION v0.12.2
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
+
+### EVALUATION v0.12.3
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
 
 
 ## GOVERNANCE
@@ -160,6 +186,15 @@ source_files:
 ### GOVERNANCE v1.5.0
 - ✅ Completed: Conditional Regression Gate - Bypassed regression check for PRs modifying non-evaluable files using tj-actions/changed-files.
 
+### GOVERNANCE v1.6.0
+- ✅ Completed: Rich PR Annotations - Enhanced the regression gate workflow to provide rich PR annotations and a detailed Markdown summary of regression evidence.
+
+### GOVERNANCE v1.7.0
+- ✅ Completed: Minimal Plan Exception - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.8.0
+- ✅ Completed: Promotion Approval Enforcement - Fixed jq logic in promote.yml to properly pipe approvals/*.json contents.
+
 
 ## RUNTIME
 
@@ -201,4 +236,21 @@ source_files:
 ### RUNTIME v1.3.1
 - ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
 
+### RUNTIME v1.4.0
+- ✅ Completed: ReferenceCLI - Spec the reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
+
+### RUNTIME v1.4.1
+- ✅ Completed: LocalOverrideFix - Fix the LocalResolver in the resolver chain to parse prompt packages instead of returning stub strings.
+
+### RUNTIME v1.5.0
+- ✅ Completed: ReferenceCLI - Implemented reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
+
+### RUNTIME v1.6.0
+- ✅ Completed: DirectoryResolver - Update WorkspaceResolver and GitRefResolver to support resolving prompts packaged in a <prompt_id> directory.
+
+### RUNTIME v1.7.0
+- ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
+
+### RUNTIME v1.7.1
+- ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
 
