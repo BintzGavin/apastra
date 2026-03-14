@@ -136,9 +136,15 @@ def evaluate_assertions(output: str, assertions: list, metadata: dict = None) ->
                         except (ValueError, jsonschema.exceptions.ValidationError):
                             continue
             elif base_type == "latency":
-                passed = float(metadata.get("latency", 0)) <= float(assert_value)
+                try:
+                    passed = float(metadata.get("latency", 0)) <= float(assert_value)
+                except (ValueError, TypeError):
+                    passed = False
             elif base_type == "cost":
-                passed = float(metadata.get("cost", 0.0)) <= float(assert_value)
+                try:
+                    passed = float(metadata.get("cost", 0.0)) <= float(assert_value)
+                except (ValueError, TypeError):
+                    passed = False
             elif base_type in ("similar", "llm-rubric", "factuality", "answer-relevance"):
                 passed = True
             else:
