@@ -1,0 +1,21 @@
+name: Moderation Scan
+on:
+  pull_request:
+    paths:
+      - 'promptops/prompts/**'
+      - 'promptops/datasets/**'
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run basic keyword scan
+        run: |
+          # Use GitHub Actions syntax to fail if the grep finds blocked keywords
+          if grep -i -r -E "blocked_keyword_1|blocked_keyword_2" promptops/prompts/ promptops/datasets/ 2>/dev/null; then
+            echo "Blocked keywords found!"
+            exit 1
+          else
+            echo "No blocked keywords found."
+            exit 0
+          fi
