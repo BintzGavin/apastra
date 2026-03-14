@@ -1,0 +1,12 @@
+id: "summarize-quick"
+prompt: "Summarize the following text in {{max_length}} or fewer words: {{text}}"
+cases:
+  - case_id: "short-article"
+    inputs:
+      max_length: "50"
+      text: "The quick brown fox jumps over the lazy dog."
+    assert:
+      - type: "icontains"
+        value: "fox"
+thresholds:
+  pass_rate: 1.0

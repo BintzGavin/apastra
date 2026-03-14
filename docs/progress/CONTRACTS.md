@@ -80,3 +80,9 @@
 
 ### CONTRACTS v0.28.0
 - ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas, validation scripts, and initial instances have been fully implemented and verified.
+
+### CONTRACTS v0.29.0
+- ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception.
+
+### CONTRACTS v0.30.0
+- ✅ Completed: InitialQuickEval - Created missing initial quick eval instance in promptops/evals/my-eval.yaml

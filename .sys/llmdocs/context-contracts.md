@@ -146,7 +146,7 @@
 ## Section C: Source File Conventions
 - **Quick Evals:**
   - Naming: `*.yaml`
-  - Structure: Lives in `promptops/evals/`
+  - Structure: Lives in `promptops/evals/` (e.g., `my-eval.yaml`)
   - Required fields: `id` (string), `prompt` (string), `cases` (array).
 - **Prompts:**
   - Naming: `prompt.yaml` or `prompt.json`
