@@ -66,3 +66,7 @@
 
 ### GOVERNANCE v1.14.0
 - ✅ Completed: Node20DeprecationFix - Injected FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 into GitHub Actions workflows.
+
+### GOVERNANCE v1.15.0
+- ✅ Completed: Minimal Plan Exception Final - Acknowledged all GOVERNANCE vision gaps are complete.
+- ✅ Completed: Naming Policy - Implemented naming and rename policy.
