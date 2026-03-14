@@ -1,4 +1,4 @@
-**Version**: 0.17.1
+**Version**: 0.18.0
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
@@ -23,3 +23,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.16.0] ✅ Completed: TrialsAndVarianceSupport - Implemented trials support in reference adapter and variance calculation in scorecard normalizer
 [v0.17.0] ✅ Completed: JsonSchemaAssertion - Implemented the is-valid-json-schema assertion type for inline evaluation
 [v0.17.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
+[v0.18.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
