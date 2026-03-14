@@ -1,4 +1,4 @@
-**Version**: 0.24.0
+**Version**: 0.25.0
 
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
@@ -24,3 +24,4 @@
 [v0.23.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.23.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.24.0] ✅ Completed: QuickEvalAndInlineAssertions - Defined schemas for Quick Eval Mode and Inline Assertions.
+[v0.25.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
