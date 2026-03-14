@@ -21,5 +21,5 @@
 
 #### 4. Test Plan
 - **Verification**: Run `bash promptops/validators/validate-quick-eval.sh promptops/evals/my-eval.yaml`
-- **Success Criteria**: The validation script returns `Validation passed.`
+- **Success Criteria**: The validation script returns an exit code of 0.
 - **Edge Cases**: Missing `id`, `prompt`, or `cases` should be rejected by the schema.
