@@ -27,3 +27,6 @@
 
 ### EVALUATION v0.12.0
 - ✅ Completed: ReferenceAdapterRefactor - Refactored reference adapter to natively support split artifacts and updated scorecard normalizer execution
+
+### EVALUATION v0.12.1
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
