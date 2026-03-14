@@ -60,3 +60,6 @@
 
 ### GOVERNANCE v1.12.0
 - ✅ Completed: CommunityReportingWorkflow - Implemented an automated workflow and issue template for handling community moderation reports.
+
+### GOVERNANCE v1.13.0
+- ✅ Completed: Consolidated CI - Implemented simplified two-workflow setup.

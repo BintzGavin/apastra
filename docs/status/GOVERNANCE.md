@@ -1,4 +1,4 @@
-**Version**: 1.12.0
+**Version**: 1.13.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -26,3 +26,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.10.0] ✅ Completed: ArtifactAttestations - Added build provenance attestations to immutable-release.yml.
 [v1.11.0] ✅ Completed: SecretScan - Implemented automated secret scanning workflow.
 [v1.12.0] ✅ Completed: CommunityReportingWorkflow - Implemented an automated workflow and issue template for handling community moderation reports.
+[v1.13.0] ✅ Completed: Consolidated CI - Implemented simplified two-workflow setup.

@@ -1,0 +1,9 @@
+name: Prompt Eval
+on:
+  pull_request:
+    paths:
+      - 'promptops/**'
+
+jobs:
+  eval:
+    uses: ./.github/workflows/regression-gate.yml
