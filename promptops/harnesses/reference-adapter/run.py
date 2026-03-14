@@ -39,6 +39,7 @@ def main():
 
     dataset_path = request.get('dataset_path')
     is_quick_eval = 'inline-asserts' in request.get('evaluator_refs', [])
+    trials = request.get('trials', 1)
 
     cases_data = []
     if is_quick_eval and dataset_path and os.path.exists(dataset_path):
@@ -74,27 +75,34 @@ def main():
     cases = []
     if is_quick_eval:
         for c in cases_data:
+            per_trial_outputs = []
             eval_outputs = []
             asserts = c.get('assert', [])
-            # Using real evaluation logic
-            mock_output = "mock_output"
-            eval_scores = evaluate_assertions(mock_output, asserts)
-            # evaluate_assertions returns a list of dictionaries [{"assert_<type>": score}, ...]
-            for eval_score in eval_scores:
-                eval_outputs.append(eval_score)
+
+            for t in range(trials):
+                # Using real evaluation logic
+                mock_output = f"mock_output_{t}"
+                per_trial_outputs.append({"output": mock_output})
+
+                eval_scores = evaluate_assertions(mock_output, asserts)
+                # evaluate_assertions returns a list of dictionaries [{"assert_<type>": score}, ...]
+                for eval_score in eval_scores:
+                    eval_outputs.append(eval_score)
 
             cases.append({
                 "case_id": c.get('id', 'case-X'),
-                "per_trial_outputs": [{"output": mock_output}],
+                "per_trial_outputs": per_trial_outputs,
                 "evaluator_outputs": eval_outputs,
                 "pointers": {}
             })
     else:
+        per_trial_outputs = [{"output": f"dummy_{t}"} for t in range(trials)]
+        eval_outputs = [{"score": 1.0} for t in range(trials)]
         cases = [
             {
                 "case_id": "case-1",
-                "per_trial_outputs": [{"output": "dummy"}],
-                "evaluator_outputs": [{"score": 1.0}],
+                "per_trial_outputs": per_trial_outputs,
+                "evaluator_outputs": eval_outputs,
                 "pointers": {}
             }
         ]

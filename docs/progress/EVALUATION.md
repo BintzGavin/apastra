@@ -45,3 +45,6 @@
 
 ### EVALUATION v0.15.0
 - ✅ Completed: ModelAssistedAssertions - Implemented model-assisted and performance assertion types in the deterministic evaluation engine
+
+### EVALUATION v0.16.0
+- ✅ Completed: TrialsAndVarianceSupport - Implemented trials support in reference adapter and variance calculation in scorecard normalizer
