@@ -54,3 +54,6 @@
 
 ### GOVERNANCE v1.10.0
 - ✅ Completed: ArtifactAttestations - Added build provenance attestations to immutable-release.yml.
+
+### GOVERNANCE v1.11.0
+- ✅ Completed: SecretScan - Implemented automated secret scanning workflow.
