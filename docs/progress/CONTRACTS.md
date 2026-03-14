@@ -57,3 +57,6 @@
 
 ### CONTRACTS v0.21.0
 - ✅ Completed: InitialSuite - Created first suite instance test-suite.yaml
+
+### CONTRACTS v0.22.0
+- ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
