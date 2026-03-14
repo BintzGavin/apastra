@@ -86,3 +86,6 @@
 
 ### CONTRACTS v0.30.0
 - ✅ Completed: InitialQuickEval - Created missing initial quick eval instance in promptops/evals/my-eval.yaml
+
+### CONTRACTS v0.31.0
+- ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception as all required schemas, validation scripts, and initial instances have been fully implemented and verified.
