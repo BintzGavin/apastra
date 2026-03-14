@@ -63,3 +63,6 @@
 
 ### EVALUATION v0.19.0
 - ✅ Completed: PerformanceAssertions - Implemented latency and cost assertions
+
+### EVALUATION v0.19.1
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
