@@ -27,6 +27,10 @@ promptops/
 def load_manifest(ref_context=None) -> ManifestWrapper:
     pass
 
+class PackagedResolver:
+    def resolve(self, prompt_id: str, ref: str) -> dict:
+        pass
+
 def resolve(prompt_id: str, ref_context: str = None, variables: dict = None) -> tuple[str, dict]:
     # Returns (rendered_prompt_string, metadata_dict)
     # metadata_dict contains 'prompt_digest' (str) and optionally 'model' (str) if specified in manifest.
