@@ -1,4 +1,5 @@
-**Version**: 1.17.0
+**Version**: 1.18.0
+[v1.18.0] ✅ Completed: PackagedResolver - Implemented packaged artifact resolution for sha256 and oci refs with schema validation.
 [v1.17.0] ✅ Completed: LocalNameMappingResolution - Implement local alias mapping to stable IDs and model metadata propagation in the resolver chain.
 [v1.16.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
 [v1.15.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
