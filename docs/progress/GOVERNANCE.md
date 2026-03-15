@@ -70,3 +70,6 @@
 ### GOVERNANCE v1.15.0
 - ✅ Completed: Minimal Plan Exception Final - Acknowledged all GOVERNANCE vision gaps are complete.
 - ✅ Completed: Naming Policy - Implemented naming and rename policy.
+
+### GOVERNANCE v1.16.0
+- ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
