@@ -20,6 +20,10 @@
     "schema_version": {
       "type": "string",
       "description": "Version of the dataset case schema used by the JSONL file."
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Information about the origin and creation of the dataset."
     }
   },
   "required": [
