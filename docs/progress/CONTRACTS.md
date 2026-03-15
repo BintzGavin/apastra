@@ -101,3 +101,6 @@
 
 ### CONTRACTS v0.35.0
 - ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+
+### CONTRACTS v0.36.0
+- ✅ Completed: SubmissionRecordSchema - Created submission-record.schema.json and validate-submission-record.sh
