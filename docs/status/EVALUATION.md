@@ -1,4 +1,4 @@
-**Version**: 0.19.2
+**Version**: 0.19.3
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
@@ -28,3 +28,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.19.0] ✅ Completed: PerformanceAssertions - Implemented latency and cost assertions
 [v0.19.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.19.2] ✅ Completed: Minimal Plan Exception - All plans officially complete
+[v0.19.3] ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard normalizer

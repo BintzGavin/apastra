@@ -69,3 +69,6 @@
 
 ### EVALUATION v0.19.2
 - ✅ Completed: Minimal Plan Exception - All plans officially complete
+
+### EVALUATION v0.19.3
+- ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard normalizer
