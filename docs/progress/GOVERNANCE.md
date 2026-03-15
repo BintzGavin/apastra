@@ -73,3 +73,6 @@
 
 ### GOVERNANCE v1.16.0
 - ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
+
+### GOVERNANCE v1.17.0
+- ✅ Completed: TrustedPublisherBadges - Added trusted-publisher.md policy and codeowners.
