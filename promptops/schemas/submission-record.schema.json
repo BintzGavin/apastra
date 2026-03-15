@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-submission-record-v1",
+  "title": "Submission Record",
+  "description": "Schema for an append-only artifact structure for package submissions to a public registry.",
+  "type": "object",
+  "properties": {
+    "submission_id": {
+      "type": "string",
+      "description": "Stable identifier for the submission."
+    },
+    "package_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Content digest of the submitted package bundle."
+    },
+    "publisher_id": {
+      "type": "string",
+      "description": "Identifier of the user or system publishing the package."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The time the submission was created."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Arbitrary metadata for the submission.",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "submission_id",
+    "package_digest",
+    "publisher_id",
+    "timestamp"
+  ],
+  "additionalProperties": false
+}

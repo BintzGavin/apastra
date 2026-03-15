@@ -69,6 +69,9 @@
 - **ID:** `apastra-provider-artifact-v1`
   - **Version:** 0.17.0
   - **Description:** Schema for provider artifacts.
+- **ID:** `apastra-submission-record-v1`
+  - **Version:** 0.36.0
+  - **Description:** Schema for an append-only artifact structure for package submissions to a public registry.
 - **ID:** `https://promptops.apastra.com/schemas/quick-eval.schema.json`
   - **Version:** 0.24.0
   - **Description:** Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
@@ -139,6 +142,9 @@
 - **Validator:** `validate-provider-artifact.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-provider-artifact.sh <provider-artifact.json|yaml>`
   - **Validates:** JSON or YAML files against the `provider-artifact.schema.json` schema.
+- **Validator:** `validate-submission-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-submission-record.sh <submission-record.json>`
+  - **Validates:** JSON files against the `submission-record.schema.json` schema.
 - **Validator:** `validate-quick-eval.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-quick-eval.sh <eval.yaml>`
   - **Validates:** YAML files against the `quick-eval.schema.json` schema.
