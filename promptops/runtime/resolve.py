@@ -93,9 +93,16 @@ def resolve(prompt_id, ref_context=None, variables=None):
     except jsonschema.exceptions.ValidationError as e:
         raise RuntimeError(f"Resolved prompt failed schema validation: {e.message}")
 
+    rules = manifest.get_rules(prompt_id) if hasattr(manifest, 'get_rules') else {}
+    defaults = manifest.data.get('defaults', {}) if hasattr(manifest, 'data') and isinstance(manifest.data, dict) else {}
+    model_id = rules.get('model', defaults.get('model'))
+
     metadata = {
         "prompt_digest": compute_digest_from_dict(prompt_spec),
     }
+    if model_id:
+        metadata["model"] = model_id
+
 
     template = prompt_spec.get('template') if isinstance(prompt_spec, dict) else prompt_spec
 

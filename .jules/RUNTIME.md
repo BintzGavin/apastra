@@ -10,3 +10,7 @@
 ## 1.3.0 - Resolver topology misalignment
 **Learning:** The initial implementations of WorkspaceResolver and GitRefResolver searched for prompts in the root `promptops/` directory instead of the `promptops/prompts/` directory defined in the `README.md` repo topology model.
 **Action:** Always cross-reference directory lookup logic with the Example Repo Trees section in the vision document.
+
+## [v1.17.0] - Local Name Mapping
+**Learning:** The consumption manifest allows mapping local app aliases to stable backend IDs and injecting specific model configurations directly from the manifest. This breaks the 1:1 strict parity assumption of prompt_id, meaning resolvers must handle mapped IDs.
+**Action:** Always use rules.get('id', prompt_id) to extract the mapped ID.
