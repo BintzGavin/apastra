@@ -35,6 +35,7 @@ def main():
 
     candidate_metrics = candidate.get("normalized_metrics", {})
     baseline_metrics = baseline.get("normalized_metrics", {})
+    candidate_flake_rates = candidate.get("flake_rates", {})
 
     status = "pass"
     evidence = []
@@ -48,6 +49,8 @@ def main():
         floor = rule.get("floor")
         allowed_delta = rule.get("allowed_delta")
         direction = rule.get("direction")
+
+        is_flaky = candidate_flake_rates.get(metric, 0.0) > 0.0
 
         c_val = candidate_metrics.get(metric)
         b_val = baseline_metrics.get(metric)
@@ -83,6 +86,9 @@ def main():
                 passed = False
                 message = f"Delta {delta} exceeds allowed rise {allowed_delta}."
 
+        if not passed and is_flaky:
+            message += " (quarantined due to flakiness)"
+
         ruled_metrics.add(metric)
         evidence.append({
             "metric": metric,
@@ -94,8 +100,11 @@ def main():
         })
 
         if not passed:
-            if severity == "blocker": has_blocker = True
-            if severity == "warning": has_warning = True
+            if is_flaky:
+                has_warning = True
+            else:
+                if severity == "blocker": has_blocker = True
+                if severity == "warning": has_warning = True
 
     all_metrics = set(candidate_metrics.keys()).union(set(baseline_metrics.keys()))
     ungated_metrics = all_metrics - ruled_metrics

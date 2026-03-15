@@ -13,8 +13,10 @@ def normalize_scorecard(cases):
     metrics_count = {}
     metrics_values = {}
     metric_versions = {}
+    metrics_by_case = {}
 
     for case in cases:
+        case_id = case.get("case_id", "unknown")
         for eval_output in case.get("evaluator_outputs", []):
             extracted_version = eval_output.get("metric_version", "1.0.0")
             for key, value in eval_output.items():
@@ -26,11 +28,17 @@ def normalize_scorecard(cases):
                     if key not in metrics_values:
                         metrics_values[key] = []
                         metric_versions[key] = extracted_version
+                        metrics_by_case[key] = {}
                     metrics_values[key].append(value)
+
+                    if case_id not in metrics_by_case[key]:
+                        metrics_by_case[key][case_id] = []
+                    metrics_by_case[key][case_id].append(value)
 
     normalized_metrics = {}
     metric_definitions = {}
     variance = {}
+    flake_rates = {}
 
     for key, count in metrics_count.items():
         mean = metrics_sum[key] / count
@@ -44,10 +52,21 @@ def normalize_scorecard(cases):
             "version": metric_versions.get(key, "1.0.0")
         }
 
+        flaky_cases = 0
+        total_unique_cases = len(metrics_by_case[key])
+        if total_unique_cases > 0:
+            for case_id, values in metrics_by_case[key].items():
+                if max(values) - min(values) > 1e-6:
+                    flaky_cases += 1
+            flake_rates[key] = flaky_cases / total_unique_cases
+        else:
+            flake_rates[key] = 0.0
+
     return {
         "normalized_metrics": normalized_metrics,
         "metric_definitions": metric_definitions,
-        "variance": variance
+        "variance": variance,
+        "flake_rates": flake_rates
     }
 
 def main():

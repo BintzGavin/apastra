@@ -75,3 +75,6 @@
 
 ### EVALUATION v0.20.0
 - ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
+
+### EVALUATION v0.21.0
+- ✅ Completed: FlakeQuarantine - Implemented flake tracking and variance-aware gating

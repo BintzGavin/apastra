@@ -7,7 +7,8 @@
   "properties": {
     "normalized_metrics": { "type": "object", "description": "Mapping of metric names to their values" },
     "metric_definitions": { "type": "object", "description": "Metadata like metric version and description" },
-    "variance": { "type": "object", "description": "Optional variance details if trials were run" }
+    "variance": { "type": "object", "description": "Optional variance details if trials were run" },
+    "flake_rates": { "type": "object", "description": "Mapping of metric names to their flake rates" }
   },
   "required": ["normalized_metrics", "metric_definitions"]
 }
