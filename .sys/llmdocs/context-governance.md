@@ -61,3 +61,13 @@ Gate Enforcement Flow:
 - `derived-index/promotions/` @apastra/governance-admins
 - `.github/workflows/` @apastra/infrastructure
 - `.github/CODEOWNERS` @apastra/governance-admins
+- `promptops/datasets/` @apastra/contracts-team
+- `promptops/evals/` @apastra/contracts-team
+- `promptops/validators/` @apastra/contracts-team
+- `promptops/harnesses/` @apastra/evaluation-team
+- `promptops/runs/` @apastra/evaluation-team
+- `derived-index/baselines/` @apastra/evaluation-team
+- `derived-index/regressions/` @apastra/evaluation-team
+- `promptops/manifests/` @apastra/runtime-team
+- `promptops/resolver/` @apastra/runtime-team
+- `promptops/runtime/` @apastra/runtime-team

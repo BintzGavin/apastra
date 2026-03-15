@@ -1,5 +1,6 @@
-**Version**: 1.18.1
+**Version**: 1.19.0
 
+[v1.19.0] ✅ Completed: Complete CODEOWNERS - Added missing paths for CONTRACTS, EVALUATION, and RUNTIME to .github/CODEOWNERS.
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
 Blocked: waiting for stable EVALUATION regression report schema
