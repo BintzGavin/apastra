@@ -1,4 +1,5 @@
-**Version**: 1.20.0
+**Version**: 1.21.0
+[v1.21.0] ✅ Completed: PackagedResolver - Complete removal of mock data formatting and fallback templates.
 [v1.20.0] ✅ Completed: PackagedResolver - Removed mock implementation and correctly enforced remote asset resolution handling.
 [v1.19.0] ✅ Completed: PackagedResolver - Fully implemented packaged artifact resolution for sha256 and oci refs to return valid prompt spec dictionary instead of mock string.
 [v1.18.0] ✅ Completed: PackagedResolver - Implemented packaged artifact resolution for sha256 and oci refs with schema validation.

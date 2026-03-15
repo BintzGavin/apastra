@@ -19,24 +19,12 @@ class PackagedResolver:
 
             asset = self._fetch_remote_asset(ref)
 
-            # We must load a relaxed schema internally for the mock data, since prompt-package.schema.json expects strings in specs array.
-            # Real implementation would validate the actual package, which conforms.
-            # However, for prompt-package.schema.json specs is array of string.
-            # We override the mock to return an array of strings to pass validation, and fetch real data
-
-            # Re-fetch as proper schema format for validation
-            validation_asset = {
-                "id": asset.get("id"),
-                "digest": asset.get("digest"),
-                "specs": [s["id"] if isinstance(s, dict) else s for s in asset.get("specs", [])]
-            }
-
             current_dir = os.path.dirname(os.path.abspath(__file__))
             schema_path = os.path.abspath(os.path.join(current_dir, "..", "schemas", "prompt-package.schema.json"))
             with open(schema_path, 'r') as sf:
                 schema = json.load(sf)
             try:
-                jsonschema.validate(instance=validation_asset, schema=schema)
+                jsonschema.validate(instance=asset, schema=schema)
             except jsonschema.exceptions.ValidationError as e:
                 raise RuntimeError(f"Prompt package failed schema validation: {e.message}")
 
@@ -44,8 +32,7 @@ class PackagedResolver:
                 if isinstance(spec, dict) and spec.get('id') == prompt_id:
                     return spec
                 if isinstance(spec, str) and spec == prompt_id:
-                    # Fallback if actual dict wasn't provided by fetcher
-                    return {"id": prompt_id, "template": "mock packaged prompt", "variables": {}}
+                    raise RuntimeError(f"Unresolved remote asset: {spec}")
 
             raise ValueError(f"Prompt ID '{prompt_id}' not found in package '{ref}'")
 
