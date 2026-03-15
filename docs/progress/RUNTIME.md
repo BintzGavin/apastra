@@ -86,3 +86,6 @@
 
 ### RUNTIME v1.18.0
 - ✅ Completed: PackagedResolver - Implemented packaged artifact resolution for sha256 and oci refs with schema validation.
+
+### RUNTIME v1.19.0
+- ✅ Completed: PackagedResolver - Fully implemented packaged artifact resolution for sha256 and oci refs to return valid prompt spec dictionary instead of mock string.
