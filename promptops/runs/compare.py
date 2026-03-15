@@ -41,6 +41,7 @@ def main():
     has_blocker = False
     has_warning = False
 
+    ruled_metrics = set()
     for rule in policy.get("rules", []):
         metric = rule["metric"]
         severity = rule["severity"]
@@ -82,6 +83,7 @@ def main():
                 passed = False
                 message = f"Delta {delta} exceeds allowed rise {allowed_delta}."
 
+        ruled_metrics.add(metric)
         evidence.append({
             "metric": metric,
             "candidate_value": c_val,
@@ -94,6 +96,31 @@ def main():
         if not passed:
             if severity == "blocker": has_blocker = True
             if severity == "warning": has_warning = True
+
+    all_metrics = set(candidate_metrics.keys()).union(set(baseline_metrics.keys()))
+    ungated_metrics = all_metrics - ruled_metrics
+
+    for metric in ungated_metrics:
+        c_val = candidate_metrics.get(metric)
+        b_val = baseline_metrics.get(metric)
+        if c_val is not None and b_val is not None:
+            delta = c_val - b_val
+            evidence.append({
+                "metric": metric,
+                "candidate_value": c_val,
+                "baseline_value": b_val,
+                "delta": delta,
+                "status": "info",
+                "message": ""
+            })
+        else:
+            evidence.append({
+                "metric": metric,
+                "candidate_value": c_val,
+                "baseline_value": b_val,
+                "status": "info",
+                "message": "Metric missing in candidate or baseline."
+            })
 
     if has_blocker:
         status = "fail"

@@ -72,3 +72,6 @@
 
 ### EVALUATION v0.19.3
 - ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard normalizer
+
+### EVALUATION v0.20.0
+- ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
