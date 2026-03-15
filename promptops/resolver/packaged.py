@@ -6,28 +6,6 @@ import re
 class PackagedResolver:
     def _fetch_remote_asset(self, ref):
         """Mock fetching remote assets."""
-        if ref.startswith("sha256:"):
-            # Mock retrieving the actual package for this reference
-            # In real implementation this would fetch content addressed by digest
-            return {
-                "id": "mock-package",
-                "digest": ref,
-                "specs": [
-                    {
-                        "id": "test-prompt",
-                        "template": "resolved mock packaged prompt from digest",
-                        "variables": {}
-                    }
-                ]
-            }
-        elif ref.startswith("oci://"):
-            # Mock pulling the OCI registry wrapper
-            return {
-                "id": "mock-provider-artifact",
-                "type": "oci_artifact",
-                "reference": ref,
-                "package_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-            }
         raise RuntimeError(f"Unresolved remote asset: {ref}")
 
     def resolve(self, prompt_id, ref):
