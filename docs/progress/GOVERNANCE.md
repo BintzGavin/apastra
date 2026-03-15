@@ -76,3 +76,6 @@
 
 ### GOVERNANCE v1.17.0
 - ✅ Completed: TrustedPublisherBadges - Added trusted-publisher.md policy and codeowners.
+
+### GOVERNANCE v1.18.0
+- ✅ Completed: ArtifactAttestations - Pinned GitHub Action SHA in immutable-release.yml
