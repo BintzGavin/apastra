@@ -79,3 +79,6 @@
 
 ### GOVERNANCE v1.18.0
 - ✅ Completed: ArtifactAttestations - Pinned GitHub Action SHA in immutable-release.yml
+
+### GOVERNANCE v1.18.1
+- ✅ Completed: StrictPinning - Pinned GitHub Action SHAs in all workflows.
