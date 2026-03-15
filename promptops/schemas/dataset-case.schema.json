@@ -27,7 +27,8 @@
         "properties": {
           "type": {
             "type": "string",
-            "description": "The type of assertion (e.g., contains, equals, regex, icontains)."
+            "description": "The type of assertion (e.g., contains, equals, regex, icontains).",
+            "pattern": "^(not-)?(equals|contains|icontains|contains-any|contains-all|regex|starts-with|is-json|contains-json|is-valid-json-schema|similar|llm-rubric|factuality|answer-relevance|latency|cost)$"
           },
           "value": {
             "description": "The value or condition the output is asserted against."

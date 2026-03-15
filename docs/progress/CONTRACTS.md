@@ -95,3 +95,6 @@
 
 ### CONTRACTS v0.33.0
 - ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception.
+
+### CONTRACTS v0.34.0
+- ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
