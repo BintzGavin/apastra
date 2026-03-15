@@ -1,0 +1,10 @@
+def resolve(prompt_id, ref_context=None, variables=None)
+
+def compute_digest(file_path: str) -> str:
+
+def compute_digest_from_dict(data: dict) -> str:
+```
+
+## Section D: Manifest Format
+```yaml
+version: "1.0"
