@@ -1,4 +1,0 @@
-id: summarize-v1
-variables:
-  text: { type: string }
-template: "Summarize: {{text}}"
