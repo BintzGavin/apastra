@@ -1,0 +1,10 @@
+prompts:
+  my-prompt:
+    id: "prompt-123"
+    override: "./local-override.yaml"
+    pin: "v1.0.0"
+```
+
+## Section E: Integration Points
+Harnesses and other domains should interact with the runtime via `ResolverChain.resolve(prompt_id, manifest)` and `resolve(prompt_id, ref_context=None, variables=None)`.
+`runner.py` executes BYO harness adapters and strictly validates output artifacts against CONTRACT schemas.

@@ -1,0 +1,10 @@
+├── resolver/
+│   ├── __init__.py
+│   ├── chain.py
+│   ├── git_ref.py
+│   ├── local.py
+│   ├── packaged.py
+│   ├── workspace.py
+├── manifests/
+│   └── consumption-example.yaml
+└── evals/
