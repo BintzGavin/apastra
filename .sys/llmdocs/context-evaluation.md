@@ -23,7 +23,7 @@ Harness execution flow:
 ## Section C: Run Artifact Format
 Run Artifact Schema (from CONTRACTS) `promptops/schemas/run-artifact.schema.json`:
 - `manifest`: input_refs, resolved_digests, timestamps, harness_version, model_ids, environment, status
-- `scorecard`: normalized_metrics, metric_definitions, variance
+- `scorecard`: normalized_metrics, metric_definitions (including versioning), variance
 - `cases`: array of objects (case_id, per_trial_outputs, evaluator_outputs)
 - `failures`: array of objects
 
