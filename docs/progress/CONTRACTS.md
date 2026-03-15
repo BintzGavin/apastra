@@ -104,3 +104,6 @@
 
 ### CONTRACTS v0.36.0
 - ✅ Completed: SubmissionRecordSchema - Created submission-record.schema.json and validate-submission-record.sh
+
+### CONTRACTS v0.37.0
+- ✅ Completed: RunArtifactProvenance - Added SLSA-style provenance metadata schema to the run manifest.

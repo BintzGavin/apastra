@@ -58,8 +58,8 @@
   - **Version:** 0.15.0
   - **Description:** Schema for an Approval state record indicating human and machine review results.
 - **ID:** `apastra-run-manifest-v1`
-  - **Version:** 0.16.0
-  - **Description:** Schema for a run manifest.
+  - **Version:** 0.37.0
+  - **Description:** Schema for a run manifest with optional SLSA-style provenance metadata.
 - **ID:** `apastra-run-case-v1`
   - **Version:** 0.16.0
   - **Description:** Schema for a single case in cases.jsonl.

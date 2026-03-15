@@ -11,7 +11,30 @@
     "harness_version": { "type": "string", "description": "Harness version" },
     "model_ids": { "type": "array", "items": { "type": "string" }, "description": "Model IDs" },
     "environment": { "type": "object", "description": "Environment metadata" },
-    "status": { "type": "string", "description": "Run status" }
+    "status": { "type": "string", "description": "Run status" },
+    "provenance": {
+      "type": "object",
+      "description": "SLSA-style provenance metadata representing the invocation of the evaluation run.",
+      "properties": {
+        "builder": {
+          "type": "object",
+          "description": "Identifies the builder.",
+          "properties": {
+            "id": { "type": "string", "description": "String URI identifying the builder." }
+          }
+        },
+        "buildType": { "type": "string", "description": "String defining the build model." },
+        "invocation": {
+          "type": "object",
+          "description": "Invocation configuration.",
+          "properties": {
+            "configSource": { "type": "object", "description": "Source of the configuration." },
+            "environment": { "type": "object", "description": "Invocation environment." }
+          }
+        },
+        "metadata": { "type": "object", "description": "Timestamps and build metadata." }
+      }
+    }
   },
   "required": ["input_refs", "resolved_digests", "timestamps", "harness_version", "model_ids", "environment", "status"]
 }
