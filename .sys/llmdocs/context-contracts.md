@@ -24,7 +24,7 @@
   - **Description:** Schema for a dataset manifest, defining identity, version, schema version, digest, and provenance.
 - **ID:** `https://promptops.apastra.com/schemas/dataset-case.schema.json`
   - **Version:** 0.34.0
-  - **Description:** Schema defining a single line of a JSONL dataset for evaluating prompt tests.
+  - **Description:** Schema defining a single line of a JSONL dataset for evaluating prompt tests, with restricted assertion types.
 - **ID:** `https://promptops.apastra.com/schemas/evaluator.schema.json`
   - **Version:** 0.4.0
   - **Description:** Scoring definition (deterministic checks, schema validation, rubric/judge config).
@@ -160,8 +160,9 @@
   - Naming: `manifest.json` or `manifest.yaml` and `cases.jsonl`
   - Structure: Lives in `promptops/datasets/<dataset-id>/`
   - Required fields in manifest: `id`, `version`, `schema_version`, `digest`
+  - Optional fields in manifest: `provenance` (object)
   - Required fields in case: `case_id`, `inputs`
-  - Optional fields in case: `assert` (array of assertions with `type` and `value`)
+  - Optional fields in case: `assert` (array of assertions with restricted built-in `type` strings and `value`)
 - **Evaluators:**
   - Naming: `evaluator.yaml` or `evaluator.json`
   - Structure: Lives in `promptops/evaluators/<evaluator-id>/`
