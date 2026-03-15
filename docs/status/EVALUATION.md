@@ -1,5 +1,6 @@
-**Version**: 0.19.3
+**Version**: 0.20.0
 
+[v0.20.0] ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
 Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.2.0] ✅ Completed: HarnessAdapterContract - Implemented reference BYO harness adapter config and execution script
