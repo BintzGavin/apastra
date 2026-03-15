@@ -1,4 +1,4 @@
-**Version**: 1.16.0
+**Version**: 1.17.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 
@@ -31,3 +31,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.15.0] ✅ Completed: Minimal Plan Exception Final - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.15.0] ✅ Completed: Naming Policy - Implemented naming and rename policy.
 [v1.16.0] ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
+[v1.17.0] ✅ Completed: TrustedPublisherBadges - Added trusted-publisher.md policy and codeowners.
