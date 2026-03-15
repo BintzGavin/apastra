@@ -80,3 +80,6 @@
 
 ### RUNTIME v1.16.0
 - ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
+
+### RUNTIME v1.17.0
+- ✅ Completed: LocalNameMappingResolution - Implement local alias mapping to stable IDs and model metadata propagation in the resolver chain.
