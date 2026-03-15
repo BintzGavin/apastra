@@ -89,3 +89,6 @@
 
 ### RUNTIME v1.19.0
 - ✅ Completed: PackagedResolver - Fully implemented packaged artifact resolution for sha256 and oci refs to return valid prompt spec dictionary instead of mock string.
+
+### RUNTIME v1.20.0
+- ✅ Completed: PackagedResolver - Removed mock implementation and correctly enforced remote asset resolution handling.
