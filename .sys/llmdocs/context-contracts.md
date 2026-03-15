@@ -20,10 +20,10 @@
   - **Version:** 0.4.0
   - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, and metadata.
 - **ID:** `https://promptops.apastra.com/schemas/dataset-manifest.schema.json`
-  - **Version:** 0.34.0
+  - **Version:** 0.35.0
   - **Description:** Schema for a dataset manifest, defining identity, version, schema version, digest, and provenance.
 - **ID:** `https://promptops.apastra.com/schemas/dataset-case.schema.json`
-  - **Version:** 0.34.0
+  - **Version:** 0.35.0
   - **Description:** Schema defining a single line of a JSONL dataset for evaluating prompt tests, with restricted assertion types.
 - **ID:** `https://promptops.apastra.com/schemas/evaluator.schema.json`
   - **Version:** 0.4.0

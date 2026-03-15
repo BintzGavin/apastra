@@ -98,3 +98,6 @@
 
 ### CONTRACTS v0.34.0
 - ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+
+### CONTRACTS v0.35.0
+- ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
