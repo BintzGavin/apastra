@@ -92,3 +92,6 @@
 
 ### RUNTIME v1.20.0
 - ✅ Completed: PackagedResolver - Removed mock implementation and correctly enforced remote asset resolution handling.
+
+### RUNTIME v1.21.0
+- ✅ Completed: PackagedResolver - Complete removal of mock data formatting and fallback templates.
