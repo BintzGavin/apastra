@@ -31,6 +31,24 @@ Schema defining a single line of a JSONL dataset for evaluating prompt tests.
 - **Requirement:** Optional
 - **Description:** Map of expected output values (e.g., exact matches, substrings).
 
+## `assert`
+
+- **Type:** array of object
+- **Requirement:** Optional
+- **Description:** Array of inline assertions to evaluate the case output against.
+
+### `type`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The type of assertion (e.g., contains, equals, regex, icontains).
+
+### `value`
+
+- **Type:** any
+- **Requirement:** Required
+- **Description:** The value or condition the output is asserted against.
+
 ## `metadata`
 
 - **Type:** object
