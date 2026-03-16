@@ -1,5 +1,6 @@
-**Version**: 0.39.0
+**Version**: 0.40.0
 
+[v0.40.0] ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.39.0] ✅ Completed: ModerationRecordsSchemas - Created moderation decision, deprecation, takedown, and mirror sync schemas.
 [v0.38.0] ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
 [v0.37.0] ✅ Completed: RunArtifactProvenance - Added SLSA-style provenance metadata schema to the run manifest.

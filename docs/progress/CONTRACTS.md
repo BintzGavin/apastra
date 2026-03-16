@@ -113,3 +113,6 @@
 
 ### CONTRACTS v0.39.0
 - ✅ Completed: ModerationRecordsSchemas - Created moderation decision, deprecation, takedown, and mirror sync schemas.
+
+### CONTRACTS v0.40.0
+- ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
