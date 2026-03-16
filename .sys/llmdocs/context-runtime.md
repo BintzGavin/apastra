@@ -1,7 +1,7 @@
 ## Section A: Architecture
 1. **Local Override**: Checked first via manifest (`override: path/to/file.yaml`).
 2. **Workspace**: Fallback to checking `./promptops/prompts/<prompt_id>/prompt-spec.yaml` or `.json` or just `<prompt_id>.yaml`/`<prompt_id>.json`.
-3. **Git Ref / Packaged**: Fallback to fetching via `git checkout` (SHA or semver tag) or pulling OCI artifacts if a `pin` is present in the manifest.
+3. **Git Ref / Packaged**: Fallback to fetching via `git checkout` (SHA or semver tag) or pulling OCI artifacts, npm packages, or PyPI packages if a `pin` is present in the manifest.
 *Note: The ID used in the resolver chain is the mapped `id` from the manifest (defaulting to the requested `prompt_id`), allowing aliases.*
 
 ## Section B: File Tree

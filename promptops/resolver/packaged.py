@@ -10,7 +10,7 @@ class PackagedResolver:
 
     def resolve(self, prompt_id, ref):
         """Resolves a prompt package from a digest or URL."""
-        if not (ref.startswith('sha256:') or ref.startswith('https://') or ref.startswith('oci://')):
+        if not (ref.startswith('sha256:') or ref.startswith('https://') or ref.startswith('oci://') or ref.startswith('npm:') or ref.startswith('pypi:')):
             raise RuntimeError(f"Failed to resolve packaged artifact '{prompt_id}' with ref '{ref}'")
 
         if ref.startswith('sha256:'):
@@ -36,7 +36,7 @@ class PackagedResolver:
 
             raise ValueError(f"Prompt ID '{prompt_id}' not found in package '{ref}'")
 
-        elif ref.startswith('https://') or ref.startswith('oci://'):
+        elif ref.startswith('https://') or ref.startswith('oci://') or ref.startswith('npm:') or ref.startswith('pypi:'):
             asset = self._fetch_remote_asset(ref)
 
             current_dir = os.path.dirname(os.path.abspath(__file__))
