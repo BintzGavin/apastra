@@ -28,15 +28,25 @@ jobs:
       - name: Fetch Artifacts Branch
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          git fetch origin promptops-artifacts || true
-          git checkout origin/promptops-artifacts -- reports/regression_report.json || true
+          if git ls-remote --exit-code --heads origin promptops-artifacts > /dev/null 2>&1; then
+            echo "BRANCH_EXISTS=true" >> $GITHUB_ENV
+            git fetch origin promptops-artifacts || true
+            git checkout origin/promptops-artifacts -- reports/regression_report.json || true
+          else
+            echo "BRANCH_EXISTS=false" >> $GITHUB_ENV
+          fi
       - name: Check Regression Report Status
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           REPORT="reports/regression_report.json"
           if [ ! -f "$REPORT" ]; then
-            echo "::error::Regression report missing. Merges are blocked."
-            exit 1
+            if [ "$BRANCH_EXISTS" = "false" ]; then
+              echo "::warning::Artifacts branch not found. Allowing bootstrap merge."
+              exit 0
+            else
+              echo "::error::Regression report missing. Merges are blocked."
+              exit 1
+            fi
           fi
 
           echo "## Regression Report Evidence" >> $GITHUB_STEP_SUMMARY
