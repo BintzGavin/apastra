@@ -8,8 +8,10 @@
     "input_refs": { "type": "object", "description": "Input references" },
     "resolved_digests": { "type": "object", "description": "Resolved digests" },
     "timestamps": { "type": "object", "description": "Timestamps" },
+    "harness_identifier": { "type": "string", "description": "Harness identifier" },
     "harness_version": { "type": "string", "description": "Harness version" },
     "model_ids": { "type": "array", "items": { "type": "string" }, "description": "Model IDs" },
+    "sampling_config": { "type": "object", "description": "Sampling configuration" },
     "environment": { "type": "object", "description": "Environment metadata" },
     "status": { "type": "string", "description": "Run status" },
     "provenance": {
@@ -36,5 +38,5 @@
       }
     }
   },
-  "required": ["input_refs", "resolved_digests", "timestamps", "harness_version", "model_ids", "environment", "status"]
+  "required": ["input_refs", "resolved_digests", "timestamps", "harness_identifier", "harness_version", "model_ids", "sampling_config", "environment", "status"]
 }

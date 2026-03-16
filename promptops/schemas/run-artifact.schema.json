@@ -12,12 +12,14 @@
         "input_refs": { "type": "object" },
         "resolved_digests": { "type": "object" },
         "timestamps": { "type": "object" },
+        "harness_identifier": { "type": "string" },
         "harness_version": { "type": "string" },
         "model_ids": { "type": "array", "items": { "type": "string" } },
+        "sampling_config": { "type": "object" },
         "environment": { "type": "object" },
         "status": { "type": "string" }
       },
-      "required": ["input_refs", "resolved_digests", "timestamps", "harness_version", "model_ids", "environment", "status"]
+      "required": ["input_refs", "resolved_digests", "timestamps", "harness_identifier", "harness_version", "model_ids", "sampling_config", "environment", "status"]
     },
     "scorecard": {
       "type": "object",
