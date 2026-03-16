@@ -95,7 +95,6 @@ def main():
         return per_trial_outputs, eval_outputs, case_cost
 
     if is_quick_eval:
-        executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
         for c in cases_data:
             if cost_accumulated >= budget_cost:
                 status = "budget_exceeded"
@@ -107,8 +106,9 @@ def main():
 
             try:
                 if case_timeout is not None:
-                    future = executor.submit(execute_case, c, trials, asserts)
-                    per_trial_outputs, eval_outputs, case_cost = future.result(timeout=case_timeout)
+                    with concurrent.futures.ThreadPoolExecutor() as executor:
+                        future = executor.submit(execute_case, c, trials, asserts)
+                        per_trial_outputs, eval_outputs, case_cost = future.result(timeout=case_timeout)
                 else:
                     per_trial_outputs, eval_outputs, case_cost = execute_case(c, trials, asserts)
 
@@ -121,8 +121,6 @@ def main():
                 })
             except concurrent.futures.TimeoutError:
                 failures.append({"message": f"Timeout exceeded at case {c.get('id', 'case-X')}"})
-
-        executor.shutdown(wait=False)
     else:
         per_trial_outputs = [{"output": f"dummy_{t}"} for t in range(trials)]
         eval_outputs = [{"score": 1.0} for t in range(trials)]
