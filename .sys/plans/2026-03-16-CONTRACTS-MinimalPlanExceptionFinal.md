@@ -16,6 +16,6 @@
 - **Dependencies**: None
 
 #### 4. Test Plan
-- **Verification**: N/A
-- **Success Criteria**: N/A
+- **Verification**: cat .sys/llmdocs/context-contracts.md
+- **Success Criteria**: Output matches original content.
 - **Edge Cases**: N/A
