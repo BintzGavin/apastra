@@ -20,10 +20,10 @@
   - **Version:** 0.4.0
   - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, and metadata.
 - **ID:** `https://promptops.apastra.com/schemas/dataset-manifest.schema.json`
-  - **Version:** 0.35.0
+  - **Version:** 0.38.0
   - **Description:** Schema for a dataset manifest, defining identity, version, schema version, digest, and provenance.
 - **ID:** `https://promptops.apastra.com/schemas/dataset-case.schema.json`
-  - **Version:** 0.35.0
+  - **Version:** 0.38.0
   - **Description:** Schema defining a single line of a JSONL dataset for evaluating prompt tests, with restricted assertion types.
 - **ID:** `https://promptops.apastra.com/schemas/evaluator.schema.json`
   - **Version:** 0.4.0
@@ -72,6 +72,18 @@
 - **ID:** `apastra-submission-record-v1`
   - **Version:** 0.36.0
   - **Description:** Schema for an append-only artifact structure for package submissions to a public registry.
+- **ID:** `https://promptops.apastra.com/schemas/moderation-decision-record.schema.json`
+  - **Version:** 0.39.0
+  - **Description:** Schema for moderation decision records.
+- **ID:** `https://promptops.apastra.com/schemas/deprecation-record.schema.json`
+  - **Version:** 0.39.0
+  - **Description:** Schema for deprecation records.
+- **ID:** `https://promptops.apastra.com/schemas/takedown-record.schema.json`
+  - **Version:** 0.39.0
+  - **Description:** Schema for takedown records.
+- **ID:** `https://promptops.apastra.com/schemas/mirror-sync-receipt.schema.json`
+  - **Version:** 0.39.0
+  - **Description:** Schema for mirror sync receipts.
 - **ID:** `https://promptops.apastra.com/schemas/quick-eval.schema.json`
   - **Version:** 0.24.0
   - **Description:** Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
@@ -148,6 +160,18 @@
 - **Validator:** `validate-quick-eval.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-quick-eval.sh <eval.yaml>`
   - **Validates:** YAML files against the `quick-eval.schema.json` schema.
+- **Validator:** `validate-moderation-decision-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-moderation-decision-record.sh <moderation-decision-record.json|yaml>`
+  - **Validates:** JSON or YAML files against the `moderation-decision-record.schema.json` schema.
+- **Validator:** `validate-deprecation-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-deprecation-record.sh <deprecation-record.json|yaml>`
+  - **Validates:** JSON or YAML files against the `deprecation-record.schema.json` schema.
+- **Validator:** `validate-takedown-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-takedown-record.sh <takedown-record.json|yaml>`
+  - **Validates:** JSON or YAML files against the `takedown-record.schema.json` schema.
+- **Validator:** `validate-mirror-sync-receipt.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-mirror-sync-receipt.sh <mirror-sync-receipt.json|yaml>`
+  - **Validates:** JSON or YAML files against the `mirror-sync-receipt.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Quick Evals:**
