@@ -48,7 +48,15 @@ def main():
                 if line.strip():
                     cases_data.append(json.loads(line))
 
-    # 1. Write run_manifest.json
+    budgets = request.get('budgets', {})
+    budget_cost = budgets.get('cost', float('inf'))
+    timeouts = request.get('timeouts', {})
+    case_timeout = timeouts.get('time', None)  # Fallback config
+    if timeouts.get('case_timeout') is not None:
+        case_timeout = timeouts.get('case_timeout')
+    cost_accumulated = 0.0
+
+    # 1. Setup run_manifest.json content (written later)
     manifest = {
         "input_refs": {
             "run_request": request_path
@@ -67,34 +75,54 @@ def main():
         },
         "status": status
     }
-    manifest_path = os.path.join(output_dir, 'run_manifest.json')
-    with open(manifest_path, 'w') as f:
-        json.dump(manifest, f, indent=2)
 
     # 2. Write cases.jsonl
     cases = []
+    import time
+    import concurrent.futures
+
+    def execute_case(c, trials, asserts):
+        per_trial_outputs = []
+        eval_outputs = []
+        case_cost = 0.0
+        for t in range(trials):
+            mock_output = f"mock_output_{t}"
+            per_trial_outputs.append({"output": mock_output})
+            eval_scores = evaluate_assertions(mock_output, asserts, {"latency": 50, "cost": 0.001})
+            case_cost += 0.001
+            for eval_score in eval_scores:
+                eval_outputs.append(eval_score)
+        return per_trial_outputs, eval_outputs, case_cost
+
     if is_quick_eval:
+        executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
         for c in cases_data:
-            per_trial_outputs = []
-            eval_outputs = []
+            if cost_accumulated >= budget_cost:
+                status = "budget_exceeded"
+                manifest["status"] = status
+                failures.append({"message": f"Budget exceeded at case {c.get('id', 'case-X')}"})
+                break
+
             asserts = c.get('assert', [])
 
-            for t in range(trials):
-                # Using real evaluation logic
-                mock_output = f"mock_output_{t}"
-                per_trial_outputs.append({"output": mock_output})
+            try:
+                if case_timeout is not None:
+                    future = executor.submit(execute_case, c, trials, asserts)
+                    per_trial_outputs, eval_outputs, case_cost = future.result(timeout=case_timeout)
+                else:
+                    per_trial_outputs, eval_outputs, case_cost = execute_case(c, trials, asserts)
 
-                eval_scores = evaluate_assertions(mock_output, asserts, {"latency": 50, "cost": 0.001})
-                # evaluate_assertions returns a list of dictionaries [{"assert_<type>": score}, ...]
-                for eval_score in eval_scores:
-                    eval_outputs.append(eval_score)
+                cost_accumulated += case_cost
+                cases.append({
+                    "case_id": c.get('id', 'case-X'),
+                    "per_trial_outputs": per_trial_outputs,
+                    "evaluator_outputs": eval_outputs,
+                    "pointers": {}
+                })
+            except concurrent.futures.TimeoutError:
+                failures.append({"message": f"Timeout exceeded at case {c.get('id', 'case-X')}"})
 
-            cases.append({
-                "case_id": c.get('id', 'case-X'),
-                "per_trial_outputs": per_trial_outputs,
-                "evaluator_outputs": eval_outputs,
-                "pointers": {}
-            })
+        executor.shutdown(wait=False)
     else:
         per_trial_outputs = [{"output": f"dummy_{t}"} for t in range(trials)]
         eval_outputs = [{"score": 1.0} for t in range(trials)]
@@ -110,6 +138,11 @@ def main():
     with open(cases_path, 'w') as f:
         for case in cases:
             f.write(json.dumps(case) + "\n")
+
+    # Write run_manifest.json (updated with status)
+    manifest_path = os.path.join(output_dir, 'run_manifest.json')
+    with open(manifest_path, 'w') as f:
+        json.dump(manifest, f, indent=2)
 
     # 3. Write failures.json
     failures_path = os.path.join(output_dir, 'failures.json')
