@@ -1,7 +1,8 @@
-**Version**: 0.23.0
+**Version**: 0.24.0
 
-[v0.22.0] ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter
+[v0.24.0] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.23.0] ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest
+[v0.22.0] ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter
 [v0.21.0] ✅ Completed: FlakeQuarantine - Implemented flake tracking and variance-aware gating
 [v0.20.0] ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
