@@ -36,3 +36,9 @@ Schema for a dataset manifest, defining identity, version, schema version, diges
 - **Type:** string
 - **Requirement:** Required
 - **Description:** Version of the dataset case schema used by the JSONL file.
+
+## `provenance`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Information about the origin and creation of the dataset.

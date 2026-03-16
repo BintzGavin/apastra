@@ -113,6 +113,24 @@ source_files:
 ### CONTRACTS v0.33.0
 - ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception.
 
+### CONTRACTS v0.34.0
+- ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+
+### CONTRACTS v0.35.0
+- ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+
+### CONTRACTS v0.36.0
+- ✅ Completed: SubmissionRecordSchema - Created submission-record.schema.json and validate-submission-record.sh
+
+### CONTRACTS v0.37.0
+- ✅ Completed: RunArtifactProvenance - Added SLSA-style provenance metadata schema to the run manifest.
+
+### CONTRACTS v0.38.0
+- ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+
+### CONTRACTS v0.39.0
+- ✅ Completed: ModerationRecordsSchemas - Created moderation decision, deprecation, takedown, and mirror sync schemas.
+
 
 ## DOCS
 
@@ -140,6 +158,13 @@ source_files:
   - Refreshed cross-domain dashboards
   - Rebuilt schema dependency graph
   - Updated DOCS context
+
+### DOCS v0.5.0
+- ✅ Completed: Daily Documentation Review
+  - Updated API documentation for `takedown-record`, `moderation-decision-record`, `deprecation-record`, `mirror-sync-receipt`, and `submission-record` schemas
+  - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md`
+  - Rebuilt schema dependency graph to include new moderation schemas
+  - Regenerated context-docs.md
 
 
 ## EVALUATION
@@ -218,6 +243,18 @@ source_files:
 
 ### EVALUATION v0.19.3
 - ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard normalizer
+
+### EVALUATION v0.20.0
+- ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
+
+### EVALUATION v0.21.0
+- ✅ Completed: FlakeQuarantine - Implemented flake tracking and variance-aware gating
+
+### EVALUATION v0.22.0
+- ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter
+
+### EVALUATION v0.23.0
+- ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest
 
 
 ## GOVERNANCE
@@ -304,6 +341,12 @@ source_files:
 ### GOVERNANCE v1.18.0
 - ✅ Completed: ArtifactAttestations - Pinned GitHub Action SHA in immutable-release.yml
 
+### GOVERNANCE v1.18.1
+- ✅ Completed: StrictPinning - Pinned GitHub Action SHAs in all workflows.
+
+### GOVERNANCE v1.19.0
+- ✅ Completed: Complete CODEOWNERS - Added missing paths for CONTRACTS, EVALUATION, and RUNTIME to .github/CODEOWNERS.
+
 
 ## RUNTIME
 
@@ -389,3 +432,24 @@ source_files:
 
 ### RUNTIME v1.16.0
 - ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
+
+### RUNTIME v1.17.0
+- ✅ Completed: LocalNameMappingResolution - Implement local alias mapping to stable IDs and model metadata propagation in the resolver chain.
+
+### RUNTIME v1.18.0
+- ✅ Completed: PackagedResolver - Implemented packaged artifact resolution for sha256 and oci refs with schema validation.
+
+### RUNTIME v1.19.0
+- ✅ Completed: PackagedResolver - Fully implemented packaged artifact resolution for sha256 and oci refs to return valid prompt spec dictionary instead of mock string.
+
+### RUNTIME v1.20.0
+- ✅ Completed: PackagedResolver - Removed mock implementation and correctly enforced remote asset resolution handling.
+
+### RUNTIME v1.21.0
+- ✅ Completed: PackagedResolver - Complete removal of mock data formatting and fallback templates.
+
+### RUNTIME v1.22.0
+- ✅ Completed: NPM-PyPI-Resolver - Implemented npm and PyPI wrapper resolution in the PackagedResolver.
+
+### RUNTIME v1.23.0
+- ✅ Completed: PackagedResolverCaching - Implemented local caching, offline fallback, and signature verification.

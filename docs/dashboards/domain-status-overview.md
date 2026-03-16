@@ -15,7 +15,7 @@ source_files:
 
 ## CONTRACTS
 
-**Version**: 0.33.0
+**Version**: 0.39.0
 
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
@@ -39,7 +39,6 @@ source_files:
 [v0.21.0] ✅ Completed: InitialSuite - Created first suite instance test-suite.yaml
 [v0.22.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.23.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
-[v0.23.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.24.0] ✅ Completed: QuickEvalAndInlineAssertions - Defined schemas for Quick Eval Mode and Inline Assertions.
 [v0.25.0] ✅ Completed: Minimal Plan Exception - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.26.0] ✅ Completed: InitialQuickEval - Created first quick eval instance in promptops/evals/my-eval.yaml
@@ -50,27 +49,28 @@ source_files:
 [v0.31.0] ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception as all required schemas, validation scripts, and initial instances have been fully implemented and verified.
 [v0.32.0] ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception as all required schemas, validation scripts, and initial instances have been fully implemented and verified.
 [v0.33.0] ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception.
-
+[v0.34.0] ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+[v0.35.0] ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+[v0.36.0] ✅ Completed: SubmissionRecordSchema - Created submission-record.schema.json and validate-submission-record.sh
+[v0.37.0] ✅ Completed: RunArtifactProvenance - Added SLSA-style provenance metadata schema to the run manifest.
+[v0.38.0] ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+[v0.39.0] ✅ Completed: ModerationRecordsSchemas - Created moderation decision, deprecation, takedown, and mirror sync schemas.
 
 ## DOCS
 
-**Version**: 0.4.0
+**Version**: 0.5.0
 
 [v0.1.0] ✅ Completed: Daily Documentation Review - Initialized comprehensive daily documentation review process. Created all required dashboards, generated API references for all existing schemas, and verified documentation completeness against implemented features.
-
 [v0.2.0] ✅ Completed: Daily Documentation Review - Updated API documentation, guides, ADRs, and cross-domain dashboards based on latest implementation.
-
 [v0.3.0] ✅ Completed: Daily Documentation Review - Updated API documentation, dashboards, and domain contexts based on current implementation.
-
 [v0.4.0] ✅ Completed: Daily Documentation Review - Updated API documentation, dashboards, and schema dependency graph based on current implementation.
-
+[v0.5.0] ✅ Completed: Daily Documentation Review - Updated API documentation for moderation and governance schemas, refreshed domain status and progress dashboards, and updated schema dependency graph.
 
 ## EVALUATION
 
-**Version**: 0.19.3
+**Version**: 0.23.0
 
 [v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
-Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.2.0] ✅ Completed: HarnessAdapterContract - Implemented reference BYO harness adapter config and execution script
 [v0.3.0] ✅ Completed: RunRequestValidation - Implemented run request validation script
 [v0.4.0] ✅ Completed: BaselineEstablishment - Verified schema availability and created baselines directory structure
@@ -79,7 +79,6 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.7.0] ✅ Completed: BaselineEstablishmentWorkflow - Implemented bash script to establish baselines
 [v0.8.0] ✅ Completed: RunArtifactGeneration - Implemented script to split monolithic run_artifact.json into distinct, append-friendly files.
 [v0.9.0] ✅ Completed: ScorecardNormalizationRefactor - Refactored normalize.py to read cases.jsonl and output scorecard.json
-
 [v0.10.0] ✅ Completed: RegressionComparisonRefactor - Refactored Regression Engine to read split scorecard.json files
 [v0.11.0] ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
 [v0.12.0] ✅ Completed: ReferenceAdapterRefactor - Refactored reference adapter to natively support split artifacts and updated scorecard normalizer execution
@@ -98,19 +97,17 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.19.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.19.2] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.19.3] ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard normalizer
-
+[v0.20.0] ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
+[v0.21.0] ✅ Completed: FlakeQuarantine - Implemented flake tracking and variance-aware gating
+[v0.22.0] ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter
+[v0.23.0] ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest
 
 ## GOVERNANCE
 
-**Version**: 1.18.0
+**Version**: 1.19.0
 
 [v0.2.0] ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
-
-Blocked: waiting for stable EVALUATION regression report schema
-Blocked: waiting for CONTRACTS regression policy schema
 [v0.3.0] ✅ Completed: Promotion Record Workflow - Created automated workflow to append promotion records upon governed releases.
-Blocked: waiting for CONTRACTS delivery target schema
-Blocked: waiting for CONTRACTS promotion record schema
 [v0.4.0] ✅ Completed: Immutable Release Workflow - Created .github/workflows/immutable-release.yml to package prompts, compute digest, and create a GitHub Release when tags are pushed.
 [v0.5.0] ✅ Completed: Required Status Check - Created regression gate workflow and base regression policy.
 [v0.6.0] ✅ Completed: Delivery Target Specs - Implemented delivery target schema configs and a workflow to sync downstream.
@@ -137,26 +134,13 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.16.0] ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
 [v1.17.0] ✅ Completed: TrustedPublisherBadges - Added trusted-publisher.md policy and codeowners.
 [v1.18.0] ✅ Completed: ArtifactAttestations - Pinned GitHub Action SHA in immutable-release.yml
-
+[v1.18.1] ✅ Completed: StrictPinning - Pinned GitHub Action SHAs in all workflows.
+[v1.19.0] ✅ Completed: Complete CODEOWNERS - Added missing paths for CONTRACTS, EVALUATION, and RUNTIME to .github/CODEOWNERS.
 
 ## RUNTIME
 
-**Version**: 1.16.0
-[v1.16.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
-[v1.15.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
-[v1.14.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
-[v1.13.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
-[v1.12.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
-[v1.11.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
-[v1.10.0] ✅ Completed: QuickEvalLocalOverrideResolution - Implement quick eval format resolution in the LocalResolver.
-[v1.9.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
-[v1.7.0] ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
-[v1.6.0] ✅ Completed: DirectoryResolver - Update WorkspaceResolver and GitRefResolver to support resolving prompts packaged in a <prompt_id> directory.
-[v1.5.0] ✅ Completed: ReferenceCLI - Implemented reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
-[v1.4.1] ✅ Completed: LocalOverrideFix - Fix the LocalResolver in the resolver chain to parse prompt packages instead of returning stub strings.
-[v1.4.0] ✅ Completed: ReferenceCLI - Spec the reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
-[v1.3.1] ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
-[v1.3.0] ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function
+**Version**: 1.23.0
+
 [v0.2.0] ✅ Completed: ConsumptionManifestFormat - Defined schema example format
 [v0.2.0] ✅ Completed: LocalOverrideResolution - Implemented local override step in python resolver chain
 [v0.3.0] ✅ Completed: WorkspacePathResolution - Implemented workspace path lookup in resolver chain
@@ -169,5 +153,27 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.0.0] ✅ Completed: ConsumptionManifestFormat - Re-wrote consumption manifest format to be more realistic and validate
 [v1.1.0] ✅ Completed: PromptSpecValidation - Implemented schema validation for resolved prompt specifications against prompt-spec.schema.json
 [v1.2.0] ✅ Completed: HarnessContractValidation - Implemented runner shim validation against CONTRACTS schemas
+[v1.3.0] ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function
+[v1.3.1] ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
+[v1.4.0] ✅ Completed: ReferenceCLI - Spec the reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
+[v1.4.1] ✅ Completed: LocalOverrideFix - Fix the LocalResolver in the resolver chain to parse prompt packages instead of returning stub strings.
+[v1.5.0] ✅ Completed: ReferenceCLI - Implemented reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
+[v1.6.0] ✅ Completed: DirectoryResolver - Update WorkspaceResolver and GitRefResolver to support resolving prompts packaged in a <prompt_id> directory.
+[v1.7.0] ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
 [v1.7.1] ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
 [v1.8.0] ✅ Completed: QuickEvalWorkspaceResolution - Implement quick eval format resolution in the WorkspaceResolver.
+[v1.9.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
+[v1.10.0] ✅ Completed: QuickEvalLocalOverrideResolution - Implement quick eval format resolution in the LocalResolver.
+[v1.11.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.12.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
+[v1.13.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.14.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.15.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.16.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
+[v1.17.0] ✅ Completed: LocalNameMappingResolution - Implement local alias mapping to stable IDs and model metadata propagation in the resolver chain.
+[v1.18.0] ✅ Completed: PackagedResolver - Implemented packaged artifact resolution for sha256 and oci refs with schema validation.
+[v1.19.0] ✅ Completed: PackagedResolver - Fully implemented packaged artifact resolution for sha256 and oci refs to return valid prompt spec dictionary instead of mock string.
+[v1.20.0] ✅ Completed: PackagedResolver - Removed mock implementation and correctly enforced remote asset resolution handling.
+[v1.21.0] ✅ Completed: PackagedResolver - Complete removal of mock data formatting and fallback templates.
+[v1.22.0] ✅ Completed: NPM-PyPI-Resolver - Implemented npm and PyPI wrapper resolution in the PackagedResolver.
+[v1.23.0] ✅ Completed: PackagedResolverCaching - Implemented local caching, offline fallback, and signature verification.

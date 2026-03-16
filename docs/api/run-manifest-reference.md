@@ -54,3 +54,51 @@ Schema for a run manifest.
 - **Type:** string
 - **Requirement:** Required
 - **Description:** Run status
+
+## `provenance`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** SLSA-style provenance metadata representing the invocation of the evaluation run.
+
+### `builder`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Identifies the builder.
+
+#### `id`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** String URI identifying the builder.
+
+### `buildType`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** String defining the build model.
+
+### `invocation`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Invocation configuration.
+
+#### `configSource`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Source of the configuration.
+
+#### `environment`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Invocation environment.
+
+### `metadata`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Timestamps and build metadata.
