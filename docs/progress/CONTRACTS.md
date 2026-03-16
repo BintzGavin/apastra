@@ -119,3 +119,6 @@
 
 ### CONTRACTS v0.41.0
 - ✅ Completed: HumanReviewHooksEvaluatorType - Added human as an evaluator type to the evaluator.schema.json to support human review hooks.
+
+### CONTRACTS v0.42.0
+- ✅ Completed: ToolContractSchema - Added tool_contract as an optional property to the prompt-spec.schema.json.

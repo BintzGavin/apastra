@@ -28,6 +28,10 @@
     "metadata": {
       "type": "object",
       "description": "Arbitrary key-value pairs (e.g., author, intent, tags)."
+    },
+    "tool_contract": {
+      "type": "object",
+      "description": "JSON Schema defining the expected tool calling structure and available tools."
     }
   },
   "required": ["id", "variables", "template"]
