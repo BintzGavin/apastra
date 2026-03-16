@@ -292,7 +292,7 @@ The system supports any harness, including scripts, notebooks, internal schedule
 - Record environment metadata sufficient for reproduction attempts.
 
 **Required outputs:**
-- `run_manifest.json`: input refs, resolved digests, timestamps, harness version, model IDs, sampling config, environment, status.
+- `run_manifest.json`: input refs, resolved digests, timestamps, harness identifier (e.g., `claude-code`, `antigravity`, `cursor`, `api`, `github-actions`), harness version, model IDs, sampling config, environment, status. The harness identifier is distinct from the model ID because the same model can produce different outputs in different execution environments.
 - `scorecard.json`: normalized metrics, metric definitions, metric versioning, variance if trials.
 - `cases.jsonl`: per-case records with stable case IDs, per-trial outputs, evaluator outputs, pointers to raw text/traces.
 - `artifact_refs.json`: URIs + digests to raw artifacts.

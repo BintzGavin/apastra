@@ -52,6 +52,7 @@ Read the suite file from `promptops/suites/<suite-id>.yaml`. Extract:
 - `datasets` — list of dataset IDs
 - `evaluators` — list of evaluator IDs
 - `model_matrix` — list of models (use "default" to mean your own model)
+- `harness` — (optional) identifier for the execution environment (e.g., `claude-code`, `antigravity`, `cursor`, `api`, `github-actions`). If omitted, the agent should auto-detect and record it.
 - `trials` — number of times to run each case (default: 1)
 - `thresholds` — minimum metric scores to pass
 
@@ -159,7 +160,30 @@ If no baseline exists, note that no baseline comparison was performed and sugges
 Write the run results to `promptops/runs/<run-id>/`:
 - `scorecard.json` — the aggregated metrics
 - `cases.jsonl` — per-case results (one JSON object per line)
-- `run_manifest.json` — metadata: timestamp, model used, suite ID, prompt digest
+- `run_manifest.json` — metadata: timestamp, model used, harness used, suite ID, prompt digest
+
+The `run_manifest.json` should include:
+```json
+{
+  "suite_id": "summarize-smoke",
+  "timestamp": "2026-03-16T09:00:00Z",
+  "model": "claude-sonnet-4-20250514",
+  "harness": "antigravity",
+  "prompt_digest": "sha256:abc123...",
+  "status": "pass"
+}
+```
+
+**Harness values:** Use a short identifier for the execution environment. Common values:
+- `claude-code` — Claude Code CLI/IDE
+- `antigravity` — Antigravity by Google DeepMind
+- `cursor` — Cursor IDE agent
+- `copilot` — GitHub Copilot agent
+- `api` — Direct API call (no IDE agent)
+- `github-actions` — CI/CD pipeline
+- `jules` — Jules by Google
+
+The harness matters because the same model can produce different results in different environments (system prompts, tool availability, context window handling, etc.).
 
 Use a run ID like `<suite-id>-<YYYY-MM-DD-HHmmss>` for readability.
 

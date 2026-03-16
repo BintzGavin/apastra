@@ -39,14 +39,14 @@ The execution environment must accomplish the following:
 3. **Apply Evaluators:** Evaluate the outputs and produce consistent metrics.
 4. **Emit Run Artifacts:** Populate the structured run artifact directory.
 5. **Attach Raw Traces:** Attach references (URIs) and digests to raw text, logs, and traces.
-6. **Record Environment Metadata:** Capture data required to reproduce the run (model IDs, sampling configurations, harness version).
+6. **Record Environment Metadata:** Capture data required to reproduce the run (harness identifier, harness version, model IDs, sampling configurations). The harness identifier (e.g., `claude-code`, `antigravity`, `cursor`, `api`) is a required field distinct from the model ID, since the same model can behave differently across execution environments.
 
 ## Required Outputs
 
 The harness must generate the following standard structures inside the artifact directory:
 
 ### `run_manifest.json`
-A comprehensive metadata record. It must contain the resolved digests, timestamps, harness version, model IDs, sampling configs, environment data, and the overall status.
+A comprehensive metadata record. It must contain the harness identifier (e.g., `claude-code`, `antigravity`, `cursor`, `api`, `github-actions`), resolved digests, timestamps, harness version, model IDs, sampling configs, environment data, and the overall status.
 
 ### `scorecard.json`
 The normalized evaluation results. This file holds the metrics, metric definitions, metric versioning, and trial variance data.
