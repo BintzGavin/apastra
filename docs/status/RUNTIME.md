@@ -1,4 +1,5 @@
-**Version**: 1.22.0
+**Version**: 1.23.0
+[v1.23.0] ✅ Completed: PackagedResolverCaching - Implemented local caching, offline fallback, and signature verification.
 [v1.22.0] ✅ Completed: NPM-PyPI-Resolver - Implemented npm and PyPI wrapper resolution in the PackagedResolver.
 [v1.21.0] ✅ Completed: PackagedResolver - Complete removal of mock data formatting and fallback templates.
 [v1.20.0] ✅ Completed: PackagedResolver - Removed mock implementation and correctly enforced remote asset resolution handling.

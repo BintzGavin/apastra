@@ -30,6 +30,8 @@ def load_manifest(ref_context=None) -> ManifestWrapper:
 class PackagedResolver:
     def resolve(self, prompt_id: str, ref: str) -> dict:
         pass
+    def verify_signature(self, asset: dict) -> bool:
+        pass
 
 def resolve(prompt_id: str, ref_context: str = None, variables: dict = None) -> tuple[str, dict]:
     # Returns (rendered_prompt_string, metadata_dict)

@@ -14,3 +14,7 @@
 ## [v1.17.0] - Local Name Mapping
 **Learning:** The consumption manifest allows mapping local app aliases to stable backend IDs and injecting specific model configurations directly from the manifest. This breaks the 1:1 strict parity assumption of prompt_id, meaning resolvers must handle mapped IDs.
 **Action:** Always use rules.get('id', prompt_id) to extract the mapped ID.
+
+## [v1.23.0] - PackagedResolver Caching
+**Learning:** The `PackagedResolver` was missing implementation for local caching, offline fallback, and signature verification, which are critical for the 'Packaged artifact' vision requirement.
+**Action:** Implement local caching, offline fallback, and signature verification within the `PackagedResolver` to enable offline resilience and enhanced artifact security.

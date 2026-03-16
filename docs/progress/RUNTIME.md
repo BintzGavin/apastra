@@ -98,3 +98,6 @@
 
 ### RUNTIME v1.22.0
 - ✅ Completed: NPM-PyPI-Resolver - Implemented npm and PyPI wrapper resolution in the PackagedResolver.
+
+### RUNTIME v1.23.0
+- ✅ Completed: PackagedResolverCaching - Implemented local caching, offline fallback, and signature verification.
