@@ -57,6 +57,25 @@ def main():
     cost_accumulated = 0.0
 
     # 1. Setup run_manifest.json content (written later)
+    provenance = {
+        "builder": {
+            "id": "https://github.com/apastra/promptops/reference-adapter"
+        },
+        "buildType": "https://apastra.github.io/buildTypes/reference-adapter/v1",
+        "invocation": {
+            "configSource": {},
+            "environment": {
+                "GITHUB_ACTIONS": os.environ.get("GITHUB_ACTIONS", "false"),
+                "GITHUB_RUN_ID": os.environ.get("GITHUB_RUN_ID", ""),
+                "GITHUB_SHA": os.environ.get("GITHUB_SHA", ""),
+                "USER": os.environ.get("USER", "")
+            }
+        },
+        "metadata": {
+            "buildInvocationId": os.environ.get("GITHUB_RUN_ID", "")
+        }
+    }
+
     manifest = {
         "input_refs": {
             "run_request": request_path
@@ -73,7 +92,8 @@ def main():
         "environment": {
             "os": os.name
         },
-        "status": status
+        "status": status,
+        "provenance": provenance
     }
 
     # 2. Write cases.jsonl

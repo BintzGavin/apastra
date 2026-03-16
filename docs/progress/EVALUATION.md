@@ -81,3 +81,6 @@
 
 ### EVALUATION v0.22.0
 - ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter
+
+### EVALUATION v0.23.0
+- ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest
