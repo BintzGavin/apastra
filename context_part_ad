@@ -1,9 +1,0 @@
-```
-
-## Section C: Public Interface
-Currently implemented:
-```python
-class ResolverChain:
-    def resolve(self, prompt_id, manifest)
-
-def load_manifest(ref_context)
