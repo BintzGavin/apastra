@@ -1,5 +1,7 @@
-**Version**: 0.37.0
+**Version**: 0.39.0
 
+[v0.39.0] ✅ Completed: ModerationRecordsSchemas - Created moderation decision, deprecation, takedown, and mirror sync schemas.
+[v0.38.0] ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
 [v0.37.0] ✅ Completed: RunArtifactProvenance - Added SLSA-style provenance metadata schema to the run manifest.
 [v0.36.0] ✅ Completed: SubmissionRecordSchema - Created submission-record.schema.json and validate-submission-record.sh
 [v0.35.0] ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.

@@ -107,3 +107,9 @@
 
 ### CONTRACTS v0.37.0
 - ✅ Completed: RunArtifactProvenance - Added SLSA-style provenance metadata schema to the run manifest.
+
+### CONTRACTS v0.38.0
+- ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
+
+### CONTRACTS v0.39.0
+- ✅ Completed: ModerationRecordsSchemas - Created moderation decision, deprecation, takedown, and mirror sync schemas.

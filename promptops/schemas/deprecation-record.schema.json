@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/deprecation-record.schema.json",
+  "title": "Deprecation Record",
+  "description": "Schema for deprecation records.",
+  "type": "object",
+  "properties": {
+    "deprecation_id": {
+      "type": "string",
+      "description": "Unique identifier for the deprecation record."
+    },
+    "package_digest": {
+      "type": "string",
+      "description": "The SHA-256 digest of the deprecated package.",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "reference": {
+      "type": "string",
+      "description": "The reference of the deprecated package."
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "The timestamp of the deprecation.",
+      "format": "date-time"
+    },
+    "reason": {
+      "type": "string",
+      "description": "The reason for the deprecation."
+    },
+    "replacement_ref": {
+      "type": "string",
+      "description": "The reference to the suggested replacement."
+    }
+  },
+  "required": [
+    "deprecation_id",
+    "timestamp",
+    "reason"
+  ],
+  "anyOf": [
+    { "required": ["package_digest"] },
+    { "required": ["reference"] }
+  ],
+  "additionalProperties": false
+}

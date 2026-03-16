@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/takedown-record.schema.json",
+  "title": "Takedown Record",
+  "description": "Schema for takedown records.",
+  "type": "object",
+  "properties": {
+    "takedown_id": {
+      "type": "string",
+      "description": "Unique identifier for the takedown record."
+    },
+    "package_digest": {
+      "type": "string",
+      "description": "The SHA-256 digest of the taken down package.",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "The timestamp of the takedown.",
+      "format": "date-time"
+    },
+    "reason": {
+      "type": "string",
+      "description": "The reason for the takedown."
+    },
+    "policy_violation_type": {
+      "type": "string",
+      "description": "The type of policy violation."
+    }
+  },
+  "required": [
+    "takedown_id",
+    "package_digest",
+    "timestamp",
+    "reason",
+    "policy_violation_type"
+  ],
+  "additionalProperties": false
+}

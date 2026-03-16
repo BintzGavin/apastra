@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/mirror-sync-receipt.schema.json",
+  "title": "Mirror Sync Receipt",
+  "description": "Schema for mirror sync receipts.",
+  "type": "object",
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "description": "Unique identifier for the sync receipt."
+    },
+    "mirror_id": {
+      "type": "string",
+      "description": "The ID of the mirror."
+    },
+    "synced_digests": {
+      "type": "array",
+      "description": "Array of SHA-256 digests that were synced.",
+      "items": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "The timestamp of the sync.",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the sync operation."
+    }
+  },
+  "required": [
+    "receipt_id",
+    "mirror_id",
+    "synced_digests",
+    "timestamp",
+    "status"
+  ],
+  "additionalProperties": false
+}

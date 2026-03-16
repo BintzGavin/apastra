@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/moderation-decision-record.schema.json",
+  "title": "Moderation Decision Record",
+  "description": "Schema for moderation decision records.",
+  "type": "object",
+  "properties": {
+    "decision_id": {
+      "type": "string",
+      "description": "Unique identifier for the moderation decision."
+    },
+    "submission_id": {
+      "type": "string",
+      "description": "The ID of the submission this decision applies to."
+    },
+    "package_digest": {
+      "type": "string",
+      "description": "The SHA-256 digest of the package this decision applies to.",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "decision": {
+      "type": "string",
+      "description": "The moderation decision made.",
+      "enum": ["approved", "rejected", "flagged"]
+    },
+    "moderator_id": {
+      "type": "string",
+      "description": "The ID of the moderator who made the decision."
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "The timestamp of the decision.",
+      "format": "date-time"
+    },
+    "reason": {
+      "type": "string",
+      "description": "The reason for the decision."
+    }
+  },
+  "required": [
+    "decision_id",
+    "decision",
+    "moderator_id",
+    "timestamp",
+    "reason"
+  ],
+  "anyOf": [
+    { "required": ["submission_id"] },
+    { "required": ["package_digest"] }
+  ],
+  "additionalProperties": false
+}
