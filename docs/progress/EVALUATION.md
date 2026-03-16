@@ -78,3 +78,6 @@
 
 ### EVALUATION v0.21.0
 - ✅ Completed: FlakeQuarantine - Implemented flake tracking and variance-aware gating
+
+### EVALUATION v0.22.0
+- ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter
