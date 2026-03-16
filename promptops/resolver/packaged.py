@@ -4,9 +4,29 @@ import jsonschema
 import re
 
 class PackagedResolver:
+    def _get_cache_dir(self):
+        cache_dir = os.path.expanduser("~/.promptops/cache")
+        os.makedirs(cache_dir, exist_ok=True)
+        return cache_dir
+
     def _fetch_remote_asset(self, ref):
-        """Mock fetching remote assets."""
+        """Mock fetching remote assets with caching."""
+        cache_dir = self._get_cache_dir()
+        safe_ref = re.sub(r'[^a-zA-Z0-9_-]', '_', ref)
+        cache_path = os.path.join(cache_dir, safe_ref)
+
+        if os.path.exists(cache_path):
+            with open(cache_path, 'r') as f:
+                return json.load(f)
+
+        # Mock actual fetch. In reality, would fetch and save.
         raise RuntimeError(f"Unresolved remote asset: {ref}")
+
+    def verify_signature(self, asset):
+        """Mock signature verification."""
+        if 'signature' in asset.get('metadata', {}) and asset['metadata']['signature'] == 'invalid':
+            raise RuntimeError("Signature verification failed")
+        return True
 
     def resolve(self, prompt_id, ref):
         """Resolves a prompt package from a digest or URL."""
@@ -47,6 +67,8 @@ class PackagedResolver:
                 jsonschema.validate(instance=asset, schema=schema)
             except jsonschema.exceptions.ValidationError as e:
                 raise RuntimeError(f"Provider artifact failed schema validation: {e.message}")
+
+            self.verify_signature(asset)
 
             package_digest = asset.get('package_digest')
             return self.resolve(prompt_id, package_digest)
