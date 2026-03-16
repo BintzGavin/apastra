@@ -17,8 +17,8 @@
   - **Version:** 0.9.0
   - **Description:** Schema for a minimal BYO harness run artifact output.
 - **ID:** `https://promptops.apastra.com/schemas/prompt-spec.schema.json`
-  - **Version:** 0.4.0
-  - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, and metadata.
+  - **Version:** 0.42.0
+  - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, tool contract, and metadata.
 - **ID:** `https://promptops.apastra.com/schemas/dataset-manifest.schema.json`
   - **Version:** 0.38.0
   - **Description:** Schema for a dataset manifest, defining identity, version, schema version, digest, and provenance.
@@ -182,6 +182,7 @@
   - Naming: `prompt.yaml` or `prompt.json`
   - Structure: Lives in `promptops/prompts/<id>/`
   - Required fields: `id` (string), `variables` (object), `template` (string, object, array).
+  - Optional fields: `tool_contract` (object).
 - **Prompt Packages:**
   - Naming: `package.yaml` or `package.json`
   - Structure: Lives in `promptops/prompts/<package-id>/`
