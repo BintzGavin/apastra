@@ -1,5 +1,6 @@
-**Version**: 0.40.0
+**Version**: 0.41.0
 
+[v0.41.0] ✅ Completed: HumanReviewHooksEvaluatorType - Added human as an evaluator type to the evaluator.schema.json to support human review hooks.
 [v0.40.0] ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.39.0] ✅ Completed: ModerationRecordsSchemas - Created moderation decision, deprecation, takedown, and mirror sync schemas.
 [v0.38.0] ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.

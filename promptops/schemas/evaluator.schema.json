@@ -12,7 +12,7 @@
     "type": {
       "type": "string",
       "description": "The type of the evaluator.",
-      "enum": ["deterministic", "schema", "judge"]
+      "enum": ["deterministic", "schema", "judge", "human"]
     },
     "metrics": {
       "type": "array",
