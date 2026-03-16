@@ -29,6 +29,8 @@ Gate Enforcement Flow:
 - `promptops/policies/ownership-disputes.md`
 - `promptops/policies/naming.md`
 - `promptops/policies/trusted-publisher.md`
+- `promptops/policies/federation.md`
+- `promptops/policies/mirroring.md`
 
 **Section C: Policy Inventory**
 - `promptops/policies/acceptable-use.md`: Acceptable use constraints.
@@ -38,6 +40,8 @@ Gate Enforcement Flow:
 - `promptops/policies/trusted-publisher.md`: Trusted publisher requirements based on build provenance.
 - `promptops/policies/takedowns.md`: Takedown procedure for content removal.
 - `promptops/policies/appeals.md`: Moderation decision appeals process.
+- `promptops/policies/federation.md`: Governance rules for cross-custodian trust and namespace resolution.
+- `promptops/policies/mirroring.md`: Requirements and processes for establishing read-only mirrors.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 
 **Section D: Promotion Record Format**
