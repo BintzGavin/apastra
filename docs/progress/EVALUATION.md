@@ -84,3 +84,6 @@
 
 ### EVALUATION v0.23.0
 - ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest
+
+### EVALUATION v0.24.0
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
