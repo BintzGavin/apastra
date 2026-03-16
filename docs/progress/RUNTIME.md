@@ -95,3 +95,6 @@
 
 ### RUNTIME v1.21.0
 - ✅ Completed: PackagedResolver - Complete removal of mock data formatting and fallback templates.
+
+### RUNTIME v1.22.0
+- ✅ Completed: NPM-PyPI-Resolver - Implemented npm and PyPI wrapper resolution in the PackagedResolver.
