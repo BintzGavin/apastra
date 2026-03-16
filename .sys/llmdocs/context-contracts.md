@@ -26,8 +26,8 @@
   - **Version:** 0.38.0
   - **Description:** Schema defining a single line of a JSONL dataset for evaluating prompt tests, with restricted assertion types.
 - **ID:** `https://promptops.apastra.com/schemas/evaluator.schema.json`
-  - **Version:** 0.4.0
-  - **Description:** Scoring definition (deterministic checks, schema validation, rubric/judge config).
+  - **Version:** 0.41.0
+  - **Description:** Scoring definition (deterministic checks, schema validation, rubric/judge config, human review hooks).
 - **ID:** `https://apastra.com/schemas/promptops/suite.schema.json`
   - **Version:** 0.5.0
   - **Description:** Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
@@ -196,7 +196,7 @@
 - **Evaluators:**
   - Naming: `evaluator.yaml` or `evaluator.json`
   - Structure: Lives in `promptops/evaluators/<evaluator-id>/`
-  - Required fields: `id` (string), `type` (string: "deterministic", "schema", "judge"), `metrics` (array of strings).
+  - Required fields: `id` (string), `type` (string: "deterministic", "schema", "judge", "human"), `metrics` (array of strings).
 - **Suites:**
   - Naming: `suite.yaml` or `suite.json`
   - Structure: Lives in `promptops/suites/<suite-id>/`

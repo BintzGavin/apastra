@@ -116,3 +116,6 @@
 
 ### CONTRACTS v0.40.0
 - ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
+
+### CONTRACTS v0.41.0
+- ✅ Completed: HumanReviewHooksEvaluatorType - Added human as an evaluator type to the evaluator.schema.json to support human review hooks.
