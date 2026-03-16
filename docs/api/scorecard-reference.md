@@ -30,3 +30,9 @@ Schema for the run artifact scorecard.
 - **Type:** object
 - **Requirement:** Optional
 - **Description:** Optional variance details if trials were run
+
+## `flake_rates`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Mapping of metric names to their flake rates

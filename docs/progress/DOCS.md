@@ -22,3 +22,10 @@
   - Refreshed cross-domain dashboards
   - Rebuilt schema dependency graph
   - Updated DOCS context
+
+### DOCS v0.5.0
+- ✅ Completed: Daily Documentation Review
+  - Updated API documentation for `takedown-record`, `moderation-decision-record`, `deprecation-record`, `mirror-sync-receipt`, and `submission-record` schemas
+  - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md`
+  - Rebuilt schema dependency graph to include new moderation schemas
+  - Regenerated context-docs.md

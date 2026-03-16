@@ -18,4 +18,9 @@ graph TD
   G[Regression Report] --> E
   H[Promotion Record] --> I[Run Artifact]
   J[Quick Eval] --> D[Dataset Case]
+  K[Takedown Record]
+  L[Moderation Decision Record]
+  M[Deprecation Record]
+  N[Mirror Sync Receipt]
+  O[Submission Record]
 ```
