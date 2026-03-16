@@ -85,3 +85,6 @@
 
 ### GOVERNANCE v1.19.0
 - ✅ Completed: Complete CODEOWNERS - Added missing paths for CONTRACTS, EVALUATION, and RUNTIME to .github/CODEOWNERS.
+
+### GOVERNANCE v1.20.0
+- ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
