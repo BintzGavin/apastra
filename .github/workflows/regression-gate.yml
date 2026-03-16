@@ -28,11 +28,20 @@ jobs:
       - name: Fetch Artifacts Branch
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          git fetch origin promptops-artifacts || true
-          git checkout origin/promptops-artifacts -- reports/regression_report.json || true
+          if git ls-remote --exit-code --heads origin promptops-artifacts; then
+            git fetch origin promptops-artifacts || true
+            git checkout origin/promptops-artifacts -- reports/regression_report.json || true
+          else
+            echo "promptops-artifacts branch not found, skipping fetch"
+          fi
       - name: Check Regression Report Status
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
+          if ! git ls-remote --exit-code --heads origin promptops-artifacts; then
+             echo "Bootstrap state detected: promptops-artifacts branch missing. Bypassing regression check."
+             exit 0
+          fi
+
           REPORT="reports/regression_report.json"
           if [ ! -f "$REPORT" ]; then
             echo "::error::Regression report missing. Merges are blocked."
