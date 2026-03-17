@@ -1,5 +1,6 @@
-**Version**: 0.24.0
+**Version**: 0.25.0
 
+[v0.25.0] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.24.0] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.23.0] ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest
 [v0.22.0] ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter

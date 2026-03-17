@@ -87,3 +87,6 @@
 
 ### EVALUATION v0.24.0
 - ✅ Completed: Minimal Plan Exception - All plans officially complete
+
+### EVALUATION v0.25.0
+- ✅ Completed: Minimal Plan Exception - All plans officially complete
