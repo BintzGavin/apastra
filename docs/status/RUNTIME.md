@@ -1,4 +1,5 @@
-**Version**: 1.23.0
+**Version**: 1.24.0
+[v1.24.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.23.0] ✅ Completed: PackagedResolverCaching - Implemented local caching, offline fallback, and signature verification.
 [v1.22.0] ✅ Completed: NPM-PyPI-Resolver - Implemented npm and PyPI wrapper resolution in the PackagedResolver.
 [v1.21.0] ✅ Completed: PackagedResolver - Complete removal of mock data formatting and fallback templates.
