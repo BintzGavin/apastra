@@ -1,5 +1,6 @@
-**Version**: 0.42.0
+**Version**: 0.43.0
 
+[v0.43.0] ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.42.0] ✅ Completed: ToolContractSchema - Added tool_contract as an optional property to the prompt-spec.schema.json.
 [v0.41.0] ✅ Completed: HumanReviewHooksEvaluatorType - Added human as an evaluator type to the evaluator.schema.json to support human review hooks.
 [v0.40.0] ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.

@@ -122,3 +122,6 @@
 
 ### CONTRACTS v0.42.0
 - ✅ Completed: ToolContractSchema - Added tool_contract as an optional property to the prompt-spec.schema.json.
+
+### CONTRACTS v0.43.0
+- ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
