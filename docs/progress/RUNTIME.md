@@ -113,3 +113,6 @@
 
 ### RUNTIME v1.27.0
 - ✅ Completed: MinimalRuntimeMetadata - Implemented dataset digest and harness version in minimal runtime resolve() output.
+
+### RUNTIME v1.28.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
