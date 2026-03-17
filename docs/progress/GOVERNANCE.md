@@ -94,3 +94,6 @@
 
 ### GOVERNANCE v1.22.0
 - ✅ Completed: FederationAndMirrors - Specified the mirror protocol and optional federation policy.
+
+### GOVERNANCE v1.23.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
