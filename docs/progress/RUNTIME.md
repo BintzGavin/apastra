@@ -101,3 +101,6 @@
 
 ### RUNTIME v1.23.0
 - ✅ Completed: PackagedResolverCaching - Implemented local caching, offline fallback, and signature verification.
+
+### RUNTIME v1.24.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
