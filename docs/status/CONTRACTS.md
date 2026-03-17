@@ -1,5 +1,6 @@
-**Version**: 0.43.0
+**Version**: 0.44.0
 
+[v0.44.0] ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard and evaluator schemas
 [v0.43.0] ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
 [v0.42.0] ✅ Completed: ToolContractSchema - Added tool_contract as an optional property to the prompt-spec.schema.json.
 [v0.41.0] ✅ Completed: HumanReviewHooksEvaluatorType - Added human as an evaluator type to the evaluator.schema.json to support human review hooks.

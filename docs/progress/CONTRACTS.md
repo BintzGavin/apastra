@@ -125,3 +125,6 @@
 
 ### CONTRACTS v0.43.0
 - ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
+
+### CONTRACTS v0.44.0
+- ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard and evaluator schemas

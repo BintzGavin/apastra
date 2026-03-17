@@ -30,6 +30,10 @@
       "type": "object",
       "description": "Configuration specific to the evaluator type, such as model details or target values."
     },
+    "metric_versions": {
+      "type": "object",
+      "description": "Mapping of metric names to their semantic versions."
+    },
     "digest": {
       "type": "string",
       "description": "SHA-256 hash of the evaluator content.",
