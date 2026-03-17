@@ -1,5 +1,6 @@
-**Version**: 0.45.0
+**Version**: 0.46.0
 
+[v0.46.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the CONTRACTS domain.
 [v0.45.0] ✅ Completed: MetricVersioning - Minimal plan exception for MetricVersioning as the implementation was found to be already complete in the domain status log.
 [v0.44.0] ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard and evaluator schemas
 [v0.43.0] ✅ Completed: Minimal Plan Exception Final - Triggered minimal plan exception as all required schemas and validation scripts are complete.
