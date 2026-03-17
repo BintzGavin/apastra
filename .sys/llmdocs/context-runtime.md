@@ -33,9 +33,9 @@ class PackagedResolver:
     def verify_signature(self, asset: dict) -> bool:
         pass
 
-def resolve(prompt_id: str, ref_context: str = None, variables: dict = None) -> tuple[str, dict]:
+def resolve(prompt_id: str, ref_context: str = None, variables: dict = None, dataset_digest: str = None, harness_version: str = None) -> tuple[str, dict]:
     # Returns (rendered_prompt_string, metadata_dict)
-    # metadata_dict contains 'prompt_digest' (str) and optionally 'model' (str) if specified in manifest.
+    # metadata_dict contains 'prompt_digest' (str) and optionally 'model', 'dataset_digest', and 'harness_version' if specified.
     pass
 
 def compute_digest(file_path: str) -> str:

@@ -70,7 +70,7 @@ def load_manifest(ref_context):
             return PinManifest(ref_context)
     return ManifestWrapper()
 
-def resolve(prompt_id, ref_context=None, variables=None):
+def resolve(prompt_id, ref_context=None, variables=None, dataset_digest=None, harness_version=None):
     manifest = load_manifest(ref_context)
     prompt_spec = ResolverChain().resolve(prompt_id, manifest)
 
@@ -102,6 +102,10 @@ def resolve(prompt_id, ref_context=None, variables=None):
     }
     if model_id:
         metadata["model"] = model_id
+    if dataset_digest:
+        metadata["dataset_digest"] = dataset_digest
+    if harness_version:
+        metadata["harness_version"] = harness_version
 
 
     template = prompt_spec.get('template') if isinstance(prompt_spec, dict) else prompt_spec

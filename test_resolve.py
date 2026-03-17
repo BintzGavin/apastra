@@ -25,4 +25,9 @@ assert rendered == "Hello {{name}}!", "Failed missing variables"
 rendered, metadata = promptops.runtime.resolve('test-prompt', None, variables={"name": "Alice"})
 assert rendered == "Hello Alice!", f"Failed variables: expected 'Hello Alice!', got '{rendered}'"
 
+# test dataset_digest and harness_version
+rendered, metadata = promptops.runtime.resolve('test-prompt', None, dataset_digest='abc', harness_version='v1')
+assert metadata.get('dataset_digest') == 'abc', f"Failed dataset_digest: expected 'abc', got '{metadata.get('dataset_digest')}'"
+assert metadata.get('harness_version') == 'v1', f"Failed harness_version: expected 'v1', got '{metadata.get('harness_version')}'"
+
 print("Tests passed")
