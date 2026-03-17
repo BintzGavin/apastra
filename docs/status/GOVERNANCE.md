@@ -1,5 +1,6 @@
-**Version**: 1.22.0
+**Version**: 1.23.0
 
+[v1.23.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.22.0] ✅ Completed: FederationAndMirrors - Specified the mirror protocol and optional federation policy.
 [v1.21.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.20.0] ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
