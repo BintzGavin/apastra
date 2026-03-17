@@ -1,4 +1,5 @@
-**Version**: 1.25.0
+**Version**: 1.26.0
+[v1.26.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.25.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.24.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.23.0] ✅ Completed: PackagedResolverCaching - Implemented local caching, offline fallback, and signature verification.
