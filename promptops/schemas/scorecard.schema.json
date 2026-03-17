@@ -6,7 +6,18 @@
   "type": "object",
   "properties": {
     "normalized_metrics": { "type": "object", "description": "Mapping of metric names to their values" },
-    "metric_definitions": { "type": "object", "description": "Metadata like metric version and description" },
+    "metric_definitions": {
+      "type": "object",
+      "description": "Metadata like metric version and description",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "version": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": ["version"]
+      }
+    },
     "variance": { "type": "object", "description": "Optional variance details if trials were run" },
     "flake_rates": { "type": "object", "description": "Mapping of metric names to their flake rates" }
   },
