@@ -103,3 +103,9 @@
 
 ### GOVERNANCE v1.26.0
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.25.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.27.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
