@@ -1,5 +1,6 @@
-**Version**: 0.28.0
+**Version**: 0.29.0
 
+[v0.29.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.28.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.27.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.26.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
