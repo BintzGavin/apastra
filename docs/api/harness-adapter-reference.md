@@ -1,56 +1,47 @@
 ---
 title: "Harness Adapter Reference"
-description: "API reference for Harness Adapter"
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-11"
+description: "API reference for harness-adapter schema"
+audience: "all"
+last_verified: "2026-03-15"
 source_files:
   - "promptops/schemas/harness-adapter.schema.json"
 ---
 
 # Harness Adapter Reference
 
-API reference for Harness Adapter
-
 ## Properties
 
-## `id`
+### `id`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Stable identifier for the harness adapter.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Stable identifier for the harness adapter.
+### `type`
+- **Type**: const (`harness_adapter`)
+- **Presence**: **Required**
+- **Description**: Must be 'harness_adapter'.
 
-## `type`
+### `capabilities`
+- **Type**: array of string
+- **Presence**: **Required**
+- **Description**: List of capabilities (e.g., ['run_suite', 'trials', 'model_matrix']).
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Must be 'harness_adapter'.
+### `entrypoint`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: The CLI command or script to invoke the harness.
 
-## `capabilities`
+### `description`
+- **Type**: string
+- **Presence**: *Optional*
+- **Description**: Optional description of the harness adapter.
 
-- **Type:** array of string
-- **Requirement:** Required
-- **Description:** List of capabilities (e.g., ['run_suite', 'trials', 'model_matrix']).
+### `env_vars`
+- **Type**: array of string
+- **Presence**: *Optional*
+- **Description**: Required environment variables (e.g., 'OPENAI_API_KEY').
 
-## `entrypoint`
-
-- **Type:** string
-- **Requirement:** Required
-- **Description:** The CLI command or script to invoke the harness.
-
-## `description`
-
-- **Type:** string
-- **Requirement:** Optional
-- **Description:** Optional description of the harness adapter.
-
-## `env_vars`
-
-- **Type:** array of string
-- **Requirement:** Optional
-- **Description:** Required environment variables (e.g., 'OPENAI_API_KEY').
-
-## `digest`
-
-- **Type:** string
-- **Requirement:** Optional
-- **Description:** Content digest stored inline.
+### `digest`
+- **Type**: string
+- **Presence**: *Optional*
+- **Description**: Content digest stored inline.

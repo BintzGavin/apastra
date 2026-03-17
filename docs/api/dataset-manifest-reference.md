@@ -1,8 +1,8 @@
 ---
 title: "Dataset Manifest Reference"
-description: "Schema for a dataset manifest, defining identity, version, schema version, digest, and provenance."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-11"
+description: "API reference for dataset-manifest schema"
+audience: "all"
+last_verified: "2026-03-15"
 source_files:
   - "promptops/schemas/dataset-manifest.schema.json"
 ---
@@ -13,32 +13,27 @@ Schema for a dataset manifest, defining identity, version, schema version, diges
 
 ## Properties
 
-## `id`
+### `id`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Stable identifier for the dataset.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Stable identifier for the dataset.
+### `version`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Semantic version or revision of the dataset.
 
-## `version`
+### `digest`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Content digest (e.g., SHA-256) of the associated dataset.jsonl file to ensure reproducibility.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Semantic version or revision of the dataset.
+### `schema_version`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Version of the dataset case schema used by the JSONL file.
 
-## `digest`
-
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Content digest (e.g., SHA-256) of the associated dataset.jsonl file to ensure reproducibility.
-
-## `schema_version`
-
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Version of the dataset case schema used by the JSONL file.
-
-## `provenance`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Information about the origin and creation of the dataset.
+### `provenance`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Information about the origin and creation of the dataset.

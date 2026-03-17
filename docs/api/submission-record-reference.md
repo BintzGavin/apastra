@@ -1,8 +1,8 @@
 ---
 title: "Submission Record Reference"
-description: "Schema for an append-only artifact structure for package submissions to a public registry."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-11"
+description: "API reference for submission-record schema"
+audience: "all"
+last_verified: "2026-03-15"
 source_files:
   - "promptops/schemas/submission-record.schema.json"
 ---
@@ -13,32 +13,27 @@ Schema for an append-only artifact structure for package submissions to a public
 
 ## Properties
 
-## `submission_id`
+### `submission_id`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Stable identifier for the submission.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Stable identifier for the submission.
+### `package_digest`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Content digest of the submitted package bundle.
 
-## `package_digest`
+### `publisher_id`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Identifier of the user or system publishing the package.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Content digest of the submitted package bundle.
+### `timestamp`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: The time the submission was created.
 
-## `publisher_id`
-
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Identifier of the user or system publishing the package.
-
-## `timestamp`
-
-- **Type:** string
-- **Requirement:** Required
-- **Description:** The time the submission was created.
-
-## `metadata`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Arbitrary metadata for the submission.
+### `metadata`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Arbitrary metadata for the submission.
