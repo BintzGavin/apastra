@@ -128,3 +128,6 @@
 
 ### CONTRACTS v0.44.0
 - ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard and evaluator schemas
+
+### CONTRACTS v0.45.0
+- ✅ Completed: MetricVersioning - Minimal plan exception for MetricVersioning as the implementation was found to be already complete in the domain status log.

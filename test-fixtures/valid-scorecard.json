@@ -1,0 +1,11 @@
+{
+  "normalized_metrics": {
+    "exact_match": 1.0
+  },
+  "metric_definitions": {
+    "exact_match": {
+      "version": "1.0.0",
+      "description": "Exact match metric"
+    }
+  }
+}
