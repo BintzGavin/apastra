@@ -29,3 +29,10 @@
   - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md`
   - Rebuilt schema dependency graph to include new moderation schemas
   - Regenerated context-docs.md
+
+### DOCS v0.6.0
+- ✅ Completed: Daily Documentation Review
+  - Updated API documentation for `prompt-spec`, `run-manifest`, and `evaluator` schemas with new fields
+  - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md`
+  - Rebuilt schema dependency graph to include `quick-eval` to `dataset-case` dependency
+  - Regenerated context-docs.md

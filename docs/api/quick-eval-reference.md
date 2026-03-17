@@ -1,8 +1,8 @@
 ---
 title: "Quick Eval Reference"
-description: "Schema defining a combined quick evaluation file containing prompt, cases, and assertions."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-11"
+description: "API reference for quick-eval schema"
+audience: "all"
+last_verified: "2026-03-15"
 source_files:
   - "promptops/schemas/quick-eval.schema.json"
 ---
@@ -13,26 +13,22 @@ Schema defining a combined quick evaluation file containing prompt, cases, and a
 
 ## Properties
 
-## `id`
+### `id`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Stable identifier for the quick eval.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Stable identifier for the quick eval.
+### `prompt`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: The prompt template.
 
-## `prompt`
+### `cases`
+- **Type**: array of reference ([dataset-case](./dataset-case-reference.md))
+- **Presence**: **Required**
+- **Description**: Array of dataset cases with inputs and inline asserts.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** The prompt template.
-
-## `cases`
-
-- **Type:** array of objects
-- **Requirement:** Required
-- **Description:** Array of dataset cases with inputs and inline asserts.
-
-## `thresholds`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Optional thresholds for the evaluation.
+### `thresholds`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Optional thresholds for the evaluation.

@@ -2,7 +2,7 @@
 title: "Schema Dependency Graph"
 description: "Dependencies across promptops schemas"
 audience: "all"
-last_verified: "2026-03-11"
+last_verified: "2026-03-16"
 source_files:
   - "promptops/schemas/"
 ---

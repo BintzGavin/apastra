@@ -1,80 +1,69 @@
 ---
-title: "Benchmark Suite Specification Reference"
-description: "Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-11"
+title: "Suite Reference"
+description: "API reference for suite schema"
+audience: "all"
+last_verified: "2026-03-15"
 source_files:
   - "promptops/schemas/suite.schema.json"
 ---
 
-# Benchmark Suite Specification Reference
+# Suite Reference
 
 Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
 
 ## Properties
 
-## `id`
+### `id`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Stable identifier for the suite.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Stable identifier for the suite.
+### `name`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Human-readable name of the suite.
 
-## `name`
+### `description`
+- **Type**: string
+- **Presence**: *Optional*
+- **Description**: Optional detailed description of the suite's purpose.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Human-readable name of the suite.
+### `datasets`
+- **Type**: array of string
+- **Presence**: **Required**
+- **Description**: Array of dataset references.
 
-## `description`
+### `evaluators`
+- **Type**: array of string
+- **Presence**: **Required**
+- **Description**: Array of evaluator references.
 
-- **Type:** string
-- **Requirement:** Optional
-- **Description:** Optional detailed description of the suite's purpose.
+### `model_matrix`
+- **Type**: array of string
+- **Presence**: **Required**
+- **Description**: Array of model/provider identifiers to run the suite against.
 
-## `datasets`
+### `trials`
+- **Type**: integer
+- **Presence**: *Optional*
+- **Description**: Number of times to run the evaluation.
 
-- **Type:** array of string
-- **Requirement:** Required
-- **Description:** Array of dataset references.
+### `budgets`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Cost or time limits for the execution.
 
-## `evaluators`
+### `budgets.cost`
+- **Type**: number
+- **Presence**: *Optional*
+- **Description**: Maximum allowed cost in dollars.
 
-- **Type:** array of string
-- **Requirement:** Required
-- **Description:** Array of evaluator references.
+### `budgets.time`
+- **Type**: integer
+- **Presence**: *Optional*
+- **Description**: Maximum allowed execution time in seconds.
 
-## `model_matrix`
-
-- **Type:** array of string
-- **Requirement:** Required
-- **Description:** Array of model/provider identifiers to run the suite against.
-
-## `trials`
-
-- **Type:** integer
-- **Requirement:** Optional
-- **Description:** Number of times to run the evaluation.
-
-## `budgets`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Cost or time limits for the execution.
-
-### `cost`
-
-- **Type:** number
-- **Requirement:** Optional
-- **Description:** Maximum allowed cost in dollars.
-
-### `time`
-
-- **Type:** integer
-- **Requirement:** Optional
-- **Description:** Maximum allowed execution time in seconds.
-
-## `thresholds`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Pass/fail criteria mapped to specific metrics.
+### `thresholds`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Pass/fail criteria mapped to specific metrics.

@@ -1,104 +1,99 @@
 ---
-title: "Run Manifest Specification Reference"
-description: "Schema for a run manifest."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-11"
+title: "Run Manifest Reference"
+description: "API reference for run-manifest schema"
+audience: "all"
+last_verified: "2026-03-15"
 source_files:
   - "promptops/schemas/run-manifest.schema.json"
 ---
 
-# Run Manifest Specification Reference
+# Run Manifest Reference
 
 Schema for a run manifest.
 
 ## Properties
 
-## `input_refs`
+### `input_refs`
+- **Type**: object
+- **Presence**: **Required**
+- **Description**: Input references
 
-- **Type:** object
-- **Requirement:** Required
-- **Description:** Input references
+### `resolved_digests`
+- **Type**: object
+- **Presence**: **Required**
+- **Description**: Resolved digests
 
-## `resolved_digests`
+### `timestamps`
+- **Type**: object
+- **Presence**: **Required**
+- **Description**: Timestamps
 
-- **Type:** object
-- **Requirement:** Required
-- **Description:** Resolved digests
+### `harness_identifier`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Harness identifier
 
-## `timestamps`
+### `harness_version`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Harness version
 
-- **Type:** object
-- **Requirement:** Required
-- **Description:** Timestamps
+### `model_ids`
+- **Type**: array of string
+- **Presence**: **Required**
+- **Description**: Model IDs
 
-## `harness_version`
+### `sampling_config`
+- **Type**: object
+- **Presence**: **Required**
+- **Description**: Sampling configuration
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Harness version
+### `environment`
+- **Type**: object
+- **Presence**: **Required**
+- **Description**: Environment metadata
 
-## `model_ids`
+### `status`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Run status
 
-- **Type:** array of string
-- **Requirement:** Required
-- **Description:** Model IDs
+### `provenance`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: SLSA-style provenance metadata representing the invocation of the evaluation run.
 
-## `environment`
+### `provenance.builder`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Identifies the builder.
 
-- **Type:** object
-- **Requirement:** Required
-- **Description:** Environment metadata
+### `provenance.builder.id`
+- **Type**: string
+- **Presence**: *Optional*
+- **Description**: String URI identifying the builder.
 
-## `status`
+### `provenance.buildType`
+- **Type**: string
+- **Presence**: *Optional*
+- **Description**: String defining the build model.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Run status
+### `provenance.invocation`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Invocation configuration.
 
-## `provenance`
+### `provenance.invocation.configSource`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Source of the configuration.
 
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** SLSA-style provenance metadata representing the invocation of the evaluation run.
+### `provenance.invocation.environment`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Invocation environment.
 
-### `builder`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Identifies the builder.
-
-#### `id`
-
-- **Type:** string
-- **Requirement:** Optional
-- **Description:** String URI identifying the builder.
-
-### `buildType`
-
-- **Type:** string
-- **Requirement:** Optional
-- **Description:** String defining the build model.
-
-### `invocation`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Invocation configuration.
-
-#### `configSource`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Source of the configuration.
-
-#### `environment`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Invocation environment.
-
-### `metadata`
-
-- **Type:** object
-- **Requirement:** Optional
-- **Description:** Timestamps and build metadata.
+### `provenance.metadata`
+- **Type**: object
+- **Presence**: *Optional*
+- **Description**: Timestamps and build metadata.

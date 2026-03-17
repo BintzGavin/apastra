@@ -1,12 +1,14 @@
 ---
-title: "Run Failures Specification Reference"
-description: "Schema defining an array of failure objects."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-11"
+title: "Run Failures Reference"
+description: "API reference for run-failures schema"
+audience: "all"
+last_verified: "2026-03-15"
 source_files:
   - "promptops/schemas/run-failures.schema.json"
 ---
 
-# Run Failures Specification Reference
+# Run Failures Reference
 
 Schema defining an array of failure objects.
+
+## Properties

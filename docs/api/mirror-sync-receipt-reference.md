@@ -1,8 +1,8 @@
 ---
 title: "Mirror Sync Receipt Reference"
-description: "Schema for mirror sync receipts."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-11"
+description: "API reference for mirror-sync-receipt schema"
+audience: "all"
+last_verified: "2026-03-15"
 source_files:
   - "promptops/schemas/mirror-sync-receipt.schema.json"
 ---
@@ -13,32 +13,27 @@ Schema for mirror sync receipts.
 
 ## Properties
 
-## `receipt_id`
+### `receipt_id`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: Unique identifier for the sync receipt.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** Unique identifier for the sync receipt.
+### `mirror_id`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: The ID of the mirror.
 
-## `mirror_id`
+### `synced_digests`
+- **Type**: array of string
+- **Presence**: **Required**
+- **Description**: Array of SHA-256 digests that were synced.
 
-- **Type:** string
-- **Requirement:** Required
-- **Description:** The ID of the mirror.
+### `timestamp`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: The timestamp of the sync.
 
-## `synced_digests`
-
-- **Type:** array of string
-- **Requirement:** Required
-- **Description:** Array of SHA-256 digests that were synced.
-
-## `timestamp`
-
-- **Type:** string
-- **Requirement:** Required
-- **Description:** The timestamp of the sync.
-
-## `status`
-
-- **Type:** string
-- **Requirement:** Required
-- **Description:** The status of the sync operation.
+### `status`
+- **Type**: string
+- **Presence**: **Required**
+- **Description**: The status of the sync operation.

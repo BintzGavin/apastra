@@ -1,12 +1,12 @@
 # System Context: DOCS
 
 ## Section A: Guide Inventory
-- `black-hole-architecture.md`
-- `promotion-and-delivery.md`
-- `harness-contract.md`
-- `getting-started.md`
 - `architecture-overview.md`
+- `black-hole-architecture.md`
 - `consumption-and-resolution.md`
+- `getting-started.md`
+- `harness-contract.md`
+- `promotion-and-delivery.md`
 - `repo-topology.md`
 
 ## Section B: API Reference Inventory
@@ -41,13 +41,13 @@
 
 ## Section C: ADR Inventory
 - `adr-001-git-native-control-plane.md`
-- `adr-003-content-digest-identity.md`
 - `adr-002-byo-harnesses.md`
+- `adr-003-content-digest-identity.md`
 
 ## Section D: Dashboard Inventory
-- `schema-dependency-graph.md`
 - `domain-status-overview.md`
 - `implementation-progress.md`
+- `schema-dependency-graph.md`
 
 ## Section E: Coverage Gaps
 - None currently identified
