@@ -1,22 +1,22 @@
 #### 1. Context & Goal
-- **Objective**: Generate a minimal plan exception.
-- **Trigger**: The EVALUATION domain has already executed its final minimal plan exception.
-- **Impact**: None.
+- **Objective**: Execute a Minimal Plan Exception because all EVALUATION features described in `docs/vision.md` and `README.md` are fully implemented.
+- **Trigger**: `docs/status/EVALUATION.md` indicates `v0.30.0` (Minimal Plan Exception Final - All plans officially complete) is complete, and no further gaps exist in the current vision document.
+- **Impact**: Satisfies the system's planning requirement without introducing unneeded features or violating scope.
 
 #### 2. File Inventory
-- **Create**: .sys/plans/2026-03-17-EVALUATION-MinimalPlanExceptionFinal-v0.31.0.md
-- **Modify**: None
-- **Read-Only**: None
+- **Create**: `.sys/plans/2026-03-17-EVALUATION-MinimalPlanExceptionFinal-v0.31.0.md`
+- **Modify**: `.sys/llmdocs/context-evaluation.md` (no-op rewrite)
+- **Read-Only**: `docs/vision.md`, `README.md`, `docs/status/EVALUATION.md`, `docs/progress/EVALUATION.md`
 
 #### 3. Implementation Spec
-- **Harness Architecture**: N/A
-- **Run Request Format**: N/A
-- **Run Artifact Format**: N/A
-- **Pseudo-Code**: N/A
-- **Baseline and Regression Flow**: N/A
-- **Dependencies**: N/A
+- **Harness Architecture**: None
+- **Run Request Format**: None
+- **Run Artifact Format**: None
+- **Pseudo-Code**: None
+- **Baseline and Regression Flow**: None
+- **Dependencies**: None
 
 #### 4. Test Plan
-- **Verification**: N/A
-- **Success Criteria**: N/A
-- **Edge Cases**: N/A
+- **Verification**: `echo "No tests required for EVALUATION"`
+- **Success Criteria**: The dummy test executes.
+- **Edge Cases**: None
