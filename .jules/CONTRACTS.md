@@ -3,3 +3,5 @@
 **Action:** Use `yq .` prior to piping to `jq` for any `.yaml` or `.yml` files.
 ## v0.60.0
 - Executed Minimal Plan Exception Final for the CONTRACTS domain.
+## v0.61.0
+- Executed Minimal Plan Exception Final for the CONTRACTS domain.
