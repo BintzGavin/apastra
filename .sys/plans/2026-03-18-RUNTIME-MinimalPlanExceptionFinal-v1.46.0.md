@@ -1,17 +1,21 @@
 #### 1. Context & Goal
-- **Objective**: Execute a final minimal plan exception for the RUNTIME domain.
-- **Trigger**: The RUNTIME domain architecture and implementation matches the vision documents completely (Git-first resolver chain, consumption manifest schema, and minimal runtime have been fully satisfied).
-- **Impact**: Indicates that there is no remaining implementation work for RUNTIME in this phase.
+- **Objective**: Execute the final minimal plan exception for the RUNTIME domain.
+- **Trigger**: The MinimalPlanExceptionFinal task is required to finalize the plan for the RUNTIME domain.
+- **Impact**: It allows the execution of the final minimal plan exception for the RUNTIME domain.
 
 #### 2. File Inventory
-- **Create**: None
-- **Modify**: .sys/llmdocs/context-runtime.md
-- **Read-Only**: docs/vision.md, README.md, docs/status/RUNTIME.md, promptops/schemas/
+- **Create**: `.sys/plans/2026-03-18-RUNTIME-MinimalPlanExceptionFinal-v1.46.0.md`
+- **Modify**: `docs/status/RUNTIME.md`, `docs/progress/RUNTIME.md`, `.sys/llmdocs/context-runtime.md`
+- **Read-Only**: `docs/vision.md`, `README.md`
 
 #### 3. Implementation Spec
-- **Modify**: None
+- **Resolver Architecture**: None
+- **Manifest Format**: None
+- **Pseudo-Code**: None
+- **Harness Contract Interface**: None
+- **Dependencies**: None
 
 #### 4. Test Plan
-- **Verification**: echo 'No tests to run for Architect Planner'
-- **Success Criteria**: The dummy test command executes.
+- **Verification**: `echo "No tests to run"`
+- **Success Criteria**: The minimal plan exception is completed.
 - **Edge Cases**: None
