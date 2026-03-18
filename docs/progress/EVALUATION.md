@@ -129,3 +129,6 @@
 
 ### EVALUATION v0.39.0
 - ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.40.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
