@@ -1,24 +1,22 @@
 #### 1. Context & Goal
-- **Objective**: Execute a Minimal Plan Exception as the EVALUATION domain is already officially complete.
-- **Trigger**: The EVALUATION domain has already executed its final minimal plan exception.
-- **Impact**: Advances system state to v0.33.0 to safely conclude planning without fabricating work.
+- **Objective**: Execute a Minimal Plan Exception because all EVALUATION features described in `docs/vision.md` and `README.md` are fully implemented.
+- **Trigger**: `docs/status/EVALUATION.md` shows `[v0.32.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete`.
+- **Impact**: Satisfies the system's planning requirement without introducing unneeded features or violating scope.
 
 #### 2. File Inventory
-- **Create**: `.sys/plans/2026-03-18-EVALUATION-MinimalPlanExceptionFinal-v0.33.0.md` (Minimal Plan Exception)
-- **Modify**: `.sys/llmdocs/context-evaluation.md` (No-op write)
-- **Read-Only**: `docs/status/EVALUATION.md`
+- **Create**: `.sys/plans/2026-03-18-EVALUATION-MinimalPlanExceptionFinal-v0.33.0.md`
+- **Modify**: `.sys/llmdocs/context-evaluation.md` (no-op rewrite)
+- **Read-Only**: `docs/vision.md`, `README.md`, `docs/status/EVALUATION.md`, `docs/progress/EVALUATION.md`
 
 #### 3. Implementation Spec
-- **Harness Architecture**: N/A
-- **Run Request Format**: N/A
-- **Run Artifact Format**: N/A
-- **Pseudo-Code**:
-  1. Write no-op to `.sys/llmdocs/context-evaluation.md`.
-  2. Increment EVALUATION status to v0.33.0 logging 'MinimalPlanExceptionFinal'.
-- **Baseline and Regression Flow**: N/A
-- **Dependencies**: CONTRACTS (none), RUNTIME (none), GOVERNANCE (none)
+- **Harness Architecture**: None
+- **Run Request Format**: None
+- **Run Artifact Format**: None
+- **Pseudo-Code**: None
+- **Baseline and Regression Flow**: None
+- **Dependencies**: None
 
 #### 4. Test Plan
-- **Verification**: Verify no-op write with `git diff`.
-- **Success Criteria**: No-op write matches file contents exactly.
-- **Edge Cases**: N/A
+- **Verification**: `echo "No tests required for EVALUATION"`
+- **Success Criteria**: The dummy test executes.
+- **Edge Cases**: None
