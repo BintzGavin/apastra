@@ -194,6 +194,7 @@
   - Optional fields in manifest: `provenance` (object)
   - Required fields in case: `case_id`, `inputs`
   - Optional fields in case: `assert` (array of assertions with restricted built-in `type` strings and `value`)
+
 - **Evaluators:**
   - Naming: `evaluator.yaml` or `evaluator.json`
   - Structure: Lives in `promptops/evaluators/<evaluator-id>/`
