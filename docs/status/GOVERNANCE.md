@@ -1,4 +1,6 @@
-**Version**: 1.33.0
+**Version**: 1.34.0
+
+[v1.34.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 
 [v1.33.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 
