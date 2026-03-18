@@ -7,7 +7,7 @@ Harness execution flow:
 - Run request validated via `promptops/runs/validate-run-request.sh`
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
 - Harness adapter co n s umes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`). It natively enforces `budgets` and `timeouts`.
-- If inline as se rt ions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), and `is-valid-json-schema` asserti on  typ es.
+- If inline a s se rt ions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), and `is-valid-json-schema` asserti on  typ es.
 - Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file.
 - Regression report generated and stored via `promptops/runs/generate_regression_report.sh <cand idat e> < baseline> <policy> <report_id>`, with ungated metrics surfaced as informational evidence.
 
@@ -31,7 +31,7 @@ Run Artifact Schema (from CONTRACTS) `promptops/schemas/run-artifact.schema.json
 Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 - `baseline_id`: The baseline ID
 - `run_digest`: The run digest
-- `created_at`: The creation  time
+- `created_at`: The c reation  time
 - `metadat a`: The metadata
 - `description`: The description
 
