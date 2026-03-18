@@ -38,4 +38,4 @@ Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 ## Section E: Integration Points
 GOVERNANCE reads:
 - `derived-index/regressions/<report-id>.json` to evaluate policy gates (e.g. `status` field for pass/fail/warning decisions).
-- `derived-i ndex/base lines/<baseline-id>.json` to find the `run_digest` needed to locate the baseline's `scorecard.json`.
+- `derived-i ndex/base lines/<baseline-id>.json` to find the `run_digest` needed to locate the baseline's `scorecard.json`
