@@ -33,9 +33,9 @@ def main():
 
     policy = load_yaml(policy_path)
 
-    candidate_metrics = candidate.get("normalized_metrics", {})
-    baseline_metrics = baseline.get("normalized_metrics", {})
-    candidate_flake_rates = candidate.get("flake_rates", {})
+    candidate_metrics = candidate.get("scorecard", {}).get("normalized_metrics", {}) if "scorecard" in candidate else candidate.get("normalized_metrics", {})
+    baseline_metrics = baseline.get("scorecard", {}).get("normalized_metrics", {}) if "scorecard" in baseline else baseline.get("normalized_metrics", {})
+    candidate_flake_rates = candidate.get("scorecard", {}).get("flake_rates", {}) if "scorecard" in candidate else candidate.get("flake_rates", {})
 
     status = "pass"
     evidence = []
