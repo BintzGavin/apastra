@@ -12,7 +12,7 @@ promptops/
 │   ├── render.py
 │   ├── digest.py
 │   └── runner.py
-\342\224\234\\xe2\\x94 \\x80\342\224\200 resolver/
+â\xe2\x94 \x80â resolver/
 │   ├── chain.py
 │   ├── local.py
 │   ├── workspace.py
@@ -56,11 +56,11 @@ prompts:
     model: gpt-4         # Specific model override
     pin: v1.0.0          # Git ref or tag
   analyze:
-    override: ./local-prompts/an alyze.json
+    override: ./local-prompts/analyze.json
 ```
 - Local names can map to actual backend IDs using `id`.
 - Support specifying `model` explicitly.
 
 ## Section E: Integration Points
-- **EVALUATION**: Harnesses use `resolve()` to get the template, compute digests for verification, and r etrieve model configuration from metadata.
+- **EVALUATION**: Harnesses use `resolve()` to get the template, compute digests for verification, and retrieve model configuration from metadata.
 - **GOVERNANCE**: Policy gates read manifest fields to enforce model usage and digest checks.
