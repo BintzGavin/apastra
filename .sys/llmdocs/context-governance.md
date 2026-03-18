@@ -13,7 +13,7 @@ Gate Enforcement Flow:
 - `.github/rulesets/main-protection.json`
 - `.github/rulesets/tag-immutability.json`
 - `.github/workflows/auto-merge.yml`
-- `.github/ workflows/deliver.yml`
+- `.g ithub/ workflows/deliver.yml`
 - `.github/workflows/immutable-release.yml`
 - `.github/workflows/promote.yml`
 - `.github/workflows/record-approval.yml`
@@ -46,7 +46,7 @@ Gate Enforcement Flow:
 
 **Section D: Promotion Record Format**
 - `id`: Unique promotion event ID
-- `timestamp`: ISO-8601 timestamp of  promotion
+- `timestamp`: ISO-8601  timestamp of  promotion
 - `channel`: Target distribution channel (e.g., "prod", "staging")
 - `prompt_id`: ID of the prompt being promoted
 - `approved_digest`: The content digest of the promoted prompt package
@@ -79,4 +79,4 @@ Gate Enforcement Flow:
 - `derived-index/regressions/` @apastra/evaluation-team
 - `promptops/manifests/` @apastra/runtime-team
 - `promptops/resolver/` @apastra/runtime-team
-- `promptops/runtime/` @apastra/runtime-tea
+- `promptops/runtime/` @apastra/runtime-tea m
