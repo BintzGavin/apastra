@@ -30,3 +30,7 @@
 ## [0.16.0] - JsonSchemaAssertion
 **Learning:** Found that `evaluate_assertions.py` lacks implementation for `is-valid-json-schema`, causing inline assertions of this type to silently fall through to the default failure case.
 **Action:** Spec'd the implementation of `is-valid-json-schema` evaluation logic, utilizing `extract_json_blocks` and `jsonschema` validation against the provided schema value.
+
+## [0.36.0] - Minimal Plan Exception Final
+**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
+**Action:** Proceeded with no-op exception.
