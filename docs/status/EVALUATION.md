@@ -1,4 +1,4 @@
-**Version**: 0.36.0
+**Version**: 0.37.0
 n[v0.36.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 
 
@@ -51,3 +51,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.19.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.19.2] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.19.3] ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard normalizer
+[v0.37.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
