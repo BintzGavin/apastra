@@ -1,6 +1,6 @@
 #### 1. Context & Goal
 - **Objective**: Execute a Minimal Plan Exception because all EVALUATION features described in `docs/vision.md` and `README.md` are fully implemented.
-- **Trigger**: `docs/status/EVALUATION.md` shows `[v0.32.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete`.
+- **Trigger**: `docs/status/EVALUATION.md` indicates `v0.32.0` (Minimal Plan Exception Final) is complete, and no further gaps exist in the current vision document.
 - **Impact**: Satisfies the system's planning requirement without introducing unneeded features or violating scope.
 
 #### 2. File Inventory
