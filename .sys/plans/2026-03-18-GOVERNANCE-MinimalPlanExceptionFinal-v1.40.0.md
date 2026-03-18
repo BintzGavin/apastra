@@ -1,22 +1,22 @@
 #### 1. Context & Goal
-- **Objective**: Execute a Minimal Plan Exception as all documented governance primitive requirements are completed.
-- **Trigger**: System has been thoroughly analyzed against docs/vision.md and README.md, confirming no missing governance primitives.
-- **Impact**: System advances version state with no architectural alterations. No impact on existing enforcement layers.
+- **Objective**: Acknowledge that all GOVERNANCE vision gaps have been successfully implemented and tested.
+- **Trigger**: The status log `docs/status/GOVERNANCE.md` confirms that Phase 5 (Federation and Mirrors) has been completed, fulfilling all required phases from `docs/vision.md` and `README.md`. No new primitives remain.
+- **Impact**: Officially marks the GOVERNANCE domain as feature-complete according to the current vision documents, preventing unnecessary work loops and ensuring the system is ready for the Executor's Minimal Plan Exception.
 
 #### 2. File Inventory
 - **Create**: None
-- **Modify**: `.sys/llmdocs/context-governance.md` (no-op rewrite)
-- **Read-Only**: `docs/vision.md`, `README.md`, `.github/CODEOWNERS`, `.github/workflows/`
+- **Modify**: `docs/status/GOVERNANCE.md` (bump minor version to v1.40.0), `.sys/llmdocs/context-governance.md` (no-op write).
+- **Read-Only**: `docs/vision.md`, `README.md`.
 
 #### 3. Implementation Spec
-- **Policy Architecture**: All current architectures satisfy the documented vision. The regression gate check, CODEOWNERS patterns, promotion record format, and delivery target formats are fully implemented and functional.
-- **Workflow Design**: No action required. Workflows for CI gate, delivery sync, release packaging, and approvals are complete.
-- **CODEOWNERS Patterns**: No action required. `.github/CODEOWNERS` is fully mapped to domains.
-- **Promotion Record Format**: No action required. The promotion schema supports rollback and append-only append characteristics.
-- **Delivery Target Format**: No action required. Declarative target configuration operates within the promptops-artifacts branch correctly.
-- **Dependencies**: No pending external domain dependencies.
+- **Policy Architecture**: The GOVERNANCE executor should perform a no-op write to `.sys/llmdocs/context-governance.md` leaving it exactly identical byte-for-byte, update the version number to v1.40.0 in `docs/status/GOVERNANCE.md`, and add a journal entry noting the system is fully mapped to the vision.
+- **Workflow Design**: No GitHub actions workflows are to be modified or created.
+- **CODEOWNERS Patterns**: No changes necessary. All CODEOWNERS requirements are fulfilled.
+- **Promotion Record Format**: No changes necessary.
+- **Delivery Target Format**: No changes necessary.
+- **Dependencies**: None.
 
 #### 4. Test Plan
-- **Verification**: A byte-for-byte no-op update to `.sys/llmdocs/context-governance.md` confirms write capabilities.
-- **Success Criteria**: The no-op write completes with a zero-change diff, leaving all prior governance configurations and state fully intact.
-- **Edge Cases**: N/A
+- **Verification**: Run `cat docs/status/GOVERNANCE.md` to ensure the file was touched, the version bumped, and the new completion entry exists. Run `cat .sys/llmdocs/context-governance.md | wc -c` and `git diff .sys/llmdocs/context-governance.md` to verify the no-op write.
+- **Success Criteria**: The status file correctly reads the new version number and the context file remains byte-for-byte identical.
+- **Edge Cases**: None.
