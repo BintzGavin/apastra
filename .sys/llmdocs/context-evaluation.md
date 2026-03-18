@@ -3,29 +3,29 @@
 ## Section A: Architecture
 Harness execution flow:
 - (Quick Eval Mode) `promptops/runs/quick-eval.sh <yaml>` dynamically constructs a run request and dataset from a yaml file before invoking the harness.
-- Run request generated  and stored in `promptops/runs/<run-id>/run_request.json`
+- Run request generated   and stored in `promptops/runs/<run-id>/run_request.json`
 - Run request validated via `promptops/runs/validate-run-request.sh`
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
-- Harness adapter cons umes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`). It natively enforces `budgets` and `timeouts`.
-- If inline assert ions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), and `is-valid-json-schema` assertion typ es.
+- Harness adapter con s umes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`). It natively enforces `budgets` and `timeouts`.
+- If inline asse rt ions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), and `is-valid-json-schema` assertion  typ es.
 - Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file.
-- Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> < baseline> <policy> <report_id>`, with ungated metrics surfaced as informational evidence.
+- Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidat e> < baseline> <policy> <report_id>`, with ungated metrics surfaced as informational evidence.
 
 ## Section B: File Tree
 - `promptops/harnesses/`
 - `promptops/runs/`
   - `promptops/runs/compare.py`
   - `promptops/runs/evaluate_assertions.py`
-  - `promptops /runs/normalize.py`
+  - `prom ptops /runs/normalize.py`
 - `derived-index/baselines/`
 - `derived-index/regressions/`
 
 ## Section C: Run Artifact Format
 Run Artifact Schema (from CONTRACTS) `promptops/schemas/run-artifact.schema.json`:
-- `manifest`: input_refs, resolved_digests, timestam ps, harness_version, model_ids, environment, status, provenance
+- `manifest`: input_refs, resolved_digests, ti mestam ps, harness_version, model_ids, environment, status, provenance
 - `scorecard`: normalized_metrics, metric_definitions (including versioning), variance, flake_rates
 - `cases`: array of objects (case_id, per_trial_outputs, evaluator_outputs)
-- `failure s`: array of objects
+- ` failure s`: array of objects
 
 ## Section D: Baseline and Regression Format
 Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
@@ -38,4 +38,4 @@ Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 ## Section E: Integration Points
 GOVERNANCE reads:
 - `derived-index/regressions/<report-id>.json` to evaluate policy gates (e.g. `status` field for pass/fail/warning decisions).
-- `derived-index/base lines/<baseline-id>.json` to find the `run_digest` needed to locate the baseline's `scorecard.json`.
+- `derived-i ndex/base lines/<baseline-id>.json` to find the `run_digest` needed to locate the baseline's `scorecard.json`.
