@@ -1,4 +1,4 @@
-**Version**: 0.55.0
+**Version**: 0.56.0
 
 [v0.55.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 
@@ -62,3 +62,5 @@
 [v0.34.0] ✅ Completed: DatasetSchemaUpdates - Added provenance to manifest schema and assertion type validation to case schema.
 
 [v0.54.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
+
+[v0.56.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
