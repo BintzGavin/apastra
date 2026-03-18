@@ -150,3 +150,6 @@
 
 ### EVALUATION v0.46.0
 - ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.47.0
+- ✅ Completed: RegressionEngine - Implemented CLI script for regression comparison
