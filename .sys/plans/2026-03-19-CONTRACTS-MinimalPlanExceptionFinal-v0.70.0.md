@@ -9,14 +9,13 @@
 - **Read-Only**: `docs/vision.md`, `README.md`, `promptops/schemas/`, `promptops/validators/`
 
 #### 3. Implementation Spec
-- **Schema Architecture**: N/A (Minimal Plan Exception)
-- **Content Digest Convention**: N/A
-- **Pseudo-Code**:
-  - Execute no changes to any implementation files within `promptops/schemas/` or `promptops/validators/`.
-- **Public Contract Changes**: None.
-- **Dependencies**: None.
+- **Schema Architecture**: None
+- **Content Digest Convention**: None
+- **Pseudo-Code**: None
+- **Public Contract Changes**: None
+- **Dependencies**: None
 
 #### 4. Test Plan
 - **Verification**: `echo "No execution needed"`
 - **Success Criteria**: The `.sys/plans/2026-03-19-CONTRACTS-MinimalPlanExceptionFinal-v0.70.0.md` file is successfully created.
-- **Edge Cases**: N/A
+- **Edge Cases**: None
