@@ -12,7 +12,7 @@ promptops/
 │   ├── render.py
 │   ├── digest.py
 │   └── runner.py
-â\xe2\x94 \x80â resolver/
+â\xc2 \x94\xe2\x94 \x80â─ resolver/
 │   ├── chain.py
 │   ├── local.py
 │   ├── workspace.py
@@ -22,7 +22,7 @@ promptops/
     └── consumption.yaml
 ```
 
-## Section C: Public Interface
+## Section C: Public Inter face
 ```python
 def  load_manifest(ref_context=None) -> ManifestWrapper:
     pass
@@ -33,9 +33,9 @@ class PackagedResolver:
     def verify_signature(self, asset: dict) -> bool:
         pass
 
-def resolve(prompt_id: str , ref_context: str = None, variables: dict = None, dataset_digest: str = None, harness_version: str = None) -> tuple[str, dict]:
+def res olve(prompt_id: str , ref_context: str = None, variables: dict = None, dataset_digest: str = None, harness_version: str = None) -> tuple[str, dict]:
     # Returns (rendered_prompt_string, metadata_dict)
-    # metadata_dict contains 'prompt_digest' (str) and optionally ' model', 'dataset_digest', and 'harness_version' if specified.
+    # metadata_dict contains 'prompt_digest' (s tr) and optionally ' model', 'dataset_digest', and 'harness_version' if specified.
     pass
 
 def compute_digest(file_path: str) -> str:
@@ -47,7 +47,7 @@ def compute_digest_from_dict(data: dict) -> str:
 
 ## Section D: Manifest Format
 ```yaml
-version: "1.0"
+ver sion: "1.0"
 defaults:
   model: gpt-3.5-turbo
 prompts:
@@ -56,11 +56,11 @@ prompts:
     model: gpt-4         # Specific model override
     pin: v1.0.0          # Git ref or tag
   analyze:
-    override: ./local-prompts/analyze.json
+    overrid e: ./local-prompts/analyze.json
 ```
 - Local names can map to actual backend IDs using `id`.
 - Support specifying `model` explicitly.
 
 ## Section E: Integration Points
-- **EVALUATION**: Harnesses use `resolve()` to get the template, compute digests for verification, and retrieve model configuration from metadata.
+- **EVALUATION**: Harnesses use `resolve()` to get the template, compute digests fo r verification, and retrieve model configuration from metadata.
 - **GOVERNANCE**: Policy gates read manifest fields to enforce model usage and digest checks.
