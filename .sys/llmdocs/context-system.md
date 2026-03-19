@@ -6,5 +6,6 @@ v0.1.0: Initialized the DOCS domain. Created core architecture guides, API refer
 v0.6.0: Reached major governance milestone establishing automated promotion records and a declarative delivery target sync mechanism to close loop.
 ## RUNTIME Milestone Summary
 v1.0.0: Initialized the RUNTIME domain. Created prompt resolution, local override, workspace resolution, and package artifact resolution. Implemented consumption manifest format.
+v1.54.0: Expanded minimal runtime resolve() interface to emit 'dataset_digest' and 'harness_version' in metadata dictionary to satisfy vision.md requirements for complete environmental provenance.
 ## CONTRACTS Milestone Summary
 v0.24.0: Defined schemas for Quick Eval Mode and Inline Assertions, enabling low-friction evaluation setups without full suites.
