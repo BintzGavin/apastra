@@ -198,3 +198,6 @@
 
 ### EVALUATION v0.63.0
 - \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.64.0
+- \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
