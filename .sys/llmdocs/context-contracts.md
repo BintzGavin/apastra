@@ -3,12 +3,12 @@
 **Status File**: `docs/status/CONTRACTS.md`
 **Progress File**: `docs/progress/CONTRACTS.md`
 **Journal File**: `.jules/CONTRACTS.md`
-**Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system \342\200\224 schemas, validators, prompt specs, datasets, evaluators, and suites \342\200\224 according to the approved plan from your Planner counterpart.
+**Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system — schemas, validators, prompt specs, datasets, evaluators, and suites — according to the approved plan from your Planner counterpart.
 
 ## Section A: Schema Inventory
 - **ID:** `apastra-prompt-spec-v1`
   - **Version:** 0.2.0
-  - **Description:** Source-of-truth prompt definition with a stabl e ID, variable schema, output contract, tool contract, and metadata.
+  - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, tool contract, and metadata.
 - **ID:** `apastra-dataset-manifest-v1`
   - **Version:** 0.38.0
   - **Description:** Schema for a dataset manifest, defining identity, version, schema version, digest, and optional provenance.
@@ -27,7 +27,7 @@
 - **ID:** `apastra-harness-adapter-v1`
   - **Version:** 0.8.0
   - **Description:** Configuration for test harnesses including invocation patterns and capabilities.
-- **ID:** `apastra-run-request-v1`
+- **ID:** ` apastra-run-request-v1`
   - **Version:** 0.9.0
   - **Description:** Immutable request instructing a harness to execute a specific suite configuration.
 - **ID:** `apastra-run-artifact-v1`
@@ -47,7 +47,7 @@
   - **Description:** Append-only record of an artifact promotion to a specific channel.
 - **ID:** `apastra-delivery-target-v1`
   - **Version:** 0.11.0
-  - **Desc ription:** Configuration mapping a channel to a physical deployment destination.
+  - **Description:** Configuration mapping a channel to a physical deployment destination.
 - **ID:** `apastra-baseline-v1`
   - **Version:** 0.12.0
   - **Description:** Schema defining a baseline reference mapping prompt IDs to specific digest or tags.
@@ -60,7 +60,7 @@
 - **ID:** `apastra-approval-state-v1`
   - **Version:** 0.15.0
   - **Description:** Schema defining the approval status of a test run or promotion.
-- **ID:** `apastra-run-manifest- v1`
+- **ID:** `apastra-run-manifest-v1`
   - **Version:** 0.37.0
   - **Description:** Schema defining the master index of a test run, including SLSA-style provenance metadata.
 - **ID:** `apastra-run-case-v1`
@@ -75,21 +75,21 @@
 - **ID:** `apastra-submission-record-v1`
   - **Version:** 0.36.0
   - **Description:** Schema for an append-only artifact structure for package submissions to a public registry.
-- **ID:** `https://promptops.apastra.com/schemas/moderation-dec ision-record.schema.json`
+- **ID:** `apastra-moderation-decision-record-v1`
   - **Version:** 0.39.0
   - **Description:** Schema for moderation decision records.
-- **ID:** `https://promptops.apastra.com/schemas/deprecation-record.schema.json`
+- **ID:** `apastra-deprecation-record-v1`
   - **Version:** 0.39.0
   - **Description:** Schema for deprecation records.
-- **ID:** `https://promptops.apastra.com/schemas/takedown-record.schema.json`
+- **ID:** `apastra-takedown-record-v1`
   - **Version:** 0.39.0
   - **Description:** Schema for takedown records.
-- **ID:** `https://promptops.apastra.com/schemas/mirror-sync-receipt.schema.json`
+- **ID:** `apastra-mirror-sync-receipt-v1`
   - **Version:** 0.39.0
   - **Description:** Schema for mirror sync receipts.
-- **ID:** `https://promptops.apastra.com/schemas/quick-eval.schema.json`
+- **ID:** `apastra-quick-eval-v1`
   - **Version:** 0.24.0
-  - **Description:** Schema defining a combined quick evaluation file co ntaining prompt, cases, and assertions.
+  - **Description:** Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
 
 ## Section B: Validator Inventory
 - **Validator:** `validate-regression-policy.sh`
@@ -100,7 +100,7 @@
   - **Validates:** JSON or YAML files against the `promotion-record.schema.json` schema.
 - **Validator:** `validate-delivery-target.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-delivery-target.sh <delivery-target.json|yaml>`
-  - **Validates:** JSO N or YAML files against the `delivery-target.schema.json` schema.
+  - **Validates:** JSON or YAML files against the `delivery-target.schema.json` schema.
 - **Validator:** `validate-run-request.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-run-request.sh <run-request.json>`
   - **Validates:** JSON files against the `run-request.schema.json` schema.
@@ -110,7 +110,7 @@
 - **Validator:** `validate-prompt-spec.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-prompt-spec.sh <prompt-spec.json|yaml>`
   - **Validates:** JSON or YAML files against the `prompt-spec.schema.json` schema.
-- **Validator:** `validat e-dataset.sh`
+- **Validator:** `validate-dataset.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-dataset.sh <manifest.json|yaml> <cases.jsonl>`
   - **Validates:** Dataset manifest and test cases JSONL file against their respective schemas.
 - **Validator:** `validate-evaluator.sh`
@@ -120,7 +120,7 @@
   - **Invocation Syntax:** `./promptops/validators/validate-suite.sh <suite.json|yaml>`
   - **Validates:** JSON or YAML files against the `suite.schema.json` schema.
 - **Validator:** `validate-consumption-manifest.sh`
-  - **Invocation Syntax:** `./promptops/validators/val idate-consumption-manifest.sh <consumption-manifest.json|yaml>`
+  - **Invocation Syntax:** `./promptops/validators/validate-consumption-manifest.sh <consumption-manifest.json|yaml>`
   - **Validates:** JSON or YAML files against the `consumption-manifest.schema.json` schema.
 - **Validator:** `validate-harness-adapter.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-harness-adapter.sh <harness-adapter.json|yaml>`
@@ -130,7 +130,7 @@
   - **Invocation Syntax:** `./promptops/validators/validate-scorecard.sh <scorecard.json>`
   - **Validates:** JSON files against the `scorecard.schema.json` schema.
 - **Validator:** `validate-regression-report.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-regression-report.sh <regression-r eport.json>`
+  - **Invocation Syntax:** `./promptops/validators/validate-regression-report.sh <regression-report.json>`
   - **Validates:** JSON files against the `regression-report.schema.json` schema.
 
 - **Validator:** `validate-baseline.sh`
@@ -141,7 +141,7 @@
   - **Validates:** JSON or YAML files against the `prompt-package.schema.json` schema.
 - **Validator:** `validate-artifact-refs.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-artifact-refs.sh <artifact-refs.json>`
-  - **Validates:** JSON files against the `artifact-refs .schema.json` schema.
+  - **Validates:** JSON files against the `artifact-refs.schema.json` schema.
 - **Validator:** `validate-approval-state.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-approval-state.sh <approval-state.json>`
   - **Validates:** JSON files against the `approval-state.schema.json` schema.
@@ -152,7 +152,7 @@
   - **Invocation Syntax:** `./promptops/validators/validate-run-case.sh <run-case.json>`
   - **Validates:** JSON files against the `run-case.schema.json` schema.
 - **Validator:** `validate-run-failures.sh`
-  - **Invocation Syntax:** `./promptop s/validators/validate-run-failures.sh <run-failures.json>`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-failures.sh <run-failures.json>`
   - **Validates:** JSON files against the `run-failures.schema.json` schema.
 - **Validator:** `validate-provider-artifact.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-provider-artifact.sh <provider-artifact.json|yaml>`
@@ -161,7 +161,7 @@
   - **Invocation Syntax:** `./promptops/validators/validate-submission-record.sh <submission-record.json>`
   - **Validates:** JSON files against the `submission-record.schema.json` schema.
 - **Validator:** `validate-quick-eval.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-quick-eval.sh <eval.yam l>`
+  - **Invocation Syntax:** `./promptops/validators/validate-quick-eval.sh <eval.yaml>`
   - **Validates:** YAML files against the `quick-eval.schema.json` schema.
 - **Validator:** `validate-moderation-decision-record.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-moderation-decision-record.sh <moderation-decision-record.json|yaml>`
@@ -170,7 +170,7 @@
   - **Invocation Syntax:** `./promptops/validators/validate-deprecation-record.sh <deprecation-record.json|yaml>`
   - **Validates:** JSON or YAML files against the `deprecation-record.schema.json` schema.
 - **Validator:** `validate-takedown-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-takedown-record.sh <ta kedown-record.json|yaml>`
+  - **Invocation Syntax:** `./promptops/validators/validate-takedown-record.sh <takedown-record.json|yaml>`
   - **Validates:** JSON or YAML files against the `takedown-record.schema.json` schema.
 - **Validator:** `validate-mirror-sync-receipt.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-mirror-sync-receipt.sh <mirror-sync-receipt.json|yaml>`
@@ -184,7 +184,7 @@
 - **Prompts:**
   - Naming: `prompt.yaml` or `prompt.json`
   - Structure: Lives in `promptops/prompts/<id>/`
-  - Required fields: `id` (string), `variables` (obj ect), `template` (string, object, array).
+  - Required fields: `id` (string), `variables` (object), `template` (string, object, array).
   - Optional fields: `tool_contract` (object).
 - **Prompt Packages:**
   - Naming: `package.yaml` or `package.json`
@@ -211,7 +211,7 @@
 - Computed across the canonical representation of the file.
 - YAML files are converted to JSON and canonicalized.
 - JSON files are canonicalized with sorted keys and insignificant whitespace removed (e.g. `jq -cSM .`).
-- JSONL files are canonicalized line by  line and joined with newlines.
+- JSONL files are canonicalized line by line and joined with newlines.
 - The output format is `sha256:<hex>`.
 - For dataset cases, the digest is held in the `digest` field of the dataset manifest, which is computed across the `cases.jsonl` file.
 
