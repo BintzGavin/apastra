@@ -9,27 +9,27 @@
 ## Section B: File Tree
 ```
 promptops/
-├── runtime/
-│   ├── resolve.py
-│   ├── render.py
-│   ├── digest.py
-│   └── runner.py
-â\
-xc2 \x94\xe2\x94 \x80â─ resolver/
-│   ├── chain.py
-│   ├── local.py
-│   ├── workspace.py
-│   ├── git_ref.py
-│   └── packaged.py
-└── manifests/
-    └── consumption.yaml
+âââ runtime/
+â   âââ resolve.py
+â   âââ render.py
+â   âââ digest.py
+â   âââ runner.py
+Ã¢\
+xc2 \x94Â\xe2\x94 \x80Ã¢Ââ resolver/
+â   âââ chain.py
+â   âââ local.py
+â   âââ workspace.py
+â   âââ git_ref.py
+â   âââ packaged.py
+âââ manifests/
+    âââ consumption.yaml
 ```
 
-## Section C: Publ
+## Section C: P ubl
 ic Inter face
 ```python
 def  load_manifest(ref_context=None) -> ManifestWrapper:
-    pass
+     pass
 
 class PackagedResolver:
     def resolve(self, prompt_id: str, ref: str) -> dict:
@@ -40,7 +40,7 @@ class PackagedResolver:
 
 def res olve(prompt_id: str , ref_context: str = None, variables: dict = None, dataset_digest: str = None, harness_version: str = None) -> tuple[str, dict]:
     # Returns (rendered_prompt_string, metadata_dict)
-    # metadata_dict contains 'prompt_
+    # metadata_dict contains 'pr ompt_
 digest' (s tr) and optionally ' model', 'dataset_digest', and 'harness_version' if specified.
     pass
 
@@ -51,7 +51,7 @@ def compute_digest_from_dict(data: dict) -> str:
     pass
 ```
 
-## Section D: Manifest Format
+## Section D: Manifest F ormat
 
 ```yaml
 ver sion: "1.0"
@@ -62,7 +62,7 @@ prompts:
     id: summarize-v1     # Stable ID mapped
     model: gpt-4         # Specific model override
     pin: v1.0.0          # Git ref or tag
-  analyze:
+  a nalyze:
 
     overrid e: ./local-prompts/analyze.json
 ```
@@ -70,6 +70,6 @@ prompts:
 - Support specifying `model` explicitly.
 
 ## Section E: Integration Points
-- **EVALUATION**: Harnesses use `resolve()` to get the template, compu
+- **EVALUATION**: Harnesses use `resolve()` to get the templat e, compu
 te digests fo r verification, and retrieve model configuration from metadata.
 - **GOVERNANCE**: Policy gates read manifest fields to enforce model usage and digest checks
