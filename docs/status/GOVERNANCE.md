@@ -1,4 +1,4 @@
-**Version**: 1.45.0
+**Version**: 1.46.0
 [v1.44.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 
 [v1.41.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
@@ -69,3 +69,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.18.0] ✅ Completed: ArtifactAttestations - Pinned GitHub Action SHA in immutable-release.yml
 [v1.18.1] ✅ Completed: StrictPinning - Pinned GitHub Action SHAs in all workflows.
 [v1.45.0] ✅ Completed: Minimal Plan Exception Final - Acknowledged all GOVERNANCE vision gaps are complete.
+[v1.46.0] ✅ Completed: Minimal Plan Exception Final - Acknowledged all GOVERNANCE vision gaps are complete.
