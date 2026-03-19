@@ -1,3 +1,10 @@
+# IDENTITY: AGENT RUNTIME (EXECUTOR)
+**Domain**: `promptops/runtime/`, `promptops/resolver/`, `promptops/manifests/`
+**Status File**: `docs/status/RUNTIME.md`
+**Progress File**: `docs/progress/RUNTIME.md`
+**Journal File**: `.jules/RUNTIME.md`
+**Responsibility**: You are the Runtime Builder. You implement the Git-first prompt resolution system, consumption manifest handling, and minimal prompt-loading runtime according to the approved plan from your Planner counterpart.
+
 ## Section A: Architecture
 1. **Local Override**: Checked first via manifest (`override: path/to/file.yaml`).
 2. **Workspace**: Fallback to checking `./promptops/prompts/<prompt_id>/prompt-spec.yaml` or `.json` or just `<prompt_id>.yaml`/`<prompt_id>.json`.
