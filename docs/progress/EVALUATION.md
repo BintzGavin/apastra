@@ -162,3 +162,6 @@
 
 ### EVALUATION v0.51.0
 - ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
+
+### EVALUATION v0.52.0
+- \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
