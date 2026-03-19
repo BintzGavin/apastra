@@ -1,4 +1,4 @@
-**Version**: 0.56.0
+**Version**: 0.58.0
 [v0.56.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.55.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.54.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
@@ -80,3 +80,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 
 [v0.50.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.57.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
+[v0.58.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
