@@ -1,2 +1,8 @@
+target_id: npm-target
 type: npm
-repo: my-org/npm-registry
+channel: public
+registry: registry.npmjs.org
+sync_rules:
+  on_promotion: true
+  require_approval: true
+credentials_ref: NPM_PUBLISH_TOKEN

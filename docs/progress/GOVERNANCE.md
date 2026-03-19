@@ -167,3 +167,6 @@
 
 ### GOVERNANCE v1.48.0
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.49.0
+- ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
