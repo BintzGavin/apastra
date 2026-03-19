@@ -1,12 +1,12 @@
 **Section A: Architecture**
 Gate Enforcement Flow:
 - Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `reports/regression_report.json` retrieved from the `promptops-artifac ts` branch (fails if missing). It extracts metrics from the regression report to add PR annotations and step summaries. The check is gracefully skipped for PRs that do not modify evaluable assets (prompts, harnesses, datasets, policies).
-- Promotions  enforce that a matching Approval State record with decision="approved" and checks_passed=true exists on the `promptops-artifacts` branch before generating a promotion record. A successful promotion record triggers a delivery target sync via `deliver .yml`.
+- Promotions  enforce that a matching Approval State record with decision="approved" and checks_passed=true exists on the `promptops-artifacts` branch before generating a promotion record. A successful promotion record triggers a delivery target sync via `deliv er .yml`.
 - Reusable workflows: `regression-gate.yml`, `immutable-release.yml` (generates provenance attestations for release assets), and `deliver.yml` can be invoked via `workflow_call`.
 - Rulesets / Branch Protection: Enforces required status checks  (e.g., `gate` check) on pull requests to the `main` branch, and immutability (no updates/deletions) on tags. Automated secret scanning runs on PRs modifying prompts or datasets to fail if secret keywords are found.
 - Artifacts Branch Topology: All de rived, machine-generated artifacts (run artifacts, regression reports, and promotion records, and approval states) are isolated on the `promptops-artifacts` branch instead of the main branch to reduce repo bloat and avoid merge conflicts.
 
-**Section  B: File Tree**
+**Sec tion  B: File Tree**
 - `.github/CODEOWNERS`
 - `.github/workflows/prompt-eval.yml`
 - `.github/workflows/prompt-release.yml`
@@ -25,7 +25,7 @@ Gate Enforcement Flow:
 - `promptops/delivery/prod-target.yaml`
 - `promptops/policies/regression.yaml`
 - `promptops/policies/acceptable-use.md`
-- `promptops/policie s/deprecation.md`
+- `promptop s/policie s/deprecation.md`
 - `promptops/policies/ownership-disputes.md`
 - `promptops/policies/naming.md`
 - `promptops/policies/trusted-publisher.md`
@@ -39,7 +39,7 @@ Gate Enforcement Flow:
 - `promptops/policies/naming.md`: Na ming rules for prompts, packages, and metrics.
 - `promptops/policies/trusted-publisher.md`: Trusted publisher requirements based on build provenance.
 - `promptops/policies/takedowns.md`: Takedown procedure for content removal.
-- `promptops/policies/a ppeals.md`: Moderation decision appeals process.
+- `promptop s/policies/a ppeals.md`: Moderation decision appeals process.
 - `promptops/policies/federation.md`: Governance rules for cross-custodian trust and namespace resolution.
 - `promptops/policies/mirroring.md`: Requirements and processes for establishing read-only mir rors.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
@@ -50,7 +50,7 @@ Gate Enforcement Flow:
 - `channel`: Target distribution channel (e.g., "prod", "staging")
 - `prompt_id`: ID of the prompt being promoted
 - `approved_digest`: The content digest of the promoted prompt package
-- `regression_report_id`: The ID of the regression repo rt justifying the promotion
+- `regression_report_id`: The ID of the  regression repo rt justifying the promotion
 - `approver`: GitHub actor who approved/triggered the promotion
 - `evidence_links`: Array of URIs linking to regression reports or run artifacts
 
@@ -65,7 +65,7 @@ Gate Enforcement Flow:
 - `promptops/schemas/` @apastra/governance-admins
 - `promptops/policies/` @apastra/governance-admins
 - `promptops/evaluators/` @apastra/evaluation-team
-- `promptops/suites/` @apastra/evaluation- team
+- `promptops/suites/` @ apastra/evaluation- team
 - `promptops/delivery/` @apastra/governance-admins
 - `derived-index/promotions/` @apastra/governance-admins
 - `.github/workflows/` @apastra/infrastructure
@@ -75,8 +75,8 @@ Gate Enforcement Flow:
 - `promptops/validators/` @apastra/contracts-team
 - `promptops/harnesses/` @apastra/evaluation-team
 - `promptops/runs/` @apastra/evaluation-team
-- `derived-index/baselines/` @apastra/evaluation-tea m
+- `derived-index/baselines/` @a pastra/evaluation-tea m
 - `derived-index/regressions/` @apastra/evaluation-team
 - `promptops/manifests/` @apastra/runtime-team
 - `promptops/resolver/` @apastra/runtime-team
-- `promptops/runtime/` @apastra/runtime-tea m
+- `promptops/runtime/` @apastra/runtime-tea
