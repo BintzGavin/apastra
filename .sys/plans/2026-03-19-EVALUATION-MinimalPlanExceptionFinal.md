@@ -1,22 +1,22 @@
 #### 1. Context & Goal
-- **Objective**: Execute a minimal plan exception to satisfy architectural and domain bounds.
-- **Trigger**: The EVALUATION domain has already executed its final minimal plan exception and no new functional behaviors are missing based on previous tracking.
-- **Impact**: Formalizes the completion of iterations, ensuring all required steps are strictly followed.
+- **Objective**: Execute a Minimal Plan Exception as all functional plans are complete.
+- **Trigger**: None
+- **Impact**: Fulfills system planning requirements.
 
 #### 2. File Inventory
-- **Create**: `.sys/plans/2026-03-19-EVALUATION-MinimalPlanExceptionFinal.md` (this file)
-- **Modify**: None
-- **Read-Only**: `docs/status/EVALUATION.md`, `docs/progress/EVALUATION.md`, `.jules/EVALUATION.md`
+- **Create**: None
+- **Modify**: docs/status/EVALUATION.md, docs/progress/EVALUATION.md, .jules/EVALUATION.md
+- **Read-Only**: None
 
 #### 3. Implementation Spec
-- **Harness Architecture**: N/A
-- **Run Request Format**: N/A
-- **Run Artifact Format**: N/A
-- **Pseudo-Code**: N/A
-- **Baseline and Regression Flow**: N/A
-- **Dependencies**: CONTRACTS schemas exist, RUNTIME resolver is available.
+- **Harness Architecture**: None
+- **Run Request Format**: None
+- **Run Artifact Format**: None
+- **Pseudo-Code**: None
+- **Baseline and Regression Flow**: None
+- **Dependencies**: None
 
 #### 4. Test Plan
-- **Verification**: `echo "No execution needed"`
-- **Success Criteria**: No files modified in owned paths.
-- **Edge Cases**: None.
+- **Verification**: None
+- **Success Criteria**: None
+- **Edge Cases**: None
