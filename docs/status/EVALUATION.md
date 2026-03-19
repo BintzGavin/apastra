@@ -79,3 +79,4 @@ Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
 [v0.49.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 
 [v0.50.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+[v0.57.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
