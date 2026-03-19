@@ -72,4 +72,4 @@ prompts:
 ## Section E: Integration Points
 - **EVALUATION**: Harnesses use `resolve()` to get the template, compu
 te digests fo r verification, and retrieve model configuration from metadata.
-- **GOVERNANCE**: Policy gates read manifest fields to enforce model usage and digest checks.
+- **GOVERNANCE**: Policy gates read manifest fields to enforce model usage and digest checks
