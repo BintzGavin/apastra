@@ -1,18 +1,18 @@
 #### 1. Context & Goal
-- **Objective**: Execute a Minimal Plan Exception as all functional plans are complete.
+- **Objective**: Log a minimal plan exception to fulfill system planning requirements.
 - **Trigger**: None
-- **Impact**: Fulfills system planning requirements.
+- **Impact**: None
 
 #### 2. File Inventory
 - **Create**: None
-- **Modify**: docs/status/EVALUATION.md, docs/progress/EVALUATION.md, .jules/EVALUATION.md
+- **Modify**: None
 - **Read-Only**: None
 
 #### 3. Implementation Spec
 - **Harness Architecture**: None
 - **Run Request Format**: None
 - **Run Artifact Format**: None
-- **Pseudo-Code**: None
+- **Scorecard Normalization**: None
 - **Baseline and Regression Flow**: None
 - **Dependencies**: None
 
