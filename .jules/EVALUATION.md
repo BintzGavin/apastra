@@ -42,3 +42,7 @@
 ## [v0.44.0] - Minimal Plan Exception Final
 **Learning:** Reached the end of functional planning iterations; all planned domain features are marked completed.
 **Action:** Log a minimal plan exception to fulfill system planning requirements.
+
+## [v0.50.0] - Minimal Plan Exception Final
+**Learning:** Reached the end of functional planning iterations; all planned domain features are marked completed.
+**Action:** Log a minimal plan exception to fulfill system planning requirements.
