@@ -1,4 +1,6 @@
-**Version**: 1.55.0
+**Version**: 1.55.2
+[v1.55.2] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.55.1] ✅ Completed: MinimalRuntimeMetadata - Implemented dataset digest and harness version in minimal runtime resolve() output.
 [v1.55.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.54.0] ✅ Completed: MinimalRuntimeMetadata - Implemented dataset digest and harness version in minimal runtime resolve() output.
 [v1.53.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
