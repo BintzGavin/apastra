@@ -1,4 +1,5 @@
-**Version**: 0.68.0
+**Version**: 0.69.0
+[v0.69.0] ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception for the CONTRACTS domain.
 [v0.68.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.67.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.66.0] ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception.
