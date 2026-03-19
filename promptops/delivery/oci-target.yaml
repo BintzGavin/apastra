@@ -1,2 +1,8 @@
+target_id: oci-target
 type: oci
-repo: my-org/oci-registry
+channel: public
+registry: ghcr.io
+sync_rules:
+  on_promotion: true
+  require_approval: true
+credentials_ref: OCI_REGISTRY_TOKEN
