@@ -31,7 +31,7 @@ Run Artifact Schema (from CONTRACTS) `promptops/schemas/run-artifact.schema.json
 Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 - `baseline_id`: The baseline ID
 - `run_digest`: The run digest
-- `created_at`: The  c reation  time
+- `created_at`: Th e  c reation  time
 - `metadat a`: The metadata
 - `description`: The description
 
