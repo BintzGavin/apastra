@@ -1,4 +1,5 @@
-**Version**: 1.51.0
+**Version**: 1.52.0
+[v1.52.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.51.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.50.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.49.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
