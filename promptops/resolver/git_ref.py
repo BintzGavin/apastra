@@ -43,8 +43,15 @@ def match_semver(tag, range_str):
         return v[:3] == target[:3]
 
 class GitRefResolver:
+    def __init__(self):
+        self.cache = {}
+
     def resolve(self, prompt_id, pin):
         """Resolves a prompt package from a git ref."""
+        cache_key = (prompt_id, pin)
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+
         if pin.startswith("semver:"):
             range_str = pin.replace("semver:", "")
             result = subprocess.run(
@@ -75,7 +82,9 @@ class GitRefResolver:
                 check=False
             )
             if result.returncode == 0:
-                return yaml.safe_load(result.stdout)
+                res = yaml.safe_load(result.stdout)
+                self.cache[cache_key] = res
+                return res
 
             # If yaml fails, try json
             result_json = subprocess.run(
@@ -85,7 +94,9 @@ class GitRefResolver:
                 check=False
             )
             if result_json.returncode == 0:
-                return json.loads(result_json.stdout)
+                res = json.loads(result_json.stdout)
+                self.cache[cache_key] = res
+                return res
 
             # If flat files fail, try directory yaml
             result_dir_yaml = subprocess.run(
@@ -95,7 +106,9 @@ class GitRefResolver:
                 check=False
             )
             if result_dir_yaml.returncode == 0:
-                return yaml.safe_load(result_dir_yaml.stdout)
+                res = yaml.safe_load(result_dir_yaml.stdout)
+                self.cache[cache_key] = res
+                return res
 
             # If directory yaml fails, try directory json
             result_dir_json = subprocess.run(
@@ -105,7 +118,9 @@ class GitRefResolver:
                 check=False
             )
             if result_dir_json.returncode == 0:
-                return json.loads(result_dir_json.stdout)
+                res = json.loads(result_dir_json.stdout)
+                self.cache[cache_key] = res
+                return res
 
             # Quick eval resolution
             result_eval_yaml = subprocess.run(
@@ -115,7 +130,9 @@ class GitRefResolver:
             if result_eval_yaml.returncode == 0:
                 data = yaml.safe_load(result_eval_yaml.stdout)
                 if data and "prompt" in data:
-                    return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+                    res = {"id": prompt_id, "template": data["prompt"], "variables": {}}
+                    self.cache[cache_key] = res
+                    return res
 
             result_eval_json = subprocess.run(
                 ["git", "show", f"{pin}:promptops/evals/{prompt_id}.json"],
@@ -124,7 +141,9 @@ class GitRefResolver:
             if result_eval_json.returncode == 0:
                 data = json.loads(result_eval_json.stdout)
                 if data and "prompt" in data:
-                    return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+                    res = {"id": prompt_id, "template": data["prompt"], "variables": {}}
+                    self.cache[cache_key] = res
+                    return res
 
             raise RuntimeError(f"Failed to resolve prompt '{prompt_id}' at git ref '{pin}'")
 
