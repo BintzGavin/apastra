@@ -129,3 +129,7 @@
 ## 0.80.0 - MinimalPlanExceptionFinal
 **Learning:** None
 **Action:** None
+
+## 0.81.0 - AnswerRelevanceAssertion
+**Learning:** Found that `evaluate_assertions.py` lacks an implementation for `answer-relevance`, currently returning a placeholder score.
+**Action:** Spec'd the implementation of `answer-relevance` evaluation logic.
