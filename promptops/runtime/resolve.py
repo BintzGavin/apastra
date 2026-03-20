@@ -70,7 +70,7 @@ def load_manifest(ref_context):
             return PinManifest(ref_context)
     return ManifestWrapper()
 
-def resolve(prompt_id, ref_context=None, variables=None, dataset_digest=None, harness_version=None):
+def resolve(prompt_id, ref_context=None, variables=None, dataset_digest=None, harness_version=None, model_ids=None):
     manifest = load_manifest(ref_context)
     prompt_spec = ResolverChain().resolve(prompt_id, manifest)
 
@@ -95,13 +95,17 @@ def resolve(prompt_id, ref_context=None, variables=None, dataset_digest=None, ha
 
     rules = manifest.get_rules(prompt_id) if hasattr(manifest, 'get_rules') else {}
     defaults = manifest.data.get('defaults', {}) if hasattr(manifest, 'data') and isinstance(manifest.data, dict) else {}
-    model_id = rules.get('model', defaults.get('model'))
+
+    if model_ids is None:
+        model = rules.get('model', defaults.get('model'))
+        if model:
+            model_ids = [model]
 
     metadata = {
         "prompt_digest": compute_digest_from_dict(prompt_spec),
     }
-    if model_id:
-        metadata["model"] = model_id
+    if model_ids:
+        metadata["model_ids"] = model_ids
     if dataset_digest:
         metadata["dataset_digest"] = dataset_digest
     if harness_version:

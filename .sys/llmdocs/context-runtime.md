@@ -29,7 +29,7 @@ promptops/
 
 ## Section C: Public Interface
 ```python
-def resolve(prompt_id: str, ref_context=None, variables: dict=None, dataset_digest: str=None, harness_version: str=None) -> tuple[str, dict]:
+def resolve(prompt_id: str, ref_context=None, variables: dict=None, dataset_digest: str=None, harness_version: str=None, model_ids: list=None) -> tuple[str, dict]:
     # Returns rendered_prompt_string, metadata_dict
 ```
 
