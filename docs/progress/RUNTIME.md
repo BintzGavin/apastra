@@ -216,3 +216,6 @@
 
 ### RUNTIME v1.62.0
 - \342\234\205 Completed: WorkspaceResolverCaching - Drafted spec for Workspace Resolver Caching
+
+### RUNTIME v1.63.0
+- \342\234\205 Completed: WorkspaceResolverCaching - Implemented caching in WorkspaceResolver to reduce disk reads.
