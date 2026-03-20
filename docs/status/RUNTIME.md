@@ -1,4 +1,5 @@
-**Version**: 1.66.0\n[v1.59.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.\n[v1.58.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest\n[v1.56.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+**Version**: 1.67.0\n[v1.59.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.\n[v1.58.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest\n[v1.56.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.67.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.66.0] \342\234\205 Completed: ResolverProvenanceMetadata - Implemented provenance extraction in resolve()
 [v1.65.0] \342\234\205 Completed: GitRefResolverCaching - Implemented caching in GitRefResolver to reduce duplicate git show subprocess calls.
 [v1.64.0] \\342\\234\\205 Completed: GitRefResolverCaching - Drafted spec for Git Ref Resolver Caching.

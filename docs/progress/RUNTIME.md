@@ -228,3 +228,6 @@
 
 ### RUNTIME v1.66.0
 - \342\234\205 Completed: ResolverProvenanceMetadata - Implemented provenance extraction in resolve()
+
+### RUNTIME v1.67.0
+- \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
