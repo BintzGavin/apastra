@@ -207,3 +207,6 @@
 
 ### EVALUATION v0.66.0
 - \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.67.0
+- \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete

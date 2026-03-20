@@ -1,4 +1,5 @@
-**Version**: 0.66.0
+**Version**: 0.67.0
+[v0.67.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.66.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.65.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.64.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
