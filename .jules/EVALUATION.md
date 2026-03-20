@@ -77,3 +77,7 @@
 ## [v0.67.0] - Minimal Plan Exception
 **Learning:** System planning requirements fulfilled because all functional planning iterations are marked completed.
 **Action:** Execute minimal plan exception as instructed.
+
+## [v0.68.0] - MinimalPlanExceptionFinal
+**Learning:** None
+**Action:** None
