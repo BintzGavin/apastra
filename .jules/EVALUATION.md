@@ -133,3 +133,7 @@
 ## 0.81.0 - AnswerRelevanceAssertion
 **Learning:** Found that `evaluate_assertions.py` lacks an implementation for `answer-relevance`, currently returning a placeholder score.
 **Action:** Spec'd the implementation of `answer-relevance` evaluation logic.
+
+## 0.83.0 - LLMRubricAssertion
+**Learning:** Found that `evaluate_assertions.py` lacks an implementation for `llm-rubric`, currently returning a placeholder score.
+**Action:** Spec'd the implementation of `llm-rubric` evaluation logic.
