@@ -4,6 +4,9 @@ import jsonschema
 import re
 
 class PackagedResolver:
+    def __init__(self):
+        self.cache = {}
+
     def _get_cache_dir(self):
         cache_dir = os.path.expanduser("~/.promptops/cache")
         os.makedirs(cache_dir, exist_ok=True)
@@ -56,6 +59,9 @@ class PackagedResolver:
 
     def resolve(self, prompt_id, ref):
         """Resolves a prompt package from a digest or URL."""
+        if (prompt_id, ref) in self.cache:
+            return self.cache[(prompt_id, ref)]
+
         if not (ref.startswith('sha256:') or ref.startswith('https://') or ref.startswith('oci://') or ref.startswith('npm:') or ref.startswith('pypi:')):
             raise RuntimeError(f"Failed to resolve packaged artifact '{prompt_id}' with ref '{ref}'")
 
@@ -76,6 +82,7 @@ class PackagedResolver:
 
             for spec in asset.get('specs', []):
                 if isinstance(spec, dict) and spec.get('id') == prompt_id:
+                    self.cache[(prompt_id, ref)] = spec
                     return spec
                 if isinstance(spec, str) and spec == prompt_id:
                     raise RuntimeError(f"Unresolved remote asset: {spec}")
@@ -97,4 +104,6 @@ class PackagedResolver:
             self.verify_signature(asset)
 
             package_digest = asset.get('package_digest')
-            return self.resolve(prompt_id, package_digest)
+            result = self.resolve(prompt_id, package_digest)
+            self.cache[(prompt_id, ref)] = result
+            return result
