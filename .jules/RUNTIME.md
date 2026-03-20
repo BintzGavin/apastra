@@ -22,3 +22,7 @@
 ## [v1.59.0] - MinimalPlanExceptionFinal
 **Learning:** Executed MinimalPlanExceptionFinal to clear pending state for the RUNTIME domain.
 **Action:** Always strictly increment logical sequential version numbers even for MinimalPlanException exceptions.
+
+## 1.61.0 - Local Resolver Caching
+**Learning:** Local resolution was a potential bottleneck because it re-read files from disk on every `resolve()` call.
+**Action:** Implement memory caching based on the file's modification time in `LocalResolver`.
