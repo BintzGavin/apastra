@@ -111,3 +111,7 @@
 ## [v1.55.0] - Minimal Plan Exception Final
 **Learning:** Executed minimal plan exception.
 **Action:** No action needed.
+
+## [v1.56.0] - Minimal Plan Exception Final
+**Learning:** Executed minimal plan exception.
+**Action:** No action needed.
