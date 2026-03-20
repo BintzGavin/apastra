@@ -1,1 +1,9 @@
-{"id": "summarize", "template": "hello {{name}}", "variables": {}}
+{
+  "id": "summarize",
+  "template": "Summarize this: {{text}}",
+  "variables": {
+    "text": {
+      "type": "string"
+    }
+  }
+}
