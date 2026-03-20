@@ -243,3 +243,6 @@
 
 ### EVALUATION v0.81.0
 - ✅ Completed: AnswerRelevanceAssertion - Spec for implementing the answer-relevance assertion type for model-assisted evaluation
+
+### EVALUATION v0.82.0
+- ✅ Completed: AnswerRelevanceAssertion - Implemented answer-relevance assertion
