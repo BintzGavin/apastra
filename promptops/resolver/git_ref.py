@@ -2,6 +2,9 @@ import subprocess
 import yaml
 import json
 import re
+import os
+import tempfile
+import shutil
 
 def parse_version(v):
     # Remove 'v' prefix if present
@@ -46,11 +49,96 @@ class GitRefResolver:
     def __init__(self):
         self.cache = {}
 
+    def _read_from_dir(self, directory, prompt_id):
+        # Try flat yaml
+        path = os.path.join(directory, "promptops", "prompts", f"{prompt_id}.yaml")
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                return yaml.safe_load(f)
+
+        # Try flat json
+        path = os.path.join(directory, "promptops", "prompts", f"{prompt_id}.json")
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                return json.load(f)
+
+        # Try directory yaml
+        path = os.path.join(directory, "promptops", "prompts", prompt_id, "prompt.yaml")
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                return yaml.safe_load(f)
+
+        # Try directory json
+        path = os.path.join(directory, "promptops", "prompts", prompt_id, "prompt.json")
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                return json.load(f)
+
+        # Try quick eval yaml
+        path = os.path.join(directory, "promptops", "evals", f"{prompt_id}.yaml")
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                data = yaml.safe_load(f)
+                if data and "prompt" in data:
+                    return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+
+        # Try quick eval json
+        path = os.path.join(directory, "promptops", "evals", f"{prompt_id}.json")
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                data = json.load(f)
+                if data and "prompt" in data:
+                    return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+
+        return None
+
     def resolve(self, prompt_id, pin):
         """Resolves a prompt package from a git ref."""
         cache_key = (prompt_id, pin)
         if cache_key in self.cache:
             return self.cache[cache_key]
+
+        if pin.startswith('git+'):
+            # Parse remote git URL and ref
+            url_part, ref_part = pin[4:].split('#', 1)
+
+            temp_dir = tempfile.mkdtemp()
+            try:
+                # Use git archive to extract specific files to a temp directory
+                # First get the archive from the remote
+                archive_p = subprocess.run(
+                    ["git", "archive", f"--remote={url_part}", ref_part],
+                    capture_output=True,
+                    check=False
+                )
+
+                if archive_p.returncode == 0:
+                    # Then tar it into temp_dir
+                    tar_p = subprocess.run(
+                        ["tar", "-x", "-C", temp_dir],
+                        input=archive_p.stdout,
+                        capture_output=True,
+                        check=False
+                    )
+
+                    if tar_p.returncode != 0:
+                        raise RuntimeError(f"Failed to tar remote git archive: {tar_p.stderr.decode('utf-8')}")
+                else:
+                    # Fallback to shallow clone if git archive is disabled on the remote
+                    clone_cmd = ["git", "clone", "--depth", "1", "--branch", ref_part, url_part, temp_dir]
+                    result = subprocess.run(clone_cmd, capture_output=True, check=False)
+                    if result.returncode != 0:
+                        raise RuntimeError(f"Failed to fetch remote git repo: {result.stderr.decode('utf-8')}")
+
+                # Read files from temp directory using existing fallback logic
+                res = self._read_from_dir(temp_dir, prompt_id)
+                if res is not None:
+                    self.cache[cache_key] = res
+                    return res
+                else:
+                    raise RuntimeError(f"Failed to resolve prompt '{prompt_id}' at remote git ref '{pin}'")
+            finally:
+                shutil.rmtree(temp_dir)
 
         if pin.startswith("semver:"):
             range_str = pin.replace("semver:", "")
