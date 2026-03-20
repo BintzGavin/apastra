@@ -120,7 +120,7 @@ def main():
                 "baseline_value": b_val,
                 "delta": delta,
                 "status": "info",
-                "message": ""
+                "message": "Ungated metric surfaced for informational purposes."
             })
         else:
             evidence.append({
@@ -128,7 +128,7 @@ def main():
                 "candidate_value": c_val,
                 "baseline_value": b_val,
                 "status": "info",
-                "message": "Metric missing in candidate or baseline."
+                "message": "Ungated metric missing in candidate or baseline."
             })
 
     if has_blocker:
