@@ -1,39 +1,45 @@
 ---
-title: "Baseline Reference"
-description: "API reference for baseline schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Baseline Specification Reference"
+description: "Schema definition for baseline references to unblock Evaluation."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/baseline.schema.json"
 ---
 
-# Baseline Reference
+# Baseline Specification Reference
 
 Schema definition for baseline references to unblock Evaluation.
 
 ## Properties
 
-### `baseline_id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The baseline ID
+## `baseline_id`
 
-### `run_digest`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The run digest
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The baseline ID
 
-### `created_at`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The creation time
+## `run_digest`
 
-### `metadata`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: The metadata
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The run digest
 
-### `description`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: The description
+## `created_at`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The creation time
+
+## `metadata`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** The metadata
+
+## `description`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** The description
+

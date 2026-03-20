@@ -1,59 +1,45 @@
 ---
-title: "Consumption Manifest Reference"
-description: "API reference for consumption-manifest schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Consumption Manifest Schema Reference"
+description: "Schema for the apastra PromptOps consumption manifest."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/consumption-manifest.schema.json"
 ---
 
-# Consumption Manifest Reference
+# Consumption Manifest Schema Reference
 
 Schema for the apastra PromptOps consumption manifest.
 
 ## Properties
 
-### `version`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Version of the consumption manifest.
+## `version`
 
-### `prompts`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Mapping of local names to resolution configurations.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Version of the consumption manifest.
 
-### `prompts.<additional>.id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Stable prompt ID.
+## `prompts`
 
-### `prompts.<additional>.pin`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: A semver or git ref to pin to.
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Mapping of local names to resolution configurations.
 
-### `prompts.<additional>.override`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Path to a local file overriding the prompt.
+## `defaults`
 
-### `prompts.<additional>.model`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Model to use for this prompt.
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Global fallbacks like default model or provider.
 
-### `defaults`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Global fallbacks like default model or provider.
+### `model`
 
-### `defaults.model`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Default model.
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** Default model.
 
-### `defaults.provider`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Default provider.
+### `provider`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** Default provider.
+

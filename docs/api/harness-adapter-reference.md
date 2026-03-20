@@ -1,47 +1,57 @@
 ---
 title: "Harness Adapter Reference"
-description: "API reference for harness-adapter schema"
-audience: "all"
-last_verified: "2026-03-15"
+description: "API reference for Harness Adapter"
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/harness-adapter.schema.json"
 ---
 
 # Harness Adapter Reference
 
+API reference for Harness Adapter
+
 ## Properties
 
-### `id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Stable identifier for the harness adapter.
+## `id`
 
-### `type`
-- **Type**: const (`harness_adapter`)
-- **Presence**: **Required**
-- **Description**: Must be 'harness_adapter'.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Stable identifier for the harness adapter.
 
-### `capabilities`
-- **Type**: array of string
-- **Presence**: **Required**
-- **Description**: List of capabilities (e.g., ['run_suite', 'trials', 'model_matrix']).
+## `type`
 
-### `entrypoint`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The CLI command or script to invoke the harness.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Must be 'harness_adapter'.
 
-### `description`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Optional description of the harness adapter.
+## `capabilities`
 
-### `env_vars`
-- **Type**: array of string
-- **Presence**: *Optional*
-- **Description**: Required environment variables (e.g., 'OPENAI_API_KEY').
+- **Type:** array of string
+- **Requirement:** Required
+- **Description:** List of capabilities (e.g., ['run_suite', 'trials', 'model_matrix']).
 
-### `digest`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Content digest stored inline.
+## `entrypoint`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The CLI command or script to invoke the harness.
+
+## `description`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** Optional description of the harness adapter.
+
+## `env_vars`
+
+- **Type:** array of string
+- **Requirement:** Optional
+- **Description:** Required environment variables (e.g., 'OPENAI_API_KEY').
+
+## `digest`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** Content digest stored inline.
+

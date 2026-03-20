@@ -1,34 +1,39 @@
 ---
-title: "Run Case Reference"
-description: "API reference for run-case schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Run Case Specification Reference"
+description: "Schema for a single case in cases.jsonl."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/run-case.schema.json"
 ---
 
-# Run Case Reference
+# Run Case Specification Reference
 
 Schema for a single case in cases.jsonl.
 
 ## Properties
 
-### `case_id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Case ID
+## `case_id`
 
-### `per_trial_outputs`
-- **Type**: array
-- **Presence**: **Required**
-- **Description**: Per trial outputs
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Case ID
 
-### `evaluator_outputs`
-- **Type**: array
-- **Presence**: **Required**
-- **Description**: Evaluator outputs
+## `per_trial_outputs`
 
-### `pointers`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Pointers to raw text/traces
+- **Type:** array of any
+- **Requirement:** Required
+- **Description:** Per trial outputs
+
+## `evaluator_outputs`
+
+- **Type:** array of any
+- **Requirement:** Required
+- **Description:** Evaluator outputs
+
+## `pointers`
+
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Pointers to raw text/traces
+
