@@ -218,3 +218,6 @@
 
 ### CONTRACTS v0.76.0
 - \342\234\205 Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
+
+### CONTRACTS v0.78.0
+- \342\234\205 Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.

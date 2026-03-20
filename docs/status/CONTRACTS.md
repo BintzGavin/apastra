@@ -1,4 +1,5 @@
-**Version**: 0.77.0
+**Version**: 0.78.0
+[v0.78.0] \342\234\205 Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.77.0] \342\234\205 Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.76.0] \342\234\205 Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.75.0] \\342\\234\\205 Completed: Minimal Plan Exception Final - Executed the final minimal plan exception for the CONTRACTS domain.
