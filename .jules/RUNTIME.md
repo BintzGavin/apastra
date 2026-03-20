@@ -26,3 +26,7 @@
 ## 1.61.0 - Local Resolver Caching
 **Learning:** Local resolution was a potential bottleneck because it re-read files from disk on every `resolve()` call.
 **Action:** Implement memory caching based on the file's modification time in `LocalResolver`.
+
+## 1.64.0 - GitRef Resolver Caching
+**Learning:** Similar to Local and Workspace resolvers, GitRef resolution creates redundant I/O bottlenecks (subprocess calls) when resolving identical remote refs.
+**Action:** Implement memory caching based on the pin and prompt ID tuple in `GitRefResolver`.
