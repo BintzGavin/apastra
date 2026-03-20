@@ -139,7 +139,17 @@ def evaluate_assertions(output: str, assertions: list, metadata: dict = None) ->
                 passed = float(metadata.get("latency", 0)) <= float(assert_value)
             elif base_type == "cost":
                 passed = float(metadata.get("cost", 0.0)) <= float(assert_value)
-            elif base_type in ("similar", "llm-rubric", "factuality", "answer-relevance"):
+            elif base_type == "answer-relevance":
+                if "judge_callable" in metadata:
+                    passed = metadata["judge_callable"](output, assert_value)
+                elif assert_value:
+                    if isinstance(assert_value, list):
+                        passed = all(str(v).lower() in output.lower() for v in assert_value)
+                    else:
+                        passed = str(assert_value).lower() in output.lower()
+                else:
+                    passed = True
+            elif base_type in ("similar", "llm-rubric", "factuality"):
                 passed = True
             else:
                 # Unknown assertion type, default to fail

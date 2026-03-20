@@ -14,7 +14,7 @@ Harness execution flow:
 - Run request validated via `promptops/runs/validate-run-request.sh`
 - Harness adapter invoked via entrypoint declared in `promptops/harnesses/<adapter-id>/adapter.yaml`
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`). It natively enforces `budgets` and `timeouts`.
-- If inline assertions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), and `is-valid-json-schema` assertion types.
+- If inline assertions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), `is-valid-json-schema`, and `answer-relevance` assertion types.
 - Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file.
 - Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> <baseline> <policy> <report_id>`, with ungated metrics surfaced as informational evidence.
 
