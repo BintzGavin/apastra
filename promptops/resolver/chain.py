@@ -2,9 +2,13 @@ from promptops.resolver.local import LocalResolver
 from promptops.resolver.workspace import WorkspaceResolver
 from promptops.resolver.git_ref import GitRefResolver
 from promptops.resolver.packaged import PackagedResolver
+from promptops.manifests.consumption import validate_manifest
 
 class ResolverChain:
     def resolve(self, prompt_id, manifest):
+        if hasattr(manifest, 'data') and manifest.data:
+            validate_manifest(manifest.data)
+
         rules = manifest.get_rules(prompt_id) if hasattr(manifest, 'get_rules') else {}
         target_id = rules.get('id', prompt_id)
 

@@ -1,74 +1,54 @@
-# IDENTITY: AGENT RUNTIME (EXECUTOR)
-**Domain**: `promptops/runtime/`, `promptops/resolver/`, `promptops/manifests/`
-**Status File**: `docs/status/RUNTIME.md`
-**Progress File**: `docs/progress/RUNTIME.md`
-**Journal File**: `.jules/RUNTIME.md`
-**Responsibility**: You are the Runtime Builder. You implement the Git-first prompt resolution system, consumption manifest handling, and minimal prompt-loading runtime according to the approved plan from your Planner counterpart.
+# Context: RUNTIME Domain
 
 ## Section A: Architecture
-1. **Local Override**: Checked first via manifest (`override: path/to/file.yaml`).
-2. **Workspace**: Fallback to checking `./promptops/prompts/<prompt_id>/prompt-spec.yaml` or `.json` or just `<prompt_id>.yaml`/`<prompt_id>.json`.
-3. **Git Ref / Packaged**: Fallback to fetching via `git checkout` (SHA or semver tag) or pulling OCI artifacts, npm packages, or PyPI packages if a `pin` is present in the manifest.
-*Note: The ID used in the resolver chain is the mapped `id` from the manifest (defaulting to the requested `prompt_id`), allowing aliases.*
+The promptops runtime resolves prompt templates deterministically. The resolution chain executes in this explicit order:
+1. **Local Override**: Resolves to a local file path if specified in the manifest.
+2. **Workspace Path**: Looks for the prompt file directly in `promptops/prompts/` within the repository.
+3. **Git Ref**: Fetches the prompt specification directly from git using a specified tag or commit SHA.
+4. **Packaged Artifact**: Falls back to packaged assets when resolving remote references (e.g., via sha256).
 
 ## Section B: File Tree
 ```
 promptops/
 ├── runtime/
-│   ├── resolve.py
-│   ├── render.py
+│   ├── __init__.py
 │   ├── digest.py
-│   └── runner.py
+│   ├── render.py
+│   └── resolve.py
 ├── resolver/
+│   ├── __init__.py
 │   ├── chain.py
-│   ├── local.py
-│   ├── workspace.py
 │   ├── git_ref.py
-│   └── packaged.py
+│   ├── local.py
+│   ├── packaged.py
+│   └── workspace.py
 └── manifests/
-    └── consumption.yaml
+    ├── __init__.py
+    └── consumption.py
 ```
 
 ## Section C: Public Interface
 ```python
-def load_manifest(ref_context=None) -> ManifestWrapper:
-    pass
-
-class PackagedResolver:
-    def resolve(self, prompt_id: str, ref: str) -> dict:
-        pass
-    def verify_signature(self, asset: dict) -> bool:
-        pass
-
-def resolve(prompt_id: str, ref_context: str = None, variables: dict = None, dataset_digest: str = None, harness_version: str = None) -> tuple[str, dict]:
-    # Returns (rendered_prompt_string, metadata_dict)
-    # metadata_dict contains 'prompt_digest' (str) and optionally 'model', 'dataset_digest', and 'harness_version' if specified.
-    pass
-
-def compute_digest(file_path: str) -> str:
-    pass
-
-def compute_digest_from_dict(data: dict) -> str:
-    pass
+def resolve(prompt_id: str, ref_context=None, variables: dict=None, dataset_digest: str=None, harness_version: str=None) -> tuple[str, dict]:
+    # Returns rendered_prompt_string, metadata_dict
 ```
+
+Exceptions:
+- `RuntimeError` if resolution fails, or schema validation fails.
 
 ## Section D: Manifest Format
-
 ```yaml
 version: "1.0"
-defaults:
-  model: gpt-3.5-turbo
 prompts:
-  summarize:             # App alias
-    id: summarize-v1     # Stable ID mapped
-    model: gpt-4         # Specific model override
-    pin: v1.0.0          # Git ref or tag
-  analyze:
-    override: ./local-prompts/analyze.json
+  "my-stable-id":
+    id: "actual-prompt-id"
+    pin: "v1.0.0"          # Optional Git ref or package pin
+    override: "./local"    # Optional local override path
+    model: "gpt-4"         # Optional default model to use
+defaults:
+  model: "gpt-3.5-turbo"
 ```
-- Local names can map to actual backend IDs using `id`.
-- Support specifying `model` explicitly.
 
 ## Section E: Integration Points
-- **EVALUATION**: Harnesses use `resolve()` to get the template, compute digests for verification, and retrieve model configuration from metadata.
-- **GOVERNANCE**: Policy gates read manifest fields to enforce model usage and digest checks.
+- **EVALUATION**: Harnesses call `resolve(prompt_id, ...)`, which returns the prompt template and a metadata block to attach to the runner execution payload.
+- **GOVERNANCE**: No direct API dependencies; relies on deterministic artifacts emitted by EVALUATION.
