@@ -1,90 +1,109 @@
 ---
-title: "Run Artifact Reference"
-description: "API reference for run-artifact schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Run Artifact Specification Reference"
+description: "Schema for a minimal BYO harness run artifact output."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/run-artifact.schema.json"
 ---
 
-# Run Artifact Reference
+# Run Artifact Specification Reference
 
 Schema for a minimal BYO harness run artifact output.
 
 ## Properties
 
-### `manifest`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Run manifest
+## `manifest`
 
-### `manifest.input_refs`
-- **Type**: object
-- **Presence**: **Required**
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Run manifest
 
-### `manifest.resolved_digests`
-- **Type**: object
-- **Presence**: **Required**
+### `input_refs`
 
-### `manifest.timestamps`
-- **Type**: object
-- **Presence**: **Required**
+- **Type:** object
+- **Requirement:** Required
 
-### `manifest.harness_identifier`
-- **Type**: string
-- **Presence**: **Required**
+### `resolved_digests`
 
-### `manifest.harness_version`
-- **Type**: string
-- **Presence**: **Required**
+- **Type:** object
+- **Requirement:** Required
 
-### `manifest.model_ids`
-- **Type**: array of string
-- **Presence**: **Required**
+### `timestamps`
 
-### `manifest.sampling_config`
-- **Type**: object
-- **Presence**: **Required**
+- **Type:** object
+- **Requirement:** Required
 
-### `manifest.environment`
-- **Type**: object
-- **Presence**: **Required**
+### `harness_identifier`
 
-### `manifest.status`
-- **Type**: string
-- **Presence**: **Required**
+- **Type:** string
+- **Requirement:** Required
 
-### `scorecard`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Run scorecard
+### `harness_version`
 
-### `scorecard.normalized_metrics`
-- **Type**: object
-- **Presence**: **Required**
+- **Type:** string
+- **Requirement:** Required
 
-### `scorecard.metric_definitions`
-- **Type**: object
-- **Presence**: **Required**
+### `model_ids`
 
-### `cases`
-- **Type**: array of object
-- **Presence**: **Required**
-- **Description**: Run cases
+- **Type:** array of string
+- **Requirement:** Required
 
-### `cases[].case_id`
-- **Type**: string
-- **Presence**: **Required**
+### `sampling_config`
 
-### `cases[].per_trial_outputs`
-- **Type**: array
-- **Presence**: **Required**
+- **Type:** object
+- **Requirement:** Required
 
-### `cases[].evaluator_outputs`
-- **Type**: array
-- **Presence**: **Required**
+### `environment`
 
-### `failures`
-- **Type**: array of object
-- **Presence**: **Required**
-- **Description**: Run failures
+- **Type:** object
+- **Requirement:** Required
+
+### `status`
+
+- **Type:** string
+- **Requirement:** Required
+
+## `scorecard`
+
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Run scorecard
+
+### `normalized_metrics`
+
+- **Type:** object
+- **Requirement:** Required
+
+### `metric_definitions`
+
+- **Type:** object
+- **Requirement:** Required
+
+## `cases`
+
+- **Type:** array of object
+- **Requirement:** Required
+- **Description:** Run cases
+
+### `case_id`
+
+- **Type:** string
+- **Requirement:** Required
+
+### `per_trial_outputs`
+
+- **Type:** array of any
+- **Requirement:** Required
+
+### `evaluator_outputs`
+
+- **Type:** array of any
+- **Requirement:** Required
+
+## `failures`
+
+- **Type:** array of object
+- **Requirement:** Required
+- **Description:** Run failures
+

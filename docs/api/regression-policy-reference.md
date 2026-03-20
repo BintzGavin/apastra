@@ -1,49 +1,58 @@
 ---
-title: "Regression Policy Reference"
-description: "API reference for regression-policy schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Regression Policy Specification Reference"
+description: "Schema for regression policy definition."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/regression-policy.schema.json"
 ---
 
-# Regression Policy Reference
+# Regression Policy Specification Reference
 
 Schema for regression policy definition.
 
 ## Properties
 
-### `baseline`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Baseline reference rules, e.g., 'prod current'
+## `baseline`
 
-### `rules`
-- **Type**: array of object
-- **Presence**: **Required**
-- **Description**: List of per-metric rules
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Baseline reference rules, e.g., 'prod current'
 
-### `rules[].metric`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Metric to evaluate
+## `rules`
 
-### `rules[].floor`
-- **Type**: number
-- **Presence**: *Optional*
-- **Description**: Absolute floor value
+- **Type:** array of object
+- **Requirement:** Required
+- **Description:** List of per-metric rules
 
-### `rules[].allowed_delta`
-- **Type**: number
-- **Presence**: *Optional*
-- **Description**: Allowed delta from baseline
+### `metric`
 
-### `rules[].direction`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Directionality, e.g., 'higher_is_better'
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Metric to evaluate
 
-### `rules[].severity`
-- **Type**: enum (`blocker`, `warning`)
-- **Presence**: **Required**
-- **Description**: Severity of rule failure
+### `floor`
+
+- **Type:** number
+- **Requirement:** Optional
+- **Description:** Absolute floor value
+
+### `allowed_delta`
+
+- **Type:** number
+- **Requirement:** Optional
+- **Description:** Allowed delta from baseline
+
+### `direction`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** Directionality, e.g., 'higher_is_better'
+
+### `severity`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Severity of rule failure
+- **Allowed Values:** blocker, warning
+

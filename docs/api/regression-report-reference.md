@@ -1,34 +1,39 @@
 ---
-title: "Regression Report Reference"
-description: "API reference for regression-report schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Regression Report Specification Reference"
+description: "Schema for a regression report output."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/regression-report.schema.json"
 ---
 
-# Regression Report Reference
+# Regression Report Specification Reference
 
 Schema for a regression report output.
 
 ## Properties
 
-### `status`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Pass, fail, warning status
+## `status`
 
-### `baseline_ref`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The reference digest or ID
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Pass, fail, warning status
 
-### `candidate_ref`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The digest or ID being tested
+## `baseline_ref`
 
-### `evidence`
-- **Type**: array of object
-- **Presence**: **Required**
-- **Description**: A list of metric deltas and comparisons
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The reference digest or ID
+
+## `candidate_ref`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The digest or ID being tested
+
+## `evidence`
+
+- **Type:** array of object
+- **Requirement:** Required
+- **Description:** A list of metric deltas and comparisons
+

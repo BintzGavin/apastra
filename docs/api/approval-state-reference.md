@@ -1,8 +1,8 @@
 ---
 title: "Approval State Reference"
-description: "API reference for approval-state schema"
-audience: "all"
-last_verified: "2026-03-15"
+description: "Schema for an Approval state record indicating human and machine review results."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/approval-state.schema.json"
 ---
@@ -13,37 +13,46 @@ Schema for an Approval state record indicating human and machine review results.
 
 ## Properties
 
-### `revision_ref`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Target digest or ID of the revision or package.
+## `revision_ref`
 
-### `checks_passed`
-- **Type**: boolean
-- **Presence**: **Required**
-- **Description**: Whether the required machine checks have passed.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Target digest or ID of the revision or package.
 
-### `human_review`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Details of the manual human review.
+## `checks_passed`
 
-### `human_review.reviewer`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The identity of the reviewer.
+- **Type:** boolean
+- **Requirement:** Required
+- **Description:** Whether the required machine checks have passed.
 
-### `human_review.timestamp`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The time when the review occurred.
+## `human_review`
 
-### `decision`
-- **Type**: enum (`approved`, `rejected`, `abstained`)
-- **Presence**: **Required**
-- **Description**: The final decision of the review.
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Details of the manual human review.
 
-### `digest`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: The computed content digest (e.g., sha256:<hex>).
+### `reviewer`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The identity of the reviewer.
+
+### `timestamp`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The time when the review occurred.
+
+## `decision`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The final decision of the review.
+- **Allowed Values:** approved, rejected, abstained
+
+## `digest`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** The computed content digest (e.g., sha256:<hex>).
+

@@ -1,49 +1,58 @@
 ---
-title: "Evaluator Reference"
-description: "API reference for evaluator schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Evaluator Specification Reference"
+description: "Scoring definition (deterministic checks, schema validation, rubric/judge config)"
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/evaluator.schema.json"
 ---
 
-# Evaluator Reference
+# Evaluator Specification Reference
 
 Scoring definition (deterministic checks, schema validation, rubric/judge config)
 
 ## Properties
 
-### `id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Stable identifier for the evaluator.
+## `id`
 
-### `type`
-- **Type**: enum (`deterministic`, `schema`, `judge`, `human`)
-- **Presence**: **Required**
-- **Description**: The type of the evaluator.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Stable identifier for the evaluator.
 
-### `metrics`
-- **Type**: array of string
-- **Presence**: **Required**
-- **Description**: Array of metrics produced by this evaluator.
+## `type`
 
-### `description`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Optional human-readable description of the evaluator.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The type of the evaluator.
+- **Allowed Values:** deterministic, schema, judge, human
 
-### `config`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Configuration specific to the evaluator type, such as model details or target values.
+## `metrics`
 
-### `metric_versions`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Mapping of metric names to their semantic versions.
+- **Type:** array of string
+- **Requirement:** Required
+- **Description:** Array of metrics produced by this evaluator.
 
-### `digest`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: SHA-256 hash of the evaluator content.
+## `description`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** Optional human-readable description of the evaluator.
+
+## `config`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Configuration specific to the evaluator type, such as model details or target values.
+
+## `metric_versions`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Mapping of metric names to their semantic versions.
+
+## `digest`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** SHA-256 hash of the evaluator content.
+

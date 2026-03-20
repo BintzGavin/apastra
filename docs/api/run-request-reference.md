@@ -1,54 +1,63 @@
 ---
-title: "Run Request Reference"
-description: "API reference for run-request schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Run Request Specification Reference"
+description: "Schema for a minimal BYO harness run request."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/run-request.schema.json"
 ---
 
-# Run Request Reference
+# Run Request Specification Reference
 
 Schema for a minimal BYO harness run request.
 
 ## Properties
 
-### `suite_id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The benchmark suite ID
+## `suite_id`
 
-### `revision_ref`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The revision ref (SHA/tag/digest)
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The benchmark suite ID
 
-### `model_matrix`
-- **Type**: array of string
-- **Presence**: **Required**
-- **Description**: Model matrix
+## `revision_ref`
 
-### `evaluator_refs`
-- **Type**: array of string
-- **Presence**: **Required**
-- **Description**: Evaluator references
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The revision ref (SHA/tag/digest)
 
-### `trials`
-- **Type**: integer
-- **Presence**: *Optional*
-- **Description**: Number of trials
+## `model_matrix`
 
-### `budgets`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Budgets
+- **Type:** array of string
+- **Requirement:** Required
+- **Description:** Model matrix
 
-### `timeouts`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Timeouts
+## `evaluator_refs`
 
-### `artifact_backend_config`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Artifact backend config
+- **Type:** array of string
+- **Requirement:** Required
+- **Description:** Evaluator references
+
+## `trials`
+
+- **Type:** integer
+- **Requirement:** Optional
+- **Description:** Number of trials
+
+## `budgets`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Budgets
+
+## `timeouts`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Timeouts
+
+## `artifact_backend_config`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Artifact backend config
+

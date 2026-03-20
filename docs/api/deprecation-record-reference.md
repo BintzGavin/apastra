@@ -1,8 +1,8 @@
 ---
 title: "Deprecation Record Reference"
-description: "API reference for deprecation-record schema"
-audience: "all"
-last_verified: "2026-03-15"
+description: "Schema for deprecation records."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/deprecation-record.schema.json"
 ---
@@ -13,32 +13,39 @@ Schema for deprecation records.
 
 ## Properties
 
-### `deprecation_id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Unique identifier for the deprecation record.
+## `deprecation_id`
 
-### `package_digest`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: The SHA-256 digest of the deprecated package.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Unique identifier for the deprecation record.
 
-### `reference`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: The reference of the deprecated package.
+## `package_digest`
 
-### `timestamp`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The timestamp of the deprecation.
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** The SHA-256 digest of the deprecated package.
 
-### `reason`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The reason for the deprecation.
+## `reference`
 
-### `replacement_ref`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: The reference to the suggested replacement.
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** The reference of the deprecated package.
+
+## `timestamp`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The timestamp of the deprecation.
+
+## `reason`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The reason for the deprecation.
+
+## `replacement_ref`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** The reference to the suggested replacement.
+

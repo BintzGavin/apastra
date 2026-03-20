@@ -1,39 +1,45 @@
 ---
-title: "Prompt Package Reference"
-description: "API reference for prompt-package schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Prompt Package Manifest Reference"
+description: "Immutable bundle of prompt specs with a manifest and content digest."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/prompt-package.schema.json"
 ---
 
-# Prompt Package Reference
+# Prompt Package Manifest Reference
 
 Immutable bundle of prompt specs with a manifest and content digest.
 
 ## Properties
 
-### `id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Stable identifier for the package.
+## `id`
 
-### `digest`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Content digest of the package, computed over canonicalized JSON using SHA-256.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Stable identifier for the package.
 
-### `specs`
-- **Type**: array of string
-- **Presence**: **Required**
-- **Description**: Array of included prompt spec IDs/digests.
+## `digest`
 
-### `version`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: Optional semantic version for the package.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Content digest of the package, computed over canonicalized JSON using SHA-256.
 
-### `metadata`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Optional metadata (e.g., provenance, author).
+## `specs`
+
+- **Type:** array of string
+- **Requirement:** Required
+- **Description:** Array of included prompt spec IDs/digests.
+
+## `version`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** Optional semantic version for the package.
+
+## `metadata`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Optional metadata (e.g., provenance, author).
+

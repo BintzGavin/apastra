@@ -1,99 +1,117 @@
 ---
-title: "Run Manifest Reference"
-description: "API reference for run-manifest schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Run Manifest Specification Reference"
+description: "Schema for a run manifest."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/run-manifest.schema.json"
 ---
 
-# Run Manifest Reference
+# Run Manifest Specification Reference
 
 Schema for a run manifest.
 
 ## Properties
 
-### `input_refs`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Input references
+## `input_refs`
 
-### `resolved_digests`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Resolved digests
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Input references
 
-### `timestamps`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Timestamps
+## `resolved_digests`
 
-### `harness_identifier`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Harness identifier
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Resolved digests
 
-### `harness_version`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Harness version
+## `timestamps`
 
-### `model_ids`
-- **Type**: array of string
-- **Presence**: **Required**
-- **Description**: Model IDs
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Timestamps
 
-### `sampling_config`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Sampling configuration
+## `harness_identifier`
 
-### `environment`
-- **Type**: object
-- **Presence**: **Required**
-- **Description**: Environment metadata
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Harness identifier
 
-### `status`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Run status
+## `harness_version`
 
-### `provenance`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: SLSA-style provenance metadata representing the invocation of the evaluation run.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Harness version
 
-### `provenance.builder`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Identifies the builder.
+## `model_ids`
 
-### `provenance.builder.id`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: String URI identifying the builder.
+- **Type:** array of string
+- **Requirement:** Required
+- **Description:** Model IDs
 
-### `provenance.buildType`
-- **Type**: string
-- **Presence**: *Optional*
-- **Description**: String defining the build model.
+## `sampling_config`
 
-### `provenance.invocation`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Invocation configuration.
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Sampling configuration
 
-### `provenance.invocation.configSource`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Source of the configuration.
+## `environment`
 
-### `provenance.invocation.environment`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Invocation environment.
+- **Type:** object
+- **Requirement:** Required
+- **Description:** Environment metadata
 
-### `provenance.metadata`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Timestamps and build metadata.
+## `status`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Run status
+
+## `provenance`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** SLSA-style provenance metadata representing the invocation of the evaluation run.
+
+### `builder`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Identifies the builder.
+
+#### `id`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** String URI identifying the builder.
+
+### `buildType`
+
+- **Type:** string
+- **Requirement:** Optional
+- **Description:** String defining the build model.
+
+### `invocation`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Invocation configuration.
+
+#### `configSource`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Source of the configuration.
+
+#### `environment`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Invocation environment.
+
+### `metadata`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Timestamps and build metadata.
+

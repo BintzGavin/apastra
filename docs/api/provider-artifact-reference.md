@@ -1,39 +1,46 @@
 ---
-title: "Provider Artifact Reference"
-description: "API reference for provider-artifact schema"
-audience: "all"
-last_verified: "2026-03-15"
+title: "Provider Artifact Manifest Reference"
+description: "A distribution wrapper around a prompt package (git ref, release asset, OCI artifact, npm/PyPI wrapper)."
+audience: "developers | platform-teams | agents | all"
+last_verified: "2026-03-20"
 source_files:
   - "promptops/schemas/provider-artifact.schema.json"
 ---
 
-# Provider Artifact Reference
+# Provider Artifact Manifest Reference
 
 A distribution wrapper around a prompt package (git ref, release asset, OCI artifact, npm/PyPI wrapper).
 
 ## Properties
 
-### `id`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Stable identifier for the provider artifact.
+## `id`
 
-### `type`
-- **Type**: enum (`git_ref`, `release_asset`, `oci_artifact`, `npm_wrapper`, `pypi_wrapper`)
-- **Presence**: **Required**
-- **Description**: The distribution type of the wrapper.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Stable identifier for the provider artifact.
 
-### `reference`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: The URI, ref, or tag of the wrapper.
+## `type`
 
-### `package_digest`
-- **Type**: string
-- **Presence**: **Required**
-- **Description**: Content digest of the underlying prompt package.
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The distribution type of the wrapper.
+- **Allowed Values:** git_ref, release_asset, oci_artifact, npm_wrapper, pypi_wrapper
 
-### `metadata`
-- **Type**: object
-- **Presence**: *Optional*
-- **Description**: Arbitrary key-value pairs for registry-specific data, provenance, or signatures.
+## `reference`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** The URI, ref, or tag of the wrapper.
+
+## `package_digest`
+
+- **Type:** string
+- **Requirement:** Required
+- **Description:** Content digest of the underlying prompt package.
+
+## `metadata`
+
+- **Type:** object
+- **Requirement:** Optional
+- **Description:** Arbitrary key-value pairs for registry-specific data, provenance, or signatures.
+
