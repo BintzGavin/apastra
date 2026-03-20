@@ -18,3 +18,7 @@
 ## [v1.23.0] - PackagedResolver Caching
 **Learning:** The `PackagedResolver` was missing implementation for local caching, offline fallback, and signature verification, which are critical for the 'Packaged artifact' vision requirement.
 **Action:** Implement local caching, offline fallback, and signature verification within the `PackagedResolver` to enable offline resilience and enhanced artifact security.
+
+## [v1.59.0] - MinimalPlanExceptionFinal
+**Learning:** Executed MinimalPlanExceptionFinal to clear pending state for the RUNTIME domain.
+**Action:** Always strictly increment logical sequential version numbers even for MinimalPlanException exceptions.
