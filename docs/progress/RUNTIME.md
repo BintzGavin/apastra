@@ -1,4 +1,5 @@
 ### RUNTIME v0.2.0
+[v1.61.0] \\342\\234\\205 Completed: LocalResolverCaching - Drafted spec for Local Resolver Caching
 - ✅ Completed: ConsumptionManifestFormat - Defined schema example format
 - ✅ Completed: LocalOverrideResolution - Implemented local override step in python resolver chain
 ### RUNTIME v0.3.0

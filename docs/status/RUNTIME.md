@@ -70,3 +70,6 @@
 [v1.2.0] ✅ Completed: HarnessContractValidation - Implemented runner shim validation against CONTRACTS schemas
 [v1.7.1] ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
 [v1.8.0] ✅ Completed: QuickEvalWorkspaceResolution - Implement quick eval format resolution in the WorkspaceResolver.
+
+### RUNTIME v1.61.0
+- \342\234\205 Completed: LocalResolverCaching - Drafted spec for Local Resolver Caching
