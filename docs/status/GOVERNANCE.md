@@ -1,4 +1,5 @@
-**Version**: 1.63.0
+**Version**: 1.64.0
+[v1.64.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.63.0] \\342\\234\\205 Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.62.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.61.0] \\342\\234\\205 Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
