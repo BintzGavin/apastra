@@ -30,3 +30,7 @@
 ## 1.64.0 - GitRef Resolver Caching
 **Learning:** Similar to Local and Workspace resolvers, GitRef resolution creates redundant I/O bottlenecks (subprocess calls) when resolving identical remote refs.
 **Action:** Implement memory caching based on the pin and prompt ID tuple in `GitRefResolver`.
+
+## 1.67.0 - MinimalPlanExceptionFinal
+**Learning:** Executed MinimalPlanExceptionFinal to clear pending state for the RUNTIME domain.
+**Action:** Always strictly increment logical sequential version numbers even for MinimalPlanException exceptions.
