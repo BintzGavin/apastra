@@ -93,3 +93,7 @@
 ## 0.71.0 - MinimalPlanExceptionFinal
 **Learning:** None
 **Action:** None
+
+## 0.72.0 - MinimalPlanExceptionFinal
+**Learning:** None
+**Action:** None
