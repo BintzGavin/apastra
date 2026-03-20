@@ -1,4 +1,5 @@
-**Version**: 1.63.0\n[v1.59.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.\n[v1.58.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest\n[v1.56.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+**Version**: 1.64.0\n[v1.59.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.\n[v1.58.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest\n[v1.56.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.64.0] \\342\\234\\205 Completed: GitRefResolverCaching - Drafted spec for Git Ref Resolver Caching.
 [v1.63.0] \342\234\205 Completed: WorkspaceResolverCaching - Implemented caching in WorkspaceResolver to reduce disk reads.
 [v1.62.0] \\342\\234\\205 Completed: WorkspaceResolverCaching - Drafted spec for Workspace Resolver Caching
 [v1.61.0] \342\234\205 Completed: LocalResolverCaching - Implemented caching of local overrides to support offline fallback.

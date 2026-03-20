@@ -219,3 +219,6 @@
 
 ### RUNTIME v1.63.0
 - \342\234\205 Completed: WorkspaceResolverCaching - Implemented caching in WorkspaceResolver to reduce disk reads.
+
+### RUNTIME v1.64.0
+- \342\234\205 Completed: GitRefResolverCaching - Drafted spec for Git Ref Resolver Caching.
