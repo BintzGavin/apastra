@@ -234,3 +234,6 @@
 
 ### RUNTIME v1.68.0
 - \\342\\234\\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+
+### RUNTIME v1.69.0
+- ✅ Completed: PackagedResolverInMemoryCaching - Implemented in-memory caching in PackagedResolver
