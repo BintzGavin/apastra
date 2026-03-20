@@ -1,4 +1,5 @@
-**Version**: 0.79.0
+**Version**: 0.80.0
+[v0.80.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.79.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.78.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.77.0] \342\234\205 Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
