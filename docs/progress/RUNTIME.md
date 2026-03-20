@@ -213,3 +213,6 @@
 
 ### RUNTIME v1.60.0
 - \342\234\205 Completed: MinimalRuntimeMetadataModelIDs - Implemented the model IDs array in the resolve() function metadata output.
+
+### RUNTIME v1.62.0
+- \342\234\205 Completed: WorkspaceResolverCaching - Drafted spec for Workspace Resolver Caching
