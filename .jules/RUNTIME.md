@@ -34,3 +34,7 @@
 ## 1.67.0 - MinimalPlanExceptionFinal
 **Learning:** Executed MinimalPlanExceptionFinal to clear pending state for the RUNTIME domain.
 **Action:** Always strictly increment logical sequential version numbers even for MinimalPlanException exceptions.
+
+## 1.68.0 - MinimalPlanExceptionFinal
+**Learning:** Executed MinimalPlanExceptionFinal to clear pending state for the RUNTIME domain.
+**Action:** Always strictly increment logical sequential version numbers even for MinimalPlanException exceptions.
