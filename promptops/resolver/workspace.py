@@ -12,34 +12,33 @@ def load_prompt_package(path):
     return None
 
 class WorkspaceResolver:
+    def __init__(self):
+        self.cache = {}
+
     def resolve(self, prompt_id):
         """Resolves a prompt package from a workspace path."""
-        workspace_path_yaml = f"promptops/prompts/{prompt_id}.yaml"
-        if os.path.exists(workspace_path_yaml):
-            return load_prompt_package(workspace_path_yaml)
+        paths_to_try = [
+            (f"promptops/prompts/{prompt_id}.yaml", False),
+            (f"promptops/prompts/{prompt_id}.json", False),
+            (f"promptops/prompts/{prompt_id}/prompt.yaml", False),
+            (f"promptops/prompts/{prompt_id}/prompt.json", False),
+            (f"promptops/evals/{prompt_id}.yaml", True),
+            (f"promptops/evals/{prompt_id}.json", True)
+        ]
 
-        workspace_path_json = f"promptops/prompts/{prompt_id}.json"
-        if os.path.exists(workspace_path_json):
-            return load_prompt_package(workspace_path_json)
+        for path, is_quick_eval in paths_to_try:
+            if os.path.exists(path):
+                mtime = os.path.getmtime(path)
+                if path in self.cache and self.cache[path]['mtime'] == mtime:
+                    data = self.cache[path]['data']
+                else:
+                    data = load_prompt_package(path)
+                    self.cache[path] = {'mtime': mtime, 'data': data}
 
-        workspace_path_yaml_dir = f"promptops/prompts/{prompt_id}/prompt.yaml"
-        if os.path.exists(workspace_path_yaml_dir):
-            return load_prompt_package(workspace_path_yaml_dir)
-
-        workspace_path_json_dir = f"promptops/prompts/{prompt_id}/prompt.json"
-        if os.path.exists(workspace_path_json_dir):
-            return load_prompt_package(workspace_path_json_dir)
-
-        quick_eval_yaml = f"promptops/evals/{prompt_id}.yaml"
-        if os.path.exists(quick_eval_yaml):
-            data = load_prompt_package(quick_eval_yaml)
-            if data and "prompt" in data:
-                return {"id": prompt_id, "template": data["prompt"], "variables": {}}
-
-        quick_eval_json = f"promptops/evals/{prompt_id}.json"
-        if os.path.exists(quick_eval_json):
-            data = load_prompt_package(quick_eval_json)
-            if data and "prompt" in data:
-                return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+                if is_quick_eval:
+                    if data and "prompt" in data:
+                        return {"id": prompt_id, "template": data["prompt"], "variables": {}}
+                else:
+                    return data
 
         return None
