@@ -1,4 +1,5 @@
-**Version**: 1.60.0\n[v1.59.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.\n[v1.58.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest\n[v1.56.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+**Version**: 1.61.0\n[v1.59.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.\n[v1.58.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest\n[v1.56.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.61.0] \342\234\205 Completed: LocalResolverCaching - Implemented caching of local overrides to support offline fallback.
 [v1.60.0] \\342\\234\\205 Completed: MinimalRuntimeMetadataModelIDs - Implemented the model IDs array in the resolve() function metadata output.
 [v1.55.2] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.55.1] ✅ Completed: MinimalRuntimeMetadata - Implemented dataset digest and harness version in minimal runtime resolve() output.
