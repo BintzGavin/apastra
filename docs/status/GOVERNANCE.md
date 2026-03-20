@@ -1,4 +1,5 @@
-**Version**: 1.66.0
+**Version**: 1.67.0
+[v1.67.0] ✅ Planned: ModerationPolicyChecks - Created spec for moderation and policy checks.
 [v1.66.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.65.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.64.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.

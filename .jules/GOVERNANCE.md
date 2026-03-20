@@ -151,3 +151,7 @@
 ## 1.66.0 - Minimal Plan Exception Final
 **Learning:** Executed minimal plan exception.
 **Action:** No action needed.
+
+## 1.67.0 - Moderation and Policy Checks Spec
+**Learning:** The vision doc specifies moderation and policy checks centrally for registry metadata, which was missing from the current policy inventory.
+**Action:** Created a plan to implement a moderation and policy checks policy to secure the registry ecosystem.
