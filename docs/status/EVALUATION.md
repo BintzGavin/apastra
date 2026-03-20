@@ -1,4 +1,5 @@
-**Version**: 0.80.0
+**Version**: 0.81.0
+[v0.81.0] ✅ Completed: AnswerRelevanceAssertion - Spec for implementing the answer-relevance assertion type for model-assisted evaluation
 [v0.80.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.79.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.78.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
