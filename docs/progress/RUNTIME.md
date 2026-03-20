@@ -222,3 +222,6 @@
 
 ### RUNTIME v1.64.0
 - \342\234\205 Completed: GitRefResolverCaching - Drafted spec for Git Ref Resolver Caching.
+
+### RUNTIME v1.65.0
+- \342\234\205 Completed: GitRefResolverCaching - Implemented caching in GitRefResolver to reduce duplicate git show subprocess calls.
