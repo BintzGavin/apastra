@@ -111,6 +111,14 @@ def resolve(prompt_id, ref_context=None, variables=None, dataset_digest=None, ha
     if harness_version:
         metadata["harness_version"] = harness_version
 
+    provenance = None
+    if isinstance(prompt_spec, dict) and "provenance" in prompt_spec:
+        provenance = prompt_spec["provenance"]
+    elif isinstance(rules, dict) and "provenance" in rules:
+        provenance = rules["provenance"]
+
+    if provenance:
+        metadata["provenance"] = provenance
 
     template = prompt_spec.get('template') if isinstance(prompt_spec, dict) else prompt_spec
 

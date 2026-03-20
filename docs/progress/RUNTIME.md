@@ -225,3 +225,6 @@
 
 ### RUNTIME v1.65.0
 - \342\234\205 Completed: GitRefResolverCaching - Implemented caching in GitRefResolver to reduce duplicate git show subprocess calls.
+
+### RUNTIME v1.66.0
+- \342\234\205 Completed: ResolverProvenanceMetadata - Implemented provenance extraction in resolve()
