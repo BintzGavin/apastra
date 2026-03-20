@@ -1,4 +1,5 @@
-**Version**: 0.82.0
+**Version**: 0.83.0
+[v0.83.0] ✅ Completed: LLMRubricAssertion - Spec for implementing the llm-rubric assertion type for model-assisted evaluation
 [v0.82.0] ✅ Completed: AnswerRelevanceAssertion - Implemented answer-relevance assertion
 [v0.81.0] ✅ Completed: AnswerRelevanceAssertion - Spec for implementing the answer-relevance assertion type for model-assisted evaluation
 [v0.80.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete

@@ -246,3 +246,6 @@
 
 ### EVALUATION v0.82.0
 - ✅ Completed: AnswerRelevanceAssertion - Implemented answer-relevance assertion
+
+### EVALUATION v0.83.0
+- ✅ Completed: LLMRubricAssertion - Spec for implementing the llm-rubric assertion type for model-assisted evaluation
