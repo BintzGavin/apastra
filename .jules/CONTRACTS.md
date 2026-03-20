@@ -19,3 +19,5 @@
 - Executed Minimal Plan Exception Final for the CONTRACTS domain.
 ## v0.78.0
 - Executed Minimal Plan Exception Final for the CONTRACTS domain.
+## v0.79.0
+- Executed Minimal Plan Exception Final for the CONTRACTS domain.
