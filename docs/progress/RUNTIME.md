@@ -237,3 +237,6 @@
 
 ### RUNTIME v1.69.0
 - ✅ Completed: PackagedResolverInMemoryCaching - Implemented in-memory caching in PackagedResolver
+
+### RUNTIME v1.71.0
+- ✅ Completed: RemoteGitUrlResolution - Implemented remote git URL resolution in GitRefResolver
