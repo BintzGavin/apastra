@@ -155,3 +155,7 @@
 ## 1.67.0 - Moderation and Policy Checks Spec
 **Learning:** The vision doc specifies moderation and policy checks centrally for registry metadata, which was missing from the current policy inventory.
 **Action:** Created a plan to implement a moderation and policy checks policy to secure the registry ecosystem.
+
+## 1.69.0 - Schema Validation Workflow Spec
+**Learning:** The vision doc explicitly states "automated scanning (schema validation...)" is required for moderation, but no automated GitHub workflow currently runs the validators for PRs.
+**Action:** Designed a plan to integrate existing CONTRACTS validators into a PR check.
