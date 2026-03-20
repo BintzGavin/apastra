@@ -43,6 +43,7 @@ Gate Enforcement Flow:
 - `promptops/policies/appeals.md`: Moderation decision appeals process.
 - `promptops/policies/federation.md`: Governance rules for cross-custodian trust and namespace resolution.
 - `promptops/policies/mirroring.md`: Requirements and processes for establishing read-only mirrors.
+- `promptops/policies/moderation-policy.md`: Criteria for moderation and policy check failures, automated scanning, and manual flagging.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 
 **Section D: Promotion Record Format**
