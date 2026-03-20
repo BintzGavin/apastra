@@ -113,3 +113,7 @@
 ## 0.76.0 - MinimalPlanExceptionFinal
 **Learning:** None
 **Action:** None
+
+## [v0.77.0] - Tradeoff Surfacing
+**Learning:** Surfacing ungated metrics provides valuable context for human review without enforcing policy gates.
+**Action:** Iterate on regression report schema and frontend integration to better surface 'info' status evidence.
