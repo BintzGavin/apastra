@@ -57,3 +57,6 @@
 ## 0.95.0 - PolicyExceptionRecord
 **Learning:** `docs/vision.md` explicitly defines "Policy exceptions" as human checkpoints for moderation approval. Like other governance actions, an explicit schema is required so downstream domains can accurately generate and validate these records.
 **Action:** Always formalize architectural concepts from the vision document into explicit schema implementations to enable proper cross-domain interaction.
+## 0.97.0 - ModerationEscalationRecord
+**Learning:** `docs/vision.md` explicitly defines a "human escalation path for high-risk content" as part of the public registry moderation procedures. The creation of a dedicated schema is required for the system to formally track these human escalations without hallucinating state.
+**Action:** Continue cross-referencing high-level moderation procedures against existing schemas to ensure all documented states have an explicit schema definition for downstream domains.
