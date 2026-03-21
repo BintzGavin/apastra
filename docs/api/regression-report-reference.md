@@ -1,13 +1,13 @@
 ---
-title: "Regression Report Specification Reference"
+title: "Regression Report Specification"
 description: "Schema for a regression report output."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "promptops/schemas/regression-report.schema.json"
 ---
 
-# Regression Report Specification Reference
+# Regression Report Specification
 
 Schema for a regression report output.
 
@@ -15,25 +15,24 @@ Schema for a regression report output.
 
 ## `status`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** Pass, fail, warning status
 
 ## `baseline_ref`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The reference digest or ID
 
 ## `candidate_ref`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The digest or ID being tested
 
 ## `evidence`
 
-- **Type:** array of object
+- **Type:** `array`
 - **Requirement:** Required
 - **Description:** A list of metric deltas and comparisons
-

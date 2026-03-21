@@ -1,13 +1,13 @@
 ---
-title: "Scorecard Specification Reference"
+title: "Scorecard Specification"
 description: "Schema for the run artifact scorecard."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "promptops/schemas/scorecard.schema.json"
 ---
 
-# Scorecard Specification Reference
+# Scorecard Specification
 
 Schema for the run artifact scorecard.
 
@@ -15,25 +15,24 @@ Schema for the run artifact scorecard.
 
 ## `normalized_metrics`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Required
 - **Description:** Mapping of metric names to their values
 
 ## `metric_definitions`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Required
 - **Description:** Metadata like metric version and description
 
 ## `variance`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Optional variance details if trials were run
 
 ## `flake_rates`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Mapping of metric names to their flake rates
-

@@ -1,13 +1,13 @@
 ---
-title: "Takedown Record Reference"
+title: "Takedown Record"
 description: "Schema for takedown records."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "promptops/schemas/takedown-record.schema.json"
 ---
 
-# Takedown Record Reference
+# Takedown Record
 
 Schema for takedown records.
 
@@ -15,31 +15,30 @@ Schema for takedown records.
 
 ## `takedown_id`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** Unique identifier for the takedown record.
 
 ## `package_digest`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The SHA-256 digest of the taken down package.
 
 ## `timestamp`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The timestamp of the takedown.
 
 ## `reason`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The reason for the takedown.
 
 ## `policy_violation_type`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The type of policy violation.
-

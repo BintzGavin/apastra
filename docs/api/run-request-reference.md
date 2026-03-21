@@ -1,13 +1,13 @@
 ---
-title: "Run Request Specification Reference"
+title: "Run Request Specification"
 description: "Schema for a minimal BYO harness run request."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "promptops/schemas/run-request.schema.json"
 ---
 
-# Run Request Specification Reference
+# Run Request Specification
 
 Schema for a minimal BYO harness run request.
 
@@ -15,49 +15,48 @@ Schema for a minimal BYO harness run request.
 
 ## `suite_id`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The benchmark suite ID
 
 ## `revision_ref`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The revision ref (SHA/tag/digest)
 
 ## `model_matrix`
 
-- **Type:** array of string
+- **Type:** `array`
 - **Requirement:** Required
 - **Description:** Model matrix
 
 ## `evaluator_refs`
 
-- **Type:** array of string
+- **Type:** `array`
 - **Requirement:** Required
 - **Description:** Evaluator references
 
 ## `trials`
 
-- **Type:** integer
+- **Type:** `integer`
 - **Requirement:** Optional
 - **Description:** Number of trials
 
 ## `budgets`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Budgets
 
 ## `timeouts`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Timeouts
 
 ## `artifact_backend_config`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Artifact backend config
-

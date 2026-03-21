@@ -1,4 +1,6 @@
-**Version**: 0.7.0
+**Version**: 0.8.0
+
+[v0.8.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Generated API docs, updated dashboards, updated guides and ADRs last_verified timestamps, and updated context-docs.md.
 
 [v0.1.0] ✅ Completed: Daily Documentation Review - Initialized comprehensive daily documentation review process. Created all required dashboards, generated API references for all existing schemas, and verified documentation completeness against implemented features.
 

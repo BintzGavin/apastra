@@ -22,6 +22,7 @@
 - `harness-adapter-reference.md`
 - `mirror-sync-receipt-reference.md`
 - `moderation-decision-record-reference.md`
+- `ownership-dispute-record-reference.md`
 - `promotion-record-reference.md`
 - `prompt-package-reference.md`
 - `prompt-spec-reference.md`

@@ -1,13 +1,13 @@
 ---
-title: "Deprecation Record Reference"
+title: "Deprecation Record"
 description: "Schema for deprecation records."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "promptops/schemas/deprecation-record.schema.json"
 ---
 
-# Deprecation Record Reference
+# Deprecation Record
 
 Schema for deprecation records.
 
@@ -15,37 +15,36 @@ Schema for deprecation records.
 
 ## `deprecation_id`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** Unique identifier for the deprecation record.
 
 ## `package_digest`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Optional
 - **Description:** The SHA-256 digest of the deprecated package.
 
 ## `reference`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Optional
 - **Description:** The reference of the deprecated package.
 
 ## `timestamp`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The timestamp of the deprecation.
 
 ## `reason`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The reason for the deprecation.
 
 ## `replacement_ref`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Optional
 - **Description:** The reference to the suggested replacement.
-

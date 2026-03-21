@@ -1,13 +1,13 @@
 ---
-title: "Prompt Package Manifest Reference"
+title: "Prompt Package Manifest"
 description: "Immutable bundle of prompt specs with a manifest and content digest."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "promptops/schemas/prompt-package.schema.json"
 ---
 
-# Prompt Package Manifest Reference
+# Prompt Package Manifest
 
 Immutable bundle of prompt specs with a manifest and content digest.
 
@@ -15,31 +15,30 @@ Immutable bundle of prompt specs with a manifest and content digest.
 
 ## `id`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** Stable identifier for the package.
 
 ## `digest`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** Content digest of the package, computed over canonicalized JSON using SHA-256.
 
 ## `specs`
 
-- **Type:** array of string
+- **Type:** `array`
 - **Requirement:** Required
 - **Description:** Array of included prompt spec IDs/digests.
 
 ## `version`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Optional
 - **Description:** Optional semantic version for the package.
 
 ## `metadata`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Optional metadata (e.g., provenance, author).
-

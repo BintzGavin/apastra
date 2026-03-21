@@ -1,8 +1,8 @@
 ---
-title: "Implementation Progress Dashboard"
-description: "Progress tracker for all domains"
+title: "Implementation Progress"
+description: "Implementation progress across all system domains"
 audience: "all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "docs/progress/CONTRACTS.md"
   - "docs/progress/RUNTIME.md"
@@ -12,7 +12,6 @@ source_files:
 ---
 
 # Implementation Progress
-
 ## CONTRACTS
 
 ### CONTRACTS v0.2.0
@@ -230,9 +229,34 @@ source_files:
 ### CONTRACTS v0.72.0
 - ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception for the CONTRACTS domain.
 
+### CONTRACTS v0.75.0
+- ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception for the CONTRACTS domain.
+
+### CONTRACTS v0.76.0
+- ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
+
+### CONTRACTS v0.78.0
+- ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
+
+### CONTRACTS v0.79.0
+- ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
+
+### CONTRACTS v0.80.0
+- ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
+
+### CONTRACTS v0.83.0
+- ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
+
+### CONTRACTS v0.85.0
+- ✅ Completed: OwnershipDisputeRecord - Created spec for ownership dispute record schema and validator
+
+### CONTRACTS v0.86.0
+- ✅ Completed: CommunityReportRecord - Authored execution plan spec for community report record schema and validator
+
 ## RUNTIME
 
 ### RUNTIME v0.2.0
+[v1.61.0] ✅ Completed: LocalResolverCaching - Implemented caching of local overrides to support offline fallback.
 - ✅ Completed: ConsumptionManifestFormat - Defined schema example format
 - ✅ Completed: LocalOverrideResolution - Implemented local override step in python resolver chain
 ### RUNTIME v0.3.0
@@ -442,6 +466,42 @@ source_files:
 - ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest
 
 ### RUNTIME v1.59.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+
+### RUNTIME v1.60.0
+- ✅ Completed: MinimalRuntimeMetadataModelIDs - Implemented the model IDs array in the resolve() function metadata output.
+
+### RUNTIME v1.62.0
+- ✅ Completed: WorkspaceResolverCaching - Drafted spec for Workspace Resolver Caching
+
+### RUNTIME v1.63.0
+- ✅ Completed: WorkspaceResolverCaching - Implemented caching in WorkspaceResolver to reduce disk reads.
+
+### RUNTIME v1.64.0
+- ✅ Completed: GitRefResolverCaching - Drafted spec for Git Ref Resolver Caching.
+
+### RUNTIME v1.65.0
+- ✅ Completed: GitRefResolverCaching - Implemented caching in GitRefResolver to reduce duplicate git show subprocess calls.
+
+### RUNTIME v1.66.0
+- ✅ Completed: ResolverProvenanceMetadata - Implemented provenance extraction in resolve()
+
+### RUNTIME v1.67.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+
+### RUNTIME v1.68.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+
+### RUNTIME v1.69.0
+- ✅ Completed: PackagedResolverInMemoryCaching - Implemented in-memory caching in PackagedResolver
+
+### RUNTIME v1.71.0
+- ✅ Completed: RemoteGitUrlResolution - Implemented remote git URL resolution in GitRefResolver
+
+### RUNTIME v1.72.0
+- ✅ Completed: GitRefDirectoryResolution - Implemented Git Ref Resolution for Directory-Based Prompts.
+
+### RUNTIME v1.73.0
 - ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 
 ## EVALUATION
@@ -662,6 +722,51 @@ source_files:
 ### EVALUATION v0.68.0
 - ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 
+### EVALUATION v0.69.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.70.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.71.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.73.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.74.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.75.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.77.0
+- ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
+
+### EVALUATION v0.79.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.80.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.81.0
+- ✅ Completed: AnswerRelevanceAssertion - Spec for implementing the answer-relevance assertion type for model-assisted evaluation
+
+### EVALUATION v0.82.0
+- ✅ Completed: AnswerRelevanceAssertion - Implemented answer-relevance assertion
+
+### EVALUATION v0.83.0
+- ✅ Completed: LLMRubricAssertion - Spec for implementing the llm-rubric assertion type for model-assisted evaluation
+
+### EVALUATION v0.84.0
+- ✅ Completed: LLMRubricAssertion - Implemented llm-rubric assertion type for model-assisted evaluation
+
+### EVALUATION v0.85.0
+- ✅ Completed: SimilarAssertion - Implemented similar assertion type for model-assisted evaluation
+
+### EVALUATION v0.86.0
+- ✅ Completed: FactualityAssertion - Implemented factuality assertion type for model-assisted evaluation
+
 ## GOVERNANCE
 
 ### GOVERNANCE v0.2.0
@@ -817,6 +922,7 @@ source_files:
 
 ### GOVERNANCE v1.41.0
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+[v1.42.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 
 ### GOVERNANCE v1.43.0
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
@@ -856,6 +962,42 @@ source_files:
 
 ### GOVERNANCE v1.57.0
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.58.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.59.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.61.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.62.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.63.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.64.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.65.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.66.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.68.0
+- ✅ Completed: ModerationPolicyChecks - Implemented moderation and policy checks policy.
+
+### GOVERNANCE v1.69.0
+- ✅ Completed: SchemaValidationWorkflow - Implemented automated schema validation workflow.
+
+### GOVERNANCE v1.71.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.72.0
+- ✅ Completed: VulnerabilityFlags - Implemented vulnerability flags policy.
 
 ## DOCS
 
@@ -898,3 +1040,14 @@ source_files:
   - Rebuilt schema dependency graph to include `quick-eval` to `dataset-case` dependency
   - Regenerated context-docs.md
 
+### DOCS v0.7.0
+- ✅ Completed: Daily Documentation Review
+  - Updated all API documentation from schemas using `generate_api_docs.py`
+
+### DOCS v0.8.0
+- ✅ Completed: Daily Documentation Review
+  - Updated all API documentation from schemas using `generate_api_docs.py`
+  - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md` with new data
+  - Updated `schema-dependency-graph.md`
+  - Regenerated `context-docs.md`
+  - Updated `last_verified` dates in guides and ADRs
