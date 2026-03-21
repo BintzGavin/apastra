@@ -137,3 +137,7 @@
 ## 0.83.0 - LLMRubricAssertion
 **Learning:** Found that `evaluate_assertions.py` lacks an implementation for `llm-rubric`, currently returning a placeholder score.
 **Action:** Spec'd the implementation of `llm-rubric` evaluation logic.
+
+## 0.84.0 - Minimal Plan Exception Final
+**Learning:** The EVALUATION domain has completed all required capabilities defined in the current vision document.
+**Action:** Close out the domain with a minimal plan exception to satisfy process requirements.
