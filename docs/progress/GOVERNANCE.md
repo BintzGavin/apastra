@@ -227,3 +227,6 @@
 
 ### GOVERNANCE v1.72.0
 - ✅ Completed: VulnerabilityFlags - Implemented vulnerability flags policy.
+
+### GOVERNANCE v1.73.0
+- ✅ Completed: PolicyExceptions - Implemented policy exceptions governance document.

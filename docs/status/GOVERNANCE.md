@@ -1,4 +1,5 @@
-**Version**: 1.72.0
+**Version**: 1.73.0
+[v1.73.0] ✅ Completed: PolicyExceptions - Implemented policy exceptions governance document.
 [v1.72.0] ✅ Completed: VulnerabilityFlags - Implemented vulnerability flags policy.
 [v1.71.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.70.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
