@@ -48,3 +48,6 @@
 ## 0.91.0 - NamespaceClaimRecord
 **Learning:** `docs/vision.md` mandates a transparent governance policy for "naming" in the registry. Like ownership disputes, this requires a formalized schema for claiming namespaces.
 **Action:** Ensure all governance concepts related to registry namespace and identity explicitly listed in the vision document have a corresponding schema definition.
+## 0.93.0 - ProvenanceAttestation
+**Learning:** `docs/vision.md` lists "Provenance attestations" as a core append-only artifact required for governed releases and supply-chain integrity, meaning it requires its own formal contract schema independent of existing tracking records.
+**Action:** When a vision requirement details specific immutable metadata (like SLSA-style builder/invocation fields), ensure a distinct schema exists so downstream domains can accurately generate and validate these records.

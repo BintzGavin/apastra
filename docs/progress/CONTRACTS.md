@@ -251,3 +251,6 @@
 
 ### CONTRACTS v0.92.0
 - ✅ Completed: NamespaceClaimRecord - Created schema and validator for namespace claim record.
+
+### CONTRACTS v0.93.0
+- ✅ Planned: ProvenanceAttestation - Authored execution plan spec for provenance attestation schema and validator.
