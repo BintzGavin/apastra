@@ -45,3 +45,6 @@
 ## 0.90.0 - VulnerabilityFlagRecord
 **Learning:** `docs/vision.md` outlines "vulnerability flags" as part of the append-only registry metadata store, which requires a formalized schema for the GOVERNANCE domain to programmatically track and enforce.
 **Action:** Continue auditing moderation and governance concepts in the vision document to ensure there's a corresponding schema for each described procedure, preventing state hallucination.
+## 0.91.0 - NamespaceClaimRecord
+**Learning:** `docs/vision.md` mandates a transparent governance policy for "naming" in the registry. Like ownership disputes, this requires a formalized schema for claiming namespaces.
+**Action:** Ensure all governance concepts related to registry namespace and identity explicitly listed in the vision document have a corresponding schema definition.
