@@ -91,6 +91,10 @@
   - **Version:** 0.24.0
   - **Description:** Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
 
+- **ID:** `apastra-ownership-dispute-record-v1`
+  - **Version:** 0.85.0
+  - **Description:** Schema for an ownership dispute record in the governance system.
+
 ## Section B: Validator Inventory
 - **Validator:** `validate-regression-policy.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-regression-policy.sh <regression-policy.json|yaml>`
@@ -175,6 +179,10 @@
 - **Validator:** `validate-mirror-sync-receipt.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-mirror-sync-receipt.sh <mirror-sync-receipt.json|yaml>`
   - **Validates:** JSON or YAML files against the `mirror-sync-receipt.schema.json` schema.
+
+- **Validator:** `validate-ownership-dispute-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-ownership-dispute-record.sh <ownership-dispute-record.json|yaml>`
+  - **Validates:** JSON or YAML files against the `ownership-dispute-record.schema.json` schema.
 
 ## Section C: Source File Conventions
 - **Quick Evals:**
