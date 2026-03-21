@@ -1,4 +1,5 @@
-**Version**: 1.78.0
+**Version**: 1.79.0
+[v1.79.0] ✅ Planned: RemoteGitSHACloningFix - Drafted spec to fix remote git SHA resolution.
 [v1.78.0] ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
 [v1.77.0] ✅ Completed: RegistryProtocolResolution - Implemented OCI, NPM, and PyPI protocol resolution.
 [v1.76.0] ✅ Completed: RegistryProtocolResolutionPlan - Drafted implementation spec for OCI, NPM, and PyPI protocol resolution.
