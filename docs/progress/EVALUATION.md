@@ -249,3 +249,6 @@
 
 ### EVALUATION v0.83.0
 - ✅ Completed: LLMRubricAssertion - Spec for implementing the llm-rubric assertion type for model-assisted evaluation
+
+### EVALUATION v0.84.0
+- ✅ Completed: LLMRubricAssertion - Implemented llm-rubric assertion type for model-assisted evaluation
