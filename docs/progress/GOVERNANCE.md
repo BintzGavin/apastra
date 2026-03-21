@@ -241,4 +241,4 @@
 - ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
 
 ### GOVERNANCE v1.77.0
-- ✅ Planned: RegressionGateGlobFix - Created spec to fix the glob pattern in the regression gate check.
+- ✅ Completed: RegressionGateGlobFix - Fixed glob pattern in regression-gate workflow.
