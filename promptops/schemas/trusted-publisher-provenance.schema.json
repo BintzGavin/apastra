@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "apastra-trusted-publisher-provenance-v1",
+  "title": "Trusted Publisher Provenance",
+  "description": "Provenance record to verify and grant trusted publisher badges for packages and providers.",
+  "type": "object",
+  "properties": {
+    "publisher_id": {
+      "type": "string",
+      "description": "Unique identifier of the trusted publisher."
+    },
+    "package_name": {
+      "type": "string",
+      "description": "Name or canonical digest of the package being published."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the provenance record was generated."
+    },
+    "claims": {
+      "type": "object",
+      "description": "Verifications performed for trusted publisher badging.",
+      "properties": {
+        "identity_verified": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "boolean", "description": "Whether identity verification passed." },
+            "evidence_url": { "type": "string", "description": "Optional URL providing evidence." },
+            "signature": { "type": "string", "description": "Optional signature of the verification claim." }
+          },
+          "required": ["status"],
+          "additionalProperties": false,
+          "description": "Status of publisher identity verification."
+        },
+        "source_repo_linked": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "boolean", "description": "Whether source repository link verification passed." },
+            "evidence_url": { "type": "string", "description": "Optional URL providing evidence." },
+            "signature": { "type": "string", "description": "Optional signature of the verification claim." }
+          },
+          "required": ["status"],
+          "additionalProperties": false,
+          "description": "Status of source repository linkage."
+        },
+        "build_environment_attested": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "boolean", "description": "Whether the build environment was attested and verified." },
+            "evidence_url": { "type": "string", "description": "Optional URL providing evidence." },
+            "signature": { "type": "string", "description": "Optional signature of the verification claim." }
+          },
+          "required": ["status"],
+          "additionalProperties": false,
+          "description": "Status of build environment attestation."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "publisher_id",
+    "package_name",
+    "timestamp",
+    "claims"
+  ],
+  "additionalProperties": false
+}

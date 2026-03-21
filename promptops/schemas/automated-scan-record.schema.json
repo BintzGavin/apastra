@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "apastra-automated-scan-record-v1",
+  "title": "Automated Scan Record",
+  "description": "A record of an automated scan performed on a prompt package.",
+  "type": "object",
+  "properties": {
+    "scan_id": {
+      "type": "string",
+      "description": "Unique identifier for this scan record."
+    },
+    "package_digest": {
+      "type": "string",
+      "description": "The digest of the package that was scanned."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the scan was performed."
+    },
+    "scanner_id": {
+      "type": "string",
+      "description": "The tool or service performing the scan."
+    },
+    "scan_type": {
+      "type": "string",
+      "enum": ["malware", "secrets", "schema", "policy"],
+      "description": "The type of scan performed."
+    },
+    "result": {
+      "type": "string",
+      "enum": ["pass", "fail", "warn"],
+      "description": "The outcome of the scan."
+    },
+    "evidence_links": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional links to detailed scan logs or evidence."
+    },
+    "detailed_report": {
+      "type": "string",
+      "description": "Optional detailed text report from the scanner."
+    }
+  },
+  "required": [
+    "scan_id",
+    "package_digest",
+    "timestamp",
+    "scanner_id",
+    "scan_type",
+    "result"
+  ],
+  "additionalProperties": false
+}

@@ -1,11 +1,11 @@
 **Version**: 0.90.0
 [v0.90.0] ✅ Completed: VulnerabilityFlagRecord - Created schema and validator for vulnerability flag record.
-[v0.89.0] ✅ Completed: TrustedPublisherProvenance - Created spec for trusted publisher provenance schema and validator
-[v0.88.0] ✅ Completed: AutomatedScanRecord - Created spec for automated scan record schema and validator
+[v0.89.0] ✅ Completed: TrustedPublisherProvenance - Created schema and validator for trusted publisher provenance.
+[v0.88.0] ✅ Completed: AutomatedScanRecord - Created schema and validator for automated scan record.
 [v0.87.0] ✅ Completed: CommunityReportRecord - Created schema and validator for community report record.
 [v0.86.0] ✅ Completed: CommunityReportRecord - Authored execution plan spec for community report record schema and validator
 [v0.85.0] ✅ Completed: OwnershipDisputeRecord - Created spec for ownership dispute record schema and validator
-[v0.84.0] ✅ Completed: TakedownAppealRecord - Created spec for takedown appeal record schema and validator
+[v0.84.0] ✅ Completed: TakedownAppealRecord - Created schema and validator for takedown appeal record.
 [v0.83.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.82.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.81.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
