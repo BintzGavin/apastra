@@ -245,3 +245,6 @@
 
 ### CONTRACTS v0.90.0
 - ✅ Completed: VulnerabilityFlagRecord - Created schema and validator for vulnerability flag record.
+
+### CONTRACTS v0.91.0
+- ✅ Completed: NamespaceClaimRecord - Authored execution plan spec for namespace claim record schema and validator

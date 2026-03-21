@@ -1,4 +1,5 @@
-**Version**: 0.90.0
+**Version**: 0.91.0
+[v0.91.0] ✅ Completed: NamespaceClaimRecord - Authored execution plan spec for namespace claim record schema and validator
 [v0.90.0] ✅ Completed: VulnerabilityFlagRecord - Created schema and validator for vulnerability flag record.
 [v0.89.0] ✅ Completed: TrustedPublisherProvenance - Created schema and validator for trusted publisher provenance.
 [v0.88.0] ✅ Completed: AutomatedScanRecord - Created schema and validator for automated scan record.
