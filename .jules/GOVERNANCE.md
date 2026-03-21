@@ -182,3 +182,7 @@
 ## 1.78.0 - Submission Records Spec
 **Learning:** The vision doc explicitly mentions submission records as a key append-only artifact for the registry, but a formal policy defining them was missing.
 **Action:** Created a plan to implement a submission records policy to ensure an auditable trail from submission to publish.
+
+## 1.79.0 - Moderation Decision Records Spec
+**Learning:** The vision doc explicitly mentions moderation decision records as a key append-only artifact for the registry, but a formal policy defining them was missing.
+**Action:** Created a plan to implement a moderation decision records policy to ensure an auditable trail for moderation actions.
