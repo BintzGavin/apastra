@@ -47,6 +47,7 @@ Gate Enforcement Flow:
 - `promptops/policies/mirroring.md`: Requirements and processes for establishing read-only mirrors.
 - `promptops/policies/provenance-attestations.md`: Defines handling and verification of build provenance attestations.
 - `promptops/policies/moderation-policy.md`: Criteria for moderation and policy check failures, automated scanning, and manual flagging.
+- `promptops/policies/policy-exceptions.md`: Defines handling and format of exceptions to automated policy checks.
 - `promptops/policies/submission-records.md`: Defines the handling, format, and expectations of submission records.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 

@@ -1,4 +1,5 @@
-**Version**: 1.81.0
+**Version**: 1.82.0
+[v1.82.0] ✅ Completed: PolicyExceptions - Minimal Plan Exception. Changes already present.
 [v1.81.0] ✅ Completed: MirrorSyncReceipts - Implemented mirror sync receipts policy.
 [v1.80.0] ✅ Completed: ModerationDecisionRecords - Implemented moderation decision records policy.
 [v1.79.0] ✅ Completed: SubmissionRecords - Implemented submission records policy.

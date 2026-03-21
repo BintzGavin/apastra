@@ -190,3 +190,7 @@
 ## 1.81.0 - Deprecation Notices Policy Spec
 **Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include "deprecation notices", but the existing `promptops/policies/deprecation.md` is a generic placeholder rather than a formal registry-aligned policy detailing append-only behavior.
 **Action:** Created a plan to convert the generic deprecation policy placeholder into a formal append-only registry metadata store policy that aligns with `deprecation-record.schema.json`.
+
+## 1.82.0 - Policy Exceptions Spec
+**Learning:** The vision doc explicitly mentions policy exceptions as a component of human checkpoints in the single-custodian registry model, but a formal policy defining them was missing.
+**Action:** Executed a Minimal Plan Exception because the policy file was already present in the codebase.
