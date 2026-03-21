@@ -42,7 +42,7 @@ version: "1.0"
 prompts:
   "my-stable-id":
     id: "actual-prompt-id"
-    pin: "v1.0.0"          # Optional Git ref or package pin
+    pin: "v1.0.0"          # Optional Git ref, package pin, or registry URI (npm:, pypi:, oci://)
     override: "./local"    # Optional local override path
     model: "gpt-4"         # Optional default model to use
 defaults:

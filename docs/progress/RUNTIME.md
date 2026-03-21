@@ -255,3 +255,6 @@
 
 ### RUNTIME v1.76.0
 - ✅ Completed: RegistryProtocolResolutionPlan - Drafted implementation spec for OCI, NPM, and PyPI protocol resolution.
+
+### RUNTIME v1.77.0
+- ✅ Completed: RegistryProtocolResolution - Implemented OCI, NPM, and PyPI protocol resolution.

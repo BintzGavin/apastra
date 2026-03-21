@@ -1,4 +1,5 @@
-**Version**: 1.76.0
+**Version**: 1.77.0
+[v1.77.0] ✅ Completed: RegistryProtocolResolution - Implemented OCI, NPM, and PyPI protocol resolution.
 [v1.76.0] ✅ Completed: RegistryProtocolResolutionPlan - Drafted implementation spec for OCI, NPM, and PyPI protocol resolution.
 [v1.75.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.74.0] ✅ Completed: PackagedResolverSignatureVerification - Implemented signature verification in PackagedResolver.
