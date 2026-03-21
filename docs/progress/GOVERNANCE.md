@@ -253,3 +253,6 @@
 
 ### GOVERNANCE v1.81.0
 - ✅ Completed: MirrorSyncReceipts - Implemented mirror sync receipts policy.
+
+### GOVERNANCE v1.82.0
+- ✅ Completed: PolicyExceptions - Minimal Plan Exception. Changes already present.
