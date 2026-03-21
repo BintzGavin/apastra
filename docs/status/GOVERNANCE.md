@@ -1,4 +1,5 @@
-**Version**: 1.71.0
+**Version**: 1.72.0
+[v1.72.0] ✅ Planned: VulnerabilityFlags - Created spec for vulnerability flags policy.
 [v1.71.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.70.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.69.0] ✅ Completed: SchemaValidationWorkflow - Implemented automated schema validation workflow.
