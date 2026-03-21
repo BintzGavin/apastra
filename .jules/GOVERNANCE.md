@@ -194,3 +194,7 @@
 ## 1.82.0 - Policy Exceptions Spec
 **Learning:** The vision doc explicitly mentions policy exceptions as a component of human checkpoints in the single-custodian registry model, but a formal policy defining them was missing.
 **Action:** Executed a Minimal Plan Exception because the policy file was already present in the codebase.
+
+## 1.82.0 - Emergency Takedown Decisions Spec
+**Learning:** `docs/vision.md` specifically requires "Emergency takedown decisions" as a human checkpoint in the registry metadata store, but a formal policy defining them was missing from the current policy inventory.
+**Action:** Created a plan to implement an emergency takedown decisions policy to govern the immediate bypass of standard review timelines and append corresponding records to the registry.
