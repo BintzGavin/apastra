@@ -163,3 +163,6 @@
 ## 1.70.0 - Minimal Plan Exception Final
 **Learning:** The GOVERNANCE domain has achieved minimal plan completion status. All governance primitives promised in the vision are fully functional.
 **Action:** No further architectural modifications are required at this stage.
+## 1.72.0 - Vulnerability Flags Policy
+**Learning:** The vision doc explicitly mentions vulnerability flags as a key component of the registry metadata store, but a formal policy defining them was missing.
+**Action:** Created a plan to implement a vulnerability flags policy to ensure security tracking and consumer safety.
