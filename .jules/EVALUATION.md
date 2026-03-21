@@ -145,3 +145,7 @@
 ## 0.89.0 - RunRequestValidation
 **Learning**: The CONTRACTS run-request schema is now available, unblocking the validation pipeline.
 **Action**: Planned implementation of run request validation against the schema.
+
+## 0.89.0 - Minimal Plan Exception
+**Learning:** The run request validation logic against the CONTRACTS schema is already implemented in the `promptops/runs/validate-run-request.sh` script, meaning the task is already complete.
+**Action:** Proceeded with a minimal plan exception to fulfill system planning requirements.
