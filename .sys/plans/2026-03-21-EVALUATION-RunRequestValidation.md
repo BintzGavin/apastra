@@ -1,26 +1,26 @@
 #### 1. Context & Goal
-- **Objective**: Implement run request validation logic against the CONTRACTS schema.
-- **Trigger**: The EVALUATION domain was blocked waiting for `run-request.schema.json`, which is now available. This implements the "Run Request Format and validation" gap listed in `docs/vision.md` and `planning-evaluation.md`.
-- **Impact**: Enables harness execution by ensuring inbound run requests are valid before processing.
+- **Objective**: Log a minimal plan exception because the run request validation logic is already implemented.
+- **Trigger**: The EVALUATION domain was blocked waiting for `run-request.schema.json`, which is now available. However, the run request validation script `promptops/runs/validate-run-request.sh` already exists and correctly implements the validation.
+- **Impact**: Satisfies the planning process requirements by formally acknowledging the completion of the task and advancing the domain version.
 
 #### 2. File Inventory
-- **Create**: `.sys/plans/YYYY-MM-DD-EVALUATION-RunRequestValidation.md` (this file)
-- **Modify**: None
-- **Read-Only**: `promptops/schemas/run-request.schema.json`, `docs/vision.md`, `README.md`
+- **Create**: None
+- **Modify**: `docs/status/EVALUATION.md`, `docs/progress/EVALUATION.md`, `.jules/EVALUATION.md`
+- **Read-Only**: None
 
 #### 3. Implementation Spec
 - **Harness Architecture**: N/A
-- **Run Request Format**: Validates input against `promptops/schemas/run-request.schema.json`. Must contain suite ID, run ID, and configuration parameters.
+- **Run Request Format**: N/A
 - **Run Artifact Format**: N/A
 - **Pseudo-Code**:
-  - Read input `run_request.json`
-  - Load schema `promptops/schemas/run-request.schema.json`
-  - Use a JSON schema validator (e.g., `jsonschema` in Python or `ajv` in bash) to validate the input against the schema.
-  - Return pass/fail status.
+  - Update `docs/status/EVALUATION.md` to change `[v0.89.0] Blocked: waiting for CONTRACTS schema run-request.schema.json` to `[v0.89.0] ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.`
+  - Update `docs/progress/EVALUATION.md` under `### EVALUATION v0.89.0` to change `- ✅ Planned: RunRequestValidation - Implement run request validation logic against the CONTRACTS schema` to `- ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.`
+  - Append a new version `[v0.90.0] ✅ Planned: RunRequestValidation - Minimal Plan Exception. Changes already present.` to the status file and a corresponding section in the progress file.
+  - Append a journal entry to `.jules/EVALUATION.md` for `0.89.0 - Minimal Plan Exception`.
 - **Baseline and Regression Flow**: N/A
-- **Dependencies**: CONTRACTS schema (`promptops/schemas/run-request.schema.json`)
+- **Dependencies**: None
 
 #### 4. Test Plan
 - **Verification**: N/A
-- **Success Criteria**: Validation script correctly identifies valid and invalid run requests.
-- **Edge Cases**: Missing fields, invalid types.
+- **Success Criteria**: Tracking files successfully updated and version incremented.
+- **Edge Cases**: N/A
