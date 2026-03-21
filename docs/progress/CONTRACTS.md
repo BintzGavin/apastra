@@ -265,4 +265,4 @@
 - ✅ Completed: PolicyExceptionRecord - Created policy exception record schema and validator.
 
 ### CONTRACTS v0.97.0
-- ✅ Planned: ModerationEscalationRecord - Authored execution plan spec for moderation escalation record schema and validator
+- ✅ Completed: ModerationEscalationRecord - Created moderation escalation record schema and validator

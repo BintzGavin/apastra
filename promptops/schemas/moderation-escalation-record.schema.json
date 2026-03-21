@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/moderation-escalation-record.schema.json",
+  "title": "Moderation Escalation Record",
+  "description": "Schema for a moderation escalation record.",
+  "type": "object",
+  "properties": {
+    "escalation_id": {
+      "type": "string",
+      "description": "Unique identifier for the escalation."
+    },
+    "submission_id": {
+      "type": "string",
+      "description": "Unique identifier for the submission."
+    },
+    "escalated_by": {
+      "type": "string",
+      "description": "User who escalated the content."
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for the escalation."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the escalation."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "reviewed",
+        "dismissed"
+      ],
+      "description": "Status of the escalation."
+    },
+    "reviewer_id": {
+      "type": "string",
+      "description": "User who reviewed the escalation."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes."
+    }
+  },
+  "required": [
+    "escalation_id",
+    "submission_id",
+    "escalated_by",
+    "reason",
+    "timestamp",
+    "status"
+  ],
+  "additionalProperties": false
+}
