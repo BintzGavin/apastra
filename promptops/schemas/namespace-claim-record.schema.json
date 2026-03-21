@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://promptops.apastra.com/schemas/namespace-claim-record.schema.json",
+  "title": "Namespace Claim Record",
+  "description": "Schema for a namespace claim record, used to track canonical name registrations, ownership disputes, and deprecations.",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "namespace",
+    "requester_id",
+    "timestamp",
+    "status"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "description": "A unique identifier for the namespace claim request."
+    },
+    "namespace": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "The requested canonical namespace. Must contain only lowercase letters, numbers, and hyphens."
+    },
+    "requester_id": {
+      "type": "string",
+      "description": "The identifier of the user or organization requesting the namespace claim."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The ISO-8601 formatted timestamp of when the claim was made."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "disputed"
+      ],
+      "description": "The current status of the namespace claim request."
+    },
+    "evidence_uri": {
+      "type": "string",
+      "format": "uri",
+      "description": "An optional URI providing proof of trademark or ownership for the requested namespace."
+    }
+  }
+}

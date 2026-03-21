@@ -248,3 +248,6 @@
 
 ### CONTRACTS v0.91.0
 - ✅ Completed: NamespaceClaimRecord - Authored execution plan spec for namespace claim record schema and validator
+
+### CONTRACTS v0.92.0
+- ✅ Completed: NamespaceClaimRecord - Created schema and validator for namespace claim record.
