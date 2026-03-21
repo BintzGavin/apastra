@@ -21,6 +21,7 @@ Gate Enforcement Flow:
 - `.github/workflows/regression-gate.yml`
 - `.github/workflows/moderation-scan.yml`
 - `.github/workflows/secret-scan.yml`
+- `.github/workflows/schema-validation.yml`
 - `.github/workflows/community-reporting.yml`
 - `.github/ISSUE_TEMPLATE/moderation_report.yml`
 - `promptops/delivery/prod-target.yaml`
