@@ -25,6 +25,7 @@ Gate Enforcement Flow:
 - `.github/workflows/community-reporting.yml`
 - `.github/ISSUE_TEMPLATE/moderation_report.yml`
 - `promptops/delivery/prod-target.yaml`
+- `promptops/policies/emergency-takedown-decisions.md`
 - `promptops/policies/regression.yaml`
 - `promptops/policies/acceptable-use.md`
 - `promptops/policies/deprecation.md`
@@ -49,6 +50,7 @@ Gate Enforcement Flow:
 - `promptops/policies/moderation-policy.md`: Criteria for moderation and policy check failures, automated scanning, and manual flagging.
 - `promptops/policies/policy-exceptions.md`: Defines handling and format of exceptions to automated policy checks.
 - `promptops/policies/submission-records.md`: Defines the handling, format, and expectations of submission records.
+- `promptops/policies/emergency-takedown-decisions.md`: Defines criteria and procedures for executing immediate emergency takedowns.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 
 **Section D: Promotion Record Format**
