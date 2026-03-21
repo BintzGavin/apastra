@@ -255,3 +255,6 @@
 
 ### EVALUATION v0.85.0
 - ✅ Completed: SimilarAssertion - Implemented similar assertion type for model-assisted evaluation
+
+### EVALUATION v0.86.0
+- ✅ Completed: FactualityAssertion - Implemented factuality assertion type for model-assisted evaluation

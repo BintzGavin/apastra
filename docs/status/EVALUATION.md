@@ -1,4 +1,5 @@
-**Version**: 0.85.0
+**Version**: 0.86.0
+[v0.86.0] ✅ Completed: FactualityAssertion - Implemented factuality assertion type for model-assisted evaluation
 [v0.85.0] ✅ Completed: SimilarAssertion - Implemented similar assertion type for model-assisted evaluation
 [v0.84.0] ✅ Completed: LLMRubricAssertion - Implemented llm-rubric assertion type for model-assisted evaluation
 [v0.83.0] ✅ Completed: LLMRubricAssertion - Spec for implementing the llm-rubric assertion type for model-assisted evaluation
