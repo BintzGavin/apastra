@@ -42,3 +42,7 @@
 ## 1.70.0 - Remote Git URL Resolution Plan
 **Learning:** The vision document explicitly outlines the need for remote git URL resolution, enabling the separate-repo consumption topology, but current implementation relies only on local refs.
 **Action:** Draft spec to extend GitRefResolver to correctly resolve remote 'git+' URLs, implementing caching and avoiding full repo clones.
+
+## 1.71.0 - Registry Protocol Resolution
+**Learning:** The `PackagedResolver` currently throws errors for `oci://`, `npm:`, and `pypi:` protocols because the implementations were stubbed, preventing downstream consumers from using enterprise distribution methods outlined in the vision.
+**Action:** Always verify that explicit protocol schemes mentioned in the vision document have concrete fetch logic implemented rather than placeholders.
