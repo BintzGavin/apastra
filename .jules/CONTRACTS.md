@@ -36,3 +36,6 @@
 ## v0.86.0 - CommunityReportRecord
 **Learning:** `docs/vision.md` specifically requires "community reporting" as part of the moderation path. Like other governance actions, this requires a formalized schema.
 **Action:** Continue auditing moderation and governance concepts in the vision document to ensure there's a corresponding schema for each described procedure.
+## 0.88.0 - AutomatedScanRecord
+**Learning:** `docs/vision.md` requires "automated scanning (schema validation, secrets detection, obvious policy checks)" as a prerequisite for moderation, necessitating a formalized schema for scan records.
+**Action:** Continuously audit the vision document's moderation and governance workflows to guarantee all procedural steps have explicit schema representations, preventing state hallucination by the GOVERNANCE domain.
