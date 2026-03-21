@@ -1,4 +1,5 @@
-**Version**: 1.79.0
+**Version**: 1.80.0
+[v1.80.0] ✅ Planned: ModerationDecisionRecords - Created spec for moderation decision records.
 [v1.79.0] ✅ Completed: SubmissionRecords - Implemented submission records policy.
 [v1.77.0] ✅ Completed: RegressionGateGlobFix - Fixed glob pattern in regression-gate workflow.
 [v1.76.0] ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.

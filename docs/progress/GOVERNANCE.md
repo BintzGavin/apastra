@@ -248,3 +248,5 @@
 
 ### GOVERNANCE v1.79.0
 - ✅ Completed: SubmissionRecords - Implemented submission records policy.
+### GOVERNANCE v1.80.0
+- ✅ Planned: ModerationDecisionRecords - Created spec for moderation decision records.
