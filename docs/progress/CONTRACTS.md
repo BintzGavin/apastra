@@ -233,3 +233,6 @@
 
 ### CONTRACTS v0.85.0
 - ✅ Completed: OwnershipDisputeRecord - Created spec for ownership dispute record schema and validator
+
+### CONTRACTS v0.86.0
+- ✅ Completed: CommunityReportRecord - Authored execution plan spec for community report record schema and validator

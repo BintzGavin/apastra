@@ -33,3 +33,6 @@
 ## v0.85.0 - OwnershipDisputeRecord
 **Learning:** `docs/vision.md` outlines policies for ownership disputes, which require a formalized schema for the GOVERNANCE domain to programmatically track and resolve claims.
 **Action:** Ensure that all governance workflows explicitly listed in the vision document have a corresponding schema definition to prevent state hallucination.
+## v0.86.0 - CommunityReportRecord
+**Learning:** `docs/vision.md` specifically requires "community reporting" as part of the moderation path. Like other governance actions, this requires a formalized schema.
+**Action:** Continue auditing moderation and governance concepts in the vision document to ensure there's a corresponding schema for each described procedure.
