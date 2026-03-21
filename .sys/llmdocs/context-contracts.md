@@ -6,6 +6,9 @@
 **Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system — schemas, validators, prompt specs, datasets, evaluators, and suites — according to the approved plan from your Planner counterpart.
 
 ## Section A: Schema Inventory
+- **ID:** `https://promptops.apastra.com/schemas/namespace-claim-record.schema.json`
+  - **Version:** 0.92.0
+  - **Description:** Schema for a namespace claim record, used to track canonical name registrations, ownership disputes, and deprecations.
 - **ID:** `apastra-prompt-spec-v1`
   - **Version:** 0.2.0
   - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, tool contract, and metadata.
@@ -96,6 +99,9 @@
   - **Description:** Schema for an ownership dispute record in the governance system.
 
 ## Section B: Validator Inventory
+- **Validator:** `validate-namespace-claim-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-namespace-claim-record.sh <namespace-claim-record.json|yaml>`
+  - **What it Validates:** Validates namespace claim records.
 - **Validator:** `validate-regression-policy.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-regression-policy.sh <regression-policy.json|yaml>`
   - **Validates:** JSON or YAML files against the `regression-policy.schema.json` schema.
