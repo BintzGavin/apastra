@@ -27,3 +27,6 @@
 - Executed Minimal Plan Exception Final for the CONTRACTS domain.
 ## v0.82.0
 - Executed Minimal Plan Exception Final for the CONTRACTS domain.
+## v0.84.0
+**Learning:** Foundational moderation primitives in `docs/vision.md` such as appeals require explicit schemas to enable the GOVERNANCE domain to operate effectively without hallucinating state.
+**Action:** Always cross-reference high-level governance procedures (like takedowns and appeals) against existing schemas to ensure all states are representable.

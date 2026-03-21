@@ -1,4 +1,5 @@
-**Version**: 0.83.0
+**Version**: 0.84.0
+[v0.84.0] ✅ Completed: TakedownAppealRecord - Created spec for takedown appeal record schema and validator
 [v0.83.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.82.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.81.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
