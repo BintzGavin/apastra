@@ -170,3 +170,7 @@
 ## 1.74.0 - Provenance Attestations Policy Spec
 **Learning:** The vision doc explicitly mentions that the registry must verify provenance attestations if provided, or mark them as "unsigned/unverified", but no formal policy existed to define this standard.
 **Action:** Created a plan to implement a provenance attestations policy to govern the verification of cryptographic signatures and supply-chain integrity.
+
+## 1.75.0 - Mirror Sync Receipts Spec
+**Learning:** The vision doc explicitly mentions mirror sync receipts as a key component of the registry metadata store, but a formal policy defining them was missing.
+**Action:** Created a plan to implement a mirror sync receipts policy to ensure security tracking and consumer safety.

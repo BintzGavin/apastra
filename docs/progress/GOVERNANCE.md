@@ -233,3 +233,6 @@
 
 ### GOVERNANCE v1.74.0
 - ✅ Completed: ProvenanceAttestations - Implemented provenance attestations policy.
+
+### GOVERNANCE v1.75.0
+- ✅ Planned: MirrorSyncReceipts - Created spec for mirror sync receipts policy.
