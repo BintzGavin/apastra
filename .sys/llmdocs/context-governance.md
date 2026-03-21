@@ -84,4 +84,4 @@ Gate Enforcement Flow:
 - `derived-index/regressions/` @apastra/evaluation-team
 - `promptops/manifests/` @apastra/runtime-team
 - `promptops/resolver/` @apastra/runtime-team
-- `promptops/runtime/` @apastra/runtime-te
+- `promptops/runtime/` @apastra/runtime-team
