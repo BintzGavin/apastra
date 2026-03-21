@@ -243,3 +243,6 @@
 
 ### RUNTIME v1.72.0
 - ✅ Completed: GitRefDirectoryResolution - Implemented Git Ref Resolution for Directory-Based Prompts.
+
+### RUNTIME v1.73.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
