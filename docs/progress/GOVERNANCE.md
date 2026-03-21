@@ -245,3 +245,6 @@
 
 ### GOVERNANCE v1.78.0
 - ✅ Planned: SubmissionRecords - Created spec for submission records policy.
+
+### GOVERNANCE v1.79.0
+- ✅ Completed: SubmissionRecords - Implemented submission records policy.
