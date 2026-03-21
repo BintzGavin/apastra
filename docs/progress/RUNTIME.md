@@ -240,3 +240,6 @@
 
 ### RUNTIME v1.71.0
 - ✅ Completed: RemoteGitUrlResolution - Implemented remote git URL resolution in GitRefResolver
+
+### RUNTIME v1.72.0
+- ✅ Completed: GitRefDirectoryResolution - Implemented Git Ref Resolution for Directory-Based Prompts.
