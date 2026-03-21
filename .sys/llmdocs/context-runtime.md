@@ -4,7 +4,7 @@
 The promptops runtime resolves prompt templates deterministically. The resolution chain executes in this explicit order:
 1. **Local Override**: Resolves to a local file path if specified in the manifest. Includes memory caching based on the file's modification time.
 2. **Workspace Path**: Looks for the prompt file directly in `promptops/prompts/` within the repository. Includes memory caching based on the file's modification time.
-3. **Git Ref**: Fetches the prompt specification directly from git using a specified tag or commit SHA. Includes memory caching based on `(prompt_id, pin)`.
+3. **Git Ref**: Fetches the prompt specification directly from git using a specified tag or commit SHA. Includes memory caching based on `(prompt_id, pin)`. If the target git host prevents archive downloads, it falls back to a shallow clone for tags/branches, or a full clone followed by checkout for specific commit SHAs.
 4. **Packaged Artifact**: Falls back to packaged assets when resolving remote references (e.g., via sha256).
 
 ## Section B: File Tree

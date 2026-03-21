@@ -263,4 +263,4 @@
 - ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
 
 ### RUNTIME v1.79.0
-- ✅ Planned: RemoteGitSHACloningFix - Drafted spec to fix remote git SHA resolution.
+- ✅ Completed: RemoteGitSHACloningFix - Implemented explicit commit SHA fallback for remote git URLs.
