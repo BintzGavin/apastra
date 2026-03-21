@@ -242,3 +242,6 @@
 
 ### GOVERNANCE v1.77.0
 - ✅ Completed: RegressionGateGlobFix - Fixed glob pattern in regression-gate workflow.
+
+### GOVERNANCE v1.78.0
+- ✅ Planned: SubmissionRecords - Created spec for submission records policy.
