@@ -256,4 +256,4 @@
 
 ### GOVERNANCE v1.82.0
 - ✅ Completed: PolicyExceptions - Minimal Plan Exception. Changes already present.
-- ✅ Planned: EmergencyTakedownDecisions - Created spec for emergency takedown decisions.
+- ✅ Completed: EmergencyTakedownDecisions - Implemented emergency takedown decisions policy.
