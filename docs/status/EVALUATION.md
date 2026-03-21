@@ -1,5 +1,6 @@
-**Version**: 0.90.0
-[v0.90.0] ✅ Planned: RunRequestValidation - Minimal Plan Exception. Changes already present.
+**Version**: 0.91.0
+[v0.91.0] ✅ Planned: RunRequestDigestValidation - Spec the inclusion of content digest metadata in the Run Request schema validation.
+[v0.90.0] ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.
 [v0.89.0] ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.
 [v0.88.0] ✅ Completed: HarnessAdapterRunnerShim - Implemented runner shim script that invokes a harness adapter and collects its run artifact directory
 [v0.87.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
