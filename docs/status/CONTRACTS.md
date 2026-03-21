@@ -1,5 +1,5 @@
 **Version**: 0.90.0
-[v0.90.0] ✅ Planned: VulnerabilityFlagRecord - Authored execution plan spec for vulnerability flag record schema and validator
+[v0.90.0] ✅ Completed: VulnerabilityFlagRecord - Created schema and validator for vulnerability flag record.
 [v0.89.0] ✅ Completed: TrustedPublisherProvenance - Created spec for trusted publisher provenance schema and validator
 [v0.88.0] ✅ Completed: AutomatedScanRecord - Created spec for automated scan record schema and validator
 [v0.87.0] ✅ Completed: CommunityReportRecord - Created schema and validator for community report record.
