@@ -1,9 +1,10 @@
-**Version**: 1.80.0
+**Version**: 1.81.0
+[v1.81.0] ✅ Completed: MirrorSyncReceipts - Implemented mirror sync receipts policy.
 [v1.80.0] ✅ Completed: ModerationDecisionRecords - Implemented moderation decision records policy.
 [v1.79.0] ✅ Completed: SubmissionRecords - Implemented submission records policy.
 [v1.77.0] ✅ Completed: RegressionGateGlobFix - Fixed glob pattern in regression-gate workflow.
 [v1.76.0] ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
-[v1.75.0] ✅ Planned: MirrorSyncReceipts - Created spec for mirror sync receipts.
+[v1.75.0] ✅ Completed: MirrorSyncReceipts - Implemented mirror sync receipts policy.
 [v1.74.0] ✅ Completed: ProvenanceAttestations - Implemented provenance attestations policy.
 [v1.73.0] ✅ Completed: PolicyExceptions - Implemented policy exceptions governance document.
 [v1.72.0] ✅ Completed: VulnerabilityFlags - Implemented vulnerability flags policy.

@@ -250,3 +250,6 @@
 - ✅ Completed: SubmissionRecords - Implemented submission records policy.
 ### GOVERNANCE v1.80.0
 - ✅ Completed: ModerationDecisionRecords - Implemented moderation decision records policy.
+
+### GOVERNANCE v1.81.0
+- ✅ Completed: MirrorSyncReceipts - Implemented mirror sync receipts policy.
