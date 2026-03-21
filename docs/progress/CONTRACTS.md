@@ -239,3 +239,6 @@
 
 ### CONTRACTS v0.87.0
 - ✅ Completed: CommunityReportRecord - Created schema and validator for community report record.
+
+### CONTRACTS v0.89.0
+- ✅ Completed: TrustedPublisherProvenance - Created spec for trusted publisher provenance schema and validator
