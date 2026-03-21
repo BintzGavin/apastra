@@ -261,3 +261,6 @@
 
 ### EVALUATION v0.87.0
 - ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.88.0
+- ✅ Completed: HarnessAdapterRunnerShim - Implemented runner shim script that invokes a harness adapter and collects its run artifact directory

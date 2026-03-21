@@ -1,4 +1,5 @@
-**Version**: 0.87.0
+**Version**: 0.88.0
+[v0.88.0] ✅ Completed: HarnessAdapterRunnerShim - Implemented runner shim script that invokes a harness adapter and collects its run artifact directory
 [v0.87.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.86.0] ✅ Completed: FactualityAssertion - Implemented factuality assertion type for model-assisted evaluation
 [v0.85.0] ✅ Completed: SimilarAssertion - Implemented similar assertion type for model-assisted evaluation
