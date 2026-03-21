@@ -50,3 +50,7 @@
 ## 1.78.0 - MinimalPlanExceptionFinal
 **Learning:** Discovered that the RegistryProtocolResolution plan was already fully implemented in the codebase.
 **Action:** Always verify if a feature is already present before attempting to re-implement it, and use the Minimal Plan Exception protocol when it is.
+
+## 1.79.0 - Remote Git SHA Cloning Fix
+**Learning:** The fallback logic for remote git URLs `git clone --depth 1 --branch <ref>` fails when the ref is a commit SHA. Remote SHAs require a full clone followed by a checkout.
+**Action:** Draft spec to fix the `GitRefResolver` remote checkout fallback path to support commit SHAs alongside branches and tags.
