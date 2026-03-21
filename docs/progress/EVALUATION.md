@@ -252,3 +252,6 @@
 
 ### EVALUATION v0.84.0
 - ✅ Completed: LLMRubricAssertion - Implemented llm-rubric assertion type for model-assisted evaluation
+
+### EVALUATION v0.85.0
+- ✅ Completed: SimilarAssertion - Implemented similar assertion type for model-assisted evaluation
