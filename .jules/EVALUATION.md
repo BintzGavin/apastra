@@ -149,3 +149,7 @@
 ## 0.89.0 - Minimal Plan Exception
 **Learning:** The run request validation logic against the CONTRACTS schema is already implemented in the `promptops/runs/validate-run-request.sh` script, meaning the task is already complete.
 **Action:** Proceeded with a minimal plan exception to fulfill system planning requirements.
+
+## 0.91.0 - RunRequestDigestValidation
+**Learning**: The Run Request schema currently lacks required fields for tracking inputs such as prompt digest, dataset digest, and evaluator digest. This metadata is essential for reproduciability as per the vision documentation.
+**Action**: Created a plan spec to explicitly define the necessary updates for the Run Request schema in the CONTRACTS domain.

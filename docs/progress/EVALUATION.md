@@ -269,4 +269,7 @@
 - ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.
 
 ### EVALUATION v0.90.0
-- ✅ Planned: RunRequestValidation - Minimal Plan Exception. Changes already present.
+- ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.91.0
+- ✅ Planned: RunRequestDigestValidation - Spec the inclusion of content digest metadata in the Run Request schema validation.
