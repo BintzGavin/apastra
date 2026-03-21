@@ -1,4 +1,5 @@
-**Version**: 0.84.0
+**Version**: 0.85.0
+[v0.85.0] ✅ Completed: OwnershipDisputeRecord - Created spec for ownership dispute record schema and validator
 [v0.84.0] ✅ Completed: TakedownAppealRecord - Created spec for takedown appeal record schema and validator
 [v0.83.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
 [v0.82.0] ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.

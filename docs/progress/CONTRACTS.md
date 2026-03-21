@@ -230,3 +230,6 @@
 
 ### CONTRACTS v0.83.0
 - ✅ Completed: Minimal Plan Exception Final - The CONTRACTS domain has already executed its final minimal plan exception.
+
+### CONTRACTS v0.85.0
+- ✅ Completed: OwnershipDisputeRecord - Created spec for ownership dispute record schema and validator
