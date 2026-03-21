@@ -1,5 +1,5 @@
-**Version**: 1.78.0
-[v1.78.0] ✅ Planned: SubmissionRecords - Created spec for submission records.
+**Version**: 1.79.0
+[v1.79.0] ✅ Completed: SubmissionRecords - Implemented submission records policy.
 [v1.77.0] ✅ Completed: RegressionGateGlobFix - Fixed glob pattern in regression-gate workflow.
 [v1.76.0] ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
 [v1.75.0] ✅ Planned: MirrorSyncReceipts - Created spec for mirror sync receipts.
