@@ -224,3 +224,6 @@
 
 ### GOVERNANCE v1.71.0
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.72.0
+- ✅ Completed: VulnerabilityFlags - Implemented vulnerability flags policy.
