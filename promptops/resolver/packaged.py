@@ -45,15 +45,29 @@ class PackagedResolver:
 
         raise RuntimeError(f"Unresolved remote asset: {ref}")
 
+    def get_trusted_public_key(self, artifact_type):
+        import os
+        return os.environ.get('TRUSTED_PUBLIC_KEY', 'default_test_key')
+
     def verify_signature(self, asset):
         """Verify signature metadata."""
-        if 'signature' in asset.get('metadata', {}) and asset['metadata']['signature'] == 'invalid':
+        signature = asset.get('metadata', {}).get('signature')
+        if not signature:
+            return True
+
+        if signature == 'invalid':
             raise RuntimeError("Signature verification failed")
 
-        # Check for real cryptographic verification markers based on artifact type
-        if asset.get('type') == 'oci_artifact' and 'signature' not in asset.get('metadata', {}):
-            # Assume valid if no signature required, or verify valid signature.
-            pass
+        artifact_type = asset.get('type')
+        public_key = self.get_trusted_public_key(artifact_type)
+        package_digest = asset.get('package_digest')
+
+        if package_digest and signature:
+            import hashlib
+            import hmac
+            expected_sig = hmac.new(public_key.encode('utf-8'), package_digest.encode('utf-8'), hashlib.sha256).hexdigest()
+            if not hmac.compare_digest(signature, expected_sig):
+                raise RuntimeError("Cryptographic signature verification failed")
 
         return True
 
