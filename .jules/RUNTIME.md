@@ -46,3 +46,7 @@
 ## 1.71.0 - Registry Protocol Resolution
 **Learning:** The `PackagedResolver` currently throws errors for `oci://`, `npm:`, and `pypi:` protocols because the implementations were stubbed, preventing downstream consumers from using enterprise distribution methods outlined in the vision.
 **Action:** Always verify that explicit protocol schemes mentioned in the vision document have concrete fetch logic implemented rather than placeholders.
+
+## 1.78.0 - MinimalPlanExceptionFinal
+**Learning:** Discovered that the RegistryProtocolResolution plan was already fully implemented in the codebase.
+**Action:** Always verify if a feature is already present before attempting to re-implement it, and use the Minimal Plan Exception protocol when it is.
