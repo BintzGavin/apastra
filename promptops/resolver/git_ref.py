@@ -124,11 +124,19 @@ class GitRefResolver:
                     if tar_p.returncode != 0:
                         raise RuntimeError(f"Failed to tar remote git archive: {tar_p.stderr.decode('utf-8')}")
                 else:
-                    # Fallback to shallow clone if git archive is disabled on the remote
-                    clone_cmd = ["git", "clone", "--depth", "1", "--branch", ref_part, url_part, temp_dir]
-                    result = subprocess.run(clone_cmd, capture_output=True, check=False)
-                    if result.returncode != 0:
-                        raise RuntimeError(f"Failed to fetch remote git repo: {result.stderr.decode('utf-8')}")
+                    is_sha = len(ref_part) == 40 and all(c in '0123456789abcdefABCDEF' for c in ref_part)
+                    if is_sha:
+                        result = subprocess.run(["git", "clone", url_part, temp_dir], capture_output=True, check=False)
+                        if result.returncode == 0:
+                            result = subprocess.run(["git", "-C", temp_dir, "checkout", ref_part], capture_output=True, check=False)
+                        if result.returncode != 0:
+                            raise RuntimeError(f"Failed to fetch remote git repo: {result.stderr.decode('utf-8')}")
+                    else:
+                        # Fallback to shallow clone if git archive is disabled on the remote
+                        clone_cmd = ["git", "clone", "--depth", "1", "--branch", ref_part, url_part, temp_dir]
+                        result = subprocess.run(clone_cmd, capture_output=True, check=False)
+                        if result.returncode != 0:
+                            raise RuntimeError(f"Failed to fetch remote git repo: {result.stderr.decode('utf-8')}")
 
                 # Read files from temp directory using existing fallback logic
                 res = self._read_from_dir(temp_dir, prompt_id)
