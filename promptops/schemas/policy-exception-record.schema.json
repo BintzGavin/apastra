@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://promptops.apastra.com/schemas/policy-exception-record.schema.json",
+  "type": "object",
+  "properties": {
+    "exception_id": {
+      "type": "string",
+      "description": "Unique identifier for the policy exception record."
+    },
+    "policy_id": {
+      "type": "string",
+      "description": "Identifier of the policy being bypassed."
+    },
+    "target_digest": {
+      "type": "string",
+      "description": "The digest of the package or artifact receiving the exception."
+    },
+    "approver_id": {
+      "type": "string",
+      "description": "Identifier of the person granting the exception."
+    },
+    "reason": {
+      "type": "string",
+      "description": "Explanation for why the exception was granted."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the exception was recorded."
+    }
+  },
+  "required": [
+    "exception_id",
+    "policy_id",
+    "target_digest",
+    "approver_id",
+    "reason",
+    "timestamp"
+  ],
+  "additionalProperties": false
+}
