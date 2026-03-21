@@ -1,5 +1,5 @@
 **Version**: 0.97.0
-[v0.97.0] ✅ Planned: ModerationEscalationRecord - Authored execution plan spec for moderation escalation record schema and validator
+[v0.97.0] ✅ Completed: ModerationEscalationRecord - Created moderation escalation record schema and validator
 [v0.96.0] ✅ Completed: PolicyExceptionRecord - Created policy exception record schema and validator.
 [v0.95.0] ✅ Planned: PolicyExceptionRecord - Authored execution plan spec for policy exception record schema and validator
 [v0.94.0] ✅ Completed: ProvenanceAttestation - Created provenance attestation schema and validator.
