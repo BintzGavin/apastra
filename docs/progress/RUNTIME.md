@@ -264,3 +264,6 @@
 
 ### RUNTIME v1.79.0
 - ✅ Completed: RemoteGitSHACloningFix - Implemented explicit commit SHA fallback for remote git URLs.
+
+### RUNTIME v1.80.0
+- ✅ Planned: RemoteGitSemverResolution - Drafted spec for explicit support for semver resolution for remote git URLs.

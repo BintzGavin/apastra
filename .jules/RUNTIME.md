@@ -54,3 +54,7 @@
 ## 1.79.0 - Remote Git SHA Cloning Fix
 **Learning:** The fallback logic for remote git URLs `git clone --depth 1 --branch <ref>` fails when the ref is a commit SHA. Remote SHAs require a full clone followed by a checkout.
 **Action:** Draft spec to fix the `GitRefResolver` remote checkout fallback path to support commit SHAs alongside branches and tags.
+
+## 1.80.0 - Remote Git Semver Resolution Plan
+**Learning:** The `GitRefResolver` supports `semver:` resolution locally, but remote git URLs with `semver:` prefixes fail because the existing fallback logic only handles direct branches or tags. The vision states "Apps can pin prompts by commit SHA, tag, or semver", which implies this should work for remote repositories as well.
+**Action:** Draft spec to fetch tags from remote repositories using `git ls-remote --tags` and resolve semver ranges before attempting `git archive` or `git clone`.
