@@ -249,3 +249,6 @@
 
 ### RUNTIME v1.74.0
 - ✅ Completed: PackagedResolverSignatureVerification - Implemented signature verification in PackagedResolver.
+
+### RUNTIME v1.75.0
+- ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
