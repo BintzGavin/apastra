@@ -30,3 +30,6 @@
 ## v0.84.0
 **Learning:** Foundational moderation primitives in `docs/vision.md` such as appeals require explicit schemas to enable the GOVERNANCE domain to operate effectively without hallucinating state.
 **Action:** Always cross-reference high-level governance procedures (like takedowns and appeals) against existing schemas to ensure all states are representable.
+## v0.85.0 - OwnershipDisputeRecord
+**Learning:** `docs/vision.md` outlines policies for ownership disputes, which require a formalized schema for the GOVERNANCE domain to programmatically track and resolve claims.
+**Action:** Ensure that all governance workflows explicitly listed in the vision document have a corresponding schema definition to prevent state hallucination.
