@@ -178,3 +178,7 @@
 ## 1.77.0 - RegressionGateGlobFix
 **Learning:** Glob patterns in GitHub Actions (like `promptops/policies/**`) unintentionally captured markdown files in the policies directory, incorrectly triggering the regression-gate workflow for purely documentational governance policies and blocking merges due to missing artifacts.
 **Action:** Restricted the file matching pattern for policies in the tj-actions/changed-files step to explicitly target evaluable assets (e.g., `promptops/policies/*.yaml`) to prevent false-positive checks.
+
+## 1.78.0 - Submission Records Spec
+**Learning:** The vision doc explicitly mentions submission records as a key append-only artifact for the registry, but a formal policy defining them was missing.
+**Action:** Created a plan to implement a submission records policy to ensure an auditable trail from submission to publish.
