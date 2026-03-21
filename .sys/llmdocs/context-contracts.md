@@ -6,6 +6,9 @@
 **Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system — schemas, validators, prompt specs, datasets, evaluators, and suites — according to the approved plan from your Planner counterpart.
 
 ## Section A: Schema Inventory
+- **ID:** `https://promptops.apastra.com/schemas/policy-exception-record.schema.json`
+  - **Version:** 0.96.0
+  - **Description:** Schema for policy exception records.
 - **ID:** `https://promptops.apastra.com/schemas/provenance-attestation.schema.json`
   - **Version:** 0.94.0
   - **Description:** Schema for supply-chain provenance attestations (SLSA-style).
@@ -102,6 +105,9 @@
   - **Description:** Schema for an ownership dispute record in the governance system.
 
 ## Section B: Validator Inventory
+- **Validator:** `validate-policy-exception-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-policy-exception-record.sh <policy-exception-record.json|yaml>`
+  - **What it Validates:** Validates policy exception records.
 - **Validator:** `validate-provenance-attestation.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-provenance-attestation.sh <provenance-attestation.json|yaml>`
   - **What it Validates:** Validates provenance attestations.
