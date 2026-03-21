@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://promptops.apastra.com/schemas/community-report-record.schema.json",
+  "title": "Community Report Record",
+  "description": "Schema for a community report record in the governance system.",
+  "type": "object",
+  "properties": {
+    "report_id": {
+      "type": "string",
+      "description": "Unique identifier for the report."
+    },
+    "target_package_name": {
+      "type": "string",
+      "description": "The canonical name of the package or model being reported."
+    },
+    "reporter_id": {
+      "type": "string",
+      "description": "Identifier of the party filing the report."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the report was created."
+    },
+    "reason_category": {
+      "type": "string",
+      "enum": ["malware", "hate_speech", "pii_leak", "spam", "other"],
+      "description": "The categorization of the issue being reported."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "under_review", "resolved"],
+      "description": "Current status of the report."
+    },
+    "evidence_links": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional list of URLs containing evidence supporting the report."
+    },
+    "detailed_description": {
+      "type": "string",
+      "description": "Optional detailed narrative explaining the report."
+    }
+  },
+  "required": ["report_id", "target_package_name", "reporter_id", "timestamp", "reason_category", "status"],
+  "additionalProperties": false
+}

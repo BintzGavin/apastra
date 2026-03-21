@@ -236,3 +236,6 @@
 
 ### CONTRACTS v0.86.0
 - ✅ Completed: CommunityReportRecord - Authored execution plan spec for community report record schema and validator
+
+### CONTRACTS v0.87.0
+- ✅ Completed: CommunityReportRecord - Created schema and validator for community report record.
