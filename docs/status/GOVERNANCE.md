@@ -1,4 +1,5 @@
-**Version**: 1.76.0
+**Version**: 1.77.0
+[v1.77.0] ✅ Planned: RegressionGateGlobFix - Created spec to fix the glob pattern in the regression gate check.
 [v1.76.0] ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
 [v1.75.0] ✅ Planned: MirrorSyncReceipts - Created spec for mirror sync receipts.
 [v1.74.0] ✅ Completed: ProvenanceAttestations - Implemented provenance attestations policy.

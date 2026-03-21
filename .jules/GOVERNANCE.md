@@ -174,3 +174,7 @@
 ## 1.75.0 - Mirror Sync Receipts Spec
 **Learning:** The vision doc explicitly mentions mirror sync receipts as a key component of the registry metadata store, but a formal policy defining them was missing.
 **Action:** Created a plan to implement a mirror sync receipts policy to ensure security tracking and consumer safety.
+
+## 1.77.0 - RegressionGateGlobFix
+**Learning:** Glob patterns in GitHub Actions (like `promptops/policies/**`) unintentionally captured markdown files in the policies directory, incorrectly triggering the regression-gate workflow for purely documentational governance policies and blocking merges due to missing artifacts.
+**Action:** Restricted the file matching pattern for policies in the tj-actions/changed-files step to explicitly target evaluable assets (e.g., `promptops/policies/*.yaml`) to prevent false-positive checks.
