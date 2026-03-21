@@ -1,4 +1,4 @@
-**Version**: 1.74.0\n[v1.59.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.\n[v1.58.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest\n[v1.56.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+**Version**: 1.74.0
 [v1.74.0] ✅ Completed: PackagedResolverSignatureVerification - Implemented signature verification in PackagedResolver.
 [v1.73.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.72.0] ✅ Completed: GitRefDirectoryResolution - Implemented Git Ref Resolution for Directory-Based Prompts.
@@ -14,6 +14,9 @@
 [v1.62.0] \\342\\234\\205 Completed: WorkspaceResolverCaching - Drafted spec for Workspace Resolver Caching
 [v1.61.0] \342\234\205 Completed: LocalResolverCaching - Implemented caching of local overrides to support offline fallback.
 [v1.60.0] \\342\\234\\205 Completed: MinimalRuntimeMetadataModelIDs - Implemented the model IDs array in the resolve() function metadata output.
+[v1.59.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.58.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest
+[v1.56.0] \342\234\205 Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.55.2] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.55.1] ✅ Completed: MinimalRuntimeMetadata - Implemented dataset digest and harness version in minimal runtime resolve() output.
 [v1.55.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
@@ -63,6 +66,8 @@
 [v1.11.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.10.0] ✅ Completed: QuickEvalLocalOverrideResolution - Implement quick eval format resolution in the LocalResolver.
 [v1.9.0] ✅ Completed: QuickEvalGitRefResolution - Implement quick eval format resolution in the GitRefResolver.
+[v1.8.0] ✅ Completed: QuickEvalWorkspaceResolution - Implement quick eval format resolution in the WorkspaceResolver.
+[v1.7.1] ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
 [v1.7.0] ✅ Completed: SemverTagResolution - Implement semver tag resolution in the GitRefResolver.
 [v1.6.0] ✅ Completed: DirectoryResolver - Update WorkspaceResolver and GitRefResolver to support resolving prompts packaged in a <prompt_id> directory.
 [v1.5.0] ✅ Completed: ReferenceCLI - Implemented reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
@@ -70,20 +75,15 @@
 [v1.4.0] ✅ Completed: ReferenceCLI - Spec the reference CLI to resolve prompts using the existing resolver chain and emit consumption manifest entries.
 [v1.3.1] ✅ Completed: ResolverTopologyAlignment - Aligned workspace and git ref resolvers with core repo topology model
 [v1.3.0] ✅ Completed: PromptTemplateRendering - Implemented variable injection in the resolve() function
+[v1.2.0] ✅ Completed: HarnessContractValidation - Implemented runner shim validation against CONTRACTS schemas
+[v1.1.0] ✅ Completed: PromptSpecValidation - Implemented schema validation for resolved prompt specifications against prompt-spec.schema.json
+[v1.0.0] ✅ Completed: ConsumptionManifestFormat - Re-wrote consumption manifest format to be more realistic and validate
+[v0.9.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest
+[v0.8.0] ✅ Completed: DeterministicDigestTooling - Implemented canonicalization and digest computation for prompts and datasets
+[v0.7.0] ✅ Completed: RunnerShim - Implemented runner shim script
+[v0.6.0] ✅ Completed: PackagedArtifactResolution - Implemented packaged artifact fallback in resolver chain
+[v0.5.0] ✅ Completed: MinimalResolveInterface - Implemented resolve() function as minimal runtime interface
+[v0.4.0] ✅ Completed: GitRefResolution - Implemented git ref resolution in python resolver chain
+[v0.3.0] ✅ Completed: WorkspacePathResolution - Implemented workspace path lookup in resolver chain
 [v0.2.0] ✅ Completed: ConsumptionManifestFormat - Defined schema example format
 [v0.2.0] ✅ Completed: LocalOverrideResolution - Implemented local override step in python resolver chain
-[v0.3.0] ✅ Completed: WorkspacePathResolution - Implemented workspace path lookup in resolver chain
-[v0.4.0] ✅ Completed: GitRefResolution - Implemented git ref resolution in python resolver chain
-[v0.5.0] ✅ Completed: MinimalResolveInterface - Implemented resolve() function as minimal runtime interface
-[v0.6.0] ✅ Completed: PackagedArtifactResolution - Implemented packaged artifact fallback in resolver chain
-[v0.7.0] ✅ Completed: RunnerShim - Implemented runner shim script
-[v0.8.0] ✅ Completed: DeterministicDigestTooling - Implemented canonicalization and digest computation for prompts and datasets
-[v0.9.0] ✅ Completed: ConsumptionManifestValidation - Implemented schema validation for consumption manifests during load_manifest
-[v1.0.0] ✅ Completed: ConsumptionManifestFormat - Re-wrote consumption manifest format to be more realistic and validate
-[v1.1.0] ✅ Completed: PromptSpecValidation - Implemented schema validation for resolved prompt specifications against prompt-spec.schema.json
-[v1.2.0] ✅ Completed: HarnessContractValidation - Implemented runner shim validation against CONTRACTS schemas
-[v1.7.1] ✅ Completed: MinimalPlanException - Executed minimal plan exception to unlock completion of current run.
-[v1.8.0] ✅ Completed: QuickEvalWorkspaceResolution - Implement quick eval format resolution in the WorkspaceResolver.
-
-### RUNTIME v1.61.0
-- \342\234\205 Completed: LocalResolverCaching - Drafted spec for Local Resolver Caching
