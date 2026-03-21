@@ -186,3 +186,7 @@
 ## 1.79.0 - Moderation Decision Records Spec
 **Learning:** The vision doc explicitly mentions moderation decision records as a key append-only artifact for the registry, but a formal policy defining them was missing.
 **Action:** Created a plan to implement a moderation decision records policy to ensure an auditable trail for moderation actions.
+
+## 1.81.0 - Deprecation Notices Policy Spec
+**Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include "deprecation notices", but the existing `promptops/policies/deprecation.md` is a generic placeholder rather than a formal registry-aligned policy detailing append-only behavior.
+**Action:** Created a plan to convert the generic deprecation policy placeholder into a formal append-only registry metadata store policy that aligns with `deprecation-record.schema.json`.
