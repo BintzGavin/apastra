@@ -2,7 +2,7 @@
 title: "ADR 002: Bring-Your-Own Harnesses"
 description: "Architecture decision record for adopting a minimal BYO harness contract"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "README.md"
 ---

@@ -1,13 +1,13 @@
 ---
-title: "Quick Eval Reference"
+title: "Quick Eval"
 description: "Schema defining a combined quick evaluation file containing prompt, cases, and assertions."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "promptops/schemas/quick-eval.schema.json"
 ---
 
-# Quick Eval Reference
+# Quick Eval
 
 Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
 
@@ -15,25 +15,24 @@ Schema defining a combined quick evaluation file containing prompt, cases, and a
 
 ## `id`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** Stable identifier for the quick eval.
 
 ## `prompt`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** The prompt template.
 
 ## `cases`
 
-- **Type:** array of objects
+- **Type:** `array`
 - **Requirement:** Required
 - **Description:** Array of dataset cases with inputs and inline asserts.
 
 ## `thresholds`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Optional thresholds for the evaluation.
-

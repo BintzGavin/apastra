@@ -1,13 +1,13 @@
 ---
-title: "Consumption Manifest Schema Reference"
+title: "Consumption Manifest Schema"
 description: "Schema for the apastra PromptOps consumption manifest."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-20"
+last_verified: "2026-03-21"
 source_files:
   - "promptops/schemas/consumption-manifest.schema.json"
 ---
 
-# Consumption Manifest Schema Reference
+# Consumption Manifest Schema
 
 Schema for the apastra PromptOps consumption manifest.
 
@@ -15,31 +15,18 @@ Schema for the apastra PromptOps consumption manifest.
 
 ## `version`
 
-- **Type:** string
+- **Type:** `string`
 - **Requirement:** Required
 - **Description:** Version of the consumption manifest.
 
 ## `prompts`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Required
 - **Description:** Mapping of local names to resolution configurations.
 
 ## `defaults`
 
-- **Type:** object
+- **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Global fallbacks like default model or provider.
-
-### `model`
-
-- **Type:** string
-- **Requirement:** Optional
-- **Description:** Default model.
-
-### `provider`
-
-- **Type:** string
-- **Requirement:** Optional
-- **Description:** Default provider.
-
