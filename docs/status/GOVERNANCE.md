@@ -1,4 +1,5 @@
-**Version**: 1.75.0
+**Version**: 1.76.0
+[v1.76.0] ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
 [v1.75.0] ✅ Planned: MirrorSyncReceipts - Created spec for mirror sync receipts.
 [v1.74.0] ✅ Completed: ProvenanceAttestations - Implemented provenance attestations policy.
 [v1.73.0] ✅ Completed: PolicyExceptions - Implemented policy exceptions governance document.
