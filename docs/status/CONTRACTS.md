@@ -1,4 +1,5 @@
-**Version**: 0.94.0
+**Version**: 0.95.0
+[v0.95.0] ✅ Planned: PolicyExceptionRecord - Authored execution plan spec for policy exception record schema and validator
 [v0.94.0] ✅ Completed: ProvenanceAttestation - Created provenance attestation schema and validator.
 [v0.93.0] ✅ Completed: ProvenanceAttestation - Authored execution plan spec for provenance attestation schema and validator
 [v0.92.0] ✅ Completed: NamespaceClaimRecord - Created schema and validator for namespace claim record.

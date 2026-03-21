@@ -54,3 +54,6 @@
 ## 0.94.0 - ProvenanceAttestation
 **Learning:** `docs/vision.md` explicitly defines "Provenance attestations" as core artifacts for establishing supply-chain provenance. The creation of a dedicated schema allows for standardized issuance, attachment, and verification across domains.
 **Action:** Always formalize architectural concepts from the vision document into explicit schema implementations to enable proper cross-domain interaction.
+## 0.95.0 - PolicyExceptionRecord
+**Learning:** `docs/vision.md` explicitly defines "Policy exceptions" as human checkpoints for moderation approval. Like other governance actions, an explicit schema is required so downstream domains can accurately generate and validate these records.
+**Action:** Always formalize architectural concepts from the vision document into explicit schema implementations to enable proper cross-domain interaction.
