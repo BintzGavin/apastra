@@ -51,3 +51,6 @@
 ## 0.93.0 - ProvenanceAttestation
 **Learning:** `docs/vision.md` lists "Provenance attestations" as a core append-only artifact required for governed releases and supply-chain integrity, meaning it requires its own formal contract schema independent of existing tracking records.
 **Action:** When a vision requirement details specific immutable metadata (like SLSA-style builder/invocation fields), ensure a distinct schema exists so downstream domains can accurately generate and validate these records.
+## 0.94.0 - ProvenanceAttestation
+**Learning:** `docs/vision.md` explicitly defines "Provenance attestations" as core artifacts for establishing supply-chain provenance. The creation of a dedicated schema allows for standardized issuance, attachment, and verification across domains.
+**Action:** Always formalize architectural concepts from the vision document into explicit schema implementations to enable proper cross-domain interaction.

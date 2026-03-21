@@ -1,5 +1,6 @@
-**Version**: 0.93.0
-[v0.93.0] ✅ Planned: ProvenanceAttestation - Authored execution plan spec for provenance attestation schema and validator
+**Version**: 0.94.0
+[v0.94.0] ✅ Completed: ProvenanceAttestation - Created provenance attestation schema and validator.
+[v0.93.0] ✅ Completed: ProvenanceAttestation - Authored execution plan spec for provenance attestation schema and validator
 [v0.92.0] ✅ Completed: NamespaceClaimRecord - Created schema and validator for namespace claim record.
 [v0.91.0] ✅ Completed: NamespaceClaimRecord - Authored execution plan spec for namespace claim record schema and validator
 [v0.90.0] ✅ Completed: VulnerabilityFlagRecord - Created schema and validator for vulnerability flag record.

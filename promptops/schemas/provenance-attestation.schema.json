@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://promptops.apastra.com/schemas/provenance-attestation.schema.json",
+  "title": "Provenance Attestation",
+  "description": "Schema for supply-chain provenance attestations (SLSA-style).",
+  "type": "object",
+  "required": ["attestation_id", "subject", "predicateType", "predicate"],
+  "properties": {
+    "attestation_id": {
+      "type": "string",
+      "description": "Unique identifier for the attestation."
+    },
+    "subject": {
+      "type": "array",
+      "description": "The artifacts that are the subject of the attestation.",
+      "items": {
+        "type": "object",
+        "required": ["name", "digest"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the subject artifact."
+          },
+          "digest": {
+            "type": "object",
+            "description": "Collection of cryptographic digests for the subject.",
+            "patternProperties": {
+              "^[a-z0-9]+$": { "type": "string" }
+            }
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "predicateType": {
+      "type": "string",
+      "description": "URI indicating the format of the predicate (e.g., SLSA Provenance)."
+    },
+    "predicate": {
+      "type": "object",
+      "description": "The detailed attestation predicate containing builder, invocation, and materials.",
+      "required": ["builder", "buildType", "invocation"],
+      "properties": {
+        "builder": {
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "URI identifying the build entity."
+            }
+          }
+        },
+        "buildType": {
+          "type": "string",
+          "description": "URI identifying the build type."
+        },
+        "invocation": {
+          "type": "object",
+          "description": "Information about the invocation of the build."
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Additional build metadata (e.g., timestamps)."
+        }
+      }
+    }
+  }
+}

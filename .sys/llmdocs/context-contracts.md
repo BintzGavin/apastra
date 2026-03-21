@@ -6,6 +6,9 @@
 **Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system — schemas, validators, prompt specs, datasets, evaluators, and suites — according to the approved plan from your Planner counterpart.
 
 ## Section A: Schema Inventory
+- **ID:** `https://promptops.apastra.com/schemas/provenance-attestation.schema.json`
+  - **Version:** 0.94.0
+  - **Description:** Schema for supply-chain provenance attestations (SLSA-style).
 - **ID:** `https://promptops.apastra.com/schemas/namespace-claim-record.schema.json`
   - **Version:** 0.92.0
   - **Description:** Schema for a namespace claim record, used to track canonical name registrations, ownership disputes, and deprecations.
@@ -99,6 +102,9 @@
   - **Description:** Schema for an ownership dispute record in the governance system.
 
 ## Section B: Validator Inventory
+- **Validator:** `validate-provenance-attestation.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-provenance-attestation.sh <provenance-attestation.json|yaml>`
+  - **What it Validates:** Validates provenance attestations.
 - **Validator:** `validate-namespace-claim-record.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-namespace-claim-record.sh <namespace-claim-record.json|yaml>`
   - **What it Validates:** Validates namespace claim records.

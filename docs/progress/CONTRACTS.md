@@ -254,3 +254,6 @@
 
 ### CONTRACTS v0.93.0
 - ✅ Planned: ProvenanceAttestation - Authored execution plan spec for provenance attestation schema and validator.
+
+### CONTRACTS v0.94.0
+- ✅ Completed: ProvenanceAttestation - Created provenance attestation schema and validator.
