@@ -159,3 +159,7 @@
 ## 1.69.0 - Schema Validation Workflow Spec
 **Learning:** The vision doc explicitly states "automated scanning (schema validation...)" is required for moderation, but no automated GitHub workflow currently runs the validators for PRs.
 **Action:** Designed a plan to integrate existing CONTRACTS validators into a PR check.
+
+## 1.70.0 - Minimal Plan Exception Final
+**Learning:** The GOVERNANCE domain has achieved minimal plan completion status. All governance primitives promised in the vision are fully functional.
+**Action:** No further architectural modifications are required at this stage.

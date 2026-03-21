@@ -1,4 +1,5 @@
-**Version**: 1.69.0
+**Version**: 1.70.0
+[v1.70.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.69.0] ✅ Completed: SchemaValidationWorkflow - Implemented automated schema validation workflow.
 [v1.68.0] ✅ Completed: ModerationPolicyChecks - Implemented moderation and policy checks policy.
 [v1.67.0] ✅ Planned: ModerationPolicyChecks - Created spec for moderation and policy checks.
