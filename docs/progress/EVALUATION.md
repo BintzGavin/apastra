@@ -266,4 +266,7 @@
 - ✅ Completed: HarnessAdapterRunnerShim - Implemented runner shim script that invokes a harness adapter and collects its run artifact directory
 
 ### EVALUATION v0.89.0
-- ✅ Planned: RunRequestValidation - Implement run request validation logic against the CONTRACTS schema
+- ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.90.0
+- ✅ Planned: RunRequestValidation - Minimal Plan Exception. Changes already present.

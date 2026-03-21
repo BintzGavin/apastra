@@ -1,5 +1,6 @@
-**Version**: 0.89.0
-[v0.89.0] Blocked: waiting for CONTRACTS schema run-request.schema.json
+**Version**: 0.90.0
+[v0.90.0] ✅ Planned: RunRequestValidation - Minimal Plan Exception. Changes already present.
+[v0.89.0] ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.
 [v0.88.0] ✅ Completed: HarnessAdapterRunnerShim - Implemented runner shim script that invokes a harness adapter and collects its run artifact directory
 [v0.87.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.86.0] ✅ Completed: FactualityAssertion - Implemented factuality assertion type for model-assisted evaluation
