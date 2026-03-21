@@ -42,3 +42,6 @@
 ## 0.89.0 - TrustedPublisherProvenance
 **Learning:** `docs/vision.md` outlines "trusted publisher" badges that require verifiable provenance requirements (e.g., identity, build environment, and source). A specific schema is needed to represent this provenance metadata accurately.
 **Action:** When a vision requirement (like trusted publisher badges) involves verifiable claims, explicitly define the underlying schema structure to serve as the contract for generating and validating those claims.
+## 0.90.0 - VulnerabilityFlagRecord
+**Learning:** `docs/vision.md` outlines "vulnerability flags" as part of the append-only registry metadata store, which requires a formalized schema for the GOVERNANCE domain to programmatically track and enforce.
+**Action:** Continue auditing moderation and governance concepts in the vision document to ensure there's a corresponding schema for each described procedure, preventing state hallucination.

@@ -242,3 +242,6 @@
 
 ### CONTRACTS v0.89.0
 - ✅ Completed: TrustedPublisherProvenance - Created spec for trusted publisher provenance schema and validator
+
+### CONTRACTS v0.90.0
+- ✅ Planned: VulnerabilityFlagRecord - Authored execution plan spec for vulnerability flag record schema and validator.
