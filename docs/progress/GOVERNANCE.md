@@ -232,4 +232,4 @@
 - ✅ Completed: PolicyExceptions - Implemented policy exceptions governance document.
 
 ### GOVERNANCE v1.74.0
-- ✅ Planned: ProvenanceAttestations - Created spec for provenance attestations policy.
+- ✅ Completed: ProvenanceAttestations - Implemented provenance attestations policy.
