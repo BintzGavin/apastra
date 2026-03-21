@@ -39,3 +39,6 @@
 ## 0.88.0 - AutomatedScanRecord
 **Learning:** `docs/vision.md` requires "automated scanning (schema validation, secrets detection, obvious policy checks)" as a prerequisite for moderation, necessitating a formalized schema for scan records.
 **Action:** Continuously audit the vision document's moderation and governance workflows to guarantee all procedural steps have explicit schema representations, preventing state hallucination by the GOVERNANCE domain.
+## 0.89.0 - TrustedPublisherProvenance
+**Learning:** `docs/vision.md` outlines "trusted publisher" badges that require verifiable provenance requirements (e.g., identity, build environment, and source). A specific schema is needed to represent this provenance metadata accurately.
+**Action:** When a vision requirement (like trusted publisher badges) involves verifiable claims, explicitly define the underlying schema structure to serve as the contract for generating and validating those claims.

@@ -1,4 +1,5 @@
-**Version**: 0.88.0
+**Version**: 0.89.0
+[v0.89.0] ✅ Completed: TrustedPublisherProvenance - Created spec for trusted publisher provenance schema and validator
 [v0.88.0] ✅ Completed: AutomatedScanRecord - Created spec for automated scan record schema and validator
 [v0.87.0] ✅ Completed: CommunityReportRecord - Created schema and validator for community report record.
 [v0.86.0] ✅ Completed: CommunityReportRecord - Authored execution plan spec for community report record schema and validator
