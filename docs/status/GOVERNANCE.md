@@ -1,4 +1,5 @@
-**Version**: 1.82.0
+**Version**: 1.83.0
+[v1.83.0] ✅ Planned: ModerationApprovalForPublicListing - Created spec for moderation approval for public listing policy.
 [v1.82.0] ✅ Completed: EmergencyTakedownDecisions - Implemented emergency takedown decisions policy.
 [v1.82.0] ✅ Completed: PolicyExceptions - Minimal Plan Exception. Changes already present.
 [v1.81.0] ✅ Completed: MirrorSyncReceipts - Implemented mirror sync receipts policy.

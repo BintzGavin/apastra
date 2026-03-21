@@ -198,3 +198,7 @@
 ## 1.82.0 - Emergency Takedown Decisions Spec
 **Learning:** `docs/vision.md` specifically requires "Emergency takedown decisions" as a human checkpoint in the registry metadata store, but a formal policy defining them was missing from the current policy inventory.
 **Action:** Created a plan to implement an emergency takedown decisions policy to govern the immediate bypass of standard review timelines and append corresponding records to the registry.
+
+## 1.83.0 - Moderation Approval for Public Listing Spec
+**Learning:** `docs/vision.md` specifically requires "Moderation approval for public listing" as a human checkpoint in the registry metadata store, but a formal policy defining it was missing from the current policy inventory.
+**Action:** Created a plan to implement a moderation approval for public listing policy to govern the human checkpoints required for public listing.

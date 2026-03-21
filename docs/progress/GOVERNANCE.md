@@ -257,3 +257,6 @@
 ### GOVERNANCE v1.82.0
 - ✅ Completed: PolicyExceptions - Minimal Plan Exception. Changes already present.
 - ✅ Completed: EmergencyTakedownDecisions - Implemented emergency takedown decisions policy.
+
+### GOVERNANCE v1.83.0
+- ✅ Planned: ModerationApprovalForPublicListing - Created spec for moderation approval for public listing policy.
