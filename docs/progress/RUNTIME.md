@@ -258,3 +258,6 @@
 
 ### RUNTIME v1.77.0
 - ✅ Completed: RegistryProtocolResolution - Implemented OCI, NPM, and PyPI protocol resolution.
+
+### RUNTIME v1.78.0
+- ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.

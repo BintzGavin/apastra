@@ -1,4 +1,5 @@
-**Version**: 1.77.0
+**Version**: 1.78.0
+[v1.78.0] ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
 [v1.77.0] ✅ Completed: RegistryProtocolResolution - Implemented OCI, NPM, and PyPI protocol resolution.
 [v1.76.0] ✅ Completed: RegistryProtocolResolutionPlan - Drafted implementation spec for OCI, NPM, and PyPI protocol resolution.
 [v1.75.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
