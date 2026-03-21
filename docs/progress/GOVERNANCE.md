@@ -220,4 +220,4 @@
 - ✅ Completed: ModerationPolicyChecks - Implemented moderation and policy checks policy.
 
 ### GOVERNANCE v1.69.0
-- ✅ Planned: SchemaValidationWorkflow - Created spec for automated schema validation workflow.
+- ✅ Completed: SchemaValidationWorkflow - Implemented automated schema validation workflow.

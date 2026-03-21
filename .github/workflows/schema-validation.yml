@@ -1,0 +1,61 @@
+name: Schema Validation
+on:
+  pull_request:
+    paths:
+      - 'promptops/prompts/**'
+      - 'promptops/datasets/**'
+
+jobs:
+  validate-schemas:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@2d756ea4c53f7f6b397767d8723b3a10a9f35bf2
+        with:
+          files: |
+            promptops/prompts/**
+            promptops/datasets/**
+
+      - name: Set up dependencies
+        run: |
+          npm install -g ajv-formats ajv-cli
+
+      - name: Validate changed schemas
+        run: |
+          FAILED=0
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "Validating $file..."
+
+            if [[ "$file" == promptops/prompts/* ]]; then
+              if ! bash promptops/validators/validate-prompt-spec.sh "$file"; then
+                echo "::error file=$file::Schema validation failed for prompt spec $file"
+                FAILED=1
+              fi
+            elif [[ "$file" == promptops/datasets/* ]]; then
+              DIR=$(dirname "$file")
+              MANIFEST=$(find "$DIR" -name "manifest.json" -o -name "manifest.yaml" | head -n 1)
+              CASES=$(find "$DIR" -name "cases.jsonl" | head -n 1)
+
+              if [ -n "$MANIFEST" ] && [ -n "$CASES" ]; then
+                if [ ! -f "$DIR/.validated" ]; then
+                  if ! bash promptops/validators/validate-dataset.sh "$MANIFEST" "$CASES"; then
+                     echo "::error file=$file::Schema validation failed for dataset in $DIR"
+                     FAILED=1
+                  fi
+                  touch "$DIR/.validated"
+                fi
+              else
+                echo "::warning file=$file::Incomplete dataset in $DIR (manifest or cases missing), skipping validation"
+              fi
+            fi
+          done
+
+          if [ $FAILED -ne 0 ]; then
+            exit 1
+          fi
