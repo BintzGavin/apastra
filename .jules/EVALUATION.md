@@ -141,3 +141,7 @@
 ## 0.84.0 - Minimal Plan Exception Final
 **Learning:** The EVALUATION domain has completed all required capabilities defined in the current vision document.
 **Action:** Close out the domain with a minimal plan exception to satisfy process requirements.
+
+## 0.89.0 - RunRequestValidation
+**Learning**: The CONTRACTS run-request schema is now available, unblocking the validation pipeline.
+**Action**: Planned implementation of run request validation against the schema.

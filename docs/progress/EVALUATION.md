@@ -264,3 +264,6 @@
 
 ### EVALUATION v0.88.0
 - ✅ Completed: HarnessAdapterRunnerShim - Implemented runner shim script that invokes a harness adapter and collects its run artifact directory
+
+### EVALUATION v0.89.0
+- ✅ Planned: RunRequestValidation - Implement run request validation logic against the CONTRACTS schema
