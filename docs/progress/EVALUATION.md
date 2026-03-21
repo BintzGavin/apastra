@@ -258,3 +258,6 @@
 
 ### EVALUATION v0.86.0
 - ✅ Completed: FactualityAssertion - Implemented factuality assertion type for model-assisted evaluation
+
+### EVALUATION v0.87.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
