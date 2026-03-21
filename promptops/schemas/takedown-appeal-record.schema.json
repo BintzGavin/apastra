@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "apastra-takedown-appeal-record-v1",
+  "title": "Takedown Appeal Record",
+  "description": "A record used to formally process and track appeals to moderation takedowns.",
+  "type": "object",
+  "properties": {
+    "appeal_id": {
+      "type": "string",
+      "description": "Unique identifier for this takedown appeal."
+    },
+    "takedown_record_id": {
+      "type": "string",
+      "description": "Reference to the original takedown record being appealed."
+    },
+    "appellant_id": {
+      "type": "string",
+      "description": "Identifier of the user or entity filing the appeal."
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "Text reasoning explaining why the takedown should be overturned."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "approved", "rejected"],
+      "description": "Current status of the appeal."
+    },
+    "evidence_links": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional array of links providing evidence to support the appeal."
+    }
+  },
+  "required": [
+    "appeal_id",
+    "takedown_record_id",
+    "appellant_id",
+    "reasoning",
+    "status"
+  ],
+  "additionalProperties": false
+}
