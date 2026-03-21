@@ -236,3 +236,6 @@
 
 ### GOVERNANCE v1.75.0
 - ✅ Planned: MirrorSyncReceipts - Created spec for mirror sync receipts policy.
+
+### GOVERNANCE v1.76.0
+- ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
