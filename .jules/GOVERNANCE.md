@@ -218,3 +218,7 @@
 ## 1.87.0 - Minimal Plan Exception Final
 **Learning:** The GOVERNANCE domain has achieved minimal plan completion status. All governance primitives promised in the vision are fully functional.
 **Action:** No further architectural modifications are required at this stage.
+
+## 1.88.0 - Ownership Disputes Policy Spec
+**Learning:** `docs/vision.md` specifically requires an "ownership disputes" policy for the public registry, but the existing `promptops/policies/ownership-disputes.md` is a stub and lacks formal append-only mechanisms aligned with the `ownership-dispute-record` schema.
+**Action:** Created a plan to convert the generic ownership disputes stub into a formal append-only registry metadata store policy.

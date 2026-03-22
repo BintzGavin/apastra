@@ -272,3 +272,6 @@
 
 ### GOVERNANCE v1.87.0
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+
+### GOVERNANCE v1.88.0
+- ✅ Planned: OwnershipDisputesPolicy - Created spec for ownership disputes policy.
