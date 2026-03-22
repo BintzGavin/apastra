@@ -75,3 +75,7 @@
 ## 1.2.0 - Minimal Plan Exception Final
 **Learning:** Verified that all vision gaps in docs/vision.md and README.md for the CONTRACTS domain have been addressed. No remaining features to plan.
 **Action:** Conclude active planning for the CONTRACTS domain by executing a MinimalPlanExceptionFinal task.
+
+## 1.3.0 - Minimal Plan Exception Final
+**Learning:** Verified that all vision gaps in docs/vision.md and README.md for the CONTRACTS domain have been addressed. No remaining features to plan.
+**Action:** Conclude active planning for the CONTRACTS domain by executing a MinimalPlanExceptionFinal task.
