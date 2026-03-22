@@ -1,4 +1,5 @@
-**Version**: 0.97.0
+**Version**: 0.98.0
+[v0.98.0] ✅ Planned: EmergencyTakedownDecision - Authored execution plan spec for emergency takedown decision schema and validator
 [v0.97.0] ✅ Completed: ModerationEscalationRecord - Created moderation escalation record schema and validator
 [v0.96.0] ✅ Completed: PolicyExceptionRecord - Created policy exception record schema and validator.
 [v0.95.0] ✅ Planned: PolicyExceptionRecord - Authored execution plan spec for policy exception record schema and validator

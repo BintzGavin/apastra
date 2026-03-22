@@ -60,3 +60,6 @@
 ## 0.97.0 - ModerationEscalationRecord
 **Learning:** `docs/vision.md` explicitly defines a "human escalation path for high-risk content" as part of the public registry moderation procedures. The creation of a dedicated schema is required for the system to formally track these human escalations without hallucinating state.
 **Action:** Continue cross-referencing high-level moderation procedures against existing schemas to ensure all documented states have an explicit schema definition for downstream domains.
+## 0.98.0 - EmergencyTakedownDecision
+**Learning:** `docs/vision.md` outlines "Emergency takedown decisions" as a human checkpoint. A specific schema is required to formalize these high-priority administrative actions without hallucinating state.
+**Action:** Continue to audit all governance checkpoints and moderation procedures in the vision document to guarantee all procedural steps have explicit schema representations.
