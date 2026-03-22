@@ -169,3 +169,7 @@
 ## 0.95.0 - RunRequestDigestValidation
 **Learning:** The Run Request schema currently lacks required fields for tracking inputs such as prompt digest, dataset digest, and evaluator digest. This metadata is essential for reproduciability as per the vision documentation.
 **Action:** Created a plan spec to explicitly define the necessary updates for the Run Request schema in the CONTRACTS domain.
+
+## [v0.96.0] - Minimal Plan Exception Final
+**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
+**Action:** Proceeded with no-op exception.
