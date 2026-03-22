@@ -2,7 +2,7 @@
 title: "Submission Record"
 description: "Schema for an append-only artifact structure for package submissions to a public registry."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/submission-record.schema.json"
 ---
@@ -13,31 +13,31 @@ Schema for an append-only artifact structure for package submissions to a public
 
 ## Properties
 
-## `submission_id`
+### `submission_id`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Stable identifier for the submission.
 
-## `package_digest`
+### `package_digest`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Content digest of the submitted package bundle.
 
-## `publisher_id`
+### `publisher_id`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Identifier of the user or system publishing the package.
 
-## `timestamp`
+### `timestamp`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The time the submission was created.
 
-## `metadata`
+### `metadata`
 
 - **Type:** `object`
 - **Requirement:** Optional

@@ -1,55 +1,57 @@
 ---
-title: "Harness Adapter Reference"
-description: "Documentation for harness-adapter"
+title: "Harness Adapter"
+description: ""
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/harness-adapter.schema.json"
 ---
 
-# Harness Adapter Reference
+# Harness Adapter
 
-Documentation for harness-adapter
+
 
 ## Properties
 
-## `id`
+### `id`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Stable identifier for the harness adapter.
 
-## `type`
+### `type`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Must be 'harness_adapter'.
 
-## `capabilities`
+### `capabilities`
 
 - **Type:** `array`
 - **Requirement:** Required
 - **Description:** List of capabilities (e.g., ['run_suite', 'trials', 'model_matrix']).
+- **Items Type:** `string`
 
-## `entrypoint`
+### `entrypoint`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The CLI command or script to invoke the harness.
 
-## `description`
+### `description`
 
 - **Type:** `string`
 - **Requirement:** Optional
 - **Description:** Optional description of the harness adapter.
 
-## `env_vars`
+### `env_vars`
 
 - **Type:** `array`
 - **Requirement:** Optional
 - **Description:** Required environment variables (e.g., 'OPENAI_API_KEY').
+- **Items Type:** `string`
 
-## `digest`
+### `digest`
 
 - **Type:** `string`
 - **Requirement:** Optional

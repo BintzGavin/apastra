@@ -1,3 +1,11 @@
+### DOCS v0.9.0
+- ✅ Completed: Daily Documentation Review
+  - Generated all API documentation references from schemas
+  - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md` with new data
+  - Updated `schema-dependency-graph.md`
+  - Regenerated `context-docs.md`
+  - Updated `last_verified` dates in guides and ADRs
+
 ### DOCS v0.1.0
 - ✅ Completed: Daily Documentation Review
   - Initialized required DOCS domain paths (`docs/guides`, `docs/api`, `docs/decisions`, `docs/dashboards`)

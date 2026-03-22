@@ -2,7 +2,7 @@
 title: "Regression Policy Specification"
 description: "Schema for regression policy definition."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/regression-policy.schema.json"
 ---
@@ -13,14 +13,15 @@ Schema for regression policy definition.
 
 ## Properties
 
-## `baseline`
+### `baseline`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Baseline reference rules, e.g., 'prod current'
 
-## `rules`
+### `rules`
 
 - **Type:** `array`
 - **Requirement:** Required
 - **Description:** List of per-metric rules
+- **Items Type:** `object`

@@ -2,7 +2,7 @@
 title: "ADR 003: Content Digest Identity"
 description: "Architecture decision record for establishing content digests as the core identity for packages"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "README.md"
 ---

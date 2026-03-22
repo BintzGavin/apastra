@@ -1,73 +1,111 @@
 ---
 title: "Schema Dependency Graph"
-description: "Cross-domain interfaces and schema dependencies"
-audience: "all"
-last_verified: "2026-03-21"
-source_files:
-  - "promptops/schemas/"
+description: "Visualization of cross-domain schema dependencies."
+audience: "developers | platform-teams"
+last_verified: "2026-03-22"
 ---
 
 # Schema Dependency Graph
 
-This dashboard visualizes the relationships and dependencies between schemas across different domains.
+This document visualizes the dependencies between different schemas in the PromptOps ecosystem.
 
 ```mermaid
-flowchart TD
-  subgraph CONTRACTS
-    PS[prompt-spec]
-    DM[dataset-manifest]
-    DC[dataset-case]
-    E[evaluator]
-    S[suite]
-    HA[harness-adapter]
-    QE[quick-eval]
-  end
+graph TD
+    %% Core Schemas
+    PromptSpec[prompt-spec]
+    DatasetCase[dataset-case]
+    DatasetManifest[dataset-manifest]
+    Evaluator[evaluator]
+    Suite[suite]
+    QuickEval[quick-eval]
 
-  subgraph EVALUATION
-    RR[run-request]
-    RA[run-artifact]
-    RM[run-manifest]
-    RC[run-case]
-    SC[scorecard]
-    B[baseline]
-  end
+    %% Runtime Schemas
+    RunRequest[run-request]
+    HarnessAdapter[harness-adapter]
+    RunManifest[run-manifest]
+    RunCase[run-case]
+    RunFailures[run-failures]
+    RunArtifact[run-artifact]
+    Scorecard[scorecard]
 
-  subgraph GOVERNANCE
-    RP[regression-policy]
-    RRep[regression-report]
-    PR[promotion-record]
-    DT[delivery-target]
-    SR[submission-record]
-    MDR[moderation-decision-record]
-  end
+    %% Governance Schemas
+    Baseline[baseline]
+    RegressionPolicy[regression-policy]
+    RegressionReport[regression-report]
+    ApprovalState[approval-state]
+    PromotionRecord[promotion-record]
+    DeliveryTarget[delivery-target]
 
-  subgraph RUNTIME
-    CM[consumption-manifest]
-  end
+    %% Consumption
+    ConsumptionManifest[consumption-manifest]
+    PromptPackage[prompt-package]
+    ProviderArtifact[provider-artifact]
 
-  S --> PS
-  S --> DM
-  S --> E
-  DM --> DC
-  QE --> DC
+    %% Moderation & Governance
+    SubmissionRecord[submission-record]
+    ModerationDecisionRecord[moderation-decision-record]
+    AutomatedScanRecord[automated-scan-record]
+    VulnerabilityFlagRecord[vulnerability-flag-record]
+    PolicyExceptionRecord[policy-exception-record]
+    EmergencyTakedownDecision[emergency-takedown-decision]
+    TakedownRecord[takedown-record]
+    TakedownAppealRecord[takedown-appeal-record]
+    OwnershipDisputeRecord[ownership-dispute-record]
+    DeprecationRecord[deprecation-record]
+    NamespaceClaimRecord[namespace-claim-record]
+    CommunityReportRecord[community-report-record]
+    MirrorSyncReceipt[mirror-sync-receipt]
+    ProvenanceAttestation[provenance-attestation]
+    TrustedPublisherProvenance[trusted-publisher-provenance]
+    ModerationApprovalForPublicListing[moderation-approval-for-public-listing]
+    ModerationEscalationRecord[moderation-escalation-record]
 
-  RR --> S
-  RR --> HA
+    %% Dependencies
+    Suite --> PromptSpec
+    Suite --> DatasetManifest
+    Suite --> Evaluator
 
-  RA --> RM
-  RA --> RC
-  RA --> SC
-  RA --> B
-  RC --> DC
+    DatasetManifest --> DatasetCase
 
-  RRep --> SC
-  RRep --> B
-  RRep --> RP
+    QuickEval --> PromptSpec
+    QuickEval --> DatasetCase
 
-  PR --> RA
-  DT --> PR
-  SR --> PS
-  MDR --> PS
+    RunRequest --> Suite
+    RunRequest --> HarnessAdapter
 
-  CM --> PS
+    RunArtifact --> RunManifest
+    RunArtifact --> RunCase
+    RunArtifact --> RunFailures
+    RunArtifact --> Scorecard
+
+    RegressionReport --> Scorecard
+    RegressionReport --> Baseline
+    RegressionReport --> RegressionPolicy
+
+    ApprovalState --> RegressionReport
+
+    PromotionRecord --> ApprovalState
+    PromotionRecord --> DeliveryTarget
+
+    ConsumptionManifest --> PromptPackage
+    PromptPackage --> PromptSpec
+    ProviderArtifact --> PromptPackage
+
+    SubmissionRecord --> PromptPackage
+    ModerationDecisionRecord --> SubmissionRecord
+    AutomatedScanRecord --> SubmissionRecord
+    VulnerabilityFlagRecord --> PromptPackage
+    PolicyExceptionRecord --> PromptPackage
+    EmergencyTakedownDecision --> PromptPackage
+    TakedownRecord --> ModerationDecisionRecord
+    TakedownAppealRecord --> TakedownRecord
+    OwnershipDisputeRecord --> PromptPackage
+    DeprecationRecord --> PromptPackage
+    NamespaceClaimRecord --> PromptPackage
+    CommunityReportRecord --> PromptPackage
+    MirrorSyncReceipt --> PromptPackage
+    ProvenanceAttestation --> PromptPackage
+    TrustedPublisherProvenance --> ProvenanceAttestation
+    ModerationApprovalForPublicListing --> ModerationDecisionRecord
+    ModerationEscalationRecord --> ModerationDecisionRecord
 ```

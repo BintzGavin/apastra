@@ -2,7 +2,7 @@
 title: "Run Artifact Specification"
 description: "Schema for a minimal BYO harness run artifact output."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/run-artifact.schema.json"
 ---
@@ -13,26 +13,28 @@ Schema for a minimal BYO harness run artifact output.
 
 ## Properties
 
-## `manifest`
+### `manifest`
 
 - **Type:** `object`
 - **Requirement:** Required
 - **Description:** Run manifest
 
-## `scorecard`
+### `scorecard`
 
 - **Type:** `object`
 - **Requirement:** Required
 - **Description:** Run scorecard
 
-## `cases`
+### `cases`
 
 - **Type:** `array`
 - **Requirement:** Required
 - **Description:** Run cases
+- **Items Type:** `object`
 
-## `failures`
+### `failures`
 
 - **Type:** `array`
 - **Requirement:** Required
 - **Description:** Run failures
+- **Items Type:** `object`

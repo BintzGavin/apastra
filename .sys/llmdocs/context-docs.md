@@ -12,20 +12,28 @@
 ## Section B: API Reference Inventory
 - `approval-state-reference.md`
 - `artifact-refs-reference.md`
+- `automated-scan-record-reference.md`
 - `baseline-reference.md`
+- `community-report-record-reference.md`
 - `consumption-manifest-reference.md`
 - `dataset-case-reference.md`
 - `dataset-manifest-reference.md`
 - `delivery-target-reference.md`
 - `deprecation-record-reference.md`
+- `emergency-takedown-decision-reference.md`
 - `evaluator-reference.md`
 - `harness-adapter-reference.md`
 - `mirror-sync-receipt-reference.md`
+- `moderation-approval-for-public-listing-reference.md`
 - `moderation-decision-record-reference.md`
+- `moderation-escalation-record-reference.md`
+- `namespace-claim-record-reference.md`
 - `ownership-dispute-record-reference.md`
+- `policy-exception-record-reference.md`
 - `promotion-record-reference.md`
 - `prompt-package-reference.md`
 - `prompt-spec-reference.md`
+- `provenance-attestation-reference.md`
 - `provider-artifact-reference.md`
 - `quick-eval-reference.md`
 - `regression-policy-reference.md`
@@ -38,7 +46,10 @@
 - `scorecard-reference.md`
 - `submission-record-reference.md`
 - `suite-reference.md`
+- `takedown-appeal-record-reference.md`
 - `takedown-record-reference.md`
+- `trusted-publisher-provenance-reference.md`
+- `vulnerability-flag-record-reference.md`
 
 ## Section C: ADR Inventory
 - `adr-001-git-native-control-plane.md`

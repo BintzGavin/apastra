@@ -2,7 +2,7 @@
 title: "Run Failures Specification"
 description: "Schema defining an array of failure objects."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/run-failures.schema.json"
 ---
@@ -13,6 +13,6 @@ Schema defining an array of failure objects.
 
 ## Properties
 
-This schema defines an array of objects with the following item description:
+This schema represents an array of objects.
 
-- **Description:** Failure object
+- **Items type:** `object`

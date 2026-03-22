@@ -2,7 +2,7 @@
 title: "Harness Contract"
 description: "Understanding the minimal BYO harness contract"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "README.md"
 ---

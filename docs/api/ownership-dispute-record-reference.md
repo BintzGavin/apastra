@@ -1,62 +1,63 @@
 ---
-title: "Ownership Dispute Record Reference"
+title: "Ownership Dispute Record"
 description: "Schema for an ownership dispute record in the governance system."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/ownership-dispute-record.schema.json"
 ---
 
-# Ownership Dispute Record Reference
+# Ownership Dispute Record
 
 Schema for an ownership dispute record in the governance system.
 
 ## Properties
 
-## `dispute_id`
+### `dispute_id`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Unique identifier for the dispute.
 
-## `package_name`
+### `package_name`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The canonical name of the package in dispute.
 
-## `complainant_id`
+### `complainant_id`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Identifier of the party filing the dispute.
 
-## `timestamp`
+### `timestamp`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Timestamp when the dispute was created.
 
-## `claim_reason`
+### `claim_reason`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The detailed reason for the ownership claim.
 
-## `status`
+### `status`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Current status of the dispute.
-- **Allowed Values:** `open, under_review, resolved`
+- **Allowed Values:** `open`, `under_review`, `resolved`
 
-## `evidence_links`
+### `evidence_links`
 
 - **Type:** `array`
 - **Requirement:** Optional
 - **Description:** Optional list of URLs containing evidence supporting the claim.
+- **Items Type:** `string`
 
-## `resolution_notes`
+### `resolution_notes`
 
 - **Type:** `string`
 - **Requirement:** Optional

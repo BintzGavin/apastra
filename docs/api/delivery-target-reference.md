@@ -2,7 +2,7 @@
 title: "Delivery Target Specification"
 description: "Schema for delivery target config."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/delivery-target.schema.json"
 ---
@@ -13,13 +13,13 @@ Schema for delivery target config.
 
 ## Properties
 
-## `type`
+### `type`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Type of delivery target, e.g., 'github_pr', 'oci_registry'
 
-## `repo`
+### `repo`
 
 - **Type:** `string`
 - **Requirement:** Required
