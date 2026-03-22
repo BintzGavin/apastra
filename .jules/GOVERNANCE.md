@@ -234,3 +234,7 @@
 ## 1.91.0 - Trusted Publisher Provenance Policy Spec
 **Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include provenance requirements for "trusted publisher" badges, but the existing `promptops/policies/trusted-publisher.md` is a generic policy that does not strictly align with the `trusted-publisher-provenance.schema.json` schema.
 **Action:** Created a plan to convert the generic trusted publisher policy into a formal append-only registry metadata store policy that aligns with the schema.
+
+## 1.92.0 - Moderation Escalation Path Policy Spec
+**Learning:** `docs/vision.md` specifically requires a "human escalation path for high-risk content" for moderation, but no formal policy existed to define this standard or align it with the `moderation-escalation-record.schema.json`.
+**Action:** Created a plan to implement a moderation escalation path policy to govern the escalation procedures and ensure auditable human checkpoints.

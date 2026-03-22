@@ -1,4 +1,5 @@
-**Version**: 1.91.0
+**Version**: 1.92.0
+[v1.92.0] ✅ Planned: ModerationEscalationPathPolicy - Created spec for human escalation path policy.
 [v1.91.0] ✅ Completed: TrustedPublisherProvenancePolicy - Implemented trusted publisher provenance policy.
 [v1.90.0] ✅ Completed: TakedownAppealsPolicy - Implemented takedown appeals policy.
 [v1.89.0] ✅ Completed: NamespaceClaimsPolicy - Implemented namespace claims policy.
