@@ -283,3 +283,6 @@
 
 ### GOVERNANCE v1.91.0
 - ✅ Completed: TrustedPublisherProvenancePolicy - Implemented trusted publisher provenance policy.
+
+### GOVERNANCE v1.92.0
+- ✅ Planned: ModerationEscalationPathPolicy - Created spec for human escalation path policy.
