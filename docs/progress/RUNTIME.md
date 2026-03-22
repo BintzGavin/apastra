@@ -267,3 +267,6 @@
 
 ### RUNTIME v1.80.0
 - ✅ Completed: RemoteGitSemverResolution - Implemented explicit support for semver resolution for remote git URLs.
+
+### RUNTIME v1.81.0
+- ✅ Planned: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.

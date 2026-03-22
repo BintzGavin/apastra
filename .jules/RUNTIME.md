@@ -58,3 +58,7 @@
 ## 1.80.0 - Remote Git Semver Resolution Plan
 **Learning:** The `GitRefResolver` supports `semver:` resolution locally, but remote git URLs with `semver:` prefixes fail because the existing fallback logic only handles direct branches or tags. The vision states "Apps can pin prompts by commit SHA, tag, or semver", which implies this should work for remote repositories as well.
 **Action:** Draft spec to fetch tags from remote repositories using `git ls-remote --tags` and resolve semver ranges before attempting `git archive` or `git clone`.
+
+## 1.81.0 - MinimalPlanExceptionFinal
+**Learning:** Verified that all vision gaps in docs/vision.md and README.md for the RUNTIME domain have been addressed. No remaining features to plan.
+**Action:** Execute MinimalPlanExceptionFinal to clear pending state.
