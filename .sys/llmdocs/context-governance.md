@@ -46,7 +46,7 @@ Gate Enforcement Flow:
 - `promptops/policies/namespace-claims.md`: Formal append-only registry metadata store policy detailing namespace claims.
 - `promptops/policies/trusted-publisher.md`: Trusted publisher requirements based on build provenance.
 - `promptops/policies/takedowns.md`: Takedown procedure for content removal.
-- `promptops/policies/appeals.md`: Moderation decision appeals process.
+- `promptops/policies/appeals.md`: Moderation Decision Appeals Policy. Describes the formal, append-only process for appealing takedown decisions.
 - `promptops/policies/federation.md`: Governance rules for cross-custodian trust and namespace resolution.
 - `promptops/policies/mirroring.md`: Requirements and processes for establishing read-only mirrors.
 - `promptops/policies/provenance-attestations.md`: Defines handling and verification of build provenance attestations.
