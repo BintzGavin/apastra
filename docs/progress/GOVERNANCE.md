@@ -286,3 +286,9 @@
 
 ### GOVERNANCE v1.92.0
 - ✅ Completed: ModerationEscalationPathPolicy - Implemented moderation escalation path policy.
+
+### GOVERNANCE v1.93.0
+- ✅ Completed: AutomatedScanRecordsPolicy - Implemented automated scan records policy.
+
+### GOVERNANCE v1.94.0
+- ✅ Completed: CommunityReportRecordsPolicy - Implemented community report records policy.
