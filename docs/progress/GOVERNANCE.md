@@ -278,3 +278,5 @@
 
 ### GOVERNANCE v1.89.0
 - ✅ Completed: NamespaceClaimsPolicy - Implemented namespace claims policy.
+### GOVERNANCE v1.90.0
+- ✅ Planned: TakedownAppealsPolicy - Created spec for takedown appeals policy.

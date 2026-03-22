@@ -1,4 +1,5 @@
-**Version**: 1.89.0
+**Version**: 1.90.0
+[v1.90.0] ✅ Planned: TakedownAppealsPolicy - Created spec for takedown appeals policy.
 [v1.89.0] ✅ Completed: NamespaceClaimsPolicy - Implemented namespace claims policy.
 [v1.88.0] ✅ Completed: OwnershipDisputesPolicy - Implemented ownership disputes policy.
 [v1.87.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
