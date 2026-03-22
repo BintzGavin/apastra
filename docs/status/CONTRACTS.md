@@ -1,4 +1,5 @@
-**Version**: 0.98.0
+**Version**: 0.99.0
+[v0.99.0] ✅ Completed: ModerationApprovalForPublicListing - Created schema and validator for moderation approval for public listing
 [v0.98.0] ✅ Completed: EmergencyTakedownDecision - Created emergency takedown decision schema and validator
 [v0.97.0] ✅ Completed: ModerationEscalationRecord - Created moderation escalation record schema and validator
 [v0.96.0] ✅ Completed: PolicyExceptionRecord - Created policy exception record schema and validator.

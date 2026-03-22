@@ -269,3 +269,6 @@
 
 ### CONTRACTS v0.98.0
 - ✅ Completed: EmergencyTakedownDecision - Created emergency takedown decision schema and validator
+
+### CONTRACTS v0.99.0
+- ✅ Completed: ModerationApprovalForPublicListing - Created schema and validator for moderation approval for public listing
