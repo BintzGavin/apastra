@@ -222,3 +222,7 @@
 ## 1.88.0 - Ownership Disputes Policy Spec
 **Learning:** `docs/vision.md` specifically requires an "ownership disputes" policy for the public registry, but the existing `promptops/policies/ownership-disputes.md` is a stub and lacks formal append-only mechanisms aligned with the `ownership-dispute-record` schema.
 **Action:** Created a plan to convert the generic ownership disputes stub into a formal append-only registry metadata store policy.
+
+## 1.89.0 - Namespace Claims Policy Spec
+**Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include namespace registration and ownership, but the existing `promptops/policies/naming.md` only provides naming guidelines and lacks a formal append-only policy aligned with the `namespace-claim-record.schema.json`.
+**Action:** Created a plan to convert the generic naming guidelines into a formal append-only registry metadata store policy for namespace claims.
