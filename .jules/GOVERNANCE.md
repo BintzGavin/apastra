@@ -202,3 +202,7 @@
 ## 1.83.0 - Moderation Approval for Public Listing Spec
 **Learning:** `docs/vision.md` specifically requires "Moderation approval for public listing" as a human checkpoint in the registry metadata store, but a formal policy defining it was missing from the current policy inventory.
 **Action:** Created a plan to implement a moderation approval for public listing policy to govern the human checkpoints required for public listing.
+
+## 1.84.0 - Minimal Plan Exception Final
+**Learning:** Executed minimal plan exception.
+**Action:** No action needed.
