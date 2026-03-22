@@ -210,3 +210,7 @@
 ## 1.85.0 - Deprecation Notices Policy Spec
 **Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include "deprecation notices", but the existing `promptops/policies/deprecation.md` is a generic placeholder rather than a formal registry-aligned policy detailing append-only behavior.
 **Action:** Created a plan to convert the generic deprecation policy placeholder into a formal append-only registry metadata store policy that aligns with `deprecation-record.schema.json`.
+
+## 1.86.0 - Minimal Plan Exception Final
+**Learning:** The GOVERNANCE domain has achieved minimal plan completion status. All governance primitives promised in the vision are fully functional.
+**Action:** No further architectural modifications are required at this stage.
