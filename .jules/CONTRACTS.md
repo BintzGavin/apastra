@@ -69,3 +69,6 @@
 ## 1.0.0 - DeliveryTargetReceipt
 **Learning:** `docs/vision.md` explicitly defines a "delivery target receipt" as the final step of the prompt revision lineage trace. A dedicated schema is required to correctly validate and formalize these records downstream without hallucinating state.
 **Action:** Audit and ensure all lineage trace end states defined in the vision document have explicit schema representations.
+## 1.1.0 - Minimal Plan Exception Final
+**Learning:** Verified that all vision gaps in docs/vision.md and README.md for the CONTRACTS domain have been addressed. No remaining features to plan.
+**Action:** Conclude active planning for the CONTRACTS domain by executing a MinimalPlanExceptionFinal task.

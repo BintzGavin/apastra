@@ -275,3 +275,6 @@
 
 ### CONTRACTS v1.0.0
 - ✅ Completed: DeliveryTargetReceipt - Created delivery target receipt schema and validator
+
+### CONTRACTS v1.1.0
+- ✅ Planned: Minimal Plan Exception Final - Executed the final minimal plan exception for the CONTRACTS domain.
