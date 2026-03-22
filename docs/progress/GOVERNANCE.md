@@ -282,4 +282,4 @@
 - ✅ Completed: TakedownAppealsPolicy - Implemented takedown appeals policy.
 
 ### GOVERNANCE v1.91.0
-- ✅ Planned: TrustedPublisherProvenancePolicy - Created spec for trusted publisher provenance policy.
+- ✅ Completed: TrustedPublisherProvenancePolicy - Implemented trusted publisher provenance policy.
