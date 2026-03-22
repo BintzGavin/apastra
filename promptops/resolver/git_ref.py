@@ -102,6 +102,35 @@ class GitRefResolver:
             # Parse remote git URL and ref
             url_part, ref_part = pin[4:].split('#', 1)
 
+            if ref_part.startswith('semver:'):
+                range_str = ref_part.replace('semver:', '')
+                result = subprocess.run(
+                    ["git", "ls-remote", "--tags", url_part],
+                    capture_output=True,
+                    text=True,
+                    check=False
+                )
+                if result.returncode != 0:
+                    raise RuntimeError(f"Failed to execute git ls-remote --tags {url_part}")
+
+                tags = []
+                for line in result.stdout.splitlines():
+                    parts = line.split('\t')
+                    if len(parts) >= 2:
+                        tag = parts[1]
+                        if tag.startswith('refs/tags/'):
+                            tag = tag[len('refs/tags/'):]
+                        if tag.endswith('^{}'):
+                            tag = tag[:-3]
+                        tags.append(tag)
+
+                valid_tags = [t for t in set(tags) if match_semver(t, range_str)]
+                if not valid_tags:
+                    raise RuntimeError(f"No matching semver tag found for '{range_str}' on remote '{url_part}'")
+
+                valid_tags.sort(key=lambda x: parse_version(x)[:3], reverse=True)
+                ref_part = valid_tags[0]
+
             temp_dir = tempfile.mkdtemp()
             try:
                 # Use git archive to extract specific files to a temp directory
