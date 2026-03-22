@@ -259,7 +259,7 @@
 - ✅ Completed: ProvenanceAttestation - Created provenance attestation schema and validator.
 
 ### CONTRACTS v0.95.0
-- ✅ Planned: PolicyExceptionRecord - Authored execution plan spec for policy exception record schema and validator
+- ✅ Completed: PolicyExceptionRecord - Authored execution plan spec for policy exception record schema and validator
 
 ### CONTRACTS v0.96.0
 - ✅ Completed: PolicyExceptionRecord - Created policy exception record schema and validator.
