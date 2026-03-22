@@ -230,3 +230,7 @@
 ## 1.90.0 - Takedown Appeals Policy Spec
 **Learning:** `docs/vision.md` specifically requires "appeals" as a governance mechanism in the single-custodian registry model, but the existing `promptops/policies/appeals.md` is a stub and lacks formal append-only mechanisms aligned with the `takedown-appeal-record` schema.
 **Action:** Created a plan to convert the generic takedown appeals stub into a formal append-only registry metadata store policy.
+
+## 1.91.0 - Trusted Publisher Provenance Policy Spec
+**Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include provenance requirements for "trusted publisher" badges, but the existing `promptops/policies/trusted-publisher.md` is a generic policy that does not strictly align with the `trusted-publisher-provenance.schema.json` schema.
+**Action:** Created a plan to convert the generic trusted publisher policy into a formal append-only registry metadata store policy that aligns with the schema.

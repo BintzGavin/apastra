@@ -1,4 +1,5 @@
-**Version**: 1.90.0
+**Version**: 1.91.0
+[v1.91.0] ✅ Planned: TrustedPublisherProvenancePolicy - Created spec for trusted publisher provenance policy.
 [v1.90.0] ✅ Completed: TakedownAppealsPolicy - Implemented takedown appeals policy.
 [v1.89.0] ✅ Completed: NamespaceClaimsPolicy - Implemented namespace claims policy.
 [v1.88.0] ✅ Completed: OwnershipDisputesPolicy - Implemented ownership disputes policy.
