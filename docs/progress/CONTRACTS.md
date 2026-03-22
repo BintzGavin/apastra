@@ -266,3 +266,6 @@
 
 ### CONTRACTS v0.97.0
 - ✅ Completed: ModerationEscalationRecord - Created moderation escalation record schema and validator
+
+### CONTRACTS v0.98.0
+- ✅ Planned: EmergencyTakedownDecision - Authored execution plan spec for emergency takedown decision schema and validator
