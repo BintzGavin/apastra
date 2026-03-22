@@ -287,4 +287,4 @@
 - ✅ Planned: RunRequestDigestValidation - Spec the inclusion of content digest metadata in the Run Request schema validation.
 
 ### EVALUATION v0.96.0
-- ✅ Planned: Minimal Plan Exception Final - All plans officially complete
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete

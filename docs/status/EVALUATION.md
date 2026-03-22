@@ -1,5 +1,5 @@
 **Version**: 0.96.0
-[v0.96.0] ✅ Planned: Minimal Plan Exception Final - All plans officially complete
+[v0.96.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.95.0] ✅ Planned: RunRequestDigestValidation - Spec the inclusion of content digest metadata in the Run Request schema validation.
 Blocked: waiting for CONTRACTS schema run-request.schema.json
 [v0.94.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
