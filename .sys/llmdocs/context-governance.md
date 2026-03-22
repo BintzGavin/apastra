@@ -40,7 +40,7 @@ Gate Enforcement Flow:
 **Section C: Policy Inventory**
 - `promptops/policies/acceptable-use.md`: Acceptable use constraints.
 - `promptops/policies/deprecation.md`: Formal append-only registry metadata store policy detailing deprecation notices.
-- `promptops/policies/ownership-disputes.md`: Ownership and takedown appeal process.
+- `promptops/policies/ownership-disputes.md`: Formal append-only registry metadata store policy detailing ownership disputes and takedown appeals.
 - `promptops/policies/naming.md`: Naming rules for prompts, packages, and metrics.
 - `promptops/policies/trusted-publisher.md`: Trusted publisher requirements based on build provenance.
 - `promptops/policies/takedowns.md`: Takedown procedure for content removal.
