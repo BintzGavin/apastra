@@ -2,7 +2,7 @@
 title: "Getting Started"
 description: "A quick guide to getting started with PromptOps"
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "README.md"
 ---

@@ -2,7 +2,7 @@
 title: "Promotion Record Specification"
 description: "Schema for append-only binding records."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/promotion-record.schema.json"
 ---
@@ -13,31 +13,31 @@ Schema for append-only binding records.
 
 ## Properties
 
-## `version`
+### `version`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The approved version
 
-## `channel`
+### `channel`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The channel to bind to, e.g., 'prod'
 
-## `digest`
+### `digest`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The content digest of the version
 
-## `evidence`
+### `evidence`
 
 - **Type:** `object`
 - **Requirement:** Optional
 - **Description:** Links to evidence
 
-## `timestamp`
+### `timestamp`
 
 - **Type:** `string`
 - **Requirement:** Optional

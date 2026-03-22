@@ -2,7 +2,7 @@
 title: "Takedown Record"
 description: "Schema for takedown records."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/takedown-record.schema.json"
 ---
@@ -13,31 +13,31 @@ Schema for takedown records.
 
 ## Properties
 
-## `takedown_id`
+### `takedown_id`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Unique identifier for the takedown record.
 
-## `package_digest`
+### `package_digest`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The SHA-256 digest of the taken down package.
 
-## `timestamp`
+### `timestamp`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The timestamp of the takedown.
 
-## `reason`
+### `reason`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The reason for the takedown.
 
-## `policy_violation_type`
+### `policy_violation_type`
 
 - **Type:** `string`
 - **Requirement:** Required

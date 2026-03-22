@@ -1,19 +1,19 @@
 ---
-title: "Artifact Refs Reference"
-description: "Documentation for artifact-refs"
+title: "Artifact Refs"
+description: ""
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/artifact-refs.schema.json"
 ---
 
-# Artifact Refs Reference
+# Artifact Refs
 
-Documentation for artifact-refs
+
 
 ## Properties
 
-## `references`
+### `references`
 
 - **Type:** `object`
 - **Requirement:** Required

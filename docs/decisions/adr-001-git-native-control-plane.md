@@ -2,7 +2,7 @@
 title: "ADR 001: Git-Native Control Plane"
 description: "Architecture decision record for using GitHub as the canonical control plane for PromptOps"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "README.md"
 ---

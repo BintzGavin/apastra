@@ -2,7 +2,7 @@
 title: "Provider Artifact Manifest"
 description: "A distribution wrapper around a prompt package (git ref, release asset, OCI artifact, npm/PyPI wrapper)."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/provider-artifact.schema.json"
 ---
@@ -13,32 +13,32 @@ A distribution wrapper around a prompt package (git ref, release asset, OCI arti
 
 ## Properties
 
-## `id`
+### `id`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Stable identifier for the provider artifact.
 
-## `type`
+### `type`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The distribution type of the wrapper.
-- **Allowed Values:** `git_ref, release_asset, oci_artifact, npm_wrapper, pypi_wrapper`
+- **Allowed Values:** `git_ref`, `release_asset`, `oci_artifact`, `npm_wrapper`, `pypi_wrapper`
 
-## `reference`
+### `reference`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The URI, ref, or tag of the wrapper.
 
-## `package_digest`
+### `package_digest`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** Content digest of the underlying prompt package.
 
-## `metadata`
+### `metadata`
 
 - **Type:** `object`
 - **Requirement:** Optional

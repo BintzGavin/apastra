@@ -1,4 +1,6 @@
-**Version**: 0.8.0
+**Version**: 0.9.0
+
+[v0.9.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Generated API docs, updated dashboards, updated guides and ADRs last_verified timestamps, and updated context-docs.md.
 
 [v0.8.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Generated API docs, updated dashboards, updated guides and ADRs last_verified timestamps, and updated context-docs.md.
 

@@ -2,7 +2,7 @@
 title: "Baseline Specification"
 description: "Schema definition for baseline references to unblock Evaluation."
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "promptops/schemas/baseline.schema.json"
 ---
@@ -13,31 +13,31 @@ Schema definition for baseline references to unblock Evaluation.
 
 ## Properties
 
-## `baseline_id`
+### `baseline_id`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The baseline ID
 
-## `run_digest`
+### `run_digest`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The run digest
 
-## `created_at`
+### `created_at`
 
 - **Type:** `string`
 - **Requirement:** Required
 - **Description:** The creation time
 
-## `metadata`
+### `metadata`
 
 - **Type:** `object`
 - **Requirement:** Optional
 - **Description:** The metadata
 
-## `description`
+### `description`
 
 - **Type:** `string`
 - **Requirement:** Optional

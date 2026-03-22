@@ -2,7 +2,7 @@
 title: "Black Hole Architecture"
 description: "Understanding the Black Hole Architecture paradigm"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-03-21"
+last_verified: "2026-03-22"
 source_files:
   - "README.md"
 ---
