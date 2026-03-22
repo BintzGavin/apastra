@@ -280,3 +280,6 @@
 - ✅ Completed: NamespaceClaimsPolicy - Implemented namespace claims policy.
 ### GOVERNANCE v1.90.0
 - ✅ Completed: TakedownAppealsPolicy - Implemented takedown appeals policy.
+
+### GOVERNANCE v1.91.0
+- ✅ Planned: TrustedPublisherProvenancePolicy - Created spec for trusted publisher provenance policy.
