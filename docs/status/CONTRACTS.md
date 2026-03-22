@@ -1,4 +1,5 @@
-**Version**: 1.2.0
+**Version**: 1.3.0
+[v1.3.0] ✅ Planned: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the CONTRACTS domain.
 [v1.2.0] ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception for the CONTRACTS domain.
 [v1.1.0] ✅ Completed: Minimal Plan Exception Final - Executed the final minimal plan exception for the CONTRACTS domain.
 [v1.0.0] ✅ Completed: DeliveryTargetReceipt - Created delivery target receipt schema and validator
