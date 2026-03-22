@@ -273,3 +273,6 @@
 
 ### EVALUATION v0.91.0
 - ✅ Planned: RunRequestDigestValidation - Spec the inclusion of content digest metadata in the Run Request schema validation.
+
+### EVALUATION v0.92.0
+- ✅ Planned: Minimal Plan Exception Final - All plans officially complete
