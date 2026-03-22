@@ -1,4 +1,5 @@
-**Version**: 1.5.0
+**Version**: 1.6.0
+[v1.6.0] ✅ Planned: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
 [v1.5.0] ✅ Completed: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
 [v1.4.0] ✅ Completed: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
 [v1.3.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the CONTRACTS domain.
