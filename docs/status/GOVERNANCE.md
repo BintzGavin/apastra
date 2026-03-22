@@ -1,4 +1,6 @@
-**Version**: 1.92.0
+**Version**: 1.94.0
+[v1.94.0] ✅ Completed: CommunityReportRecordsPolicy - Implemented community report records policy.
+[v1.93.0] ✅ Completed: AutomatedScanRecordsPolicy - Implemented automated scan records policy.
 [v1.92.0] ✅ Completed: ModerationEscalationPathPolicy - Implemented moderation escalation path policy.
 [v1.91.0] ✅ Completed: TrustedPublisherProvenancePolicy - Implemented trusted publisher provenance policy.
 [v1.90.0] ✅ Completed: TakedownAppealsPolicy - Implemented takedown appeals policy.

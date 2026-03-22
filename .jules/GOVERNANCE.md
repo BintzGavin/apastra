@@ -238,3 +238,11 @@
 ## 1.92.0 - Moderation Escalation Path Policy Spec
 **Learning:** `docs/vision.md` specifically requires a "human escalation path for high-risk content" for moderation, but no formal policy existed to define this standard or align it with the `moderation-escalation-record.schema.json`.
 **Action:** Created a plan to implement a moderation escalation path policy to govern the escalation procedures and ensure auditable human checkpoints.
+
+## 1.93.0 - Automated Scan Records Policy Spec
+**Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include automated scanning (schema validation, secrets detection, obvious policy checks), but no formal policy existed to define this standard or align it with the `automated-scan-record.schema.json`.
+**Action:** Created a plan to implement an automated scan records policy to govern the scanning procedures and ensure auditable checkpoints.
+
+## 1.94.0 - Community Report Records Policy Spec
+**Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include community reporting, but no formal policy existed to define this standard or align it with the `community-report-record.schema.json`.
+**Action:** Created a plan to implement a community report records policy to govern the reporting procedures and ensure auditable checkpoints.
