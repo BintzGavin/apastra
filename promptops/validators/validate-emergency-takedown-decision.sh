@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+  echo "Usage: $0 <file.yaml|file.json>"
+  exit 1
+fi
+TMP_FILE=$(mktemp --suffix=.json)
+python3 -c 'import sys, yaml, json; json.dump(yaml.safe_load(sys.stdin), sys.stdout)' < "$1" > "$TMP_FILE"
+if ajv validate -c ajv-formats --spec=draft2020 -s promptops/schemas/emergency-takedown-decision.schema.json -d "$TMP_FILE"; then
+  rm -f "$TMP_FILE"
+else
+  rm -f "$TMP_FILE"
+  exit 1
+fi

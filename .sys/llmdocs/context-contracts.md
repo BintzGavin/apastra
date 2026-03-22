@@ -6,6 +6,9 @@
 **Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system — schemas, validators, prompt specs, datasets, evaluators, and suites — according to the approved plan from your Planner counterpart.
 
 ## Section A: Schema Inventory
+- **ID:** `https://promptops.apastra.com/schemas/emergency-takedown-decision.schema.json`
+  - **Version:** 0.98.0
+  - **Description:** Schema for an emergency takedown decision.
 - **ID:** `https://promptops.apastra.com/schemas/moderation-escalation-record.schema.json`
   - **Version:** 0.97.0
   - **Description:** Schema for a moderation escalation record.
@@ -108,6 +111,7 @@
   - **Description:** Schema for an ownership dispute record in the governance system.
 
 ## Section B: Validator Inventory
+- **`validate-emergency-takedown-decision.sh <file>`**: Validates an emergency takedown decision against its schema.
 - **Validator:** `validate-moderation-escalation-record.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-moderation-escalation-record.sh <moderation-escalation-record.json|yaml>`
   - **What it Validates:** Validates moderation escalation records.
