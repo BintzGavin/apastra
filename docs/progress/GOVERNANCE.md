@@ -265,4 +265,4 @@
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 
 ### GOVERNANCE v1.85.0
-- ✅ Planned: DeprecationNoticesPolicy - Created spec for deprecation notices policy.
+- ✅ Completed: DeprecationNoticesPolicy - Implemented deprecation notices policy.
