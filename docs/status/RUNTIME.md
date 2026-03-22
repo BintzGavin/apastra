@@ -1,5 +1,5 @@
 **Version**: 1.80.0
-[v1.80.0] ✅ Planned: RemoteGitSemverResolution - Drafted spec for explicit support for semver resolution for remote git URLs.
+[v1.80.0] ✅ Completed: RemoteGitSemverResolution - Implemented explicit support for semver resolution for remote git URLs.
 [v1.79.0] ✅ Completed: RemoteGitSHACloningFix - Implemented explicit commit SHA fallback for remote git URLs.
 [v1.78.0] ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
 [v1.77.0] ✅ Completed: RegistryProtocolResolution - Implemented OCI, NPM, and PyPI protocol resolution.
