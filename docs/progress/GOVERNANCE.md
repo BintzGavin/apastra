@@ -277,4 +277,4 @@
 - ✅ Completed: OwnershipDisputesPolicy - Implemented ownership disputes policy.
 
 ### GOVERNANCE v1.89.0
-- ✅ Planned: NamespaceClaimsPolicy - Created spec for namespace claims policy.
+- ✅ Completed: NamespaceClaimsPolicy - Implemented namespace claims policy.

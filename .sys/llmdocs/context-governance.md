@@ -32,6 +32,7 @@ Gate Enforcement Flow:
 - `promptops/policies/deprecation.md`
 - `promptops/policies/ownership-disputes.md`
 - `promptops/policies/naming.md`
+- `promptops/policies/namespace-claims.md`
 - `promptops/policies/trusted-publisher.md`
 - `promptops/policies/federation.md`
 - `promptops/policies/mirroring.md`
@@ -42,6 +43,7 @@ Gate Enforcement Flow:
 - `promptops/policies/deprecation.md`: Formal append-only registry metadata store policy detailing deprecation notices.
 - `promptops/policies/ownership-disputes.md`: Formal append-only registry metadata store policy detailing ownership disputes and takedown appeals.
 - `promptops/policies/naming.md`: Naming rules for prompts, packages, and metrics.
+- `promptops/policies/namespace-claims.md`: Formal append-only registry metadata store policy detailing namespace claims.
 - `promptops/policies/trusted-publisher.md`: Trusted publisher requirements based on build provenance.
 - `promptops/policies/takedowns.md`: Takedown procedure for content removal.
 - `promptops/policies/appeals.md`: Moderation decision appeals process.
