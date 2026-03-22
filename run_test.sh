@@ -1,2 +1,1 @@
-cat .github/workflows/promote.yml
-cat .github/workflows/deliver.yml
+echo "No test suite required for markdown policies"

@@ -284,3 +284,6 @@
 
 ### CONTRACTS v1.3.0
 - ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the CONTRACTS domain.
+
+### CONTRACTS v1.4.0
+- ✅ Planned: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
