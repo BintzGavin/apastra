@@ -27,6 +27,7 @@ Gate Enforcement Flow:
 - `promptops/delivery/prod-target.yaml`
 - `promptops/policies/emergency-takedown-decisions.md`
 - `promptops/policies/regression.yaml`
+- `promptops/policies/moderation-approval-public-listing.md`
 - `promptops/policies/acceptable-use.md`
 - `promptops/policies/deprecation.md`
 - `promptops/policies/ownership-disputes.md`
@@ -52,6 +53,7 @@ Gate Enforcement Flow:
 - `promptops/policies/submission-records.md`: Defines the handling, format, and expectations of submission records.
 - `promptops/policies/emergency-takedown-decisions.md`: Defines criteria and procedures for executing immediate emergency takedowns.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
+- `promptops/policies/moderation-approval-public-listing.md`: Defines human checkpoints and requirements for public listing approval.
 
 **Section D: Promotion Record Format**
 - `id`: Unique promotion event ID
