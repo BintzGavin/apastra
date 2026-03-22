@@ -294,4 +294,4 @@
 - ✅ Completed: CommunityReportRecordsPolicy - Implemented community report records policy.
 
 ### GOVERNANCE v1.95.0
-- ✅ Planned: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
