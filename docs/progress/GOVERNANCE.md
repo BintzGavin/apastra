@@ -275,3 +275,6 @@
 
 ### GOVERNANCE v1.88.0
 - ✅ Completed: OwnershipDisputesPolicy - Implemented ownership disputes policy.
+
+### GOVERNANCE v1.89.0
+- ✅ Planned: NamespaceClaimsPolicy - Created spec for namespace claims policy.

@@ -1,4 +1,5 @@
-**Version**: 1.88.0
+**Version**: 1.89.0
+[v1.89.0] ✅ Planned: NamespaceClaimsPolicy - Created spec for namespace claims policy.
 [v1.88.0] ✅ Completed: OwnershipDisputesPolicy - Implemented ownership disputes policy.
 [v1.87.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.86.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
