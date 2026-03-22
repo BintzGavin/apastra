@@ -274,4 +274,4 @@
 - ✅ Completed: ModerationApprovalForPublicListing - Created schema and validator for moderation approval for public listing
 
 ### CONTRACTS v1.0.0
-- ✅ Planned: DeliveryTargetReceipt - Authored execution plan spec for delivery target receipt schema and validator
+- ✅ Completed: DeliveryTargetReceipt - Created delivery target receipt schema and validator

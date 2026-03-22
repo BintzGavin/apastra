@@ -6,6 +6,9 @@
 **Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system — schemas, validators, prompt specs, datasets, evaluators, and suites — according to the approved plan from your Planner counterpart.
 
 ## Section A: Schema Inventory
+- **ID:** `https://promptops.apastra.com/schemas/delivery-target-receipt.schema.json`
+  - **Version:** 1.0.0
+  - **Description:** Schema for a delivery target receipt.
 - **`moderation-approval-for-public-listing.schema.json`**: Schema for moderation approval for public listing records.
 - **ID:** `https://promptops.apastra.com/schemas/emergency-takedown-decision.schema.json`
   - **Version:** 0.98.0
@@ -112,6 +115,9 @@
   - **Description:** Schema for an ownership dispute record in the governance system.
 
 ## Section B: Validator Inventory
+- **Validator:** `validate-delivery-target-receipt.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-delivery-target-receipt.sh <delivery-target-receipt.json>`
+  - **What it Validates:** Validates delivery target receipts.
 - **Validator:** `validate-moderation-approval-for-public-listing.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-moderation-approval-for-public-listing.sh <moderation-approval-for-public-listing.json|yaml>`
   - **What it Validates:** Validates moderation approval for public listing records.

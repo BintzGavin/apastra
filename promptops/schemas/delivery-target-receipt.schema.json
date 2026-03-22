@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/delivery-target-receipt.schema.json",
+  "title": "Delivery Target Receipt Specification",
+  "description": "Schema for a delivery target receipt.",
+  "type": "object",
+  "properties": {
+    "receipt_id": { "type": "string", "description": "Unique identifier for the receipt." },
+    "target_id": { "type": "string", "description": "The ID of the delivery target." },
+    "package_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "The SHA-256 digest of the package delivered." },
+    "timestamp": { "type": "string", "format": "date-time", "description": "The ISO 8601 timestamp of when the delivery was received." },
+    "status": { "type": "string", "description": "The status of the delivery receipt (e.g., success, failed)." },
+    "message": { "type": "string", "description": "Additional information or error message." },
+    "metadata": { "type": "object", "description": "Key-value pairs of any extra delivery context.", "additionalProperties": true }
+  },
+  "required": ["receipt_id", "target_id", "package_digest", "timestamp", "status"]
+}
