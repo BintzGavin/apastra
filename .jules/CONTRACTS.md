@@ -66,3 +66,6 @@
 ## 0.99.0 - ModerationApprovalForPublicListing
 **Learning:** `docs/vision.md` outlines "Moderation approval for public listing" as a human checkpoint. Like other governance actions, an explicit schema is required so downstream domains can accurately generate and validate these records.
 **Action:** Continue to audit all governance checkpoints and moderation procedures in the vision document to guarantee all procedural steps have explicit schema representations.
+## 1.0.0 - DeliveryTargetReceipt
+**Learning:** `docs/vision.md` explicitly defines a "delivery target receipt" as the final step of the prompt revision lineage trace. A dedicated schema is required to correctly validate and formalize these records downstream without hallucinating state.
+**Action:** Audit and ensure all lineage trace end states defined in the vision document have explicit schema representations.
