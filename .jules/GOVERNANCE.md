@@ -246,3 +246,7 @@
 ## 1.94.0 - Community Report Records Policy Spec
 **Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include community reporting, but no formal policy existed to define this standard or align it with the `community-report-record.schema.json`.
 **Action:** Created a plan to implement a community report records policy to govern the reporting procedures and ensure auditable checkpoints.
+
+## 1.95.0 - Minimal Plan Exception Final
+**Learning:** The GOVERNANCE domain has achieved minimal plan completion status. All governance primitives promised in the vision are fully functional.
+**Action:** No further architectural modifications are required at this stage.
