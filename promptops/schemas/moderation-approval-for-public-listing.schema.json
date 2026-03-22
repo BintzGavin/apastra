@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/moderation-approval-for-public-listing.schema.json",
+  "title": "Moderation Approval for Public Listing",
+  "description": "Schema for moderation approval for public listing records.",
+  "type": "object",
+  "properties": {
+    "approval_id": {
+      "type": "string",
+      "description": "Unique identifier for the moderation approval."
+    },
+    "package_digest": {
+      "type": "string",
+      "description": "The SHA-256 digest of the package being approved.",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "approver_id": {
+      "type": "string",
+      "description": "The ID of the moderator who approved the listing."
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "The timestamp of the approval.",
+      "format": "date-time"
+    },
+    "listing_tier": {
+      "type": "string",
+      "description": "The tier of the public listing."
+    }
+  },
+  "required": [
+    "approval_id",
+    "package_digest",
+    "approver_id",
+    "timestamp",
+    "listing_tier"
+  ],
+  "additionalProperties": false
+}

@@ -63,3 +63,6 @@
 ## 0.98.0 - EmergencyTakedownDecision
 **Learning:** `docs/vision.md` outlines "Emergency takedown decisions" as a human checkpoint. A specific schema is required to formalize these high-priority administrative actions without hallucinating state.
 **Action:** Continue to audit all governance checkpoints and moderation procedures in the vision document to guarantee all procedural steps have explicit schema representations.
+## 0.99.0 - ModerationApprovalForPublicListing
+**Learning:** `docs/vision.md` outlines "Moderation approval for public listing" as a human checkpoint. Like other governance actions, an explicit schema is required so downstream domains can accurately generate and validate these records.
+**Action:** Continue to audit all governance checkpoints and moderation procedures in the vision document to guarantee all procedural steps have explicit schema representations.
