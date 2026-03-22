@@ -260,3 +260,6 @@
 
 ### GOVERNANCE v1.83.0
 - ✅ Completed: ModerationApprovalForPublicListing - Implemented moderation approval for public listing policy.
+
+### GOVERNANCE v1.84.0
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
