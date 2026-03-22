@@ -157,3 +157,7 @@
 ## 0.92.0 - Minimal Plan Exception Final
 **Learning:** The EVALUATION domain has already executed its final minimal plan exception.
 **Action:** Proceeded with no-op exception.
+
+## 0.93.0 - Minimal Plan Exception Final
+**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
+**Action:** Proceeded with no-op exception.
