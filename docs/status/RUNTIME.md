@@ -1,5 +1,5 @@
 **Version**: 1.81.0
-[v1.81.0] ✅ Planned: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
+[v1.81.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.80.0] ✅ Completed: RemoteGitSemverResolution - Implemented explicit support for semver resolution for remote git URLs.
 [v1.79.0] ✅ Completed: RemoteGitSHACloningFix - Implemented explicit commit SHA fallback for remote git URLs.
 [v1.78.0] ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
