@@ -249,6 +249,27 @@ Resolution order: local override → workspace → git ref → packaged artifact
 - **Reproducibility by default** — content digests, environment metadata
 - **Local-first, CI-optional** — start with zero infrastructure
 
+## Planned Expansions
+
+| Skill / Feature | What it does |
+|---|---|
+| `apastra-audit` | Scans your codebase for hardcoded, untested prompts and reports "prompt debt" — proves value in 60 seconds on an existing project |
+| `apastra-drift` | Canary suites that run on a schedule to catch post-ship quality erosion when model providers update silently |
+| `apastra-compare` | Multi-model evaluation — run a suite against N models and get a cost/quality/latency comparison scorecard |
+| `apastra-review` | "Paranoid staff prompt engineer" — reviews prompt specs for ambiguity, injection surface, variable hygiene, and output contract completeness |
+| `apastra-red-team` | Generates adversarial test cases: prompt injection attempts, edge-case inputs, multilingual stress tests |
+| `apastra-optimize` | Analyzes token usage, suggests prompt compression, estimates cost reduction |
+| Community prompt packs | Curated starter packs (summarization, extraction, classification, code review) installable as git dependencies with pre-built baselines |
+| Observability adapters | Lightweight bridges to emit run artifacts to Langfuse, OpenTelemetry, and other existing observability systems |
+
+## Planned Refinements
+
+- **Simplified minimal mode** — auto-detected when ≤3 prompt specs exist; only `prompts/`, `evals/`, and `baselines/` directories
+- **Project-level config** — `promptops.config.yaml` for default model, temperature, thresholds, and auto-baseline behavior
+- **MCP integration** — support MCP tool definitions in prompt specs and provide an MCP server adapter for agent discovery
+- **First-class cost tracking** — total cost in every run manifest, cost delta in regression reports, `cost_budget` field on suites
+- **Approachable terminology** — "your agent" everywhere user-facing; "harness" reserved for technical specs
+
 ## License
 
 Apache-2.0

@@ -780,3 +780,192 @@ Build in this order:
 | You must avoid publishing per tweak | Strong | Strong (git pins) | Strong |
 | Your org wants clear gates and lineage | Medium | Strong | Medium |
 | Your team can standardize local overrides | Not needed | Helpful | Required |
+
+## Landscape convergence and "Why Now?" thesis (March 2026)
+
+Three forces converge in March 2026 that make this system's timing ideal:
+
+1. **Promptfoo acquired by OpenAI (March 2026).** The leading OSS eval CLI is no longer vendor-neutral. Teams using Claude, Gemini, or open models need an alternative that is not controlled by a model provider.
+2. **Role-based agent workflows go mainstream.** The pattern of assigning specialized cognitive roles to IDE agents via slash commands has become standard practice. Developers now expect their IDE agents to *do things* with discipline, not just answer questions. The "agent-as-harness" concept in this system is exactly this pattern applied to prompt quality.
+3. **SKILL.md ecosystem explosion.** The SKILL.md standard (published by Anthropic, agentskills.io) has become the portable package format for teaching agents domain-specific workflows. Agent skills marketplaces (Agensi, GitHub-based collections) are emerging. This system is already SKILL.md-native, meaning distribution is built into the existing ecosystem.
+
+
+
+### Six forcing questions applied to this system
+
+Six "forcing questions" to stress-test product viability:
+
+| Question | This system's answer | Gap / opportunity |
+|---|---|---|
+| Demand reality | Prompt quality is a real engineering problem — most failures trace to poor prompts, not model capability. | Demand is real but fragmented — most teams reach for platform tools because they are visible. The system needs a discoverability strategy. |
+| Status quo pain | Prompts live in Slack threads, Notion docs, or hardcoded strings. No regression testing. No rollback. | The pain is acute but unrecognized — teams don't know they need promptops until a production prompt regression costs them. The system needs a "horror story → solution" narrative. |
+| User specificity | Solo builders, product engineers, platform teams, applied AI teams, agencies. | Five personas is too many for initial focus. The ideal first user is a solo builder or small team (≤5) shipping AI features in a single repo who already uses an IDE agent. |
+| Narrowest wedge | Quick eval (single-file) mode. | Good instinct. But the wedge should be even sharper: a single command that proves value in 60 seconds on an existing prompt. See "audit" expansion below. |
+| Observation surprises | Promptfoo → OpenAI acquisition. Role-based agent workflows mainstreaming. SKILL.md ecosystem. | The promptfoo acquisition validates the category and simultaneously removes the dominant OSS competitor from neutrality. |
+| Future-fit | Agent-as-harness, file-based protocol, SKILL.md native. | Perfectly aligned with the emerging thesis that small teams use agents as multipliers. This system is the quality layer those agents need. |
+
+## Proposed expansions
+
+### Expansion 1: Audit skill — zero-config first contact
+
+**Design principle: Narrowest wedge. Make the first 60 seconds undeniable.**
+
+A new skill that scans an existing codebase for hardcoded prompts (in strings, template literals, YAML, env vars) and generates a report:
+
+- How many prompts exist and where.
+- Which ones have no tests, no versioning, no variable schema.
+- A severity score ("prompt debt").
+- Auto-generated scaffold suggestions for the top 3 riskiest prompts.
+
+Today's onboarding requires the user to already believe they need promptops. The audit skill creates the belief by showing them their exposure.
+
+### Expansion 2: Drift detection — production prompt monitoring
+
+**Design principle: Future-fit. What happens after shipping?**
+
+The current vision covers pre-ship quality (regression gating) thoroughly but does not address post-ship quality erosion — the primary unaddressed pain in production AI systems. Model providers update silently. Prompts that passed last week may fail today.
+
+A new "drift detection" capability:
+
+- Define a **canary suite** — a small set of critical assertions that run on a schedule (cron, CI, or agent-triggered).
+- When model provider updates cause output drift, the canary suite catches it.
+- Emit a drift report comparing canary results against the production baseline.
+
+```yaml
+# promptops/canaries/critical-outputs.yaml
+id: critical-outputs-canary
+schedule: "0 6 * * *"
+suite_ref: critical-outputs-suite
+alert:
+  on_regression: true
+  channel: slack
+```
+
+### Expansion 3: Multi-model comparison
+
+**Design principle: Demand reality. Teams are constantly switching and comparing models.**
+
+Extend the existing `model_matrix` concept with a first-class comparison experience:
+
+- Run a suite against N models simultaneously.
+- Generate a comparison scorecard with per-model breakdowns and a cost/quality/latency tradeoff surface.
+- Support "promotion candidate" — which model+prompt combo should ship?
+
+The `model_matrix` field in suites already supports this structurally, but the comparison experience (scorecard diffing across models, normalized latency/cost/quality views) should be a first-class workflow.
+
+### Expansion 4: Role-based agent skills
+
+**Design principle: Role specialization. Different phases need different cognitive modes.**
+
+The current skills (eval, baseline, scaffold, validate) are workflow-oriented. The key insight is that the role matters as much as the task. Add role-aware skills:
+
+| Skill | Agent role | What it does |
+|---|---|---|
+| Review | "Paranoid staff prompt engineer" | Reviews a prompt spec for ambiguity, injection surface, variable hygiene, output contract completeness, cost estimation. |
+| Red-team | "Adversarial QA" | Generates adversarial test cases: prompt injection attempts, edge-case inputs, multilingual stress tests, format-breaking inputs. |
+| Optimize | "Performance engineer" | Analyzes a prompt's token usage, suggests compression techniques, identifies unnecessary instructions, estimates cost reduction. |
+
+These do not require new infrastructure — they are agent skill files that leverage existing protocol files but with specialized judgment.
+
+### Expansion 5: Community prompt packs (bootstrapping the registry)
+
+**Design principle: Make something people want — then make it easy to share.**
+
+The public prompt library registry described in the v2 section above is the right long-term target. The immediate version:
+
+- Curate 10-20 "starter packs" as GitHub repos under a custodian org:
+  - Summarization — prompts, datasets, evaluators for text summarization.
+  - Extraction — structured data extraction from unstructured text.
+  - Classification — text classification with calibration suites.
+  - Code review — code review prompts with quality gates.
+- Each pack is installable as a git dependency and includes pre-built baselines.
+- Users can fork, customize, and contribute back.
+
+This bootstraps the registry without building the registry. Git is the registry.
+
+### Expansion 6: Observability bridge adapters
+
+**Design principle: Status quo pain — teams already have observability; don't replace it.**
+
+Lightweight adapters that emit run artifacts to existing observability systems:
+
+```yaml
+# promptops/delivery/observability.yaml
+adapters:
+  - type: langfuse
+    endpoint: ${LANGFUSE_URL}
+    emit: [scorecard, regression_report]
+  - type: opentelemetry
+    endpoint: ${OTEL_ENDPOINT}
+    emit: [run_manifest, cases]
+```
+
+The vision correctly identifies observability platforms as complementary, not competitive. Without a bridge, teams choose either this system or their observability stack. The bridge removes the choice.
+
+## Proposed refinements
+
+### Refinement 1: Simplified minimal file structure
+
+The current `promptops/` directory has 13 subdirectories. For a solo builder, this is intimidating. Proposal:
+
+**Minimal mode** (auto-detected when ≤3 prompt specs exist):
+
+```text
+promptops/
+├── prompts/summarize-v1.yaml
+├── evals/summarize-smoke.yaml
+└── baselines/
+```
+
+The full structure activates progressively as complexity grows. The scaffolding agent should create only what is needed.
+
+### Refinement 2: Project-level defaults via config file
+
+```yaml
+# promptops.config.yaml
+defaults:
+  model: claude-sonnet-4-20250514
+  temperature: 0.3
+  max_tokens: 1024
+thresholds:
+  keyword_recall: 0.6
+  pass_rate: 0.8
+baseline:
+  auto_set: true
+```
+
+This prevents repetitive configuration across suites and accelerates initial onboarding.
+
+### Refinement 3: MCP integration
+
+The system should integrate with the Model Context Protocol (MCP), the dominant tool-calling standard in 2026:
+
+- Support MCP tool definitions as part of prompt specs (for tool-calling prompt evaluation).
+- Provide an MCP server adapter so agents can discover and invoke evals as MCP tools.
+
+### Refinement 4: First-class cost tracking
+
+The assertion types include `cost` and `latency`, but cost tracking should be elevated:
+
+- Every run manifest should include total cost (input tokens × price + output tokens × price).
+- Regression reports should include cost delta.
+- A `cost_budget` field on suites should hard-stop runs that exceed a dollar threshold.
+
+The primary objection to running evals is "it costs money." Making costs explicit and controllable removes the objection.
+
+### Refinement 5: Approachable terminology
+
+"Harness" is correct jargon but alienating to new users. User-facing documentation should refer to "your agent" everywhere and reserve "harness" for the technical specification. This is already partially done in the README but should be applied consistently.
+
+## Expansion priority sequence
+
+| Priority | Action | Effort | Impact |
+|---|---|---|---|
+| P0 | Audit skill (zero-config first contact) | ~2 days | Solves cold-start and discoverability problem |
+| P0 | Project-level config + simplified minimal mode | ~1 day | Reduces onboarding friction by 50% |
+| P1 | Review + red-team skills (role-based) | ~3 days | Role differentiation and prompt hardening |
+| P1 | Drift detection (canary suites) | ~2 days | Post-ship quality — unique differentiator |
+| P2 | Multi-model comparison | ~2 days | Solves daily pain for model-switching teams |
+| P2 | Starter packs (5-10 packs) | ~1 week | Bootstraps community and registry path |
+| P3 | Observability adapters | ~3 days | Bridge strategy — reduce either/or friction |
+| P3 | MCP integration | ~2 days | Future-proofs for tool-calling evaluation |
