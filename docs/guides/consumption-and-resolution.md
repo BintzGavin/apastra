@@ -2,7 +2,7 @@
 title: "Consumption and Resolution"
 description: "Understanding prompt consumption and the resolver chain"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-03-22"
+last_verified: "2026-03-23"
 source_files:
   - "README.md"
 ---

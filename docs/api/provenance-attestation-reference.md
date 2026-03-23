@@ -1,39 +1,18 @@
----
-title: "Provenance Attestation"
-description: "Schema for supply-chain provenance attestations (SLSA-style)."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/provenance-attestation.schema.json"
----
-
-# Provenance Attestation
+# Provenance Attestation Reference
 
 Schema for supply-chain provenance attestations (SLSA-style).
 
 ## Properties
 
-### `attestation_id`
+### `attestation_id` (string, Required)
+Unique identifier for the attestation.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier for the attestation.
+### `subject` (array[object], Required)
+The artifacts that are the subject of the attestation.
 
-### `subject`
+### `predicateType` (string, Required)
+URI indicating the format of the predicate (e.g., SLSA Provenance).
 
-- **Type:** `array`
-- **Requirement:** Required
-- **Description:** The artifacts that are the subject of the attestation.
-- **Items Type:** `object`
+### `predicate` (object, Required)
+The detailed attestation predicate containing builder, invocation, and materials.
 
-### `predicateType`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** URI indicating the format of the predicate (e.g., SLSA Provenance).
-
-### `predicate`
-
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** The detailed attestation predicate containing builder, invocation, and materials.

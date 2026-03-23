@@ -1,75 +1,36 @@
----
-title: "Run Manifest Specification"
-description: "Schema for a run manifest."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/run-manifest.schema.json"
----
-
-# Run Manifest Specification
+# Run Manifest Specification Reference
 
 Schema for a run manifest.
 
 ## Properties
 
-### `input_refs`
+### `input_refs` (object, Required)
+Input references
 
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** Input references
+### `resolved_digests` (object, Required)
+Resolved digests
 
-### `resolved_digests`
+### `timestamps` (object, Required)
+Timestamps
 
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** Resolved digests
+### `harness_identifier` (string, Required)
+Harness identifier
 
-### `timestamps`
+### `harness_version` (string, Required)
+Harness version
 
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** Timestamps
+### `model_ids` (array[string], Required)
+Model IDs
 
-### `harness_identifier`
+### `sampling_config` (object, Required)
+Sampling configuration
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Harness identifier
+### `environment` (object, Required)
+Environment metadata
 
-### `harness_version`
+### `status` (string, Required)
+Run status
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Harness version
+### `provenance` (object, Optional)
+SLSA-style provenance metadata representing the invocation of the evaluation run.
 
-### `model_ids`
-
-- **Type:** `array`
-- **Requirement:** Required
-- **Description:** Model IDs
-- **Items Type:** `string`
-
-### `sampling_config`
-
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** Sampling configuration
-
-### `environment`
-
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** Environment metadata
-
-### `status`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Run status
-
-### `provenance`
-
-- **Type:** `object`
-- **Requirement:** Optional
-- **Description:** SLSA-style provenance metadata representing the invocation of the evaluation run.

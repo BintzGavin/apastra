@@ -1,65 +1,32 @@
----
-title: "Automated Scan Record"
-description: "A record of an automated scan performed on a prompt package."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/automated-scan-record.schema.json"
----
-
-# Automated Scan Record
+# Automated Scan Record Reference
 
 A record of an automated scan performed on a prompt package.
 
 ## Properties
 
-### `scan_id`
+### `scan_id` (string, Required)
+Unique identifier for this scan record.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier for this scan record.
+### `package_digest` (string, Required)
+The digest of the package that was scanned.
 
-### `package_digest`
+### `timestamp` (string, Required)
+When the scan was performed.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The digest of the package that was scanned.
+### `scanner_id` (string, Required)
+The tool or service performing the scan.
 
-### `timestamp`
+### `scan_type` (string, Required)
+The type of scan performed.
+**Enum values:** malware, secrets, schema, policy
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** When the scan was performed.
+### `result` (string, Required)
+The outcome of the scan.
+**Enum values:** pass, fail, warn
 
-### `scanner_id`
+### `evidence_links` (array[string], Optional)
+Optional links to detailed scan logs or evidence.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The tool or service performing the scan.
+### `detailed_report` (string, Optional)
+Optional detailed text report from the scanner.
 
-### `scan_type`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The type of scan performed.
-- **Allowed Values:** `malware`, `secrets`, `schema`, `policy`
-
-### `result`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The outcome of the scan.
-- **Allowed Values:** `pass`, `fail`, `warn`
-
-### `evidence_links`
-
-- **Type:** `array`
-- **Requirement:** Optional
-- **Description:** Optional links to detailed scan logs or evidence.
-- **Items Type:** `string`
-
-### `detailed_report`
-
-- **Type:** `string`
-- **Requirement:** Optional
-- **Description:** Optional detailed text report from the scanner.

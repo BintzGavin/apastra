@@ -18,6 +18,7 @@
 - `consumption-manifest-reference.md`
 - `dataset-case-reference.md`
 - `dataset-manifest-reference.md`
+- `delivery-target-receipt-reference.md`
 - `delivery-target-reference.md`
 - `deprecation-record-reference.md`
 - `emergency-takedown-decision-reference.md`

@@ -1,63 +1,31 @@
----
-title: "Moderation Escalation Record"
-description: "Schema for a moderation escalation record."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/moderation-escalation-record.schema.json"
----
-
-# Moderation Escalation Record
+# Moderation Escalation Record Reference
 
 Schema for a moderation escalation record.
 
 ## Properties
 
-### `escalation_id`
+### `escalation_id` (string, Required)
+Unique identifier for the escalation.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier for the escalation.
+### `submission_id` (string, Required)
+Unique identifier for the submission.
 
-### `submission_id`
+### `escalated_by` (string, Required)
+User who escalated the content.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier for the submission.
+### `reason` (string, Required)
+Reason for the escalation.
 
-### `escalated_by`
+### `timestamp` (string, Required)
+Timestamp of the escalation.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** User who escalated the content.
+### `status` (string, Required)
+Status of the escalation.
+**Enum values:** pending, reviewed, dismissed
 
-### `reason`
+### `reviewer_id` (string, Optional)
+User who reviewed the escalation.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Reason for the escalation.
+### `notes` (string, Optional)
+Additional notes.
 
-### `timestamp`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Timestamp of the escalation.
-
-### `status`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Status of the escalation.
-- **Allowed Values:** `pending`, `reviewed`, `dismissed`
-
-### `reviewer_id`
-
-- **Type:** `string`
-- **Requirement:** Optional
-- **Description:** User who reviewed the escalation.
-
-### `notes`
-
-- **Type:** `string`
-- **Requirement:** Optional
-- **Description:** Additional notes.

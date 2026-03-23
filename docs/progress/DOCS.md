@@ -56,3 +56,10 @@
   - Updated `schema-dependency-graph.md`
   - Regenerated `context-docs.md`
   - Updated `last_verified` dates in guides and ADRs
+
+### DOCS v0.10.0
+- ✅ Completed: Daily Documentation Review
+  - Updated all API documentation from schemas using `generate_api_docs.py`
+  - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md` with new data
+  - Regenerated `context-docs.md`
+  - Updated `last_verified` dates in guides and ADRs

@@ -1,64 +1,31 @@
----
-title: "Ownership Dispute Record"
-description: "Schema for an ownership dispute record in the governance system."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/ownership-dispute-record.schema.json"
----
-
-# Ownership Dispute Record
+# ownership-dispute-record Reference
 
 Schema for an ownership dispute record in the governance system.
 
 ## Properties
 
-### `dispute_id`
+### `dispute_id` (string, Required)
+Unique identifier for the dispute.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier for the dispute.
+### `package_name` (string, Required)
+The canonical name of the package in dispute.
 
-### `package_name`
+### `complainant_id` (string, Required)
+Identifier of the party filing the dispute.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The canonical name of the package in dispute.
+### `timestamp` (string, Required)
+Timestamp when the dispute was created.
 
-### `complainant_id`
+### `claim_reason` (string, Required)
+The detailed reason for the ownership claim.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Identifier of the party filing the dispute.
+### `status` (string, Required)
+Current status of the dispute.
+**Enum values:** open, under_review, resolved
 
-### `timestamp`
+### `evidence_links` (array[string], Optional)
+Optional list of URLs containing evidence supporting the claim.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Timestamp when the dispute was created.
+### `resolution_notes` (string, Optional)
+Notes added upon resolution of the dispute.
 
-### `claim_reason`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The detailed reason for the ownership claim.
-
-### `status`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Current status of the dispute.
-- **Allowed Values:** `open`, `under_review`, `resolved`
-
-### `evidence_links`
-
-- **Type:** `array`
-- **Requirement:** Optional
-- **Description:** Optional list of URLs containing evidence supporting the claim.
-- **Items Type:** `string`
-
-### `resolution_notes`
-
-- **Type:** `string`
-- **Requirement:** Optional
-- **Description:** Notes added upon resolution of the dispute.

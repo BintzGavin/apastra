@@ -1,64 +1,30 @@
----
-title: "Run Request Specification"
-description: "Schema for a minimal BYO harness run request."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/run-request.schema.json"
----
-
-# Run Request Specification
+# Run Request Specification Reference
 
 Schema for a minimal BYO harness run request.
 
 ## Properties
 
-### `suite_id`
+### `suite_id` (string, Required)
+The benchmark suite ID
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The benchmark suite ID
+### `revision_ref` (string, Required)
+The revision ref (SHA/tag/digest)
 
-### `revision_ref`
+### `model_matrix` (array[string], Required)
+Model matrix
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The revision ref (SHA/tag/digest)
+### `evaluator_refs` (array[string], Required)
+Evaluator references
 
-### `model_matrix`
+### `trials` (integer, Optional)
+Number of trials
 
-- **Type:** `array`
-- **Requirement:** Required
-- **Description:** Model matrix
-- **Items Type:** `string`
+### `budgets` (object, Optional)
+Budgets
 
-### `evaluator_refs`
+### `timeouts` (object, Optional)
+Timeouts
 
-- **Type:** `array`
-- **Requirement:** Required
-- **Description:** Evaluator references
-- **Items Type:** `string`
+### `artifact_backend_config` (object, Optional)
+Artifact backend config
 
-### `trials`
-
-- **Type:** `integer`
-- **Requirement:** Optional
-- **Description:** Number of trials
-
-### `budgets`
-
-- **Type:** `object`
-- **Requirement:** Optional
-- **Description:** Budgets
-
-### `timeouts`
-
-- **Type:** `object`
-- **Requirement:** Optional
-- **Description:** Timeouts
-
-### `artifact_backend_config`
-
-- **Type:** `object`
-- **Requirement:** Optional
-- **Description:** Artifact backend config

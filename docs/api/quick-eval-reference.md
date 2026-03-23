@@ -1,39 +1,18 @@
----
-title: "Quick Eval"
-description: "Schema defining a combined quick evaluation file containing prompt, cases, and assertions."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/quick-eval.schema.json"
----
-
-# Quick Eval
+# Quick Eval Reference
 
 Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
 
 ## Properties
 
-### `id`
+### `id` (string, Required)
+Stable identifier for the quick eval.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Stable identifier for the quick eval.
+### `prompt` (string, Required)
+The prompt template.
 
-### `prompt`
+### `cases` (array[ref https://promptops.apastra.com/schemas/dataset-case.schema.json], Required)
+Array of dataset cases with inputs and inline asserts.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The prompt template.
+### `thresholds` (object, Optional)
+Optional thresholds for the evaluation.
 
-### `cases`
-
-- **Type:** `array`
-- **Requirement:** Required
-- **Description:** Array of dataset cases with inputs and inline asserts.
-- **Items Type:** `any`
-
-### `thresholds`
-
-- **Type:** `object`
-- **Requirement:** Optional
-- **Description:** Optional thresholds for the evaluation.
