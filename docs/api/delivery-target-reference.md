@@ -1,26 +1,12 @@
----
-title: "Delivery Target Specification"
-description: "Schema for delivery target config."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/delivery-target.schema.json"
----
-
-# Delivery Target Specification
+# Delivery Target Specification Reference
 
 Schema for delivery target config.
 
 ## Properties
 
-### `type`
+### `type` (string, Required)
+Type of delivery target, e.g., 'github_pr', 'oci_registry'
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Type of delivery target, e.g., 'github_pr', 'oci_registry'
+### `repo` (string, Required)
+Target repository if type is 'github_pr'
 
-### `repo`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Target repository if type is 'github_pr'

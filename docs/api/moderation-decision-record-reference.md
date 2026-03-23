@@ -1,57 +1,28 @@
----
-title: "Moderation Decision Record"
-description: "Schema for moderation decision records."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/moderation-decision-record.schema.json"
----
-
-# Moderation Decision Record
+# Moderation Decision Record Reference
 
 Schema for moderation decision records.
 
 ## Properties
 
-### `decision_id`
+### `decision_id` (string, Required)
+Unique identifier for the moderation decision.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier for the moderation decision.
+### `submission_id` (string, Optional)
+The ID of the submission this decision applies to.
 
-### `submission_id`
+### `package_digest` (string, Optional)
+The SHA-256 digest of the package this decision applies to.
 
-- **Type:** `string`
-- **Requirement:** Optional
-- **Description:** The ID of the submission this decision applies to.
+### `decision` (string, Required)
+The moderation decision made.
+**Enum values:** approved, rejected, flagged
 
-### `package_digest`
+### `moderator_id` (string, Required)
+The ID of the moderator who made the decision.
 
-- **Type:** `string`
-- **Requirement:** Optional
-- **Description:** The SHA-256 digest of the package this decision applies to.
+### `timestamp` (string, Required)
+The timestamp of the decision.
 
-### `decision`
+### `reason` (string, Required)
+The reason for the decision.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The moderation decision made.
-- **Allowed Values:** `approved`, `rejected`, `flagged`
-
-### `moderator_id`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The ID of the moderator who made the decision.
-
-### `timestamp`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The timestamp of the decision.
-
-### `reason`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The reason for the decision.

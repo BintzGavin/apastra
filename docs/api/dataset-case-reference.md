@@ -1,45 +1,21 @@
----
-title: "Dataset Case"
-description: "Schema defining a single line of a JSONL dataset for evaluating prompt tests."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/dataset-case.schema.json"
----
-
-# Dataset Case
+# Dataset Case Reference
 
 Schema defining a single line of a JSONL dataset for evaluating prompt tests.
 
 ## Properties
 
-### `case_id`
+### `case_id` (string, Required)
+Stable identifier for the specific test case.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Stable identifier for the specific test case.
+### `inputs` (object, Required)
+Map of variable names to values, mapping to the variables required by the prompt spec.
 
-### `inputs`
+### `expected_outputs` (object, Optional)
+Map of expected output values (e.g., exact matches, substrings).
 
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** Map of variable names to values, mapping to the variables required by the prompt spec.
+### `assert` (array[object], Optional)
+Array of inline assertions to evaluate the case output against.
 
-### `expected_outputs`
+### `metadata` (object, Optional)
+Arbitrary metadata for the specific test case (e.g., tags, difficulty, domain).
 
-- **Type:** `object`
-- **Requirement:** Optional
-- **Description:** Map of expected output values (e.g., exact matches, substrings).
-
-### `assert`
-
-- **Type:** `array`
-- **Requirement:** Optional
-- **Description:** Array of inline assertions to evaluate the case output against.
-- **Items Type:** `object`
-
-### `metadata`
-
-- **Type:** `object`
-- **Requirement:** Optional
-- **Description:** Arbitrary metadata for the specific test case (e.g., tags, difficulty, domain).

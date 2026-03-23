@@ -1,45 +1,21 @@
----
-title: "Mirror Sync Receipt"
-description: "Schema for mirror sync receipts."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/mirror-sync-receipt.schema.json"
----
-
-# Mirror Sync Receipt
+# Mirror Sync Receipt Reference
 
 Schema for mirror sync receipts.
 
 ## Properties
 
-### `receipt_id`
+### `receipt_id` (string, Required)
+Unique identifier for the sync receipt.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier for the sync receipt.
+### `mirror_id` (string, Required)
+The ID of the mirror.
 
-### `mirror_id`
+### `synced_digests` (array[string], Required)
+Array of SHA-256 digests that were synced.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The ID of the mirror.
+### `timestamp` (string, Required)
+The timestamp of the sync.
 
-### `synced_digests`
+### `status` (string, Required)
+The status of the sync operation.
 
-- **Type:** `array`
-- **Requirement:** Required
-- **Description:** Array of SHA-256 digests that were synced.
-- **Items Type:** `string`
-
-### `timestamp`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The timestamp of the sync.
-
-### `status`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The status of the sync operation.

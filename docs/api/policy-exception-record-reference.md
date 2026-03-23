@@ -1,50 +1,24 @@
----
-title: "Policy Exception Record"
-description: "Schema for policy exception records"
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/policy-exception-record.schema.json"
----
-
-# Policy Exception Record
+# policy-exception-record Reference
 
 Schema for policy exception records
 
 ## Properties
 
-### `exception_id`
+### `exception_id` (string, Required)
+Unique identifier for the exception
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier for the exception
+### `policy_id` (string, Required)
+The policy being bypassed
 
-### `policy_id`
+### `target_digest` (string, Required)
+The digest of the package/artifact receiving the exception
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The policy being bypassed
+### `approver_id` (string, Required)
+The person granting the exception
 
-### `target_digest`
+### `reason` (string, Required)
+Explanation for the exception
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The digest of the package/artifact receiving the exception
+### `timestamp` (string, Required)
+Timestamp when the exception was granted
 
-### `approver_id`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The person granting the exception
-
-### `reason`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Explanation for the exception
-
-### `timestamp`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Timestamp when the exception was granted

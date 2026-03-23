@@ -1,45 +1,22 @@
----
-title: "Approval State"
-description: "Schema for an Approval state record indicating human and machine review results."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/approval-state.schema.json"
----
-
-# Approval State
+# approval-state Reference
 
 Schema for an Approval state record indicating human and machine review results.
 
 ## Properties
 
-### `revision_ref`
+### `revision_ref` (string, Required)
+Target digest or ID of the revision or package.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Target digest or ID of the revision or package.
+### `checks_passed` (boolean, Required)
+Whether the required machine checks have passed.
 
-### `checks_passed`
+### `human_review` (object, Required)
+Details of the manual human review.
 
-- **Type:** `boolean`
-- **Requirement:** Required
-- **Description:** Whether the required machine checks have passed.
+### `decision` (string, Required)
+The final decision of the review.
+**Enum values:** approved, rejected, abstained
 
-### `human_review`
+### `digest` (string, Optional)
+The computed content digest (e.g., sha256:<hex>).
 
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** Details of the manual human review.
-
-### `decision`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** The final decision of the review.
-- **Allowed Values:** `approved`, `rejected`, `abstained`
-
-### `digest`
-
-- **Type:** `string`
-- **Requirement:** Optional
-- **Description:** The computed content digest (e.g., sha256:<hex>).

@@ -1,38 +1,18 @@
----
-title: "Trusted Publisher Provenance"
-description: "Provenance record to verify and grant trusted publisher badges for packages and providers."
-audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-22"
-source_files:
-  - "promptops/schemas/trusted-publisher-provenance.schema.json"
----
-
-# Trusted Publisher Provenance
+# Trusted Publisher Provenance Reference
 
 Provenance record to verify and grant trusted publisher badges for packages and providers.
 
 ## Properties
 
-### `publisher_id`
+### `publisher_id` (string, Required)
+Unique identifier of the trusted publisher.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Unique identifier of the trusted publisher.
+### `package_name` (string, Required)
+Name or canonical digest of the package being published.
 
-### `package_name`
+### `timestamp` (string, Required)
+Time the provenance record was generated.
 
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Name or canonical digest of the package being published.
+### `claims` (object, Required)
+Verifications performed for trusted publisher badging.
 
-### `timestamp`
-
-- **Type:** `string`
-- **Requirement:** Required
-- **Description:** Time the provenance record was generated.
-
-### `claims`
-
-- **Type:** `object`
-- **Requirement:** Required
-- **Description:** Verifications performed for trusted publisher badging.
