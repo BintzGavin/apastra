@@ -1,12 +1,12 @@
 #### 1. Context & Goal
-- **Objective**: Minimal Plan Exception Final - All plans officially complete.
-- **Trigger**: The domain is already completed in previous versions.
-- **Impact**: Domain complete; no further implementation is needed.
+- **Objective**: Execute a no-op minimal plan exception for EVALUATION as all planning tasks have officially been completed.
+- **Trigger**: The EVALUATION domain is marked as complete with Minimal Plan Exception Final in docs/status/EVALUATION.md.
+- **Impact**: No operational changes. This satisfies the planning requirement while acknowledging the blocked/completed state of the domain.
 
 #### 2. File Inventory
-- **Create**: N/A
-- **Modify**: N/A
-- **Read-Only**: N/A
+- **Create**: None
+- **Modify**: None
+- **Read-Only**: None
 
 #### 3. Implementation Spec
 - **Harness Architecture**: N/A
