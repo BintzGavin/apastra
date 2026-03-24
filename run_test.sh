@@ -1,1 +1,1 @@
-echo "No test suite required for markdown policies"
+grep "\[v1.92.0\] ✅ Planned:" docs/status/RUNTIME.md
