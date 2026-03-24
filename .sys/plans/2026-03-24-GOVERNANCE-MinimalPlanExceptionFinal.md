@@ -1,12 +1,12 @@
 #### 1. Context & Goal
-- **Objective**: Acknowledge that all GOVERNANCE domain vision gaps are complete.
-- **Trigger**: The GOVERNANCE domain has achieved minimal plan completion status. All governance primitives promised in the vision are fully functional.
-- **Impact**: Documents that no further architectural modifications are required at this stage.
+- **Objective**: Execute a no-op minimal plan exception for GOVERNANCE.
+- **Trigger**: The GOVERNANCE domain is marked as complete with Minimal Plan Exception Final in docs/status/GOVERNANCE.md.
+- **Impact**: No operational changes. This satisfies the planning requirement while acknowledging the blocked/completed state of the domain.
 
 #### 2. File Inventory
-- **Create**: N/A
-- **Modify**: N/A
-- **Read-Only**: N/A
+- **Create**: None
+- **Modify**: None
+- **Read-Only**: None
 
 #### 3. Implementation Spec
 - **Policy Architecture**: N/A
