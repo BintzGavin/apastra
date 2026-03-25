@@ -4,9 +4,9 @@
 - **Impact**: Domain execution is blocked to preserve current system stability. No code generation will occur.
 
 #### 2. File Inventory
-- **Create**: N/A
-- **Modify**: N/A
-- **Read-Only**: docs/vision.md, README.md
+- **Create**: []
+- **Modify**: []
+- **Read-Only**: [docs/vision.md, README.md, .sys/llmdocs/context-governance.md]
 
 #### 3. Implementation Spec
 - **Policy Architecture**: N/A
@@ -14,7 +14,7 @@
 - **CODEOWNERS Patterns**: N/A
 - **Promotion Record Format**: N/A
 - **Delivery Target Format**: N/A
-- **Dependencies**: N/A
+- **Dependencies**: None.
 
 #### 4. Test Plan
 - **Verification**: N/A
