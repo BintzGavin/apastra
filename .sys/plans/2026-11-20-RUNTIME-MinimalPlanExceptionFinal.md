@@ -1,12 +1,8 @@
 #### 1. Context & Goal
-- **Objective**: Execute a MinimalPlanExceptionFinal for the RUNTIME domain.
-- **Trigger**: The RUNTIME domain has already been marked complete.
-- **Impact**: Clears pending state and avoids unnecessary updates.
+Execute the MinimalPlanExceptionFinal to formally record that the RUNTIME domain is fully implemented according to the vision document. The domain has completed all required capabilities defined in the current vision document. This formalizes the completion of the RUNTIME planner phase and unblocks subsequent execution tasks.
 
 #### 2. File Inventory
-- **Create**: N/A
-- **Modify**: N/A
-- **Read-Only**: N/A
+This task does not require modifying or creating implementation files in the RUNTIME domain. It formally records the completion of the planner phase. The state files docs/status/RUNTIME.md, docs/progress/RUNTIME.md, and .jules/RUNTIME.md would logically be updated, but this task is treated as completely blocked because the tracking files already reflect that the domain is complete or a duplicate version header exists.
 
 #### 3. Implementation Spec
 - **Resolver Architecture**: N/A
@@ -16,6 +12,4 @@
 - **Dependencies**: N/A
 
 #### 4. Test Plan
-- **Verification**: N/A
-- **Success Criteria**: N/A
-- **Edge Cases**: N/A
+No execution implementation changes are required, therefore no testing suite or success criteria need to be formulated. The execution plan will consist solely of a pre-commit step and an empty submission commit detailing the blocked status.
