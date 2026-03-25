@@ -1,12 +1,12 @@
 #### 1. Context & Goal
-- **Objective**: Log a MinimalPlanExceptionFinal because all governance requirements defined in the vision document have been fulfilled.
-- **Trigger**: The GOVERNANCE domain has completed all required capabilities defined in the current vision document.
-- **Impact**: Pauses active GOVERNANCE planning until new vision requirements are introduced. No gates or policies are affected.
+- **Objective**: Execute a minimal plan exception to halt feature expansion because all specified architectural governance primitives exist.
+- **Trigger**: The domain has completed all required capabilities defined in the current vision document.
+- **Impact**: Domain execution is blocked to preserve current system stability. No code generation will occur.
 
 #### 2. File Inventory
-- **Create**: None.
-- **Modify**: None.
-- **Read-Only**: `docs/vision.md`, `README.md`, `promptops/policies/`, `promptops/delivery/`, `derived-index/promotions/`, `.github/workflows/`, `.github/CODEOWNERS`.
+- **Create**: N/A
+- **Modify**: N/A
+- **Read-Only**: docs/vision.md, README.md
 
 #### 3. Implementation Spec
 - **Policy Architecture**: N/A
