@@ -1,12 +1,8 @@
 #### 1. Context & Goal
-- **Objective**: Execute a minimal plan exception to mark the CONTRACTS domain as complete for the current iteration.
-- **Trigger**: All vision gaps identified in docs/vision.md and README.md for the CONTRACTS domain have been fulfilled.
-- **Impact**: Formalizes the completion state for this cycle without necessitating further code changes, enabling focus on other domains.
+Trigger: The CONTRACTS domain has successfully established schemas and validation logic for all core components described in the system architecture, having completed all required capabilities defined in the current vision document.
 
 #### 2. File Inventory
-- **Create**: N/A
-- **Modify**: N/A
-- **Read-Only**: N/A
+N/A
 
 #### 3. Implementation Spec
 - **Schema Architecture**: N/A
