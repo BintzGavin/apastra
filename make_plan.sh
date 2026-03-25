@@ -1,3 +1,4 @@
+cat << 'PLAN_EOF' > .sys/plans/$(date +%Y-%m-%d)-RUNTIME-MinimalPlanExceptionFinal.md
 #### 1. Context & Goal
 Execute the MinimalPlanExceptionFinal to formally record that the RUNTIME domain is fully implemented according to the vision document. The domain has completed all required capabilities defined in the current vision document. This formalizes the completion of the RUNTIME planner phase and unblocks subsequent execution tasks.
 
@@ -17,3 +18,4 @@ Execute the MinimalPlanExceptionFinal to formally record that the RUNTIME domain
 - **Verification**: N/A
 - **Success Criteria**: N/A
 - **Edge Cases**: N/A
+PLAN_EOF
