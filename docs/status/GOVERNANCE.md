@@ -1,4 +1,5 @@
-**Version**: 1.97.0
+**Version**: 1.98.0
+[v1.98.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.96.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.95.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.94.0] ✅ Completed: CommunityReportRecordsPolicy - Implemented community report records policy.
