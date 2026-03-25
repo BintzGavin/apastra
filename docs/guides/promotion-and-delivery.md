@@ -2,7 +2,7 @@
 title: "Promotion and Delivery"
 description: "Understanding prompt promotion and downstream delivery"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-03-23"
+last_verified: "2026-03-25"
 source_files:
   - "README.md"
 ---

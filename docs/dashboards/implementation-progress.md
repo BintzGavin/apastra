@@ -2,7 +2,7 @@
 title: "Implementation Progress Dashboard"
 description: "Detailed chronological view of all completed work across domains."
 audience: "all"
-last_verified: "2026-03-23"
+last_verified: "2026-03-25"
 ---
 
 # Implementation Progress Dashboard
@@ -307,11 +307,13 @@ This dashboard aggregates the progress logs from all domains to provide a unifie
 - ✅ Completed: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
 
 ### CONTRACTS v1.6.0
-- ✅ Planned: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
+- ✅ Completed: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
 
 ### CONTRACTS v1.7.0
 - ✅ Completed: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
 
+### CONTRACTS v1.8.0
+- ✅ Planned: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
 
 ## DOCS Progress
 
@@ -374,8 +376,23 @@ This dashboard aggregates the progress logs from all domains to provide a unifie
   - Regenerated `context-docs.md`
   - Updated `last_verified` dates in guides and ADRs
 
+### DOCS v0.10.0
+- ✅ Completed: Daily Documentation Review
+  - Updated all API documentation from schemas using `generate_api_docs.py`
+  - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md` with new data
+  - Regenerated `context-docs.md`
+  - Updated `last_verified` dates in guides and ADRs
+
+### DOCS v0.11.0
+- ✅ Completed: Daily Documentation Review
+  - Updated API documentation to include digest-convention-reference.md
+  - Refreshed cross-domain dashboards domain-status-overview.md and implementation-progress.md with new data
+  - Regenerated context-docs.md
+  - Updated last_verified dates in guides and ADRs
 
 ## EVALUATION Progress
+
+# EVALUATION Progress
 
 ### EVALUATION v0.1.1
 - ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
@@ -672,7 +689,6 @@ This dashboard aggregates the progress logs from all domains to provide a unifie
 ### EVALUATION v0.98.0
 - ✅ Planned: Minimal Plan Exception Final - All plans officially complete
 
-
 ## GOVERNANCE Progress
 
 ### GOVERNANCE v0.2.0
@@ -912,7 +928,7 @@ This dashboard aggregates the progress logs from all domains to provide a unifie
 - ✅ Completed: ProvenanceAttestations - Implemented provenance attestations policy.
 
 ### GOVERNANCE v1.75.0
-- ✅ Planned: MirrorSyncReceipts - Created spec for mirror sync receipts policy.
+- ✅ Completed: MirrorSyncReceipts - Created spec for mirror sync receipts policy.
 
 ### GOVERNANCE v1.76.0
 - ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
@@ -921,7 +937,7 @@ This dashboard aggregates the progress logs from all domains to provide a unifie
 - ✅ Completed: RegressionGateGlobFix - Fixed glob pattern in regression-gate workflow.
 
 ### GOVERNANCE v1.78.0
-- ✅ Planned: SubmissionRecords - Created spec for submission records policy.
+- ✅ Completed: SubmissionRecords - Created spec for submission records policy.
 
 ### GOVERNANCE v1.79.0
 - ✅ Completed: SubmissionRecords - Implemented submission records policy.
@@ -974,8 +990,7 @@ This dashboard aggregates the progress logs from all domains to provide a unifie
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 
 ### GOVERNANCE v1.96.0
-- ✅ Planned: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
-
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 
 ## RUNTIME Progress
 
@@ -1285,4 +1300,3 @@ This dashboard aggregates the progress logs from all domains to provide a unifie
 
 ### RUNTIME v1.92.0
 - ✅ Planned: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain.
-
