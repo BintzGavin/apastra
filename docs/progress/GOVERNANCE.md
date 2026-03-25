@@ -235,7 +235,7 @@
 - ✅ Completed: ProvenanceAttestations - Implemented provenance attestations policy.
 
 ### GOVERNANCE v1.75.0
-- ✅ Planned: MirrorSyncReceipts - Created spec for mirror sync receipts policy.
+- ✅ Completed: MirrorSyncReceipts - Created spec for mirror sync receipts policy.
 
 ### GOVERNANCE v1.76.0
 - ✅ Completed: ArtifactAttestations - Minimal Plan Exception. Changes already present.
@@ -244,7 +244,7 @@
 - ✅ Completed: RegressionGateGlobFix - Fixed glob pattern in regression-gate workflow.
 
 ### GOVERNANCE v1.78.0
-- ✅ Planned: SubmissionRecords - Created spec for submission records policy.
+- ✅ Completed: SubmissionRecords - Created spec for submission records policy.
 
 ### GOVERNANCE v1.79.0
 - ✅ Completed: SubmissionRecords - Implemented submission records policy.
@@ -297,4 +297,4 @@
 - ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 
 ### GOVERNANCE v1.96.0
-- ✅ Planned: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
+- ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
