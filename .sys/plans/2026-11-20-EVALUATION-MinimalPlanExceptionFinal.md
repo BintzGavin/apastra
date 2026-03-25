@@ -1,7 +1,7 @@
 #### 1. Context & Goal
-- **Objective**: Formally conclude all tasks for the EVALUATION domain using a Minimal Plan Exception.
-- **Trigger**: The status tracker indicates "Minimal Plan Exception Final - All plans officially complete" for version 0.98.0.
-- **Impact**: All evaluation capabilities, harness logic, and report structures exist and satisfy the requirements, with no remaining domain requirements.
+- **Objective**: Execute a minimal plan exception for the EVALUATION domain.
+- **Trigger**: The EVALUATION domain has completed all required capabilities defined in the current vision document.
+- **Impact**: Formalizes the completed status of the EVALUATION domain.
 
 #### 2. File Inventory
 - **Create**: N/A
