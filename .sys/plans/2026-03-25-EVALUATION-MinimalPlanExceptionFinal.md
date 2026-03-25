@@ -1,11 +1,11 @@
 #### 1. Context & Goal
-- **Objective**: Log a final minimal plan exception for EVALUATION as all capabilities are met.
-- **Trigger**: The domain having completed all required capabilities defined in the current vision document.
-- **Impact**: Formalizes the completion of EVALUATION tasks.
+- **Objective**: Log a minimal plan exception.
+- **Trigger**: The EVALUATION domain has completed all required capabilities defined in the current vision document.
+- **Impact**: Satisfies process requirements to close out the domain.
 
 #### 2. File Inventory
-- **Create**: .sys/plans/2026-03-25-EVALUATION-MinimalPlanExceptionFinal.md
-- **Modify**: N/A
+- **Create**: None
+- **Modify**: None
 - **Read-Only**: docs/vision.md, README.md
 
 #### 3. Implementation Spec
