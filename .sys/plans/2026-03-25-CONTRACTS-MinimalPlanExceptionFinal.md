@@ -1,8 +1,12 @@
 #### 1. Context & Goal
-Trigger: The CONTRACTS domain has successfully established schemas and validation logic for all core components described in the system architecture, having completed all required capabilities defined in the current vision document.
+- **Objective**: Execute a minimal plan exception to halt feature expansion because all specified architectural governance primitives exist.
+- **Trigger**: The domain has completed all required capabilities defined in the current vision document.
+- **Impact**: Domain execution is blocked to preserve current system stability. No code generation will occur.
 
 #### 2. File Inventory
-N/A
+- **Create**: N/A
+- **Modify**: N/A
+- **Read-Only**: N/A
 
 #### 3. Implementation Spec
 - **Schema Architecture**: N/A
