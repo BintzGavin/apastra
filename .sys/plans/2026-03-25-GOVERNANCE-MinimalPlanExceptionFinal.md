@@ -1,20 +1,22 @@
 #### 1. Context & Goal
-- **Objective**: Acknowledge that all GOVERNANCE vision gaps have been successfully implemented and tested.
-- **Trigger**: The vision requirements from `docs/vision.md` and `README.md` are fully aligned with current reality, including branch protections, CODEOWNERS, immutable releases, promotion records, required status checks, and delivery targets.
-- **Impact**: Formalizes the completion of the GOVERNANCE domain architecture, triggering a minimal plan exception to avoid creating unnecessary or out-of-scope files.
+- **Objective**: Acknowledge that all GOVERNANCE domain vision gaps are currently complete.
+- **Trigger**: The GOVERNANCE domain has achieved minimal plan completion status, as all governance primitives (CODEOWNERS, required status checks, regression policy, promotion records, delivery targets, and immutable releases) promised in the `docs/vision.md` and `README.md` are fully functional and present.
+- **Impact**: No immediate architectural modifications are required for the GOVERNANCE domain at this stage, preventing unnecessary churn.
 
 #### 2. File Inventory
-- **Create**: None
-- **Modify**: None
-- **Read-Only**: `docs/vision.md`, `README.md`, `promptops/policies/`, `promptops/delivery/`, `.github/`
+- **Create**: N/A
+- **Modify**: N/A
+- **Read-Only**: `docs/vision.md`, `README.md`, `docs/status/GOVERNANCE.md`, `.jules/GOVERNANCE.md`, `promptops/policies/*`, `promptops/delivery/*`, `derived-index/promotions/*`, `.github/workflows/*`, `.github/CODEOWNERS`
 
 #### 3. Implementation Spec
-- **Policy Architecture**: The architecture is fully realized per the vision.
-- **Workflow Design**: No new workflows to design.
-- **CODEOWNERS Patterns**: No changes needed.
-- **Promotion Record Format**: No changes needed.
-- **Delivery Target Format**: No changes needed.
-- **Dependencies**: None.
+- **Policy Architecture**: N/A
+- **Workflow Design**: N/A
+- **CODEOWNERS Patterns**: N/A
+- **Promotion Record Format**: N/A
+- **Delivery Target Format**: N/A
+- **Dependencies**: N/A
 
 #### 4. Test Plan
 - **Verification**: N/A
+- **Success Criteria**: N/A
+- **Edge Cases**: N/A
