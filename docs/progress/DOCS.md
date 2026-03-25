@@ -63,3 +63,10 @@
   - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md` with new data
   - Regenerated `context-docs.md`
   - Updated `last_verified` dates in guides and ADRs
+
+### DOCS v0.11.0
+- ✅ Completed: Daily Documentation Review
+  - Updated API documentation to include digest-convention-reference.md
+  - Refreshed cross-domain dashboards domain-status-overview.md and implementation-progress.md with new data
+  - Regenerated context-docs.md
+  - Updated last_verified dates in guides and ADRs

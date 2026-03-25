@@ -2,7 +2,7 @@
 title: "Schema Dependency Graph"
 description: "Visualization of cross-domain schema dependencies."
 audience: "developers | platform-teams"
-last_verified: "2026-03-22"
+last_verified: "2026-03-25"
 ---
 
 # Schema Dependency Graph

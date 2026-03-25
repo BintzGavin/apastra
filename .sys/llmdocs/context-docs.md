@@ -21,6 +21,7 @@
 - `delivery-target-receipt-reference.md`
 - `delivery-target-reference.md`
 - `deprecation-record-reference.md`
+- `digest-convention-reference.md`
 - `emergency-takedown-decision-reference.md`
 - `evaluator-reference.md`
 - `harness-adapter-reference.md`
