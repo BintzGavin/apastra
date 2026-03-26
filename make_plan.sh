@@ -1,9 +1,10 @@
 #!/bin/bash
-cat << 'INNER_EOF' > .sys/plans/$(date +%Y-%m-%d)-CONTRACTS-MinimalPlanExceptionFinal.md
+DATE=$(date +%Y-%m-%d)
+cat << 'PLAN' > .sys/plans/${DATE}-CONTRACTS-MinimalPlanExceptionFinal.md
 #### 1. Context & Goal
-- **Objective**: Execute a minimal plan exception to halt feature expansion because all specified architectural governance primitives exist.
-- **Trigger**: The domain has completed all required capabilities defined in the current vision document.
-- **Impact**: Domain execution is blocked to preserve current system stability. No code generation will occur.
+- **Objective**: Execute the final minimal plan exception for the CONTRACTS domain.
+- **Trigger**: All vision gaps have been closed and no further functional changes are required.
+- **Impact**: Signals that the CONTRACTS domain is fully implemented and blocked from further changes.
 
 #### 2. File Inventory
 - **Create**: N/A
@@ -21,4 +22,4 @@ cat << 'INNER_EOF' > .sys/plans/$(date +%Y-%m-%d)-CONTRACTS-MinimalPlanException
 - **Verification**: N/A
 - **Success Criteria**: N/A
 - **Edge Cases**: N/A
-INNER_EOF
+PLAN
