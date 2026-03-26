@@ -1,22 +1,26 @@
 #### 1. Context & Goal
-- **Objective**: Define governance policies for observability adapter delivery targets.
-- **Trigger**: `docs/vision.md` outlines "Observability adapter delivery policies" as an expansion governance feature to define rules for how run artifacts are emitted to external observability systems (Langfuse, OpenTelemetry) via delivery adapters, and policies for what data is sent and to whom.
-- **Impact**: Establishes clear governance rules for emitting sensitive evaluation data to third-party observability platforms, ensuring auditability and compliance.
+- **Objective**: Implement a formal governance policy for observability adapters, aligning with the "Expansion 6: Observability bridge adapters" from docs/vision.md.
+- **Trigger**: The vision document explicitly lists "Observability bridge adapters" and "Observability adapters" as a planned expansion to bridge the gap with existing observability systems like Langfuse and OpenTelemetry.
+- **Impact**: Provides clear governance on how observability adapters should securely emit run artifacts and manage credentials within the promptops ecosystem.
 
 #### 2. File Inventory
-- **Create**: `promptops/policies/observability-adapters.md` (Defines governance rules for configuring and using observability adapters like Langfuse and OpenTelemetry).
-- **Modify**: `.github/CODEOWNERS` (Add the new policy file to the `@apastra/governance-admins` review boundary).
-- **Read-Only**: `docs/vision.md` (Observability bridge adapters section).
+- **Create**: `promptops/policies/observability-adapters.md`
+- **Modify**: `.sys/llmdocs/context-governance.md`
+- **Read-Only**: `docs/vision.md`, `README.md`
 
 #### 3. Implementation Spec
-- **Policy Architecture**: The policy will mandate that all observability adapters defined in `promptops/delivery/` must explicitly declare which data types (e.g., `scorecard`, `regression_report`, `run_manifest`, `cases`) are permitted to be emitted. It will also require that endpoints must use secure connections (HTTPS/TLS) and that sensitive credentials (like API keys) must be managed via GitHub Secrets or an equivalent secure secret store, not hardcoded in the adapter configurations.
-- **Workflow Design**: N/A
-- **CODEOWNERS Patterns**: Add `/promptops/policies/observability-adapters.md @apastra/governance-admins` to `.github/CODEOWNERS`
+- **Policy Architecture**:
+  - Create a new markdown policy document defining the rules for observability adapters.
+  - Require adapters to be explicitly defined in `promptops/delivery/observability.yaml`.
+  - Mandate that adapters must never hardcode credentials and must only use environment variables injected securely by the runner.
+  - Require adapters to gracefully handle network failures without crashing the core run or evaluation processes.
+- **Workflow Design**: No new automated workflows needed, this is a policy document.
+- **CODEOWNERS Patterns**: Assign `@apastra/governance-admins` as owners of `promptops/policies/observability-adapters.md` (already covered by glob pattern).
 - **Promotion Record Format**: N/A
-- **Delivery Target Format**: N/A
-- **Dependencies**: N/A
+- **Delivery Target Format**: Mention `promptops/delivery/observability.yaml` as the configuration target.
+- **Dependencies**: None.
 
 #### 4. Test Plan
-- **Verification**: Verify the creation of `promptops/policies/observability-adapters.md` and the update to `.github/CODEOWNERS`.
-- **Success Criteria**: The policy file exists and clearly articulates the governance rules for observability adapters, and CODEOWNERS enforcement is in place.
-- **Edge Cases**: N/A
+- **Verification**:
+  - Ensure the new policy file is valid markdown.
+  - Ensure it conforms to the general style of other policies in `promptops/policies/`.
