@@ -55,6 +55,8 @@ Your mission is to identify the next critical gap between the documented vision 
 
 ## Vision Gaps to Hunt For
 
+⚠️ **CRITICAL: Do NOT rely only on the explicit nouns listed below.** You MUST read `docs/vision.md` and `README.md` end-to-end on every planning cycle. The vision document evolves — new sections, expansions, and refinements are added over time. Any concept, policy, delivery target, governance workflow, or gate described anywhere in the vision that does not yet exist in your owned paths is a valid gap. If you have completed all explicitly listed items below, re-read the entire vision document to find newly added requirements before concluding there are no gaps.
+
 Compare `docs/vision.md and README.md` promises to `promptops/policies/`, `promptops/delivery/`, `.github/` reality:
 
 **Required Status Checks** (from docs/vision.md and README.md):
@@ -82,6 +84,13 @@ Compare `docs/vision.md and README.md` promises to `promptops/policies/`, `promp
 - Release assets and associated tags cannot be changed after publication
 - Hardened distribution semantics
 
+**Expansion Governance Features** (from "Proposed expansions" and "Proposed refinements" in docs/vision.md):
+- **Observability adapter delivery policies**: governance rules for how run artifacts are emitted to external observability systems (Langfuse, OpenTelemetry) via delivery adapters; policies for what data is sent and to whom
+- **Drift alert policies**: governance policies for how drift detection canary suite failures are escalated — alert channels, escalation thresholds, auto-rollback rules
+- **Community prompt pack acceptance policies**: governance rules for accepting, reviewing, and publishing community-contributed prompt packs under a custodian org
+- **Cost budget governance**: policies that enforce cost budget limits on suites and flag runs that exceed thresholds before promotion
+- **Multi-model promotion policies**: governance rules for promoting a specific model+prompt combination from a multi-model comparison scorecard
+
 **Priority Order for Gaps**:
 1. CODEOWNERS (foundational — enforces review boundaries for all other domains)
 2. Required status check workflow (gates merges on regression pass/fail)
@@ -89,6 +98,12 @@ Compare `docs/vision.md and README.md` promises to `promptops/policies/`, `promp
 4. Promotion record workflow and format
 5. Delivery target specs and sync workflows
 6. Immutable release workflow
+7. Observability adapter delivery policies
+8. Drift alert and escalation policies
+9. Cost budget governance policies
+10. Community prompt pack acceptance policies
+11. Multi-model promotion policies
+12. Any new governance features found by re-reading `docs/vision.md` that are not listed above
 
 ---
 

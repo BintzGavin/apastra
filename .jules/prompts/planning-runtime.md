@@ -55,6 +55,8 @@ Your mission is to identify the next critical gap between the documented vision 
 
 ## Vision Gaps to Hunt For
 
+⚠️ **CRITICAL: Do NOT rely only on the explicit nouns listed below.** You MUST read `docs/vision.md` and `README.md` end-to-end on every planning cycle. The vision document evolves — new sections, expansions, and refinements are added over time. Any concept, resolver behavior, runtime feature, or file format described anywhere in the vision that does not yet exist in your owned paths is a valid gap. If you have completed all explicitly listed items below, re-read the entire vision document to find newly added requirements before concluding there are no gaps.
+
 Compare `docs/vision.md and README.md` promises to `promptops/runtime/` and `promptops/resolver/` reality:
 
 **Git-First Resolution Chain** (from docs/vision.md and README.md):
@@ -74,12 +76,26 @@ Compare `docs/vision.md and README.md` promises to `promptops/runtime/` and `pro
 - Stateless compute: runtime reads files and emits resolved artifacts; no hidden state
 - BYO harness contract: runtime defines minimal harness interface; adapters are pluggable
 
+**Expansion Runtime Features** (from "Proposed expansions" and "Proposed refinements" in docs/vision.md):
+- **Project config loading**: resolve `promptops.config.yaml` and apply project-level defaults (model, temperature, thresholds, auto-baseline) to suites that don't override them
+- **Simplified minimal mode**: auto-detect when ≤3 prompt specs exist and use a reduced directory structure (`prompts/`, `evals/`, `baselines/` only)
+- **MCP server adapter**: provide an MCP server that exposes apastra evals as discoverable MCP tools for IDE agents
+- **Cost tracking in resolver metadata**: include token cost estimates in resolved prompt metadata (input tokens × price + output tokens × price)
+- **Audit codebase scanning**: runtime support for scanning a codebase for hardcoded prompts (string literals, template literals, YAML, env vars) and outputting an audit report
+- **Canary suite scheduling**: runtime support for scheduled execution of canary suites with alerting
+
 **Priority Order for Gaps**:
 1. Consumption manifest schema and format (depends on CONTRACTS defining the manifest schema)
 2. Local override resolution (simplest case; no network required)
 3. Workspace path resolution
 4. Git ref resolution (commit SHA and tag support)
 5. Minimal `resolve()` function interface definition
+6. Project config loading and defaults resolution
+7. Simplified minimal mode detection
+8. MCP server adapter interface
+9. Audit codebase scanning
+10. Cost tracking in resolver metadata
+11. Any new runtime features found by re-reading `docs/vision.md` that are not listed above
 
 ---
 

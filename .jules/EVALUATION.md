@@ -19,6 +19,7 @@
 ## 0.11.0 - Harness Adapter Inconsistency
 **Learning:** The reference harness adapter (`promptops/harnesses/reference-adapter/run.py`) outputs a monolithic `run_artifact.json` and incorrectly calls the refactored `normalize.py`. This causes an inconsistency with the new append-friendly split-artifact architecture expected by the RUNTIME runner shim.
 **Action:** The reference adapter must be refactored to write `run_manifest.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` directly, and pass the correct file paths to the normalizer.
+
 ## [0.15.0] - ModelAssistedAssertions
 **Learning:** Deterministic evaluation requires temporary placeholder scores for model-assisted capabilities.
 **Action:** Revisit evaluate_assertions when LLM rubric scoring is fully supported.
@@ -31,104 +32,9 @@
 **Learning:** Found that `evaluate_assertions.py` lacks implementation for `is-valid-json-schema`, causing inline assertions of this type to silently fall through to the default failure case.
 **Action:** Spec'd the implementation of `is-valid-json-schema` evaluation logic, utilizing `extract_json_blocks` and `jsonschema` validation against the provided schema value.
 
-## [0.36.0] - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## 0.42.0 - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## [v0.44.0] - Minimal Plan Exception Final
-**Learning:** Reached the end of functional planning iterations; all planned domain features are marked completed.
-**Action:** Log a minimal plan exception to fulfill system planning requirements.
-
-## [v0.50.0] - Minimal Plan Exception Final
-**Learning:** Reached the end of functional planning iterations; all planned domain features are marked completed.
-**Action:** Log a minimal plan exception to fulfill system planning requirements.
-
-## [v0.57.0] - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## [v0.58.0] - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## [v0.59.0] - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## [0.64.0] - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## [0.65.0] - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-## [v0.65.0] - Minimal Plan Exception
-**Learning:** System planning requirements fulfilled because all functional planning iterations are marked completed.
-**Action:** Execute minimal plan exception as instructed.
-
-## [v0.66.0] - Minimal Plan Exception
-**Learning:** System planning requirements fulfilled because all functional planning iterations are marked completed.
-**Action:** Execute minimal plan exception as instructed.
-
-## [v0.67.0] - Minimal Plan Exception
-**Learning:** System planning requirements fulfilled because all functional planning iterations are marked completed.
-**Action:** Execute minimal plan exception as instructed.
-
-## [v0.68.0] - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.69.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.70.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.71.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.72.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.73.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.74.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.75.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.76.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
 ## [v0.77.0] - Tradeoff Surfacing
 **Learning:** Surfacing ungated metrics provides valuable context for human review without enforcing policy gates.
 **Action:** Iterate on regression report schema and frontend integration to better surface 'info' status evidence.
-
-## 0.78.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.79.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
-
-## 0.80.0 - MinimalPlanExceptionFinal
-**Learning:** None
-**Action:** None
 
 ## 0.81.0 - AnswerRelevanceAssertion
 **Learning:** Found that `evaluate_assertions.py` lacks an implementation for `answer-relevance`, currently returning a placeholder score.
@@ -138,46 +44,6 @@
 **Learning:** Found that `evaluate_assertions.py` lacks an implementation for `llm-rubric`, currently returning a placeholder score.
 **Action:** Spec'd the implementation of `llm-rubric` evaluation logic.
 
-## 0.84.0 - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has completed all required capabilities defined in the current vision document.
-**Action:** Close out the domain with a minimal plan exception to satisfy process requirements.
-
-## 0.89.0 - RunRequestValidation
-**Learning**: The CONTRACTS run-request schema is now available, unblocking the validation pipeline.
-**Action**: Planned implementation of run request validation against the schema.
-
-## 0.89.0 - Minimal Plan Exception
-**Learning:** The run request validation logic against the CONTRACTS schema is already implemented in the `promptops/runs/validate-run-request.sh` script, meaning the task is already complete.
-**Action:** Proceeded with a minimal plan exception to fulfill system planning requirements.
-
 ## 0.91.0 - RunRequestDigestValidation
-**Learning**: The Run Request schema currently lacks required fields for tracking inputs such as prompt digest, dataset digest, and evaluator digest. This metadata is essential for reproduciability as per the vision documentation.
+**Learning**: The Run Request schema currently lacks required fields for tracking inputs such as prompt digest, dataset digest, and evaluator digest. This metadata is essential for reproducibility as per the vision documentation.
 **Action**: Created a plan spec to explicitly define the necessary updates for the Run Request schema in the CONTRACTS domain.
-
-## 0.92.0 - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## 0.93.0 - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## 0.94.0 - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## 0.95.0 - RunRequestDigestValidation
-**Learning:** The Run Request schema currently lacks required fields for tracking inputs such as prompt digest, dataset digest, and evaluator digest. This metadata is essential for reproduciability as per the vision documentation.
-**Action:** Created a plan spec to explicitly define the necessary updates for the Run Request schema in the CONTRACTS domain.
-
-## [v0.96.0] - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## 0.97.0 - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.
-
-## 0.98.0 - Minimal Plan Exception Final
-**Learning:** The EVALUATION domain has already executed its final minimal plan exception.
-**Action:** Proceeded with no-op exception.

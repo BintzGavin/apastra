@@ -55,6 +55,8 @@ Your mission is to identify the next critical gap between the documented vision 
 
 ## Vision Gaps to Hunt For
 
+⚠️ **CRITICAL: Do NOT rely only on the explicit nouns listed below.** You MUST read `docs/vision.md` and `README.md` end-to-end on every planning cycle. The vision document evolves — new sections, expansions, and refinements are added over time. Any concept, evaluation workflow, harness behavior, or artifact format described anywhere in the vision that does not yet exist in your owned paths is a valid gap. If you have completed all explicitly listed items below, re-read the entire vision document to find newly added requirements before concluding there are no gaps.
+
 Compare `docs/vision.md and README.md` promises to `promptops/harnesses/` and `derived-index/` reality:
 
 **Harness Adapter Contract** (from docs/vision.md and README.md):
@@ -87,6 +89,14 @@ Compare `docs/vision.md and README.md` promises to `promptops/harnesses/` and `d
 - Pass/fail, warnings, evidence deltas
 - Stored in `derived-index/regressions/`
 
+**Expansion Evaluation Features** (from "Proposed expansions" and "Proposed refinements" in docs/vision.md):
+- **Drift detection**: canary suites that run on a schedule, compare results against production baselines, and emit drift reports when model provider updates cause output changes
+- **Multi-model comparison**: run a suite against N models simultaneously and produce a comparison scorecard with per-model breakdowns and cost/quality/latency tradeoff surfaces
+- **Red-team adversarial generation**: generate adversarial test cases (prompt injection attempts, edge-case inputs, multilingual stress tests, format-breaking inputs) for a given prompt spec
+- **Prompt review**: review a prompt spec for ambiguity, injection surface, variable hygiene, output contract completeness, and cost estimation
+- **Prompt optimization**: analyze a prompt's token usage, suggest compression techniques, identify unnecessary instructions, estimate cost reduction
+- **Cost budget enforcement**: `cost_budget` field on suites that hard-stops runs exceeding a dollar threshold; total cost tracking in run manifests; cost delta in regression reports
+
 **Priority Order for Gaps**:
 1. Harness adapter contract definition (interface spec — all other work depends on this)
 2. Run request format and validation (depends on CONTRACTS schemas)
@@ -94,6 +104,13 @@ Compare `docs/vision.md and README.md` promises to `promptops/harnesses/` and `d
 4. Scorecard normalization (depends on run artifact)
 5. Baseline establishment workflow
 6. Regression comparison engine
+7. Drift detection and canary suite execution
+8. Multi-model comparison scorecard generation
+9. Red-team adversarial test case generation
+10. Prompt review workflow
+11. Prompt optimization analysis
+12. Cost budget enforcement
+13. Any new evaluation features found by re-reading `docs/vision.md` that are not listed above
 
 ---
 

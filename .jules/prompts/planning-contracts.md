@@ -53,6 +53,8 @@ Your mission is to identify the next critical gap between the documented vision 
 
 ## Vision Gaps to Hunt For
 
+⚠️ **CRITICAL: Do NOT rely only on the explicit nouns listed below.** You MUST read `docs/vision.md` and `README.md` end-to-end on every planning cycle. The vision document evolves — new sections, expansions, and refinements are added over time. Any concept, noun, schema, or file format described anywhere in the vision that does not yet exist in your owned paths is a valid gap. If you have completed all explicitly listed items below, re-read the entire vision document to find newly added requirements before concluding there are no gaps.
+
 Compare `docs/vision.md and README.md` promises to `promptops/` reality:
 
 **Core Nouns Requiring Schema** (from docs/vision.md and README.md):
@@ -65,6 +67,16 @@ Compare `docs/vision.md and README.md` promises to `promptops/` reality:
 - **Run artifact**: structured output (manifest, scorecard, per-case records, raw artifact refs, failures)
 - **Scorecard**: normalized metrics summary + metric definitions + metric versioning
 - **Regression report**: policy-evaluated candidate vs. baseline comparison
+
+**Expansion Nouns Requiring Schema** (from "Proposed expansions" and "Proposed refinements" in docs/vision.md):
+- **Canary suite**: scheduled drift-detection suite with `schedule` and `alert` fields
+- **Drift report**: comparison of canary results against production baseline
+- **Comparison scorecard**: multi-model evaluation scorecard with per-model breakdowns, cost/quality/latency tradeoffs
+- **Project config**: `promptops.config.yaml` — project-level defaults for model, temperature, thresholds, auto-baseline
+- **Cost tracking fields**: `cost_budget` on suites, total cost in run manifests, cost delta in regression reports
+- **MCP tool definition**: MCP tool definitions as part of prompt specs for tool-calling evaluation
+- **Observability adapter config**: delivery adapter schema for emitting artifacts to Langfuse, OpenTelemetry, etc.
+- **Audit report**: codebase scan results for untested/unversioned prompts with severity scoring
 
 **Validation Requirements** (from docs/vision.md and README.md):
 - Content digests for all immutable assets
@@ -80,8 +92,14 @@ Compare `docs/vision.md and README.md` promises to `promptops/` reality:
 1. Core schemas (prompt spec, dataset, evaluator, suite) — all other work depends on these
 2. Validators for each schema
 3. Content-digest convention (how digests are computed and stored)
-4. Run request and run artifact schemas (blocked by Evaluation starting work)
+4. Run request and run artifact schemas
 5. Scorecard and regression report schemas
+6. Project config schema (`promptops.config.yaml`)
+7. Canary suite and drift report schemas
+8. Comparison scorecard schema (multi-model)
+9. Audit report schema
+10. Observability adapter config schema
+11. Any new nouns found by re-reading `docs/vision.md` that are not listed above
 
 ---
 
