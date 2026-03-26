@@ -39,6 +39,7 @@ Gate Enforcement Flow:
 - `promptops/policies/provenance-attestations.md`
 
 **Section C: Policy Inventory**
+- `promptops/policies/observability-adapters.md`: Governance policy for observability bridge adapters.
 - `promptops/policies/acceptable-use.md`: Acceptable use constraints.
 - `promptops/policies/deprecation.md`: Formal append-only registry metadata store policy detailing deprecation notices.
 - `promptops/policies/ownership-disputes.md`: Formal append-only registry metadata store policy detailing ownership disputes and takedown appeals.

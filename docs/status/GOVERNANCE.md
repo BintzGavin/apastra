@@ -1,4 +1,4 @@
-**Version**: 1.98.0
+**Version**: 1.99.0
 [v1.98.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.96.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.95.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete.
@@ -121,3 +121,4 @@ Blocked: waiting for CONTRACTS promotion record schema
 [v1.18.1] ✅ Completed: StrictPinning - Pinned GitHub Action SHAs in all workflows.
 [v1.45.0] ✅ Completed: Minimal Plan Exception Final - Acknowledged all GOVERNANCE vision gaps are complete.
 [v1.46.0] ✅ Completed: Minimal Plan Exception Final - Acknowledged all GOVERNANCE vision gaps are complete.
+[v1.99.0] ✅ Completed: ObservabilityAdapterPolicies - Implemented observability adapter policy.
