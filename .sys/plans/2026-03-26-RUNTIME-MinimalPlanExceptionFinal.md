@@ -9,11 +9,11 @@
 - **Read-Only**: N/A
 
 #### 3. Implementation Spec
-- **Dependencies**: N/A
-- **Schema Architecture**: N/A
-- **Content Digest Convention**: N/A
+- **Resolver Architecture**: N/A
+- **Manifest Format**: N/A
 - **Pseudo-Code**: N/A
-- **Public Contract Changes**: N/A
+- **Harness Contract Interface**: N/A
+- **Dependencies**: N/A
 
 #### 4. Test Plan
 - **Verification**: N/A
