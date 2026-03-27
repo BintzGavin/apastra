@@ -1,125 +1,24 @@
-**Version**: 0.98.0
-[v0.98.0] ✅ Planned: Minimal Plan Exception Final - All plans officially complete
-[v0.97.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.96.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.95.0] ✅ Planned: RunRequestDigestValidation - Spec the inclusion of content digest metadata in the Run Request schema validation.
-Blocked: waiting for CONTRACTS schema run-request.schema.json
-[v0.94.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.93.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.92.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.91.0] ✅ Planned: RunRequestDigestValidation - Spec the inclusion of content digest metadata in the Run Request schema validation.
-Blocked: waiting for CONTRACTS schema run-request.schema.json
-[v0.90.0] ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.
-[v0.89.0] ✅ Completed: RunRequestValidation - Minimal Plan Exception. Changes already present.
-[v0.88.0] ✅ Completed: HarnessAdapterRunnerShim - Implemented runner shim script that invokes a harness adapter and collects its run artifact directory
-[v0.87.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.86.0] ✅ Completed: FactualityAssertion - Implemented factuality assertion type for model-assisted evaluation
-[v0.85.0] ✅ Completed: SimilarAssertion - Implemented similar assertion type for model-assisted evaluation
-[v0.84.0] ✅ Completed: LLMRubricAssertion - Implemented llm-rubric assertion type for model-assisted evaluation
-[v0.83.0] ✅ Completed: LLMRubricAssertion - Spec for implementing the llm-rubric assertion type for model-assisted evaluation
-[v0.82.0] ✅ Completed: AnswerRelevanceAssertion - Implemented answer-relevance assertion
-[v0.81.0] ✅ Completed: AnswerRelevanceAssertion - Spec for implementing the answer-relevance assertion type for model-assisted evaluation
-[v0.80.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.79.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.78.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.77.0] \342\234\205 Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
-[v0.76.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.75.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.74.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.73.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.72.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.71.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.70.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.69.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.68.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.67.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.66.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.65.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.64.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.63.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.62.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.61.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.56.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.55.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.54.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.53.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.52.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.51.0] ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
-[v0.48.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.47.0] ✅ Completed: RegressionEngine - Implemented CLI script for regression comparison
-[v0.46.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.45.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.44.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.43.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.42.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-n[v0.36.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-
-[v0.35.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.34.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.33.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.32.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.31.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.30.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.29.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.28.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.27.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.26.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.25.0] ✅ Completed: Minimal Plan Exception - All plans officially complete
-[v0.24.0] ✅ Completed: Minimal Plan Exception - All plans officially complete
+**Version**: 0.23.0
 [v0.23.0] ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest
 [v0.22.0] ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter
 [v0.21.0] ✅ Completed: FlakeQuarantine - Implemented flake tracking and variance-aware gating
 [v0.20.0] ✅ Completed: TradeoffSurfacing - Implemented tradeoff surfacing in regression report
-[v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories
-Blocked: waiting for GOVERNANCE policy promptops/policies/regression.yaml
-[v0.2.0] ✅ Completed: HarnessAdapterContract - Implemented reference BYO harness adapter config and execution script
-[v0.3.0] ✅ Completed: RunRequestValidation - Implemented run request validation script
-[v0.4.0] ✅ Completed: BaselineEstablishment - Verified schema availability and created baselines directory structure
-[v0.5.0] ✅ Completed: RegressionComparisonEngine - Implemented CLI script for regression comparison
-[v0.6.0] ✅ Completed: ScorecardNormalization - Implemented standalone scorecard normalizer
-[v0.7.0] ✅ Completed: BaselineEstablishmentWorkflow - Implemented bash script to establish baselines
-[v0.8.0] ✅ Completed: RunArtifactGeneration - Implemented script to split monolithic run_artifact.json into distinct, append-friendly files.
-[v0.9.0] ✅ Completed: ScorecardNormalizationRefactor - Refactored normalize.py to read cases.jsonl and output scorecard.json
-
-[v0.10.0] ✅ Completed: RegressionComparisonRefactor - Refactored Regression Engine to read split scorecard.json files
-[v0.11.0] ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
-[v0.12.0] ✅ Completed: ReferenceAdapterRefactor - Refactored reference adapter to natively support split artifacts and updated scorecard normalizer execution
-[v0.12.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
-[v0.12.2] ✅ Completed: Minimal Plan Exception - All plans officially complete
-[v0.12.3] ✅ Completed: Minimal Plan Exception - All plans officially complete
-[v0.13.0] ✅ Completed: QuickEvalMode - Implemented quick eval mode pipeline and adapted reference harness
-[v0.14.0] ✅ Completed: InlineAssertions - Implemented deterministic inline assertions evaluation engine.
-[v0.15.0] ✅ Completed: ModelAssistedAssertions - Implemented model-assisted and performance assertion types in the deterministic evaluation engine
-[v0.16.0] ✅ Completed: TrialsAndVarianceSupport - Implemented trials support in reference adapter and variance calculation in scorecard normalizer
-[v0.17.0] ✅ Completed: JsonSchemaAssertion - Implemented the is-valid-json-schema assertion type for inline evaluation
-[v0.17.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
-[v0.18.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.18.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.19.0] ✅ Completed: PerformanceAssertions - Implemented latency and cost assertions
-[v0.19.1] ✅ Completed: Minimal Plan Exception - All plans officially complete
-[v0.19.2] ✅ Completed: Minimal Plan Exception - All plans officially complete
 [v0.19.3] ✅ Completed: MetricVersioning - Implemented metric versioning in scorecard normalizer
-[v0.37.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.38.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.39.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.41.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.40.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.49.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-
-[v0.50.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.57.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.58.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.59.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
-[v0.60.0] \342\234\205 Completed: Minimal Plan Exception Final - All plans officially complete
+[v0.17.0] ✅ Completed: JsonSchemaAssertion - Implemented the is-valid-json-schema assertion type for inline evaluation
+[v0.16.0] ✅ Completed: TrialsAndVarianceSupport - Implemented trials support in reference adapter and variance calculation in scorecard normalizer
+[v0.15.0] ✅ Completed: ModelAssistedAssertions - Implemented model-assisted and performance assertion types in the deterministic evaluation engine
+[v0.14.0] ✅ Completed: InlineAssertions - Implemented deterministic inline assertions evaluation engine.
+[v0.13.0] ✅ Completed: QuickEvalMode - Implemented quick eval mode pipeline and adapted reference harness
+[v0.12.0] ✅ Completed: ReferenceAdapterRefactor - Refactored reference adapter to natively support split artifacts and updated scorecard normalizer execution
+[v0.11.0] ✅ Completed: RegressionReportWorkflow - Implemented regression report generation and storage workflow
+[v0.10.0] ✅ Completed: RegressionComparisonRefactor - Refactored Regression Engine to read split scorecard.json files
+[v0.9.0] ✅ Completed: ScorecardNormalizationRefactor - Refactored normalize.py to read cases.jsonl and output scorecard.json
+[v0.8.0] ✅ Completed: RunArtifactGeneration - Implemented script to split monolithic run_artifact.json into distinct, append-friendly files.
+[v0.7.0] ✅ Completed: BaselineEstablishmentWorkflow - Implemented bash script to establish baselines
+[v0.6.0] ✅ Completed: ScorecardNormalization - Implemented standalone scorecard normalizer
+[v0.5.0] ✅ Completed: RegressionComparisonEngine - Implemented CLI script for regression comparison
+[v0.4.0] ✅ Completed: BaselineEstablishment - Verified schema availability and created baselines directory structure
+[v0.3.0] ✅ Completed: RunRequestValidation - Implemented run request validation script
+[v0.2.0] ✅ Completed: HarnessAdapterContract - Implemented reference BYO harness adapter config and execution script
+[v0.1.1] ✅ Completed: HarnessAdapterContract - Verified schema availability and created domain directories

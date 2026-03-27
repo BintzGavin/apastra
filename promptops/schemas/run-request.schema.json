@@ -1,18 +1,32 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-run-request-v1",
+  "$id": "apastra-run-request-v2",
   "title": "Run Request Specification",
-  "description": "Schema for a minimal BYO harness run request.",
+  "description": "Schema for a minimal BYO harness run request. Captures all metadata required for reproducible replay of an evaluation run.",
   "type": "object",
   "properties": {
     "suite_id": { "type": "string", "description": "The benchmark suite ID" },
     "revision_ref": { "type": "string", "description": "The revision ref (SHA/tag/digest)" },
-    "model_matrix": { "type": "array", "items": { "type": "string" }, "description": "Model matrix" },
-    "evaluator_refs": { "type": "array", "items": { "type": "string" }, "description": "Evaluator references" },
-    "trials": { "type": "integer", "description": "Number of trials" },
-    "budgets": { "type": "object", "description": "Budgets" },
-    "timeouts": { "type": "object", "description": "Timeouts" },
-    "artifact_backend_config": { "type": "object", "description": "Artifact backend config" }
+    "model_matrix": { "type": "array", "items": { "type": "string" }, "description": "Model matrix — list of model IDs to evaluate against" },
+    "evaluator_refs": { "type": "array", "items": { "type": "string" }, "description": "Evaluator references — list of evaluator IDs to use" },
+    "prompt_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "Content digest of the resolved prompt spec (sha256:<hex>)" },
+    "dataset_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "Content digest of the dataset used (sha256:<hex>)" },
+    "evaluator_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "Content digest of the evaluator config used (sha256:<hex>)" },
+    "harness_version": { "type": "string", "description": "Version identifier of the harness adapter used for execution" },
+    "sampling_config": {
+      "type": "object",
+      "description": "Sampling configuration for the model (temperature, top_p, etc.)",
+      "properties": {
+        "temperature": { "type": "number", "description": "Sampling temperature" },
+        "top_p": { "type": "number", "description": "Nucleus sampling parameter" },
+        "max_tokens": { "type": "integer", "description": "Maximum tokens to generate" },
+        "seed": { "type": "integer", "description": "Random seed for reproducibility" }
+      }
+    },
+    "trials": { "type": "integer", "description": "Number of trials per case for variance measurement" },
+    "budgets": { "type": "object", "description": "Budget limits (e.g., cost_budget in USD)" },
+    "timeouts": { "type": "object", "description": "Timeout limits per case and per run" },
+    "artifact_backend_config": { "type": "object", "description": "Configuration for the artifact storage backend" }
   },
-  "required": ["suite_id", "revision_ref", "model_matrix", "evaluator_refs"]
+  "required": ["suite_id", "revision_ref", "model_matrix", "evaluator_refs", "prompt_digest", "dataset_digest", "evaluator_digest", "harness_version"]
 }
