@@ -1,0 +1,7 @@
+adapters:
+  - type: langfuse
+    endpoint: ${LANGFUSE_URL}
+    emit: [scorecard, regression_report]
+  - type: opentelemetry
+    endpoint: ${OTEL_ENDPOINT}
+    emit: [run_manifest, cases]

@@ -304,3 +304,6 @@
 
 ### GOVERNANCE v1.99.0
 - ✅ Completed: ObservabilityAdapterPolicies - Implemented observability adapter policy.
+
+### GOVERNANCE v1.95.0
+- ✅ Completed: ObservabilityAdapterPolicies - Implemented observability adapter policy and delivery target config.
