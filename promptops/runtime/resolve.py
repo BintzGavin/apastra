@@ -70,8 +70,12 @@ def load_manifest(ref_context):
             return PinManifest(ref_context)
     return ManifestWrapper()
 
+from promptops.runtime.config import load_project_config
+
 def resolve(prompt_id, ref_context=None, variables=None, dataset_digest=None, harness_version=None, model_ids=None):
     manifest = load_manifest(ref_context)
+    project_config = load_project_config()
+    project_defaults = project_config.get('defaults', {})
     prompt_spec = ResolverChain().resolve(prompt_id, manifest)
 
     if not prompt_spec:
@@ -97,7 +101,7 @@ def resolve(prompt_id, ref_context=None, variables=None, dataset_digest=None, ha
     defaults = manifest.data.get('defaults', {}) if hasattr(manifest, 'data') and isinstance(manifest.data, dict) else {}
 
     if model_ids is None:
-        model = rules.get('model', defaults.get('model'))
+        model = rules.get('model', defaults.get('model', project_defaults.get('model')))
         if model:
             model_ids = [model]
 
