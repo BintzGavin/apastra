@@ -1,5 +1,6 @@
-**Version**: 1.94.0
-[v1.99.0] ✅ Completed: ObservabilityAdapterPolicies - Implemented observability adapter policy.
+**Version**: 1.95.0
+
+[v1.95.0] ✅ Completed: ObservabilityAdapterPolicies - Implemented observability adapter policy and delivery target config.
 [v1.94.0] ✅ Completed: CommunityReportRecordsPolicy - Implemented community report records policy.
 [v1.93.0] ✅ Completed: AutomatedScanRecordsPolicy - Implemented automated scan records policy.
 [v1.92.0] ✅ Completed: ModerationEscalationPathPolicy - Implemented moderation escalation path policy.

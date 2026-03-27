@@ -1,13 +1,12 @@
 **Section A: Architecture**
 Gate Enforcement Flow:
 - Pull requests targeting protected branches trigger a GitHub Actions workflow. The workflow verifies the pass/fail outcome from `reports/regression_report.json` retrieved from the `promptops-artifacts` branch (fails if missing). It extracts metrics from the regression report to add PR annotations and step summaries. The check is gracefully skipped for PRs that do not modify evaluable assets (prompts, harnesses, datasets, policies).
-- Promotions  enforce that a matching Approval State record with decision="approved" and checks_passed=true exists on the `promptops-artifacts` branch before generating a promotion record. A successful promotion record triggers a delivery target sync via
- `deliver.yml`.
+- Promotions  enforce that a matching Approval State record with decision="approved" and checks_passed=true exists on the `promptops-artifacts` branch before generating a promotion record. A successful promotion record triggers a delivery target sync via `deliver.yml`.
 - Reusable workflows: `regression-gate.yml`, `immutable-release.yml` (generates provenance attestations for release assets), and `deliver.yml` can be invoked via `workflow_call`.
 - Rulesets / Branch Protection: Enforces required status checks  (e.g., `gate` check) on pull requests to the `main` branch, and immutability (no updates/deletions) on tags. Automated secret scanning runs on PRs modifying prompts or datasets to fail if secret keywords are found.
 - Artifacts Branch Topology: All derived, machine-generated artifacts (run artifacts, regression reports, and promotion records, and approval states) are isolated on the `promptops-artifacts` branch instead of the main branch to reduce repo bloat and avoid merge conflicts.
 
-**Section  B: File Tree**
+**Section B: File Tree**
 - `.github/CODEOWNERS`
 - `.github/workflows/prompt-eval.yml`
 - `.github/workflows/prompt-release.yml`
@@ -25,6 +24,10 @@ Gate Enforcement Flow:
 - `.github/workflows/community-reporting.yml`
 - `.github/ISSUE_TEMPLATE/moderation_report.yml`
 - `promptops/delivery/prod-target.yaml`
+- `promptops/delivery/oci-target.yaml`
+- `promptops/delivery/npm-target.yaml`
+- `promptops/delivery/pypi-target.yaml`
+- `promptops/delivery/observability.yaml`
 - `promptops/policies/emergency-takedown-decisions.md`
 - `promptops/policies/regression.yaml`
 - `promptops/policies/moderation-approval-public-listing.md`
@@ -37,9 +40,9 @@ Gate Enforcement Flow:
 - `promptops/policies/federation.md`
 - `promptops/policies/mirroring.md`
 - `promptops/policies/provenance-attestations.md`
+- `promptops/policies/observability-adapters.md`
 
 **Section C: Policy Inventory**
-- `promptops/policies/observability-adapters.md`: Governance policy for observability bridge adapters.
 - `promptops/policies/acceptable-use.md`: Acceptable use constraints.
 - `promptops/policies/deprecation.md`: Formal append-only registry metadata store policy detailing deprecation notices.
 - `promptops/policies/ownership-disputes.md`: Formal append-only registry metadata store policy detailing ownership disputes and takedown appeals.
@@ -57,6 +60,7 @@ Gate Enforcement Flow:
 - `promptops/policies/emergency-takedown-decisions.md`: Defines criteria and procedures for executing immediate emergency takedowns.
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 - `promptops/policies/moderation-approval-public-listing.md`: Defines human checkpoints and requirements for public listing approval.
+- `promptops/policies/observability-adapters.md`: Governance policy for observability bridge adapters.
 
 **Section D: Promotion Record Format**
 - `id`: Unique promotion event ID
@@ -73,6 +77,7 @@ Gate Enforcement Flow:
 - `promptops/delivery/oci-target.yaml`: Target type `oci`
 - `promptops/delivery/npm-target.yaml`: Target type `npm`
 - `promptops/delivery/pypi-target.yaml`: Target type `pypi`
+- `promptops/delivery/observability.yaml`: Obserability adapters target.
 
 **Section F: CODEOWNERS Summary**
 - `promptops/prompts/` @apastra/prompt-engineers
