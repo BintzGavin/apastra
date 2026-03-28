@@ -1,3 +1,6 @@
+### GOVERNANCE v1.98.0
+- ✅ Completed: CommunityPromptPackAcceptance - Implemented community prompt pack acceptance policy.
+
 ### GOVERNANCE v0.2.0
 - ✅ Completed: CODEOWNERS File Creation - Created .github/CODEOWNERS with required review boundaries.
 

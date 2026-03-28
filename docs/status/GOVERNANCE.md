@@ -1,4 +1,5 @@
-**Version**: 1.97.0
+**Version**: 1.98.0
+[v1.98.0] ✅ Completed: CommunityPromptPackAcceptance - Implemented community prompt pack acceptance policy.
 [v1.97.0] ✅ Completed: MultiModelPromotionPolicies - Implemented multi-model promotion policy.
 
 [v1.96.0] ✅ Completed: CostBudgetGovernance - Implemented cost budget governance policy document.
