@@ -1,4 +1,5 @@
-**Version**: 1.4.0
+**Version**: 1.5.0
+[v1.5.0] ✅ Completed: AgentSkillRoleSchemas - Created JSON Schema and validator for agent skill roles.
 [v1.4.0] ✅ Completed: CostTrackingFields - Added cost tracking fields to run manifest and regression report
 [v1.3.0] ✅ Completed: PromptOpsConfigSchema - Created schema and validator for promptops.config.yaml
 [v1.2.0] ✅ Completed: AuditReportSchema - Created schema and validator for Audit Reports
