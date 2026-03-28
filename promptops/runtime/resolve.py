@@ -114,6 +114,10 @@ def resolve(prompt_id, ref_context=None, variables=None, dataset_digest=None, ha
         metadata["dataset_digest"] = dataset_digest
     if harness_version:
         metadata["harness_version"] = harness_version
+    max_tokens = rules.get("max_tokens", defaults.get("max_tokens", project_defaults.get("max_tokens", 0)))
+    if max_tokens and model_ids:
+        metadata["estimated_cost"] = max_tokens * 0.00001
+
 
     provenance = None
     if isinstance(prompt_spec, dict) and "provenance" in prompt_spec:

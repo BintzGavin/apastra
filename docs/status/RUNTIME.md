@@ -1,4 +1,5 @@
-**Version**: 1.82.0
+**Version**: 1.83.0
+[v1.83.0] ✅ Completed: CostTrackingMetadata - Included token cost estimates in resolved prompt metadata
 [v1.82.0] ✅ Completed: SimplifiedMinimalMode - Implemented auto-detection for the simplified minimal mode file structure in the workspace resolver.
 [v1.81.0] ✅ Completed: AuditCodebaseScanning - Implemented audit command to scan for hardcoded prompts.
 [v1.80.0] ✅ Completed: RemoteGitSemverResolution - Implemented explicit support for semver resolution for remote git URLs.
