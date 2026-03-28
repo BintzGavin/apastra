@@ -305,3 +305,6 @@
 
 ### CONTRACTS v1.3.0
 - ✅ Completed: PromptOpsConfigSchema - Created schema and validator for promptops.config.yaml
+
+### CONTRACTS v1.4.0
+- ✅ Completed: CostTrackingFields - Added cost tracking fields to run manifest and regression report

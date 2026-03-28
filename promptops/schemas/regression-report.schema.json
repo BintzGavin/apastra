@@ -8,6 +8,7 @@
     "status": { "type": "string", "description": "Pass, fail, warning status" },
     "baseline_ref": { "type": "string", "description": "The reference digest or ID" },
     "candidate_ref": { "type": "string", "description": "The digest or ID being tested" },
+    "cost_delta": { "type": "number", "description": "The difference in total cost between the candidate and the baseline" },
     "evidence": { "type": "array", "description": "A list of metric deltas and comparisons", "items": { "type": "object" } }
   },
   "required": ["status", "baseline_ref", "candidate_ref", "evidence"]
