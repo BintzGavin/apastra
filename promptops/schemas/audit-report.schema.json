@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/audit-report.schema.json",
+  "title": "Audit Report Schema",
+  "description": "Schema for an audit report detailing untested and unversioned prompts.",
+  "type": "object",
+  "properties": {
+    "timestamp": { "type": "string", "format": "date-time" },
+    "scanned_paths": { "type": "array", "items": { "type": "string" } },
+    "total_prompts": { "type": "integer" },
+    "untested_prompts": { "type": "integer" },
+    "unversioned_prompts": { "type": "integer" },
+    "severity_score": { "anyOf": [{ "type": "string" }, { "type": "number" }] },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file_path": { "type": "string" },
+          "issue_type": { "type": "string" },
+          "suggestion": { "type": "string" }
+        },
+        "required": ["file_path", "issue_type"]
+      }
+    }
+  },
+  "required": ["timestamp", "scanned_paths", "total_prompts", "severity_score", "findings"]
+}

@@ -1,4 +1,5 @@
-**Version**: 1.0.0
+**Version**: 1.2.0
+[v1.2.0] ✅ Completed: AuditReportSchema - Created schema and validator for Audit Reports
 [v1.0.0] ✅ Completed: DeliveryTargetReceipt - Created delivery target receipt schema and validator
 [v0.99.0] ✅ Completed: ModerationApprovalForPublicListing - Created schema and validator for moderation approval for public listing
 [v0.98.0] ✅ Completed: EmergencyTakedownDecision - Created emergency takedown decision schema and validator

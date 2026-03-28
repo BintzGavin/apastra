@@ -299,3 +299,6 @@
 
 ### CONTRACTS v1.8.0
 - ✅ Planned: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain.
+
+### CONTRACTS v1.2.0
+- ✅ Completed: AuditReportSchema - Created schema and validator for Audit Reports
