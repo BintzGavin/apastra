@@ -297,3 +297,6 @@
 
 ### EVALUATION v0.24.0
 - ✅ Completed: RunRequestDigestValidation - Added explicit digest field validation to run request validation script
+
+### EVALUATION v0.25.0
+- [v0.25.0] ✅ Completed: MultiModelComparison - Implemented multi-model comparison generation script
