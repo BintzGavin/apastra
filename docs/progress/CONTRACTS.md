@@ -311,3 +311,6 @@
 
 ### CONTRACTS v1.5.0
 - ✅ Completed: AgentSkillRoleSchemas - Created JSON Schema and validator for agent skill roles.
+
+### CONTRACTS v1.6.0
+- ✅ Completed: CanarySuiteAndDriftReport - Created schemas and validators for canary-suite and drift-report.

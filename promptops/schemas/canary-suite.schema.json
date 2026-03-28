@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://apastra.com/schemas/promptops/canary-suite.schema.json",
+  "title": "Canary Suite Specification",
+  "description": "Canary benchmark suite declaring schedule, alerts, datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the canary suite."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the canary suite."
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional detailed description of the canary suite's purpose."
+    },
+    "schedule": {
+      "type": "string",
+      "description": "Cron string defining the schedule for execution."
+    },
+    "alert": {
+      "type": "object",
+      "description": "Notification routing for alerts upon threshold failure or drift detection.",
+      "properties": {
+        "email": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of email addresses to alert."
+        },
+        "webhook": {
+          "type": "string",
+          "description": "Webhook URL for alerts."
+        }
+      }
+    },
+    "datasets": {
+      "type": "array",
+      "description": "Array of dataset references.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "evaluators": {
+      "type": "array",
+      "description": "Array of evaluator references.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "model_matrix": {
+      "type": "array",
+      "description": "Array of model/provider identifiers to run the canary suite against.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "trials": {
+      "type": "integer",
+      "description": "Number of times to run the evaluation.",
+      "default": 1,
+      "minimum": 1
+    },
+    "budgets": {
+      "type": "object",
+      "description": "Cost or time limits for the execution.",
+      "properties": {
+        "cost": {
+          "type": "number",
+          "description": "Maximum allowed cost in dollars."
+        },
+        "time": {
+          "type": "integer",
+          "description": "Maximum allowed execution time in seconds."
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "description": "Pass/fail criteria mapped to specific metrics.",
+      "additionalProperties": {
+        "type": "number"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "schedule",
+    "datasets",
+    "evaluators",
+    "model_matrix"
+  ]
+}

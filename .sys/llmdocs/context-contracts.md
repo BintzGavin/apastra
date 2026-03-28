@@ -6,6 +6,28 @@
 **Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system — schemas, validators, prompt specs, datasets, evaluators, and suites — according to the approved plan from your Planner counterpart.
 
 ## Section A: Schema Inventory
+
+### `canary-suite.schema.json`
+**Version ID:** `https://apastra.com/schemas/promptops/canary-suite.schema.json`
+**Description:** Canary benchmark suite declaring schedule, alerts, datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
+**Key Fields:**
+- `id` (string)
+- `name` (string)
+- `schedule` (string)
+- `alert` (object)
+- `datasets` (array of strings)
+- `evaluators` (array of strings)
+- `model_matrix` (array of strings)
+
+### `drift-report.schema.json`
+**Version ID:** `https://apastra.com/schemas/promptops/drift-report.schema.json`
+**Description:** Schema for a drift report comparing current results vs a baseline to identify output drift.
+**Key Fields:**
+- `baseline_ref` (string)
+- `current_ref` (string)
+- `drift_detected` (boolean)
+- `evidence` (array of objects with `metric_name`, `baseline_value`, `current_value`, `delta`)
+
 - **ID:** `apastra-agent-skill-v1`
   - **Version:** 1.5.0
   - **Description:** Schema defining an agent skill role configuration.
@@ -126,6 +148,15 @@
   - `description`: Schema for project-level configurations.
 
 ## Section B: Validator Inventory
+
+### `validate-canary-suite.sh`
+**Usage:** `./promptops/validators/validate-canary-suite.sh <path-to-json>`
+**Validates:** Instance against `canary-suite.schema.json`
+
+### `validate-drift-report.sh`
+**Usage:** `./promptops/validators/validate-drift-report.sh <path-to-json>`
+**Validates:** Instance against `drift-report.schema.json`
+
 - **Validator:** `validate-delivery-target-receipt.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-delivery-target-receipt.sh <delivery-target-receipt.json>`
   - **What it Validates:** Validates delivery target receipts.

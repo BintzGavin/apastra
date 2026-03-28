@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://apastra.com/schemas/promptops/drift-report.schema.json",
+  "title": "Drift Report Specification",
+  "description": "Schema for a drift report comparing current results vs a baseline to identify output drift.",
+  "type": "object",
+  "properties": {
+    "baseline_ref": {
+      "type": "string",
+      "description": "The reference digest or ID for the baseline."
+    },
+    "current_ref": {
+      "type": "string",
+      "description": "The current digest or ID being tested for drift."
+    },
+    "drift_detected": {
+      "type": "boolean",
+      "description": "Boolean indicating if drift was detected beyond acceptable thresholds."
+    },
+    "evidence": {
+      "type": "array",
+      "description": "A list of metric comparisons and delta details for detected drift.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "metric_name": {
+            "type": "string",
+            "description": "Name of the metric compared."
+          },
+          "baseline_value": {
+            "description": "Value of the metric in the baseline."
+          },
+          "current_value": {
+            "description": "Value of the metric in the current run."
+          },
+          "delta": {
+            "type": "number",
+            "description": "Numerical difference between current and baseline values if applicable."
+          }
+        },
+        "required": [
+          "metric_name",
+          "baseline_value",
+          "current_value"
+        ]
+      }
+    }
+  },
+  "required": [
+    "baseline_ref",
+    "current_ref",
+    "drift_detected",
+    "evidence"
+  ]
+}
