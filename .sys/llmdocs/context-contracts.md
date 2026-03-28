@@ -118,6 +118,10 @@
   - **Version:** 1.2.0
   - **Description:** Schema for an audit report detailing untested and unversioned prompts.
 
+- **promptops-config.schema.json**
+  - `$id`: https://promptops.com/schema/promptops-config.schema.json
+  - `description`: Schema for project-level configurations.
+
 ## Section B: Validator Inventory
 - **Validator:** `validate-delivery-target-receipt.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-delivery-target-receipt.sh <delivery-target-receipt.json>`
@@ -229,6 +233,10 @@
 - **Validator:** `validate-audit-report.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-audit-report.sh <audit-report.json>`
   - **What it Validates:** Validates audit reports.
+
+- **validate-promptops-config.sh**
+  - Invocation: `./promptops/validators/validate-promptops-config.sh <file>`
+  - Validates: promptops-config.schema.json
 
 ## Section C: Source File Conventions
 - **Quick Evals:**

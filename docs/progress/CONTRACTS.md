@@ -302,3 +302,6 @@
 
 ### CONTRACTS v1.2.0
 - ✅ Completed: AuditReportSchema - Created schema and validator for Audit Reports
+
+### CONTRACTS v1.3.0
+- ✅ Completed: PromptOpsConfigSchema - Created schema and validator for promptops.config.yaml

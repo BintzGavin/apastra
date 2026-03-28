@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://promptops.com/schema/promptops-config.schema.json",
+  "type": "object",
+  "properties": {
+    "defaults": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "properties": {
+        "auto_set": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
