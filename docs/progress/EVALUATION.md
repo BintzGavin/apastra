@@ -300,3 +300,6 @@
 
 ### EVALUATION v0.25.0
 - [v0.25.0] ✅ Completed: MultiModelComparison - Implemented multi-model comparison generation script
+
+### EVALUATION v0.26.0
+- ✅ Completed: PromptReviewWorkflow - Implemented role-based agent skill prompt review workflow

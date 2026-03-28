@@ -20,6 +20,8 @@ Harness execution flow:
 - Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> <baseline> <policy> <report_id>`, with ungated metrics surfaced as informational evidence.
 
 ## Section B: File Tree
+- `promptops/evals/`
+  - `promptops/evals/prompt-review-eval.yaml`
 - `promptops/harnesses/`
 - `promptops/runs/`
   - `promptops/runs/compare.py`

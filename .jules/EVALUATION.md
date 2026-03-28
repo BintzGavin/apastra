@@ -47,3 +47,7 @@
 ## 0.91.0 - RunRequestDigestValidation
 **Learning**: The Run Request schema currently lacks required fields for tracking inputs such as prompt digest, dataset digest, and evaluator digest. This metadata is essential for reproducibility as per the vision documentation.
 **Action**: Created a plan spec to explicitly define the necessary updates for the Run Request schema in the CONTRACTS domain.
+
+## 0.26.0 - PromptReviewWorkflow
+**Learning:** Discovered the need for automated prompt reviews to catch foundational prompt issues before evaluation suites are run.
+**Action:** Implemented a prompt review evaluation yaml using llm-rubric assertions.
