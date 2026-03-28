@@ -307,3 +307,6 @@
 
 ### GOVERNANCE v1.95.0
 - ✅ Completed: ObservabilityAdapterPolicies - Implemented observability adapter policy and delivery target config.
+
+### GOVERNANCE v1.96.0
+- ✅ Completed: CostBudgetGovernance - Implemented cost budget governance policy document.
