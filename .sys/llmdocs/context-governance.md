@@ -28,6 +28,9 @@ Gate Enforcement Flow:
 - `promptops/delivery/npm-target.yaml`
 - `promptops/delivery/pypi-target.yaml`
 - `promptops/delivery/observability.yaml`
+- `promptops/delivery/oci-target.yaml`
+- `promptops/delivery/npm-target.yaml`
+- `promptops/delivery/pypi-target.yaml`
 - `promptops/policies/emergency-takedown-decisions.md`
 - `promptops/policies/regression.yaml`
 - `promptops/policies/artifact-storage-retention.md`
@@ -38,6 +41,8 @@ Gate Enforcement Flow:
 - `promptops/policies/naming.md`
 - `promptops/policies/namespace-claims.md`
 - `promptops/policies/trusted-publisher.md`
+- `promptops/policies/takedowns.md`
+- `promptops/policies/appeals.md`
 - `promptops/policies/federation.md`
 - `promptops/policies/mirroring.md`
 - `promptops/policies/provenance-attestations.md`
@@ -68,6 +73,9 @@ Gate Enforcement Flow:
 - `promptops/policies/cost-budget-governance.md`: Defines rules for enforcing cost limits on evaluation suites and preventing promotion of expensive runs.
 - `promptops/policies/multi-model-promotion.md`: Governance rules for promoting a specific model+prompt combination from a multi-model comparison scorecard.
 
+- `promptops/policies/takedowns.md`: Defines process for handling takedown requests.
+- `promptops/policies/appeals.md`: Defines process for appealing moderation decisions.
+
 **Section D: Promotion Record Format**
 - `id`: Unique promotion event ID
 - `timestamp`: ISO-8601 timestamp of promotion
@@ -84,6 +92,10 @@ Gate Enforcement Flow:
 - `promptops/delivery/npm-target.yaml`: Target type `npm`
 - `promptops/delivery/pypi-target.yaml`: Target type `pypi`
 - `promptops/delivery/observability.yaml`: Obserability adapters target.
+
+- `promptops/delivery/oci-target.yaml`: Target type `oci`
+- `promptops/delivery/npm-target.yaml`: Target type `npm`
+- `promptops/delivery/pypi-target.yaml`: Target type `pypi`
 
 **Section F: CODEOWNERS Summary**
 - `promptops/prompts/` @apastra/prompt-engineers
