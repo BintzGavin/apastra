@@ -1,4 +1,6 @@
-**Version**: 1.100.0
+**Version**: 1.102.0
+[v1.102.0] ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
+[v1.101.0] ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
 [v1.100.0] ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
 [v1.99.0] ✅ Completed: ArtifactStorageRetention - Implemented artifact storage and retention policy.
 [v1.98.0] ✅ Completed: CommunityPromptPackAcceptance - Implemented community prompt pack acceptance policy.

@@ -48,6 +48,10 @@ Gate Enforcement Flow:
 - `promptops/policies/provenance-attestations.md`
 - `promptops/policies/observability-adapters.md`
 
+
+
+- `promptops/policies/role-based-skills.md`
+
 **Section C: Policy Inventory**
 - `promptops/policies/artifact-storage-retention.md`: Defines the requirement for syncing derived artifacts to external long-term storage, overriding the 90-day CI retention limit.
 - `promptops/policies/community-prompt-pack-acceptance.md`: Governance rules for accepting, reviewing, and publishing community-contributed prompt packs.
@@ -75,6 +79,10 @@ Gate Enforcement Flow:
 
 - `promptops/policies/takedowns.md`: Defines process for handling takedown requests.
 - `promptops/policies/appeals.md`: Defines process for appealing moderation decisions.
+
+
+
+- `promptops/policies/role-based-skills.md`: Governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
 
 **Section D: Promotion Record Format**
 - `id`: Unique promotion event ID

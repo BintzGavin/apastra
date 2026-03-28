@@ -1,3 +1,9 @@
+### GOVERNANCE v1.102.0
+- ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
+
+### GOVERNANCE v1.101.0
+- ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
+
 ### GOVERNANCE v1.99.0
 - ✅ Completed: ArtifactStorageRetention - Implemented artifact storage and retention policy.
 
