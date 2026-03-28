@@ -1,4 +1,5 @@
-**Version**: 0.25.0
+**Version**: 0.26.0
+[v0.26.0] ✅ Completed: PromptReviewWorkflow - Implemented role-based agent skill prompt review workflow
 [v0.25.0] ✅ Completed: MultiModelComparison - Implemented multi-model comparison generation script
 [v0.24.0] ✅ Completed: RunRequestDigestValidation - Added explicit digest field validation to run request validation script
 [v0.23.0] ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest

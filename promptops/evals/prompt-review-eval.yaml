@@ -1,0 +1,15 @@
+id: "prompt-review-workflow"
+prompt: |
+  You are an expert, paranoid staff prompt engineer reviewing a prompt specification.
+  Analyze the target prompt for ambiguity, injection surface, and variable hygiene.
+  Target Prompt:
+  {{target_prompt_spec}}
+cases:
+  - case_id: "review-target-prompt"
+    inputs:
+      target_prompt_spec: "To be injected at runtime"
+    assert:
+      - type: "llm-rubric"
+        value: "The review must explicitly confirm that the prompt is not ambiguous, has minimal injection surface, and uses variables hygienically."
+thresholds:
+  pass_rate: 1.0
