@@ -15,6 +15,7 @@ promptops/
 │   ├── digest.py
 │   ├── render.py
 │   └── resolve.py
+│   ├── mcp_server.py
 ├── resolver/
 │   ├── __init__.py
 │   ├── chain.py
@@ -36,6 +37,11 @@ def resolve(prompt_id: str, ref_context=None, variables: dict=None, dataset_dige
 
 Exceptions:
 - `RuntimeError` if resolution fails, or schema validation fails.
+
+
+**MCP Integration:**
+- `list_suites()`: Discovers evaluation suites.
+- `run_evaluation(suite_id, revision_ref)`: Constructs run requests and invokes the runner.
 
 ## Section D: Manifest Format
 ```yaml

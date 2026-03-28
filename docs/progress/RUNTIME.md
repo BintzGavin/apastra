@@ -1,4 +1,7 @@
 ### RUNTIME v0.2.0
+### RUNTIME v1.84.0
+- ✅ Completed: MCPServerAdapter - Implemented MCP server adapter for discoverable tool evaluations
+
 [v1.61.0] \\342\\234\\205 Completed: LocalResolverCaching - Implemented caching of local overrides to support offline fallback.
 - ✅ Completed: ConsumptionManifestFormat - Defined schema example format
 - ✅ Completed: LocalOverrideResolution - Implemented local override step in python resolver chain
