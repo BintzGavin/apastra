@@ -7,24 +7,28 @@ The promptops runtime resolves prompt templates deterministically. The resolutio
 3. **Git Ref**: Fetches the prompt specification directly from git using a specified tag or commit SHA. Includes memory caching based on `(prompt_id, pin)`. Supports semver tag resolution for remote git URLs. If the target git host prevents archive downloads, it falls back to a shallow clone for tags/branches, or a full clone followed by checkout for specific commit SHAs.
 4. **Packaged Artifact**: Falls back to packaged assets when resolving remote references (e.g., via sha256).
 
+
 ## Section B: File Tree
+
 ```
 promptops/
 ├── runtime/
-│   ├── __init__.py
-│   ├── digest.py
+│   ├── resolve.py
 │   ├── render.py
-│   └── resolve.py
+│   ├── digest.py
+│   ├── config.py
+│   ├── audit.py
+│   ├── canary.py
 │   ├── mcp_server.py
+│   ├── runner.py
+│   └── cli.py
 ├── resolver/
-│   ├── __init__.py
 │   ├── chain.py
 │   ├── git_ref.py
 │   ├── local.py
 │   ├── packaged.py
 │   └── workspace.py
 └── manifests/
-    ├── __init__.py
     └── consumption.py
 ```
 

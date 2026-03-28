@@ -1,5 +1,5 @@
-**Version**: 1.84.0
-Blocked: waiting for CONTRACTS schema canary
+**Version**: 1.85.0
+[v1.85.0] ✅ Completed: CanarySuiteScheduling - Implemented drift detection via scheduled canary suites.
 [v1.84.0] ✅ Completed: MCPServerAdapter - Implemented MCP server adapter for discoverable tool evaluations
 [v1.83.0] ✅ Completed: CostTrackingMetadata - Included token cost estimates in resolved prompt metadata
 [v1.82.0] ✅ Completed: SimplifiedMinimalMode - Implemented auto-detection for the simplified minimal mode file structure in the workspace resolver.

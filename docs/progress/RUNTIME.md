@@ -1,3 +1,7 @@
+
+### RUNTIME v1.85.0
+- ✅ Completed: CanarySuiteScheduling - Implemented drift detection via scheduled canary suites.
+
 ### RUNTIME v0.2.0
 ### RUNTIME v1.84.0
 - ✅ Completed: MCPServerAdapter - Implemented MCP server adapter for discoverable tool evaluations
