@@ -1,4 +1,5 @@
-**Version**: 0.26.0
+**Version**: 0.27.0
+[v0.27.0] ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
 [v0.26.0] ✅ Completed: PromptReviewWorkflow - Implemented role-based agent skill prompt review workflow
 [v0.25.0] ✅ Completed: MultiModelComparison - Implemented multi-model comparison generation script
 [v0.24.0] ✅ Completed: RunRequestDigestValidation - Added explicit digest field validation to run request validation script
