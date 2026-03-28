@@ -114,6 +114,10 @@
   - **Version:** 0.85.0
   - **Description:** Schema for an ownership dispute record in the governance system.
 
+- **ID:** `https://promptops.apastra.com/schemas/audit-report.schema.json`
+  - **Version:** 1.2.0
+  - **Description:** Schema for an audit report detailing untested and unversioned prompts.
+
 ## Section B: Validator Inventory
 - **Validator:** `validate-delivery-target-receipt.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-delivery-target-receipt.sh <delivery-target-receipt.json>`
@@ -221,6 +225,10 @@
 - **Validator:** `validate-ownership-dispute-record.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-ownership-dispute-record.sh <ownership-dispute-record.json|yaml>`
   - **Validates:** JSON or YAML files against the `ownership-dispute-record.schema.json` schema.
+
+- **Validator:** `validate-audit-report.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-audit-report.sh <audit-report.json>`
+  - **What it Validates:** Validates audit reports.
 
 ## Section C: Source File Conventions
 - **Quick Evals:**
