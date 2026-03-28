@@ -51,3 +51,7 @@
 ## 0.26.0 - PromptReviewWorkflow
 **Learning:** Discovered the need for automated prompt reviews to catch foundational prompt issues before evaluation suites are run.
 **Action:** Implemented a prompt review evaluation yaml using llm-rubric assertions.
+
+## [v0.26.0] - AuditSkillExecution
+**Learning:** Discovered the need for an Audit Skill execution flow to scan codebases for prompt debt as defined in the vision docs.
+**Action:** Spec'd the implementation of audit-shim.sh to generate audit_report.json.
