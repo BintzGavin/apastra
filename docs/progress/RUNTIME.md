@@ -307,3 +307,6 @@
 
 ### RUNTIME v1.81.0
 - ✅ Completed: AuditCodebaseScanning - Implemented audit command to scan for hardcoded prompts.
+
+### RUNTIME v1.82.0
+- ✅ Completed: SimplifiedMinimalMode - Implemented auto-detection for the simplified minimal mode file structure in the workspace resolver.
