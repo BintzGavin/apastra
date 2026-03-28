@@ -1,4 +1,5 @@
-**Version**: 1.6.0
+**Version**: 1.7.0
+[v1.7.0] ✅ Completed: MCPToolDefinitionSchema - Created schema and validator for MCP tool definition.
 [v1.6.0] ✅ Completed: CanarySuiteAndDriftReport - Created schemas and validators for canary-suite and drift-report.
 [v1.5.0] ✅ Completed: AgentSkillRoleSchemas - Created JSON Schema and validator for agent skill roles.
 [v1.4.0] ✅ Completed: CostTrackingFields - Added cost tracking fields to run manifest and regression report

@@ -19,6 +19,10 @@
 - `evaluators` (array of strings)
 - `model_matrix` (array of strings)
 
+
+- **mcp-tool-definition.schema.json** (`https://promptops.apastra.com/schemas/mcp-tool-definition.schema.json`)
+  - **Description**: Schema defining an MCP tool definition object.
+  - **Key Fields**: `name`, `description`, `inputSchema`, `type`.
 ### `drift-report.schema.json`
 **Version ID:** `https://apastra.com/schemas/promptops/drift-report.schema.json`
 **Description:** Schema for a drift report comparing current results vs a baseline to identify output drift.
@@ -148,6 +152,10 @@
   - `description`: Schema for project-level configurations.
 
 ## Section B: Validator Inventory
+- **Validator:** `validate-mcp-tool-definition.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-mcp-tool-definition.sh <mcp-tool-definition.json>`
+  - **What it Validates:** Validates MCP tool definition against mcp-tool-definition.schema.json.
+
 
 ### `validate-canary-suite.sh`
 **Usage:** `./promptops/validators/validate-canary-suite.sh <path-to-json>`
