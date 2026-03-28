@@ -7,6 +7,23 @@
 
 ## Section A: Schema Inventory
 
+- :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+- **ID:**
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+- **ID:**
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+
 ### `canary-suite.schema.json`
 **Version ID:** `https://apastra.com/schemas/promptops/canary-suite.schema.json`
 **Description:** Canary benchmark suite declaring schedule, alerts, datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
@@ -23,6 +40,26 @@
 - **mcp-tool-definition.schema.json** (`https://promptops.apastra.com/schemas/mcp-tool-definition.schema.json`)
   - **Description**: Schema defining an MCP tool definition object.
   - **Key Fields**: `name`, `description`, `inputSchema`, `type`.
+- :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+- **ID:**
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+- **ID:**
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+
+- **ID:** `apastra-comparison-scorecard-v1`
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
 ### `drift-report.schema.json`
 **Version ID:** `https://apastra.com/schemas/promptops/drift-report.schema.json`
 **Description:** Schema for a drift report comparing current results vs a baseline to identify output drift.
@@ -157,9 +194,47 @@
   - **What it Validates:** Validates MCP tool definition against mcp-tool-definition.schema.json.
 
 
+- :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+- **ID:**
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+- **ID:**
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+
+- **Validator:** `validate-comparison-scorecard.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-comparison-scorecard.sh <comparison-scorecard.json>`
+  - **What it Validates:** Validates comparison scorecards.
+
 ### `validate-canary-suite.sh`
 **Usage:** `./promptops/validators/validate-canary-suite.sh <path-to-json>`
 **Validates:** Instance against `canary-suite.schema.json`
+
+- :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+- **ID:**
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
+- **ID:**
+  - **Version:** 1.8.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+- **Validator:**
+  - **Invocation Syntax:**
+  - **What it Validates:** Validates comparison scorecards.
 
 ### `validate-drift-report.sh`
 **Usage:** `./promptops/validators/validate-drift-report.sh <path-to-json>`

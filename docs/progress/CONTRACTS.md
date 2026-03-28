@@ -317,3 +317,6 @@
 
 ### CONTRACTS v1.7.0
 - ✅ Completed: MCPToolDefinitionSchema - Created schema and validator for MCP tool definition.
+
+### CONTRACTS v1.8.0
+- ✅ Completed: ComparisonScorecard - Created schema and validator for comparison-scorecard.

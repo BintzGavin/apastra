@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "apastra-comparison-scorecard-v1",
+  "title": "Comparison Scorecard Specification",
+  "description": "Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "description": "Unique identifier for this comparison scorecard" },
+    "suite_id": { "type": "string", "description": "Reference to the evaluation suite" },
+    "baselines": { "type": "array", "items": { "type": "string" }, "description": "List of baseline models" },
+    "models": { "type": "array", "items": { "type": "string" }, "description": "List of candidate models evaluated" },
+    "metrics": {
+      "type": "object",
+      "description": "Per-model metric breakdown",
+      "additionalProperties": {
+         "type": "object",
+         "description": "Model metrics",
+         "additionalProperties": { "type": "number" }
+      }
+    },
+    "comparison_tradeoffs": {
+       "type": "object",
+       "description": "Tradeoff comparisons between models",
+       "properties": {
+         "cost": { "type": "object", "additionalProperties": { "type": "number" } },
+         "quality": { "type": "object", "additionalProperties": { "type": "number" } },
+         "latency": { "type": "object", "additionalProperties": { "type": "number" } }
+       }
+    }
+  },
+  "required": ["id", "suite_id", "baselines", "models", "metrics", "comparison_tradeoffs"],
+  "additionalProperties": false
+}
