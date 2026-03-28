@@ -317,6 +317,14 @@ This dashboard aggregates the progress logs from all domains to provide a unifie
 
 ## DOCS Progress
 
+### DOCS v0.12.0
+- ✅ Completed: Daily Documentation Review
+  - Generated API documentation for audit-report schema
+  - Refreshed cross-domain dashboards `domain-status-overview.md` and `implementation-progress.md` with new data
+  - Regenerated `context-docs.md`
+  - Updated `last_verified` dates in guides and ADRs
+
+
 ### DOCS v0.9.0
 - ✅ Completed: Daily Documentation Review
   - Generated all API documentation references from schemas

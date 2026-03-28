@@ -11,6 +11,7 @@
 
 ## Section B: API Reference Inventory
 - `approval-state-reference.md`
+- `audit-report-reference.md`
 - `artifact-refs-reference.md`
 - `automated-scan-record-reference.md`
 - `baseline-reference.md`
