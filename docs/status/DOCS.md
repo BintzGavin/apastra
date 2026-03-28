@@ -1,4 +1,4 @@
-**Version**: 0.11.0
+**Version**: 0.12.0
 
 [v0.11.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Updated API docs to include digest-convention, refreshed dashboards, and regenerated context-docs.md.
 
@@ -21,3 +21,5 @@
 [v0.6.0] ✅ Completed: Daily Documentation Review - Updated API documentation for new schema fields, refreshed cross-domain dashboards based on latest implementation progress, and updated schema dependency graph to include quick-eval dependencies.
 
 [v0.7.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Generated API docs, updated dashboards, updated guides and ADRs last_verified timestamps, and updated context-docs.md.
+
+[v0.12.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Generated API docs for audit-report, updated dashboards, and regenerated context-docs.md.
