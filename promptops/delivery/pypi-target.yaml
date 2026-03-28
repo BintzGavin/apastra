@@ -1,8 +1,4 @@
-target_id: pypi-target
 type: pypi
-channel: public
 registry: upload.pypi.org
-sync_rules:
-  on_promotion: true
-  require_approval: true
-credentials_ref: PYPI_API_TOKEN
+channel: release
+credentials_ref: PYPI_TOKEN

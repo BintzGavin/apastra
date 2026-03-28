@@ -1,8 +1,5 @@
-target_id: npm-target
 type: npm
-channel: public
 registry: registry.npmjs.org
-sync_rules:
-  on_promotion: true
-  require_approval: true
-credentials_ref: NPM_PUBLISH_TOKEN
+scope: "@apastra"
+channel: release
+credentials_ref: NPM_TOKEN
