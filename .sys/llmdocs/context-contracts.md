@@ -56,8 +56,8 @@
   - **Version:** 0.44.0
   - **Description:** Summary of normalized metrics and variance from an evaluation run, including metric versioning definitions.
 - **ID:** `apastra-regression-report-v1`
-  - **Version:** 0.10.0
-  - **Description:** Summary of a regression test comparing a candidate to a baseline, including policy outcomes.
+  - **Version:** 1.4.0
+  - **Description:** Summary of a regression test comparing a candidate to a baseline, including cost_delta and policy outcomes.
 - **ID:** `apastra-regression-policy-v1`
   - **Version:** 0.11.0
   - **Description:** Policy definition outlining regression thresholds and blockers.
@@ -80,8 +80,8 @@
   - **Version:** 0.15.0
   - **Description:** Schema defining the approval status of a test run or promotion.
 - **ID:** `apastra-run-manifest-v1`
-  - **Version:** 0.37.0
-  - **Description:** Schema defining the master index of a test run, including SLSA-style provenance metadata.
+  - **Version:** 1.4.0
+  - **Description:** Schema defining the master index of a test run, including total_cost and SLSA-style provenance metadata.
 - **ID:** `apastra-run-case-v1`
   - **Version:** 0.16.0
   - **Description:** Schema defining the outcome of a single test case.

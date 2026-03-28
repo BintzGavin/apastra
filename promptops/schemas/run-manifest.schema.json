@@ -14,6 +14,7 @@
     "sampling_config": { "type": "object", "description": "Sampling configuration" },
     "environment": { "type": "object", "description": "Environment metadata" },
     "status": { "type": "string", "description": "Run status" },
+    "total_cost": { "type": "number", "description": "Total cost of the run in dollars (input tokens × price + output tokens × price)" },
     "provenance": {
       "type": "object",
       "description": "SLSA-style provenance metadata representing the invocation of the evaluation run.",
