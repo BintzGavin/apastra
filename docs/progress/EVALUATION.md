@@ -303,3 +303,5 @@
 
 ### EVALUATION v0.26.0
 - ✅ Completed: PromptReviewWorkflow - Implemented role-based agent skill prompt review workflow
+### EVALUATION v0.27.0
+- ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator

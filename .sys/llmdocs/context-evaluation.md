@@ -22,6 +22,8 @@ Harness execution flow:
 ## Section B: File Tree
 - `promptops/evals/`
   - `promptops/evals/prompt-review-eval.yaml`
+- `promptops/evaluators/`
+  - `promptops/evaluators/prompt-optimization-review.yaml`
 - `promptops/harnesses/`
 - `promptops/runs/`
   - `promptops/runs/compare.py`
