@@ -294,3 +294,6 @@
 
 ### EVALUATION v0.98.0
 - ✅ Planned: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.24.0
+- ✅ Completed: RunRequestDigestValidation - Added explicit digest field validation to run request validation script

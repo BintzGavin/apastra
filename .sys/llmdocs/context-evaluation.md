@@ -11,7 +11,7 @@
 Harness execution flow:
 - (Quick Eval Mode) `promptops/runs/quick-eval.sh <yaml>` dynamically constructs a run request and dataset from a yaml file before invoking the harness.
 - Run request generated and stored in `promptops/runs/<run-id>/run_request.json`
-- Run request validated via `promptops/runs/validate-run-request.sh`
+- Run request validated via `promptops/runs/validate-run-request.sh` (ensuring digest and harness version fields are present)
 - Harness adapter invoked via `promptops/runs/runner-shim.sh <adapter_yaml> <run_request> <output_dir>` which parses the entrypoint from `adapter.yaml` and executes it
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`). It natively enforces `budgets` and `timeouts`.
 - If inline assertions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), `is-valid-json-schema`, `answer-relevance`, `llm-rubric`, `similar`, and `factuality` assertion types.

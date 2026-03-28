@@ -1,4 +1,5 @@
-**Version**: 0.23.0
+**Version**: 0.24.0
+[v0.24.0] ✅ Completed: RunRequestDigestValidation - Added explicit digest field validation to run request validation script
 [v0.23.0] ✅ Completed: RunArtifactProvenanceSupport - Implemented SLSA-style provenance metadata collection in the reference harness adapter's run manifest
 [v0.22.0] ✅ Completed: HarnessTimeoutAndBudgetSupport - Implemented timeout and budget enforcement in reference adapter
 [v0.21.0] ✅ Completed: FlakeQuarantine - Implemented flake tracking and variance-aware gating
