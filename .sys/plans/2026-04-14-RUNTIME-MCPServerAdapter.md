@@ -1,31 +1,61 @@
 #### 1. Context & Goal
-- **Objective**: Design the MCP server adapter to expose apastra evals as discoverable MCP tools for IDE agents.
-- **Trigger**: "MCP server adapter" is listed as a proposed expansion in docs/vision.md and README.md.
-- **Impact**: Allows IDE agents (like Claude Code or Cursor) to dynamically discover and invoke apastra evaluations directly within the developer's workflow, bridging the gap between local prompt editing and automated testing.
+- **Objective**: Provide an MCP server adapter to expose evaluations as discoverable MCP tools.
+- **Trigger**: The docs/vision.md file specifies "MCP integration — support MCP tool definitions in prompt specs and provide an MCP server adapter for agent discovery".
+- **Impact**: Enables external IDE agents to easily discover and invoke prompt evaluations natively via the Model Context Protocol, drastically reducing friction for autonomous quality checking.
 
 #### 2. File Inventory
 - **Create**:
-  - promptops/runtime/mcp_server.py: Core MCP server implementation exposing apastra tools.
-  - promptops/runtime/mcp_tools.py: Definitions for the specific MCP tools (e.g., run_eval, baseline, scaffold).
+  - `promptops/runtime/mcp_server.py` (New module implementing the MCP server adapter and exposing evaluation tools)
 - **Modify**:
-  - promptops/runtime/cli.py: Add an mcp subcommand to start the MCP server.
+  - `promptops/runtime/cli.py` (Update CLI to add an `mcp` command that starts the server)
 - **Read-Only**:
-  - docs/vision.md (MCP integration details)
-  - README.md (Agent integration concepts)
+  - `docs/vision.md` (MCP integration specifications)
+  - `promptops/schemas/run-request.schema.json`
 
 #### 3. Implementation Spec
-- **Resolver Architecture**: The MCP server will not change the resolution chain itself but will wrap the existing ResolverChain and runner logic. It acts as an interactive frontend for agents.
-- **Manifest Format**: No direct changes to the manifest format.
+- **Resolver Architecture**: The `mcp_server.py` will define an MCP server using an appropriate MCP Python SDK or implementing the JSON-RPC protocol over stdio. It will expose tools such as `run_evaluation` (taking a `suite_id` and `prompt_id`) and `list_evaluations`. When the `run_evaluation` tool is invoked, it will internally construct a run request and trigger the `RunnerShim` to execute it, then return a summary of the scorecard and any regression alerts to the calling agent.
+- **Manifest Format**: Unchanged.
 - **Pseudo-Code**:
-  - Initialize an MCP server instance.
-  - Register tool run_eval: takes suite_id, ref as inputs. Internally calls runner.py logic and returns a summary of the scorecard.json and a link to the regression_report.json.
-  - Register tool baseline: takes run_id as input. Invokes baseline establishment logic.
-  - Register tool scaffold: takes intent as input. Generates boilerplate files for prompts, datasets, and suites.
-  - Start the stdio transport loop.
-- **Harness Contract Interface**: The MCP server will invoke the harness as defined in harness_adapter.yaml just like the CLI does.
-- **Dependencies**: No new CONTRACTS schemas required. Depends on existing scorecard.schema.json and run-manifest.schema.json.
+  ```python
+  # promptops/runtime/mcp_server.py
+  import sys
+  import json
+  # import mcp_sdk (hypothetical or stdio handling)
+
+  class MCPServer:
+      def __init__(self):
+          self.tools = {
+              "run_evaluation": self.run_evaluation,
+              "list_suites": self.list_suites
+          }
+
+      def run_evaluation(self, params):
+          suite_id = params.get("suite_id")
+          # Construct run request
+          # Invoke runner.py logic
+          # Return scorecard summary
+          return {"status": "success", "scorecard": {...}}
+
+      def serve_stdio(self):
+          # Read from stdin, write to stdout using JSON-RPC
+          pass
+
+  def start_mcp_server():
+      server = MCPServer()
+      server.serve_stdio()
+
+  # promptops/runtime/cli.py
+  # Add handling for `promptops.runtime.cli mcp` to call start_mcp_server()
+  ```
+- **Harness Contract Interface**: No changes to the harness contract interface.
+- **Dependencies**: Depends on existing RUNTIME runner and resolver logic to execute the requested suites.
 
 #### 4. Test Plan
-- **Verification**: Start the MCP server locally (python -m promptops.runtime.cli mcp). Connect a compatible MCP client (like the reference MCP Inspector) and invoke the run_eval tool with a known test suite.
-- **Success Criteria**: The tool execution returns a valid JSON response containing the suite's pass/fail status and key metrics from the scorecard.
-- **Edge Cases**: Verify behavior when an invalid suite_id is provided, when the harness fails to execute, and when the promptops directory is not initialized.
+- **Verification**:
+  1. Start the MCP server via `python -m promptops.runtime.cli mcp`.
+  2. Send a mock JSON-RPC request for `list_suites` via stdin.
+- **Success Criteria**: The server responds with a valid JSON-RPC response containing the list of available suites discovered in the workspace.
+- **Edge Cases**:
+  - Malformed JSON-RPC requests.
+  - Requested suite does not exist.
+  - Harness execution failure during `run_evaluation` tool invocation.
