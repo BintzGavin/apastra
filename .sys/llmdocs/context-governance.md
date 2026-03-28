@@ -62,6 +62,7 @@ Gate Enforcement Flow:
 - `promptops/policies/moderation-approval-public-listing.md`: Defines human checkpoints and requirements for public listing approval.
 - `promptops/policies/observability-adapters.md`: Governance policy for observability bridge adapters.
 - `promptops/policies/cost-budget-governance.md`: Defines rules for enforcing cost limits on evaluation suites and preventing promotion of expensive runs.
+- `promptops/policies/multi-model-promotion.md`: Governance rules for promoting a specific model+prompt combination from a multi-model comparison scorecard.
 
 **Section D: Promotion Record Format**
 - `id`: Unique promotion event ID

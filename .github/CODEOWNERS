@@ -1,6 +1,7 @@
 promptops/prompts/ @apastra/prompt-engineers
 promptops/schemas/ @apastra/governance-admins
 promptops/policies/ @apastra/governance-admins
+promptops/policies/multi-model-promotion.md @apastra/governance-admins
 promptops/policies/trusted-publisher.md @apastra/governance-admins
 promptops/evaluators/ @apastra/evaluation-team
 promptops/suites/ @apastra/evaluation-team
