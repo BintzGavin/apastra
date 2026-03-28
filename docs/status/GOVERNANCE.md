@@ -1,4 +1,5 @@
-**Version**: 1.98.0
+**Version**: 1.99.0
+[v1.99.0] ✅ Completed: ArtifactStorageRetention - Implemented artifact storage and retention policy.
 [v1.98.0] ✅ Completed: CommunityPromptPackAcceptance - Implemented community prompt pack acceptance policy.
 [v1.97.0] ✅ Completed: MultiModelPromotionPolicies - Implemented multi-model promotion policy.
 

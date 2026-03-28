@@ -1,3 +1,6 @@
+### GOVERNANCE v1.99.0
+- ✅ Completed: ArtifactStorageRetention - Implemented artifact storage and retention policy.
+
 ### GOVERNANCE v1.98.0
 - ✅ Completed: CommunityPromptPackAcceptance - Implemented community prompt pack acceptance policy.
 
