@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-agent-skill-v1",
+  "type": "object",
+  "description": "Schema defining an agent skill role configuration.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the agent skill."
+    },
+    "role": {
+      "type": "string",
+      "enum": ["Review", "Red-team", "Optimize"],
+      "description": "The specific role the agent skill performs."
+    },
+    "description": {
+      "type": "string",
+      "description": "A human-readable description of what the agent skill does."
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of capabilities or sub-skills the agent possesses."
+    }
+  },
+  "required": ["id", "role", "description", "capabilities"],
+  "additionalProperties": false
+}

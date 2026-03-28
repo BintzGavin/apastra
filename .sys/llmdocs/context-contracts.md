@@ -6,6 +6,9 @@
 **Responsibility**: You are the Contracts Builder. You implement the machine-readable source of truth for the apastra PromptOps system — schemas, validators, prompt specs, datasets, evaluators, and suites — according to the approved plan from your Planner counterpart.
 
 ## Section A: Schema Inventory
+- **ID:** `apastra-agent-skill-v1`
+  - **Version:** 1.5.0
+  - **Description:** Schema defining an agent skill role configuration.
 - **ID:** `https://promptops.apastra.com/schemas/delivery-target-receipt.schema.json`
   - **Version:** 1.0.0
   - **Description:** Schema for a delivery target receipt.

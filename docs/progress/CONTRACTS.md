@@ -308,3 +308,6 @@
 
 ### CONTRACTS v1.4.0
 - ✅ Completed: CostTrackingFields - Added cost tracking fields to run manifest and regression report
+
+### CONTRACTS v1.5.0
+- ✅ Completed: AgentSkillRoleSchemas - Created JSON Schema and validator for agent skill roles.
