@@ -61,6 +61,7 @@ Gate Enforcement Flow:
 - `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 - `promptops/policies/moderation-approval-public-listing.md`: Defines human checkpoints and requirements for public listing approval.
 - `promptops/policies/observability-adapters.md`: Governance policy for observability bridge adapters.
+- `promptops/policies/cost-budget-governance.md`: Defines rules for enforcing cost limits on evaluation suites and preventing promotion of expensive runs.
 
 **Section D: Promotion Record Format**
 - `id`: Unique promotion event ID

@@ -1,4 +1,5 @@
-**Version**: 1.95.0
+**Version**: 1.96.0
+[v1.96.0] ✅ Completed: CostBudgetGovernance - Implemented cost budget governance policy document.
 
 [v1.95.0] ✅ Completed: ObservabilityAdapterPolicies - Implemented observability adapter policy and delivery target config.
 [v1.94.0] ✅ Completed: CommunityReportRecordsPolicy - Implemented community report records policy.
