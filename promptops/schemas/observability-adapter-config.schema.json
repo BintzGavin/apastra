@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apastra-observability-adapter-config-v1",
+  "title": "Observability Adapter Config",
+  "description": "Configuration for exporting run artifacts to external observability systems like Langfuse or OpenTelemetry.",
+  "type": "object",
+  "properties": {
+    "adapters": {
+      "type": "array",
+      "description": "List of observability adapters.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["langfuse", "opentelemetry"],
+            "description": "The type of the observability adapter."
+          },
+          "endpoint": {
+            "type": "string",
+            "description": "The endpoint URL or environment variable reference."
+          },
+          "emit": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The types of artifacts to emit (e.g., scorecard, regression_report)."
+          }
+        },
+        "required": ["type", "endpoint"]
+      }
+    }
+  },
+  "required": ["adapters"]
+}
