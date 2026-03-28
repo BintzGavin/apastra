@@ -310,3 +310,6 @@
 
 ### GOVERNANCE v1.96.0
 - ✅ Completed: CostBudgetGovernance - Implemented cost budget governance policy document.
+
+### GOVERNANCE v1.97.0
+- ✅ Completed: MultiModelPromotionPolicies - Implemented multi-model promotion policy.

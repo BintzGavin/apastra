@@ -1,4 +1,6 @@
-**Version**: 1.96.0
+**Version**: 1.97.0
+[v1.97.0] ✅ Completed: MultiModelPromotionPolicies - Implemented multi-model promotion policy.
+
 [v1.96.0] ✅ Completed: CostBudgetGovernance - Implemented cost budget governance policy document.
 
 [v1.95.0] ✅ Completed: ObservabilityAdapterPolicies - Implemented observability adapter policy and delivery target config.
