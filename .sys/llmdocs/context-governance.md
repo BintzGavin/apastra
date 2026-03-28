@@ -30,6 +30,7 @@ Gate Enforcement Flow:
 - `promptops/delivery/observability.yaml`
 - `promptops/policies/emergency-takedown-decisions.md`
 - `promptops/policies/regression.yaml`
+- `promptops/policies/artifact-storage-retention.md`
 - `promptops/policies/moderation-approval-public-listing.md`
 - `promptops/policies/acceptable-use.md`
 - `promptops/policies/deprecation.md`
@@ -43,6 +44,7 @@ Gate Enforcement Flow:
 - `promptops/policies/observability-adapters.md`
 
 **Section C: Policy Inventory**
+- `promptops/policies/artifact-storage-retention.md`: Defines the requirement for syncing derived artifacts to external long-term storage, overriding the 90-day CI retention limit.
 - `promptops/policies/community-prompt-pack-acceptance.md`: Governance rules for accepting, reviewing, and publishing community-contributed prompt packs.
 - `promptops/policies/acceptable-use.md`: Acceptable use constraints.
 - `promptops/policies/deprecation.md`: Formal append-only registry metadata store policy detailing deprecation notices.
@@ -59,7 +61,8 @@ Gate Enforcement Flow:
 - `promptops/policies/policy-exceptions.md`: Defines handling and format of exceptions to automated policy checks.
 - `promptops/policies/submission-records.md`: Defines the handling, format, and expectations of submission records.
 - `promptops/policies/emergency-takedown-decisions.md`: Defines criteria and procedures for executing immediate emergency takedowns.
-- `promptops/policies/regression.yaml`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
+- `promptops/policies/regression.yaml`
+- `promptops/policies/artifact-storage-retention.md`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 - `promptops/policies/moderation-approval-public-listing.md`: Defines human checkpoints and requirements for public listing approval.
 - `promptops/policies/observability-adapters.md`: Governance policy for observability bridge adapters.
 - `promptops/policies/cost-budget-governance.md`: Defines rules for enforcing cost limits on evaluation suites and preventing promotion of expensive runs.
