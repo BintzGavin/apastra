@@ -5,6 +5,7 @@
   "description": "Schema for a regression report output.",
   "type": "object",
   "properties": {
+    "cost_delta": { "type": "number", "description": "The difference in total cost between the candidate and the baseline" },
     "status": { "type": "string", "description": "Pass, fail, warning status" },
     "baseline_ref": { "type": "string", "description": "The reference digest or ID" },
     "candidate_ref": { "type": "string", "description": "The digest or ID being tested" },

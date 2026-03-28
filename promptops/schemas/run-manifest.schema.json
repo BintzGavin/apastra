@@ -5,6 +5,7 @@
   "description": "Schema for a run manifest.",
   "type": "object",
   "properties": {
+    "total_cost": { "type": "number", "description": "Total cost of the run in dollars (input tokens × price + output tokens × price)" },
     "input_refs": { "type": "object", "description": "Input references" },
     "resolved_digests": { "type": "object", "description": "Resolved digests" },
     "timestamps": { "type": "object", "description": "Timestamps" },
