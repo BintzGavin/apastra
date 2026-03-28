@@ -310,3 +310,6 @@
 
 ### RUNTIME v1.82.0
 - ✅ Completed: SimplifiedMinimalMode - Implemented auto-detection for the simplified minimal mode file structure in the workspace resolver.
+
+### RUNTIME v1.83.0
+- ✅ Completed: CostTrackingMetadata - Included token cost estimates in resolved prompt metadata
