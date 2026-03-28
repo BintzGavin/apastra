@@ -1,0 +1,6 @@
+id: test-canary
+suite_ref: test-suite
+schedule: "0 6 * * *"
+alert:
+  on_regression: true
+  channel: slack

@@ -11,6 +11,14 @@ def main():
         start_mcp_server()
         return
 
+    if len(sys.argv) > 1 and sys.argv[1] == "canary":
+        parser = argparse.ArgumentParser(prog="promptops.runtime.cli canary")
+        parser.add_argument("canary_path")
+        args = parser.parse_args(sys.argv[2:])
+        from promptops.runtime.canary import run_canary
+        run_canary(args.canary_path)
+        return
+
     if len(sys.argv) > 1 and sys.argv[1] == "audit":
         parser = argparse.ArgumentParser(prog="promptops.runtime.cli audit")
         parser.add_argument("directory", nargs="?", default=".")
