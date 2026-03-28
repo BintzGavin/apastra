@@ -1,4 +1,5 @@
-**Version**: 1.80.0
+**Version**: 1.81.0
+[v1.81.0] ✅ Completed: AuditCodebaseScanning - Implemented audit command to scan for hardcoded prompts.
 [v1.80.0] ✅ Completed: RemoteGitSemverResolution - Implemented explicit support for semver resolution for remote git URLs.
 [v1.79.0] ✅ Completed: RemoteGitSHACloningFix - Implemented explicit commit SHA fallback for remote git URLs.
 [v1.77.0] ✅ Completed: RegistryProtocolResolution - Implemented OCI, NPM, and PyPI protocol resolution.
