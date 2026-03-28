@@ -14,6 +14,7 @@ Harness execution flow:
 - Run request validated via `promptops/runs/validate-run-request.sh` (ensuring digest and harness version fields are present)
 - Harness adapter invoked via `promptops/runs/runner-shim.sh <adapter_yaml> <run_request> <output_dir>` which parses the entrypoint from `adapter.yaml` and executes it
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`). It natively enforces `budgets` and `timeouts`.
+  - `promptops/runs/generate_comparison_scorecard.py`
 - If inline assertions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), `is-valid-json-schema`, `answer-relevance`, `llm-rubric`, `similar`, and `factuality` assertion types.
 - Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file.
 - Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> <baseline> <policy> <report_id>`, with ungated metrics surfaced as informational evidence.
@@ -22,6 +23,7 @@ Harness execution flow:
 - `promptops/harnesses/`
 - `promptops/runs/`
   - `promptops/runs/compare.py`
+  - `promptops/runs/generate_comparison_scorecard.py`
   - `promptops/runs/evaluate_assertions.py`
   -  `promptops/runs/normalize.py`
 - `derived-index/baselines/`
