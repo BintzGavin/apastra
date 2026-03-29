@@ -127,6 +127,12 @@ def main():
             print(f"Error: Invalid JSON in failures.json: {str(e)}")
             sys.exit(1)
 
+    from promptops.runtime.observability import emit_artifacts
+    try:
+        emit_artifacts(output_dir)
+    except Exception as e:
+        print(f"Warning: Failed to emit observability artifacts: {e}")
+
     print(f"Success: Run artifacts generated and validated at {output_dir}")
 
 if __name__ == "__main__":
