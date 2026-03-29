@@ -51,6 +51,7 @@ Gate Enforcement Flow:
 
 
 - `promptops/policies/role-based-skills.md`
+- `promptops/policies/prompt-debt-governance.md`
 
 **Section C: Policy Inventory**
 - `promptops/policies/artifact-storage-retention.md`: Defines the requirement for syncing derived artifacts to external long-term storage, overriding the 90-day CI retention limit.
@@ -83,6 +84,7 @@ Gate Enforcement Flow:
 
 
 - `promptops/policies/role-based-skills.md`: Governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
+- `promptops/policies/prompt-debt-governance.md`: Establishes governance policy for prompt debt acceptable limits, blocking PRs introducing new debt and mandating migration of existing hardcoded prompts to versioned evaluated assets.
 
 **Section D: Promotion Record Format**
 - `id`: Unique promotion event ID
