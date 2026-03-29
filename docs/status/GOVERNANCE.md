@@ -1,4 +1,5 @@
-**Version**: 1.106.0
+**Version**: 1.107.0
+[v1.107.0] ✅ Completed: ApproachableTerminology - Implemented governance policy for approachable terminology.
 [v1.106.0] ✅ Completed: FlakeQuarantinePolicy - Implemented governance policy for quarantining flaky evaluation cases.
 [1.105.0] ✅ Completed: MCPIntegration - Implemented MCP integration policy and delivery target.
 [v1.104.0] ✅ Completed: PromptDebtAuditPolicy - Implemented governance policy for prompt debt acceptable limits and remediation.
