@@ -19,6 +19,18 @@ def main():
         run_canary(args.canary_path)
         return
 
+    if len(sys.argv) > 1 and sys.argv[1] == "compare":
+        parser = argparse.ArgumentParser(prog="promptops.runtime.cli compare")
+        parser.add_argument("suite_id")
+        parser.add_argument("--models", nargs="+")
+        parser.add_argument("--adapter")
+        args = parser.parse_args(sys.argv[2:])
+        from promptops.runtime.compare import run_comparison
+        scorecard = run_comparison(args.suite_id, args.models, args.adapter)
+        print(json.dumps(scorecard, indent=2))
+        return
+
+
     if len(sys.argv) > 1 and sys.argv[1] == "audit":
         parser = argparse.ArgumentParser(prog="promptops.runtime.cli audit")
         parser.add_argument("directory", nargs="?", default=".")
