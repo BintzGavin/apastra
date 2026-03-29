@@ -18,6 +18,7 @@ Gate Enforcement Flow:
 - `.github/workflows/promote.yml`
 - `.github/workflows/record-approval.yml`
 - `.github/workflows/regression-gate.yml`
+- `.github/workflows/canary-drift-detection.yml`
 - `.github/workflows/moderation-scan.yml`
 - `.github/workflows/secret-scan.yml`
 - `.github/workflows/schema-validation.yml`

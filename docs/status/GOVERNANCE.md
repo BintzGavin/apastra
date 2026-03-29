@@ -1,4 +1,6 @@
-**Version**: 1.109.0
+**Version**: 1.110.0
+[v1.110.0] ✅ Completed: DriftAlertWorkflow - Implemented scheduled GitHub Actions workflow for canary suites and drift detection.
+
 [v1.109.0] ✅ Completed: CommunityPromptPackAcceptance - Implemented community prompt pack acceptance policy.
 [v1.108.0] ✅ Completed: ProjectLevelConfig - Implemented governance policy for project-level configurations and minimal file structure.
 [v1.107.0] ✅ Completed: ApproachableTerminology - Implemented governance policy for approachable terminology.

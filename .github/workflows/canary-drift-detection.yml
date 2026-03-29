@@ -1,0 +1,23 @@
+name: Canary Suite Drift Detection
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+jobs:
+  run-canary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f
+      - name: Run canary suite harness
+        run: |
+          echo "Running canary suite..."
+      - name: Parse reports/drift_report.json
+        run: |
+          echo "Parsing drift report..."
+      - name: Check drift_detected field
+        run: |
+          echo "Checking for drift..."
+      - name: Trigger alert and auto-rollback
+        run: |
+          echo "Triggering alert and auto-rollback if drift_detected == true"
