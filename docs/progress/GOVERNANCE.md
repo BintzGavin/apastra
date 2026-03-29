@@ -350,3 +350,6 @@
 
 ### GOVERNANCE v1.110.0
 - ✅ Completed: DriftAlertWorkflow - Implemented scheduled GitHub Actions workflow for canary suites and drift detection.
+
+### GOVERNANCE v1.111.0
+- ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
