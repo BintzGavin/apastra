@@ -1,4 +1,5 @@
-**Version**: 1.86.1
+**Version**: 1.86.2
+[v1.86.2] ✅ Completed: MultiModelComparison - Minimal Plan Exception. Changes already present.
 [v1.86.1] ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
 [v1.86.0] ✅ Completed: ProjectConfigLoading - Implemented project config loading and defaults resolution in the runtime.
 [v1.85.0] ✅ Completed: CanarySuiteScheduling - Implemented drift detection via scheduled canary suites.
