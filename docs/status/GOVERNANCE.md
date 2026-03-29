@@ -1,4 +1,5 @@
-**Version**: 1.107.0
+**Version**: 1.108.0
+[v1.108.0] ✅ Completed: ProjectLevelConfig - Implemented governance policy for project-level configurations and minimal file structure.
 [v1.107.0] ✅ Completed: ApproachableTerminology - Implemented governance policy for approachable terminology.
 [v1.106.0] ✅ Completed: FlakeQuarantinePolicy - Implemented governance policy for quarantining flaky evaluation cases.
 [1.105.0] ✅ Completed: MCPIntegration - Implemented MCP integration policy and delivery target.
