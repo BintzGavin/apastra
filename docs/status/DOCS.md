@@ -1,4 +1,6 @@
-**Version**: 0.12.0
+**Version**: 0.13.0
+
+[v0.13.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Generated missing API docs, refreshed dashboards, updated timestamps, and regenerated context-docs.md.
 
 [v0.11.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Updated API docs to include digest-convention, refreshed dashboards, and regenerated context-docs.md.
 

@@ -1,20 +1,25 @@
 ---
 title: "Domain Status Overview"
-description: "Cross-domain summary of current versions and latest activities."
+description: "Current status of all PromptOps domains"
 audience: "all"
-last_verified: "2026-03-25"
+last_verified: "2026-03-29"
+source_files:
+  - docs/status/GOVERNANCE.md
+  - docs/status/EVALUATION.md
+  - docs/status/CONTRACTS.md
+  - docs/status/DOCS.md
+  - docs/status/RUNTIME.md
 ---
 
 # Domain Status Overview
 
-This dashboard provides a high-level view of the current state of all domains in the Apastra system.
+## Domains
 
-## Domain Versions
+| Domain | Version |
+|---|---|
+| GOVERNANCE | 1.104.0 |
+| EVALUATION | 0.27.0 |
+| CONTRACTS | 1.9.0 |
+| DOCS | 0.13.0 |
+| RUNTIME | 1.85.0 |
 
-| Domain | Current Version | Latest Activity |
-|---|---|---|
-| **CONTRACTS** | `1.8.0` | [v1.8.0] ✅ Planned: MinimalPlanExceptionFinal - Execute the final minimal plan exception for the CONTRACTS domain. |
-| **DOCS** | `0.12.0` | [v0.12.0] ✅ Completed: Daily Documentation Review - Comprehensive daily review. Generated API docs for audit-report, updated dashboards, and regenerated context-docs.md. |
-| **EVALUATION** | `0.98.0` | [v0.98.0] ✅ Planned: Minimal Plan Exception Final - All plans officially complete |
-| **GOVERNANCE** | `1.97.0` | [v1.96.0] ✅ Completed: MinimalPlanExceptionFinal - Acknowledged all GOVERNANCE vision gaps are complete. |
-| **RUNTIME** | `1.93.0` | [v1.92.0] ✅ Completed: MinimalPlanExceptionFinal - Executed the final minimal plan exception for the RUNTIME domain. |

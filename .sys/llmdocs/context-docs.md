@@ -10,12 +10,15 @@
 - `repo-topology.md`
 
 ## Section B: API Reference Inventory
+- `agent-skill-reference.md`
 - `approval-state-reference.md`
-- `audit-report-reference.md`
 - `artifact-refs-reference.md`
+- `audit-report-reference.md`
 - `automated-scan-record-reference.md`
 - `baseline-reference.md`
+- `canary-suite-reference.md`
 - `community-report-record-reference.md`
+- `comparison-scorecard-reference.md`
 - `consumption-manifest-reference.md`
 - `dataset-case-reference.md`
 - `dataset-manifest-reference.md`
@@ -23,24 +26,29 @@
 - `delivery-target-reference.md`
 - `deprecation-record-reference.md`
 - `digest-convention-reference.md`
+- `drift-report-reference.md`
 - `emergency-takedown-decision-reference.md`
 - `evaluator-reference.md`
 - `harness-adapter-reference.md`
+- `mcp-tool-definition-reference.md`
 - `mirror-sync-receipt-reference.md`
 - `moderation-approval-for-public-listing-reference.md`
 - `moderation-decision-record-reference.md`
 - `moderation-escalation-record-reference.md`
 - `namespace-claim-record-reference.md`
+- `observability-adapter-config-reference.md`
 - `ownership-dispute-record-reference.md`
 - `policy-exception-record-reference.md`
 - `promotion-record-reference.md`
 - `prompt-package-reference.md`
 - `prompt-spec-reference.md`
+- `promptops-config-reference.md`
 - `provenance-attestation-reference.md`
 - `provider-artifact-reference.md`
 - `quick-eval-reference.md`
 - `regression-policy-reference.md`
 - `regression-report-reference.md`
+- `release-descriptor-reference.md`
 - `run-artifact-reference.md`
 - `run-case-reference.md`
 - `run-failures-reference.md`
@@ -53,7 +61,6 @@
 - `takedown-record-reference.md`
 - `trusted-publisher-provenance-reference.md`
 - `vulnerability-flag-record-reference.md`
-
 ## Section C: ADR Inventory
 - `adr-001-git-native-control-plane.md`
 - `adr-002-byo-harnesses.md`
