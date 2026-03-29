@@ -313,3 +313,6 @@
 
 ### EVALUATION v0.30.0
 - ✅ Completed: AuditSkillExecution - Implemented audit-shim.sh to generate audit_report.json
+
+### EVALUATION v0.31.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete

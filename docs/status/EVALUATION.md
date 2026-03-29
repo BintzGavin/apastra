@@ -1,4 +1,5 @@
-**Version**: 0.30.0
+**Version**: 0.31.0
+[v0.31.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
 [v0.30.0] ✅ Completed: AuditSkillExecution - Implemented audit-shim.sh to generate audit_report.json
 [v0.29.0] ✅ Completed: DriftDetectionWorkflow - Implemented drift report generation script
 [v0.28.0] ✅ Completed: ObservabilityBridgeAdapters - Implemented observability bridge adapters for Langfuse and OpenTelemetry

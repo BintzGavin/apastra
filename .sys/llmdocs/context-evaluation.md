@@ -1,60 +1,53 @@
-# IDENTITY: AGENT EVALUATION (EXECUTOR)
-**Domain**: `promptops/harnesses/`, `promptops/runs/`, `derived-index/baselines/`, `derived-index/regressions/`
-**Status File**: `docs/status/EVALUATION.md`
-**Progress File**: `docs/progress/EVALUATION.md`
-**Journal File**: `.jules/EVALUATION.md`
-**Responsibility**: You are the Evaluation Builder. You implement the harness execution pipeline, run-artifact generation, baseline management, and regression comparison engine according to the approved plan from your Planner counterpart.
-
-# Context: EVALUATION
+# EVALUATION Domain Context
 
 ## Section A: Architecture
-Harness execution flow:
-- (Quick Eval Mode) `promptops/runs/quick-eval.sh <yaml>` dynamically constructs a run request and dataset from a yaml file before invoking the harness.
-- Run request generated and stored in `promptops/runs/<run-id>/run_request.json`
-- Run request validated via `promptops/runs/validate-run-request.sh` (ensuring digest and harness version fields are present)
-- Harness adapter invoked via `promptops/runs/runner-shim.sh <adapter_yaml> <run_request> <output_dir>` which parses the entrypoint from `adapter.yaml` and executes it
-- Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`). It natively enforces `budgets` and `timeouts`.
-  - `promptops/runs/generate_comparison_scorecard.py`
-  - `promptops/runs/generate_drift_report.sh`
-- If inline assertions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), `is-valid-json-schema`, `answer-relevance`, `llm-rubric`, `similar`, and `factuality` assertion types.
-- The pipeline includes an observability bridge (`emit_observability.py`) that exports these artifacts to external systems like Langfuse or OpenTelemetry based on a provided configuration (`observability.yaml`).
-- Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file.
-- Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> <baseline> <policy> <report_id>`, with ungated metrics surfaced as informational evidence.
+The EVALUATION domain executes run requests to generate append-only run artifacts.
+- **Run Request Validation**: `validate-run-request.sh` ensures `prompt_digest`, `dataset_digest`, `evaluator_digest`, and `harness_version` are present.
+- **Run Artifact Generation**: Monolithic `run_artifact.json` is split into `run_manifest.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` for append-only storage.
+- **Scorecard Normalization**: Extracts normalized metrics from case evaluator outputs and calculates variance across trials. Outputs `scorecard.json`.
+- **Regression Report Generator**: `generate_regression_report.sh` compares the generated `scorecard.json` against a stored baseline and issues a pass/fail.
 
 ## Section B: File Tree
-- `promptops/evals/`
-  - `promptops/evals/prompt-review-eval.yaml`
-- `promptops/evaluators/`
-  - `promptops/evaluators/prompt-optimization-review.yaml`
-- `promptops/harnesses/`
-- `promptops/runs/`
-  - `promptops/runs/emit_observability.py`
-  - `promptops/runs/compare.py`
-  - `promptops/runs/generate_comparison_scorecard.py`
-  - `promptops/runs/generate_drift_report.sh`
-  - `promptops/runs/evaluate_assertions.py`
-  -  `promptops/runs/normalize.py`
-  - `promptops/runs/audit-shim.sh`
-- `derived-index/baselines/`
-- `derived-index/regressions/`
+```
+promptops/
+├── harnesses/
+│   └── reference-adapter/
+│       ├── adapter.yaml
+│       └── run.py
+└── runs/
+    ├── <run-id>/
+    │   ├── run_request.json
+    │   ├── run_manifest.json
+    │   ├── cases.jsonl
+    │   ├── failures.json
+    │   ├── artifact_refs.json
+    │   └── scorecard.json
+    ├── validate-run-request.sh
+    ├── runner-shim.sh
+    ├── split_artifact.sh
+    ├── normalize.py
+    ├── establish_baseline.sh
+    └── generate_regression_report.sh
+
+derived-index/
+├── baselines/
+│   └── <suite-id>.json
+└── regressions/
+    └── <report-id>.json
+```
 
 ## Section C: Run Artifact Format
-Run Artifact Schema (from CONTRACTS) `promptops/schemas/run-artifact.schema.json`:
-- `manifest`: input_refs, resolved_digests, timestamps, harness_version, model_ids, environment, status, provenance
-- `scorecard`: normalized_metrics, metric_definitions (including versioning), variance, flake_rates
-- `cases`: array of objects (case_id, per_trial_outputs, evaluator_outputs)
-- `failures`: array of objects
+- **`run_manifest.json`**: Contains digests (`prompt_digest`, `dataset_digest`, `evaluator_digest`), `harness_version`, `model_ids`, and `sampling_config`.
+- **`scorecard.json`**: Contains aggregated `metrics` (value, threshold, pass/fail status).
+- **`cases.jsonl`**: Individual case records.
+- **`failures.json`**: Case failures.
+- **`artifact_refs.json`**: Large raw outputs.
 
 ## Section D: Baseline and Regression Format
-Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
-- `baseline_id`: The baseline ID
-- `run_digest`: The run digest
-- `created_at`: The creation time
-- `metadata`: The metadata
-- `description`: The description
+- **Baseline**: `derived-index/baselines/<suite-id>.json` contains `baseline_run_id`, `digest`, and a `scorecard` snapshot. Written once, never overwritten.
+- **Regression Report**: `derived-index/regressions/<report-id>.json` contains candidate vs. baseline scorecard metrics. Contains pass/fail status based on policy gates.
 
 ## Section E: Integration Points
 GOVERNANCE reads:
-- `derived-index/regressions/<report-id>.json` to evaluate policy gates (e.g. `status` field for pass/fail/warning decisions).
-- `derived-index/baselines/<baseline-id>.json` to find the `run_digest` needed to locate the baseline's `scorecard.json`
-- Observability Bridge (`emit_observability.py`) sends artifacts directly to OpenTelemetry/Langfuse endpoints for monitoring.
+- `derived-index/regressions/<report-id>.json` to gate promotions based on pass/fail status.
+- `derived-index/baselines/<suite-id>.json` digests to verify what candidate runs were compared against.
