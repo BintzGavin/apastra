@@ -1,0 +1,6 @@
+target_type: mcp_server
+endpoint: ${MCP_SERVER_ENDPOINT}
+sync_on_promotion: true
+channels:
+  - prod
+  - staging

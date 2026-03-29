@@ -333,3 +333,6 @@
 
 ### GOVERNANCE v1.104.0
 - ✅ Completed: PromptDebtAuditPolicy - Implemented governance policy for prompt debt acceptable limits and remediation.
+
+### GOVERNANCE v1.105.0
+- ✅ Completed: MCPIntegration - Implemented MCP integration policy and delivery target.
