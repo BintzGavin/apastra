@@ -1,4 +1,5 @@
-**Version**: 1.9.0
+**Version**: 1.10.0
+[v1.10.0] ✅ Completed: ReleaseDescriptor - Created schema and validator for release descriptors.
 [v1.9.0] ✅ Completed: ReleaseDescriptor - Created release descriptor schema and validator.
 [v1.8.0] ✅ Completed: ComparisonScorecard - Created schema and validator for comparison-scorecard.
 [v1.7.0] ✅ Completed: MCPToolDefinitionSchema - Created schema and validator for MCP tool definition.
