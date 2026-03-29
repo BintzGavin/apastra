@@ -60,6 +60,8 @@ Gate Enforcement Flow:
 
 - `promptops/policies/project-level-config.md`
 
+- `promptops/policies/community-prompt-pack-acceptance.md`
+
 **Section C: Policy Inventory**
 - `promptops/policies/artifact-storage-retention.md`: Defines the requirement for syncing derived artifacts to external long-term storage, overriding the 90-day CI retention limit.
 - `promptops/policies/community-prompt-pack-acceptance.md`: Governance rules for accepting, reviewing, and publishing community-contributed prompt packs.
