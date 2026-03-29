@@ -7,6 +7,10 @@
 
 ## Section A: Schema Inventory
 
+- **ID:** `https://promptops.apastra.com/schemas/release-descriptor.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a release descriptor, posted to an internal API as part of abstract delivery targets.
+
 - :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
 - **Validator:**
   - **Invocation Syntax:**
@@ -189,6 +193,10 @@
   - `description`: Schema for project-level configurations.
 
 ## Section B: Validator Inventory
+
+- **Validator:** `validate-release-descriptor.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-release-descriptor.sh <release-descriptor.json>`
+  - **What it Validates:** Validates a release descriptor against its schema.
 - **Validator:** `validate-mcp-tool-definition.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-mcp-tool-definition.sh <mcp-tool-definition.json>`
   - **What it Validates:** Validates MCP tool definition against mcp-tool-definition.schema.json.

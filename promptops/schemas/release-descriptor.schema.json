@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://promptops.com/schemas/release-descriptor.schema.json",
+  "title": "Release Descriptor",
+  "description": "Schema for a release descriptor, posted to an internal API as part of abstract delivery targets.",
+  "type": "object",
+  "required": ["descriptor_id", "timestamp", "prompt_digest", "environment", "signatures"],
+  "properties": {
+    "descriptor_id": {
+      "type": "string",
+      "description": "Unique identifier for this release descriptor"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp of when the descriptor was created"
+    },
+    "prompt_digest": {
+      "type": "string",
+      "description": "The canonical digest of the prompt package being released"
+    },
+    "prompt_version": {
+      "type": "string",
+      "description": "Semantic version of the prompt package being released, if applicable"
+    },
+    "environment": {
+      "type": "string",
+      "description": "The environment this release is targeting (e.g., prod, staging)"
+    },
+    "signatures": {
+      "type": "array",
+      "description": "Digital signatures ensuring the authenticity of the release",
+      "items": {
+        "type": "object",
+        "required": ["key_id", "signature"],
+        "properties": {
+          "key_id": {
+            "type": "string",
+            "description": "Identifier of the key used to sign the descriptor"
+          },
+          "signature": {
+            "type": "string",
+            "description": "The digital signature string"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata related to the release descriptor",
+      "additionalProperties": true
+    }
+  }
+}
