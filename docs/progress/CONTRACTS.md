@@ -323,3 +323,6 @@
 
 ### CONTRACTS v1.9.0
 - ✅ Completed: ReleaseDescriptor - Created release descriptor schema and validator.
+
+### CONTRACTS v1.10.0
+- ✅ Completed: ReleaseDescriptor - Created schema and validator for release descriptors.

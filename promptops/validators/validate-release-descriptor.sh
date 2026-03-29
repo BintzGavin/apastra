@@ -15,4 +15,4 @@ if ! command -v ajv &> /dev/null; then
     exit 1
 fi
 
-ajv validate -c ajv-formats -s "$SCHEMA" -d "$TARGET" --all-errors
+ajv validate -s "$SCHEMA" -d "$TARGET" -c ajv-formats

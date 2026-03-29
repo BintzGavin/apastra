@@ -7,6 +7,18 @@
 
 ## Section A: Schema Inventory
 
+### `release-descriptor.schema.json`
+- **$id**: `https://promptops.com/schemas/release-descriptor.schema.json`
+- **Version**: 1.9.0
+- **Description**: Schema for a release descriptor, posted to an internal API as part of abstract delivery targets.
+- **Key Fields**:
+  - `descriptor_id`: Unique identifier for this release descriptor
+  - `timestamp`: ISO-8601 timestamp of when the descriptor was created
+  - `prompt_digest`: The canonical digest of the prompt package being released
+  - `environment`: The environment this release is targeting
+  - `signatures`: Digital signatures ensuring the authenticity of the release
+
+
 - **ID:** `apastra-agent-skill-v1`
   - **Version:** 1.9.0
   - **Description:** Schema defining an agent skill role configuration.
@@ -208,6 +220,11 @@
   - **Description:** Schema for a vulnerability flag record appended to prompt packages.
 
 ## Section B: Validator Inventory
+
+### `validate-release-descriptor.sh`
+- **Validates**: `release-descriptor.schema.json`
+- **Syntax**: `./promptops/validators/validate-release-descriptor.sh <path/to/descriptor.json>`
+
 
 - **Validator:** `validate-agent-skill.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-agent-skill.sh <target.json>`
