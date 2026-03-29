@@ -327,3 +327,6 @@
 - ✅ Completed: MultiModelPromotionPolicies - Implemented multi-model promotion policy.
 ### GOVERNANCE v1.100.0
 - ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
+
+### GOVERNANCE v1.103.0
+- ✅ Completed: AcceptableUsePolicyUpdate - Expanded and formalized the acceptable use policy for platform-level moderation.
