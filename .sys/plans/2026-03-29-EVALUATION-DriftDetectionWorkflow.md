@@ -1,31 +1,26 @@
 #### 1. Context & Goal
-- **Objective**: Implement the Drift Detection workflow to execute canary suites against production baselines and emit drift reports.
-- **Trigger**: The docs/vision.md "Drift detection" expansion calls for canary suites that run on a schedule and compare results against production baselines to emit drift reports.
-- **Impact**: Unlocks post-ship quality monitoring, allowing teams to detect when model providers silently update and cause output drift.
+- **Objective**: Implement drift detection by analyzing canary suite runs.
+- **Trigger**: "docs/vision.md" specifies "Drift detection: canary suites that run on a schedule... and emit drift reports when model provider updates cause output changes".
+- **Impact**: Unlocks production prompt monitoring and post-ship quality erosion detection, fulfilling a P1 expansion priority.
 
 #### 2. File Inventory
-- **Create**:
-  - `promptops/runs/run_canary.sh`: Bash script that takes a canary suite request, executes the harness, and compares the result to the established production baseline to generate a drift report.
-- **Modify**:
-  - None
-- **Read-Only**:
-  - `docs/vision.md`
-  - CONTRACTS schemas
+- **Create**: `promptops/runs/generate_drift_report.sh`, `promptops/runs/detect_drift.py`
+- **Modify**: None
+- **Read-Only**: `promptops/schemas/canary-suite.schema.json`, `promptops/schemas/drift-report.schema.json`, `docs/vision.md`, `README.md`
 
 #### 3. Implementation Spec
-- **Harness Architecture**: The `run_canary.sh` script will act as an orchestration layer. It will invoke the existing `runner-shim.sh` to execute the canary suite and then invoke `compare.py` to compare the resulting scorecard against the provided production baseline.
-- **Run Request Format**: Uses the existing run request format, but specifically configured for canary test cases.
-- **Run Artifact Format**: Standard run artifact format (`run_manifest.json`, `scorecard.json`, etc.), with the addition of a Drift Report (which follows the regression report schema).
+- **Harness Architecture**: Reuses the minimal adapter interface but operates in a scheduled "canary" mode. The system evaluates current model outputs against an established production baseline.
+- **Run Request Format**: Leverages existing run request metadata (`prompt_digest`, `dataset_digest`, `model_matrix`, `evaluator_refs`).
+- **Run Artifact Format**: A `drift_report.json` schema containing `baseline_ref`, `current_ref`, a boolean `drift_detected` flag, and an `evidence` array detailing metrics that exceeded thresholds.
 - **Pseudo-Code**:
-    # run_canary.sh <adapter_yaml> <run_request> <baseline_scorecard> <policy_file> <output_dir>
-    # 1. Invoke runner-shim.sh to execute the canary suite
-    # 2. Extract the new scorecard.json
-    # 3. Invoke compare.py with the new scorecard and the baseline_scorecard
-    # 4. Save the output as drift_report.json
-- **Baseline and Regression Flow**: Drift reports are structurally identical to regression reports, comparing a new run (canary) against an immutable baseline.
-- **Dependencies**: CONTRACTS regression report schema and suite schema must be available. RUNTIME resolver must be available to resolve prompts during harness execution.
+  - Read `canary_scorecard` and `baseline_scorecard`.
+  - For each metric in the scorecard, compute `delta`.
+  - If `delta` exceeds an implicitly or explicitly defined drift threshold (e.g., from `canary-suite.schema.json`), flag `drift_detected = True` and append to `evidence`.
+  - Write `drift_report.json` and validate against `drift-report.schema.json`.
+- **Baseline and Regression Flow**: Uses the same `derived-index/baselines/` for reference but applies a specific drift sensitivity check instead of merge-blocking regression rules.
+- **Dependencies**: Depends on `promptops/schemas/drift-report.schema.json` (CONTRACTS) and the ability to schedule/execute runs.
 
 #### 4. Test Plan
-- **Verification**: Run `bash promptops/runs/run_canary.sh promptops/harnesses/reference-adapter/adapter.yaml test_req.json test_baseline.json test_policy.yaml output/` with mock files to verify it generates a `drift_report.json`.
-- **Success Criteria**: The `run_canary.sh` script successfully invokes the harness and comparison engine, writing a valid `drift_report.json` that conforms to the regression report schema.
-- **Edge Cases**: Missing baseline file, harness execution failure, or missing policy file should fail gracefully with a clear error message.
+- **Verification**: Execute `generate_drift_report.sh dummy-canary.json dummy-baseline.json dummy-drift-report.json` using mock scorecards.
+- **Success Criteria**: A valid `drift_report.json` is generated that passes `ajv-cli` schema validation against `drift-report.schema.json`.
+- **Edge Cases**: Missing metrics in current vs baseline, identical values (no drift), values exactly at the threshold, and outputs varying non-deterministically without crossing the drift threshold.
