@@ -341,3 +341,6 @@
 - ✅ Completed: FlakeQuarantinePolicy - Implemented governance policy for quarantining flaky evaluation cases.
 ### GOVERNANCE v1.107.0
 - ✅ Completed: ApproachableTerminology - Implemented governance policy for approachable terminology.
+
+### GOVERNANCE v1.108.0
+- ✅ Completed: ProjectLevelConfig - Implemented governance policy for project-level configurations and minimal file structure.
