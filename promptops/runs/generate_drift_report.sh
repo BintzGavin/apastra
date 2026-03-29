@@ -64,7 +64,7 @@ except Exception as e:
     sys.exit(1)
 "
 
-npx ajv-cli validate -s promptops/schemas/drift-report.schema.json -d "$TMP_REPORT"
+npx --yes ajv-cli validate -s promptops/schemas/drift-report.schema.json -d "$TMP_REPORT"
 
 mkdir -p derived-index/regressions
 OUTPUT_PATH="derived-index/regressions/${REPORT_ID}.json"
