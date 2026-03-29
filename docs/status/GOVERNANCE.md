@@ -1,4 +1,5 @@
-**Version**: 1.104.0
+**Version**: 1.105.0
+[1.105.0] ✅ Completed: MCPIntegration - Implemented MCP integration policy and delivery target.
 [v1.104.0] ✅ Completed: PromptDebtAuditPolicy - Implemented governance policy for prompt debt acceptable limits and remediation.
 [v1.103.0] ✅ Completed: AcceptableUsePolicyUpdate - Expanded and formalized the acceptable use policy for platform-level moderation.
 [v1.102.0] ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).

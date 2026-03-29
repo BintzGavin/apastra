@@ -28,6 +28,8 @@ Gate Enforcement Flow:
 - `promptops/delivery/npm-target.yaml`
 - `promptops/delivery/pypi-target.yaml`
 - `promptops/delivery/observability.yaml`
+- `promptops/policies/mcp-integration.md`
+- `promptops/delivery/mcp-server-target.yaml`
 - `promptops/delivery/oci-target.yaml`
 - `promptops/delivery/npm-target.yaml`
 - `promptops/delivery/pypi-target.yaml`
@@ -75,6 +77,7 @@ Gate Enforcement Flow:
 - `promptops/policies/artifact-storage-retention.md`: Rules for metrics: `exact_match` (floor: 0.8, blocker), `latency_ms` (floor: 2000, warning).
 - `promptops/policies/moderation-approval-public-listing.md`: Defines human checkpoints and requirements for public listing approval.
 - `promptops/policies/observability-adapters.md`: Governance policy for observability bridge adapters.
+- `promptops/policies/mcp-integration.md`: Governance rules for MCP tool definitions and server adapter exposure.
 - `promptops/policies/cost-budget-governance.md`: Defines rules for enforcing cost limits on evaluation suites and preventing promotion of expensive runs.
 - `promptops/policies/multi-model-promotion.md`: Governance rules for promoting a specific model+prompt combination from a multi-model comparison scorecard.
 
@@ -102,6 +105,7 @@ Gate Enforcement Flow:
 - `promptops/delivery/npm-target.yaml`: Target type `npm`
 - `promptops/delivery/pypi-target.yaml`: Target type `pypi`
 - `promptops/delivery/observability.yaml`: Obserability adapters target.
+- `promptops/delivery/mcp-server-target.yaml`: Declarative config to sync approved prompt packages to the MCP server.
 
 - `promptops/delivery/oci-target.yaml`: Target type `oci`
 - `promptops/delivery/npm-target.yaml`: Target type `npm`
