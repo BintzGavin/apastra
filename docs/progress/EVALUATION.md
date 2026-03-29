@@ -307,3 +307,6 @@
 - ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
 ### EVALUATION v0.28.0
 - ✅ Completed: ObservabilityBridgeAdapters - Implemented observability bridge adapters for Langfuse and OpenTelemetry
+
+### EVALUATION v0.29.0
+- ✅ Completed: DriftDetectionWorkflow - Implemented drift report generation script
