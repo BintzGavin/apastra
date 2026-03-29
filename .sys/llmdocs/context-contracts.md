@@ -7,361 +7,403 @@
 
 ## Section A: Schema Inventory
 
-- **ID:** `https://promptops.apastra.com/schemas/release-descriptor.schema.json`
+- **ID:** `apastra-agent-skill-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema defining an agent skill role configuration.
+
+- **ID:** `apastra-approval-state-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for an Approval state record indicating human and machine review results.
+
+- **ID:** `https://apastra.com/schemas/promptops/artifact-refs.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** No description provided.
+
+- **ID:** `https://promptops.apastra.com/schemas/audit-report.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for an audit report detailing untested and unversioned prompts.
+
+- **ID:** `apastra-automated-scan-record-v1`
+  - **Version:** 1.9.0
+  - **Description:** A record of an automated scan performed on a prompt package.
+
+- **ID:** `apastra-baseline-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema definition for baseline references to unblock Evaluation.
+
+- **ID:** `https://apastra.com/schemas/promptops/canary-suite.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Canary benchmark suite declaring schedule, alerts, datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
+
+- **ID:** `https://promptops.apastra.com/schemas/community-report-record.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a community report record in the governance system.
+
+- **ID:** `apastra-comparison-scorecard-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
+
+- **ID:** `https://apastra.com/schemas/promptops/consumption-manifest.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for the apastra PromptOps consumption manifest.
+
+- **ID:** `https://promptops.apastra.com/schemas/dataset-case.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema defining a single line of a JSONL dataset for evaluating prompt tests.
+
+- **ID:** `https://promptops.apastra.com/schemas/dataset-manifest.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a dataset manifest, defining identity, version, schema version, digest, and provenance.
+
+- **ID:** `https://promptops.apastra.com/schemas/delivery-target-receipt.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a delivery target receipt.
+
+- **ID:** `apastra-delivery-target-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for delivery target config.
+
+- **ID:** `https://promptops.apastra.com/schemas/deprecation-record.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for deprecation records.
+
+- **ID:** `https://apastra.com/schemas/promptops/drift-report.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a drift report comparing current results vs a baseline to identify output drift.
+
+- **ID:** `https://promptops.apastra.com/schemas/emergency-takedown-decision.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for an emergency takedown decision.
+
+- **ID:** `https://promptops.apastra.com/schemas/evaluator.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Scoring definition (deterministic checks, schema validation, rubric/judge config)
+
+- **ID:** `https://apastra.com/schemas/harness-adapter.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** No description provided.
+
+- **ID:** `https://promptops.apastra.com/schemas/mcp-tool-definition.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema defining an MCP tool definition object.
+
+- **ID:** `https://promptops.apastra.com/schemas/mirror-sync-receipt.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for mirror sync receipts.
+
+- **ID:** `https://promptops.apastra.com/schemas/moderation-approval-for-public-listing.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for moderation approval for public listing records.
+
+- **ID:** `https://promptops.apastra.com/schemas/moderation-decision-record.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for moderation decision records.
+
+- **ID:** `https://promptops.apastra.com/schemas/moderation-escalation-record.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a moderation escalation record.
+
+- **ID:** `https://promptops.apastra.com/schemas/namespace-claim-record.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a namespace claim record, used to track canonical name registrations, ownership disputes, and deprecations.
+
+- **ID:** `apastra-observability-adapter-config-v1`
+  - **Version:** 1.9.0
+  - **Description:** Configuration for exporting run artifacts to external observability systems like Langfuse or OpenTelemetry.
+
+- **ID:** `apastra-ownership-dispute-record-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for an ownership dispute record in the governance system.
+
+- **ID:** `https://promptops.apastra.com/schemas/policy-exception-record.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for policy exception records
+
+- **ID:** `apastra-promotion-record-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for append-only binding records.
+
+- **ID:** `apastra-prompt-package-v1`
+  - **Version:** 1.9.0
+  - **Description:** Immutable bundle of prompt specs with a manifest and content digest.
+
+- **ID:** `https://promptops.apastra.com/schemas/prompt-spec.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, and metadata.
+
+- **ID:** `https://promptops.com/schema/promptops-config.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** No description provided.
+
+- **ID:** `https://promptops.apastra.com/schemas/provenance-attestation.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for supply-chain provenance attestations (SLSA-style).
+
+- **ID:** `apastra-provider-artifact-v1`
+  - **Version:** 1.9.0
+  - **Description:** A distribution wrapper around a prompt package (git ref, release asset, OCI artifact, npm/PyPI wrapper).
+
+- **ID:** `https://promptops.apastra.com/schemas/quick-eval.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
+
+- **ID:** `apastra-regression-policy-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for regression policy definition.
+
+- **ID:** `apastra-regression-report-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a regression report output.
+
+- **ID:** `https://promptops.com/schemas/release-descriptor.schema.json`
   - **Version:** 1.9.0
   - **Description:** Schema for a release descriptor, posted to an internal API as part of abstract delivery targets.
 
-- :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-- **ID:**
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-- **ID:**
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-
-### `canary-suite.schema.json`
-**Version ID:** `https://apastra.com/schemas/promptops/canary-suite.schema.json`
-**Description:** Canary benchmark suite declaring schedule, alerts, datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
-**Key Fields:**
-- `id` (string)
-- `name` (string)
-- `schedule` (string)
-- `alert` (object)
-- `datasets` (array of strings)
-- `evaluators` (array of strings)
-- `model_matrix` (array of strings)
-
-
-- **mcp-tool-definition.schema.json** (`https://promptops.apastra.com/schemas/mcp-tool-definition.schema.json`)
-  - **Description**: Schema defining an MCP tool definition object.
-  - **Key Fields**: `name`, `description`, `inputSchema`, `type`.
-- :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-- **ID:**
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-- **ID:**
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-
-- **ID:** `apastra-comparison-scorecard-v1`
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-### `drift-report.schema.json`
-**Version ID:** `https://apastra.com/schemas/promptops/drift-report.schema.json`
-**Description:** Schema for a drift report comparing current results vs a baseline to identify output drift.
-**Key Fields:**
-- `baseline_ref` (string)
-- `current_ref` (string)
-- `drift_detected` (boolean)
-- `evidence` (array of objects with `metric_name`, `baseline_value`, `current_value`, `delta`)
-
-- **ID:** `apastra-agent-skill-v1`
-  - **Version:** 1.5.0
-  - **Description:** Schema defining an agent skill role configuration.
-- **ID:** `https://promptops.apastra.com/schemas/delivery-target-receipt.schema.json`
-  - **Version:** 1.0.0
-  - **Description:** Schema for a delivery target receipt.
-- **`moderation-approval-for-public-listing.schema.json`**: Schema for moderation approval for public listing records.
-- **ID:** `https://promptops.apastra.com/schemas/emergency-takedown-decision.schema.json`
-  - **Version:** 0.98.0
-  - **Description:** Schema for an emergency takedown decision.
-- **ID:** `https://promptops.apastra.com/schemas/moderation-escalation-record.schema.json`
-  - **Version:** 0.97.0
-  - **Description:** Schema for a moderation escalation record.
-- **ID:** `https://promptops.apastra.com/schemas/policy-exception-record.schema.json`
-  - **Version:** 0.96.0
-  - **Description:** Schema for policy exception records.
-- **ID:** `https://promptops.apastra.com/schemas/provenance-attestation.schema.json`
-  - **Version:** 0.94.0
-  - **Description:** Schema for supply-chain provenance attestations (SLSA-style).
-- **ID:** `https://promptops.apastra.com/schemas/namespace-claim-record.schema.json`
-  - **Version:** 0.92.0
-  - **Description:** Schema for a namespace claim record, used to track canonical name registrations, ownership disputes, and deprecations.
-- **ID:** `apastra-prompt-spec-v1`
-  - **Version:** 0.2.0
-  - **Description:** Source-of-truth prompt definition with a stable ID, variable schema, output contract, tool contract, and metadata.
-- **ID:** `apastra-dataset-manifest-v1`
-  - **Version:** 0.38.0
-  - **Description:** Schema for a dataset manifest, defining identity, version, schema version, digest, and optional provenance.
-- **ID:** `apastra-dataset-case-v1`
-  - **Version:** 0.38.0
-  - **Description:** Schema defining a single line of a JSONL dataset for evaluating prompt tests, with restricted built-in assertion types.
-- **ID:** `apastra-evaluator-v1`
-  - **Version:** 0.44.0
-  - **Description:** Scoring definition (deterministic checks, schema validation, rubric/judge config, human review hooks), including optional semantic versioning for metrics.
-- **ID:** `apastra-suite-v1`
-  - **Version:** 0.5.0
-   - **Description:** Benchmark suite specifying what prompts run against what datasets using which evaluators and model matrix.
-- **ID:** `apastra-consumption-manifest-v1`
-  - **Version:** 0.7.0
-  - **Description:** Application-side pin definitions mapping prompt IDs to specific digests or remote targets.
-- **ID:** `apastra-harness-adapter-v1`
-  - **Version:** 0.8.0
-  - **Description:** Configuration for test harnesses including invocation patterns and capabilities.
-- **ID:** ` apastra-run-request-v1`
-  - **Version:** 0.9.0
-  - **Description:** Immutable request instructing a harness to execute a specific suite configuration.
 - **ID:** `apastra-run-artifact-v1`
-  - **Version:** 0.9.0
-  - **Description:** Master index of outputs generated by a test run.
-- **ID:** `apastra-scorecard-v1`
-  - **Version:** 0.44.0
-  - **Description:** Summary of normalized metrics and variance from an evaluation run, including metric versioning definitions.
-- **ID:** `apastra-regression-report-v1`
-  - **Version:** 1.4.0
-  - **Description:** Summary of a regression test comparing a candidate to a baseline, including cost_delta and policy outcomes.
-- **ID:** `apastra-regression-policy-v1`
-  - **Version:** 0.11.0
-  - **Description:** Policy definition outlining regression thresholds and blockers.
-- **ID:** `apastra-promotion-record-v1`
-  - **Version:** 0.11.0
-  - **Description:** Append-only record of an artifact promotion to a specific channel.
-- **ID:** `apastra-delivery-target-v1`
-  - **Version:** 0.11.0
-  - **Description:** Configuration mapping a channel to a physical deployment destination.
-- **ID:** `apastra-baseline-v1`
-  - **Version:** 0.12.0
-  - **Description:** Schema defining a baseline reference mapping prompt IDs to specific digest or tags.
-- **ID:** `apastra-prompt-package-v1`
-  - **Version:** 0.13.0
-  - **Description:** A bundled collection of prompt specs intended for bulk distribution.
-- **ID:** `apastra-artifact-refs-v1`
-  - **Version:** 0.14.0
-  - **Description:** Schema defining references to large external artifacts (like model outputs) by URI and digest.
-- **ID:** `apastra-approval-state-v1`
-  - **Version:** 0.15.0
-  - **Description:** Schema defining the approval status of a test run or promotion.
-- **ID:** `apastra-run-manifest-v1`
-  - **Version:** 1.4.0
-  - **Description:** Schema defining the master index of a test run, including total_cost and SLSA-style provenance metadata.
+  - **Version:** 1.9.0
+  - **Description:** Schema for a minimal BYO harness run artifact output.
+
 - **ID:** `apastra-run-case-v1`
-  - **Version:** 0.16.0
-  - **Description:** Schema defining the outcome of a single test case.
+  - **Version:** 1.9.0
+  - **Description:** Schema for a single case in cases.jsonl.
+
 - **ID:** `apastra-run-failures-v1`
-  - **Version:** 0.16.0
+  - **Version:** 1.9.0
   - **Description:** Schema defining an array of failure objects.
-- **ID:** `apastra-provider-artifact-v1`
-  - **Version:** 0.17.0
-  - **Description:** Schema for provider artifacts.
+
+- **ID:** `apastra-run-manifest-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a run manifest.
+
+- **ID:** `apastra-run-request-v2`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a minimal BYO harness run request. Captures all metadata required for reproducible replay of an evaluation run.
+
+- **ID:** `apastra-scorecard-v1`
+  - **Version:** 1.9.0
+  - **Description:** Schema for the run artifact scorecard.
+
 - **ID:** `apastra-submission-record-v1`
-  - **Version:** 0.36.0
+  - **Version:** 1.9.0
   - **Description:** Schema for an append-only artifact structure for package submissions to a public registry.
-- **ID:** `apastra-moderation-decision-record-v1`
-  - **Version:** 0.39.0
-  - **Description:** Schema for moderation decision records.
-- **ID:** `apastra-deprecation-record-v1`
-  - **Version:** 0.39.0
-  - **Description:** Schema for deprecation records.
-- **ID:** `apastra-takedown-record-v1`
-  - **Version:** 0.39.0
+
+- **ID:** `https://apastra.com/schemas/promptops/suite.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
+
+- **ID:** `apastra-takedown-appeal-record-v1`
+  - **Version:** 1.9.0
+  - **Description:** A record used to formally process and track appeals to moderation takedowns.
+
+- **ID:** `https://promptops.apastra.com/schemas/takedown-record.schema.json`
+  - **Version:** 1.9.0
   - **Description:** Schema for takedown records.
-- **ID:** `apastra-mirror-sync-receipt-v1`
-  - **Version:** 0.39.0
-  - **Description:** Schema for mirror sync receipts.
-- **ID:** `apastra-quick-eval-v1`
-  - **Version:** 0.24.0
-  - **Description:** Schema defining a combined quick evaluation file containing prompt, cases, and assertions.
 
-- **ID:** `apastra-ownership-dispute-record-v1`
-  - **Version:** 0.85.0
-  - **Description:** Schema for an ownership dispute record in the governance system.
+- **ID:** `apastra-trusted-publisher-provenance-v1`
+  - **Version:** 1.9.0
+  - **Description:** Provenance record to verify and grant trusted publisher badges for packages and providers.
 
-- **ID:** `https://promptops.apastra.com/schemas/audit-report.schema.json`
-  - **Version:** 1.2.0
-  - **Description:** Schema for an audit report detailing untested and unversioned prompts.
-
-- **promptops-config.schema.json**
-  - `$id`: https://promptops.com/schema/promptops-config.schema.json
-  - `description`: Schema for project-level configurations.
+- **ID:** `https://promptops.apastra.com/schemas/vulnerability-flag-record.schema.json`
+  - **Version:** 1.9.0
+  - **Description:** Schema for a vulnerability flag record appended to prompt packages.
 
 ## Section B: Validator Inventory
 
-- **Validator:** `validate-release-descriptor.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-release-descriptor.sh <release-descriptor.json>`
-  - **What it Validates:** Validates a release descriptor against its schema.
-- **Validator:** `validate-mcp-tool-definition.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-mcp-tool-definition.sh <mcp-tool-definition.json>`
-  - **What it Validates:** Validates MCP tool definition against mcp-tool-definition.schema.json.
+- **Validator:** `validate-agent-skill.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-agent-skill.sh <target.json>`
+  - **What it Validates:** Validates `agent-skill.schema.json`.
 
-
-- :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-- **ID:**
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-- **ID:**
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-
-- **Validator:** `validate-comparison-scorecard.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-comparison-scorecard.sh <comparison-scorecard.json>`
-  - **What it Validates:** Validates comparison scorecards.
-
-### `validate-canary-suite.sh`
-**Usage:** `./promptops/validators/validate-canary-suite.sh <path-to-json>`
-**Validates:** Instance against `canary-suite.schema.json`
-
-- :  - Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-- **ID:**
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-- **ID:**
-  - **Version:** 1.8.0
-  - **Description:** Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.
-- **Validator:**
-  - **Invocation Syntax:**
-  - **What it Validates:** Validates comparison scorecards.
-
-### `validate-drift-report.sh`
-**Usage:** `./promptops/validators/validate-drift-report.sh <path-to-json>`
-**Validates:** Instance against `drift-report.schema.json`
-
-- **Validator:** `validate-delivery-target-receipt.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-delivery-target-receipt.sh <delivery-target-receipt.json>`
-  - **What it Validates:** Validates delivery target receipts.
-- **Validator:** `validate-moderation-approval-for-public-listing.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-moderation-approval-for-public-listing.sh <moderation-approval-for-public-listing.json|yaml>`
-  - **What it Validates:** Validates moderation approval for public listing records.
-- **`validate-emergency-takedown-decision.sh <file>`**: Validates an emergency takedown decision against its schema.
-- **Validator:** `validate-moderation-escalation-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-moderation-escalation-record.sh <moderation-escalation-record.json|yaml>`
-  - **What it Validates:** Validates moderation escalation records.
-- **Validator:** `validate-policy-exception-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-policy-exception-record.sh <policy-exception-record.json|yaml>`
-  - **What it Validates:** Validates policy exception records.
-- **Validator:** `validate-provenance-attestation.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-provenance-attestation.sh <provenance-attestation.json|yaml>`
-  - **What it Validates:** Validates provenance attestations.
-- **Validator:** `validate-namespace-claim-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-namespace-claim-record.sh <namespace-claim-record.json|yaml>`
-  - **What it Validates:** Validates namespace claim records.
-- **Validator:** `validate-regression-policy.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-regression-policy.sh <regression-policy.json|yaml>`
-  - **Validates:** JSON or YAML files against the `regression-policy.schema.json` schema.
-- **Validator:** `validate-promotion-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-promotion-record.sh <promotion-record.json|yaml>`
-  - **Validates:** JSON or YAML files against the `promotion-record.schema.json` schema.
-- **Validator:** `validate-delivery-target.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-delivery-target.sh <delivery-target.json|yaml>`
-  - **Validates:** JSON or YAML files against the `delivery-target.schema.json` schema.
-- **Validator:** `validate-run-request.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-run-request.sh <run-request.json>`
-  - **Validates:** JSON files against the `run-request.schema.json` schema.
-- **Validator:** `validate-run-artifact.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-run-artifact.sh <run-artifact.json>`
-  - **Validates:** JSON files against the `run-artifact.schema.json` schema.
-- **Validator:** `validate-prompt-spec.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-prompt-spec.sh <prompt-spec.json|yaml>`
-  - **Validates:** JSON or YAML files against the `prompt-spec.schema.json` schema.
-- **Validator:** `validate-dataset.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-dataset.sh <manifest.json|yaml> <cases.jsonl>`
-  - **Validates:** Dataset manifest and test cases JSONL file against their respective schemas.
-- **Validator:** `validate-evaluator.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-evaluator.sh <evaluator-spec.json|yaml>`
-  - **Validates:** JSON or YAML files against the `evaluator.schema.json` schema.
-- **Validator:** `validate-suite.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-suite.sh <suite.json|yaml>`
-  - **Validates:** JSON or YAML files against the `suite.schema.json` schema.
-- **Validator:** `validate-consumption-manifest.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-consumption-manifest.sh <consumption-manifest.json|yaml>`
-  - **Validates:** JSON or YAML files against the `consumption-manifest.schema.json` schema.
-- **Validator:** `validate-harness-adapter.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-harness-adapter.sh <harness-adapter.json|yaml>`
-  - **Validates:** JSON or YAML files against the `harness-adapter.schema.json` schema.
-
-- **Validator:** `validate-scorecard.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-scorecard.sh <scorecard.json>`
-  - **Validates:** JSON files against the `scorecard.schema.json` schema.
-- **Validator:** `validate-regression-report.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-regression-report.sh <regression-report.json>`
-  - **Validates:** JSON files against the `regression-report.schema.json` schema.
-
-- **Validator:** `validate-baseline.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-baseline.sh <baseline.json|yaml>`
-  - **Validates:** JSON or YAML files against the `baseline.schema.json` schema.
-- **Validator:** `validate-prompt-package.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-prompt-package.sh <prompt-package.json|yaml>`
-  - **Validates:** JSON or YAML files against the `prompt-package.schema.json` schema.
-- **Validator:** `validate-artifact-refs.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-artifact-refs.sh <artifact-refs.json>`
-  - **Validates:** JSON files against the `artifact-refs.schema.json` schema.
 - **Validator:** `validate-approval-state.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-approval-state.sh <approval-state.json>`
-  - **Validates:** JSON files against the `approval-state.schema.json` schema.
-- **Validator:** `validate-run-manifest.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-run-manifest.sh <run-manifest.json>`
-  - **Validates:** JSON files against the `run-manifest.schema.json` schema.
-- **Validator:** `validate-run-case.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-run-case.sh <run-case.json>`
-  - **Validates:** JSON files against the `run-case.schema.json` schema.
-- **Validator:** `validate-run-failures.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-run-failures.sh <run-failures.json>`
-  - **Validates:** JSON files against the `run-failures.schema.json` schema.
-- **Validator:** `validate-provider-artifact.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-provider-artifact.sh <provider-artifact.json|yaml>`
-  - **Validates:** JSON or YAML files against the `provider-artifact.schema.json` schema.
-- **Validator:** `validate-submission-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-submission-record.sh <submission-record.json>`
-  - **Validates:** JSON files against the `submission-record.schema.json` schema.
-- **Validator:** `validate-quick-eval.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-quick-eval.sh <eval.yaml>`
-  - **Validates:** YAML files against the `quick-eval.schema.json` schema.
-- **Validator:** `validate-moderation-decision-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-moderation-decision-record.sh <moderation-decision-record.json|yaml>`
-  - **Validates:** JSON or YAML files against the `moderation-decision-record.schema.json` schema.
-- **Validator:** `validate-deprecation-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-deprecation-record.sh <deprecation-record.json|yaml>`
-  - **Validates:** JSON or YAML files against the `deprecation-record.schema.json` schema.
-- **Validator:** `validate-takedown-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-takedown-record.sh <takedown-record.json|yaml>`
-  - **Validates:** JSON or YAML files against the `takedown-record.schema.json` schema.
-- **Validator:** `validate-mirror-sync-receipt.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-mirror-sync-receipt.sh <mirror-sync-receipt.json|yaml>`
-  - **Validates:** JSON or YAML files against the `mirror-sync-receipt.schema.json` schema.
+  - **Invocation Syntax:** `./promptops/validators/validate-approval-state.sh <target.json>`
+  - **What it Validates:** Validates `approval-state.schema.json`.
 
-- **Validator:** `validate-ownership-dispute-record.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-ownership-dispute-record.sh <ownership-dispute-record.json|yaml>`
-  - **Validates:** JSON or YAML files against the `ownership-dispute-record.schema.json` schema.
+- **Validator:** `validate-artifact-refs.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-artifact-refs.sh <target.json>`
+  - **What it Validates:** Validates `artifact-refs.schema.json`.
 
 - **Validator:** `validate-audit-report.sh`
-  - **Invocation Syntax:** `./promptops/validators/validate-audit-report.sh <audit-report.json>`
-  - **What it Validates:** Validates audit reports.
+  - **Invocation Syntax:** `./promptops/validators/validate-audit-report.sh <target.json>`
+  - **What it Validates:** Validates `audit-report.schema.json`.
 
-- **validate-promptops-config.sh**
-  - Invocation: `./promptops/validators/validate-promptops-config.sh <file>`
-  - Validates: promptops-config.schema.json
+- **Validator:** `validate-automated-scan-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-automated-scan-record.sh <target.json>`
+  - **What it Validates:** Validates `automated-scan-record.schema.json`.
+
+- **Validator:** `validate-baseline.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-baseline.sh <target.json>`
+  - **What it Validates:** Validates `baseline.schema.json`.
+
+- **Validator:** `validate-canary-suite.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-canary-suite.sh <target.json>`
+  - **What it Validates:** Validates `canary-suite.schema.json`.
+
+- **Validator:** `validate-community-report-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-community-report-record.sh <target.json>`
+  - **What it Validates:** Validates `community-report-record.schema.json`.
+
+- **Validator:** `validate-comparison-scorecard.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-comparison-scorecard.sh <target.json>`
+  - **What it Validates:** Validates `comparison-scorecard.schema.json`.
+
+- **Validator:** `validate-consumption-manifest.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-consumption-manifest.sh <target.json>`
+  - **What it Validates:** Validates `consumption-manifest.schema.json`.
+
+- **Validator:** `validate-dataset.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-dataset.sh <target.json>`
+  - **What it Validates:** Validates `dataset.schema.json`.
+
+- **Validator:** `validate-delivery-target-receipt.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-delivery-target-receipt.sh <target.json>`
+  - **What it Validates:** Validates `delivery-target-receipt.schema.json`.
+
+- **Validator:** `validate-delivery-target.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-delivery-target.sh <target.json>`
+  - **What it Validates:** Validates `delivery-target.schema.json`.
+
+- **Validator:** `validate-deprecation-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-deprecation-record.sh <target.json>`
+  - **What it Validates:** Validates `deprecation-record.schema.json`.
+
+- **Validator:** `validate-drift-report.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-drift-report.sh <target.json>`
+  - **What it Validates:** Validates `drift-report.schema.json`.
+
+- **Validator:** `validate-emergency-takedown-decision.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-emergency-takedown-decision.sh <target.json>`
+  - **What it Validates:** Validates `emergency-takedown-decision.schema.json`.
+
+- **Validator:** `validate-evaluator.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-evaluator.sh <target.json>`
+  - **What it Validates:** Validates `evaluator.schema.json`.
+
+- **Validator:** `validate-harness-adapter.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-harness-adapter.sh <target.json>`
+  - **What it Validates:** Validates `harness-adapter.schema.json`.
+
+- **Validator:** `validate-mcp-tool-definition.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-mcp-tool-definition.sh <target.json>`
+  - **What it Validates:** Validates `mcp-tool-definition.schema.json`.
+
+- **Validator:** `validate-mirror-sync-receipt.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-mirror-sync-receipt.sh <target.json>`
+  - **What it Validates:** Validates `mirror-sync-receipt.schema.json`.
+
+- **Validator:** `validate-moderation-approval-for-public-listing.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-moderation-approval-for-public-listing.sh <target.json>`
+  - **What it Validates:** Validates `moderation-approval-for-public-listing.schema.json`.
+
+- **Validator:** `validate-moderation-decision-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-moderation-decision-record.sh <target.json>`
+  - **What it Validates:** Validates `moderation-decision-record.schema.json`.
+
+- **Validator:** `validate-moderation-escalation-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-moderation-escalation-record.sh <target.json>`
+  - **What it Validates:** Validates `moderation-escalation-record.schema.json`.
+
+- **Validator:** `validate-namespace-claim-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-namespace-claim-record.sh <target.json>`
+  - **What it Validates:** Validates `namespace-claim-record.schema.json`.
+
+- **Validator:** `validate-observability-adapter-config.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-observability-adapter-config.sh <target.json>`
+  - **What it Validates:** Validates `observability-adapter-config.schema.json`.
+
+- **Validator:** `validate-ownership-dispute-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-ownership-dispute-record.sh <target.json>`
+  - **What it Validates:** Validates `ownership-dispute-record.schema.json`.
+
+- **Validator:** `validate-policy-exception-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-policy-exception-record.sh <target.json>`
+  - **What it Validates:** Validates `policy-exception-record.schema.json`.
+
+- **Validator:** `validate-promotion-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-promotion-record.sh <target.json>`
+  - **What it Validates:** Validates `promotion-record.schema.json`.
+
+- **Validator:** `validate-prompt-package.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-prompt-package.sh <target.json>`
+  - **What it Validates:** Validates `prompt-package.schema.json`.
+
+- **Validator:** `validate-prompt-spec.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-prompt-spec.sh <target.json>`
+  - **What it Validates:** Validates `prompt-spec.schema.json`.
+
+- **Validator:** `validate-promptops-config.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-promptops-config.sh <target.json>`
+  - **What it Validates:** Validates `promptops-config.schema.json`.
+
+- **Validator:** `validate-provenance-attestation.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-provenance-attestation.sh <target.json>`
+  - **What it Validates:** Validates `provenance-attestation.schema.json`.
+
+- **Validator:** `validate-provider-artifact.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-provider-artifact.sh <target.json>`
+  - **What it Validates:** Validates `provider-artifact.schema.json`.
+
+- **Validator:** `validate-quick-eval.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-quick-eval.sh <target.json>`
+  - **What it Validates:** Validates `quick-eval.schema.json`.
+
+- **Validator:** `validate-regression-policy.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-regression-policy.sh <target.json>`
+  - **What it Validates:** Validates `regression-policy.schema.json`.
+
+- **Validator:** `validate-regression-report.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-regression-report.sh <target.json>`
+  - **What it Validates:** Validates `regression-report.schema.json`.
+
+- **Validator:** `validate-release-descriptor.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-release-descriptor.sh <target.json>`
+  - **What it Validates:** Validates `release-descriptor.schema.json`.
+
+- **Validator:** `validate-run-artifact.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-artifact.sh <target.json>`
+  - **What it Validates:** Validates `run-artifact.schema.json`.
+
+- **Validator:** `validate-run-case.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-case.sh <target.json>`
+  - **What it Validates:** Validates `run-case.schema.json`.
+
+- **Validator:** `validate-run-failures.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-failures.sh <target.json>`
+  - **What it Validates:** Validates `run-failures.schema.json`.
+
+- **Validator:** `validate-run-manifest.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-manifest.sh <target.json>`
+  - **What it Validates:** Validates `run-manifest.schema.json`.
+
+- **Validator:** `validate-run-request.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-run-request.sh <target.json>`
+  - **What it Validates:** Validates `run-request.schema.json`.
+
+- **Validator:** `validate-scorecard.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-scorecard.sh <target.json>`
+  - **What it Validates:** Validates `scorecard.schema.json`.
+
+- **Validator:** `validate-submission-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-submission-record.sh <target.json>`
+  - **What it Validates:** Validates `submission-record.schema.json`.
+
+- **Validator:** `validate-suite.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-suite.sh <target.json>`
+  - **What it Validates:** Validates `suite.schema.json`.
+
+- **Validator:** `validate-takedown-appeal-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-takedown-appeal-record.sh <target.json>`
+  - **What it Validates:** Validates `takedown-appeal-record.schema.json`.
+
+- **Validator:** `validate-takedown-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-takedown-record.sh <target.json>`
+  - **What it Validates:** Validates `takedown-record.schema.json`.
+
+- **Validator:** `validate-trusted-publisher-provenance.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-trusted-publisher-provenance.sh <target.json>`
+  - **What it Validates:** Validates `trusted-publisher-provenance.schema.json`.
+
+- **Validator:** `validate-vulnerability-flag-record.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-vulnerability-flag-record.sh <target.json>`
+  - **What it Validates:** Validates `vulnerability-flag-record.schema.json`.
 
 ## Section C: Source File Conventions
 - **Quick Evals:**
