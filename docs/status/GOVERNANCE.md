@@ -1,4 +1,5 @@
-**Version**: 1.105.0
+**Version**: 1.106.0
+[v1.106.0] ✅ Completed: FlakeQuarantinePolicy - Implemented governance policy for quarantining flaky evaluation cases.
 [1.105.0] ✅ Completed: MCPIntegration - Implemented MCP integration policy and delivery target.
 [v1.104.0] ✅ Completed: PromptDebtAuditPolicy - Implemented governance policy for prompt debt acceptable limits and remediation.
 [v1.103.0] ✅ Completed: AcceptableUsePolicyUpdate - Expanded and formalized the acceptable use policy for platform-level moderation.

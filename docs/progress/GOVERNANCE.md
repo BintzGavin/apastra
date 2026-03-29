@@ -336,3 +336,6 @@
 
 ### GOVERNANCE v1.105.0
 - ✅ Completed: MCPIntegration - Implemented MCP integration policy and delivery target.
+
+### GOVERNANCE v1.106.0
+- ✅ Completed: FlakeQuarantinePolicy - Implemented governance policy for quarantining flaky evaluation cases.
