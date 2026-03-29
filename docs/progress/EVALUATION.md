@@ -310,3 +310,6 @@
 
 ### EVALUATION v0.29.0
 - ✅ Completed: DriftDetectionWorkflow - Implemented drift report generation script
+
+### EVALUATION v0.30.0
+- ✅ Completed: AuditSkillExecution - Implemented audit-shim.sh to generate audit_report.json

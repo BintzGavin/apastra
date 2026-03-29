@@ -34,6 +34,7 @@ Harness execution flow:
   - `promptops/runs/generate_drift_report.sh`
   - `promptops/runs/evaluate_assertions.py`
   -  `promptops/runs/normalize.py`
+  - `promptops/runs/audit-shim.sh`
 - `derived-index/baselines/`
 - `derived-index/regressions/`
 

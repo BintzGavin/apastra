@@ -1,4 +1,5 @@
-**Version**: 0.29.0
+**Version**: 0.30.0
+[v0.30.0] ✅ Completed: AuditSkillExecution - Implemented audit-shim.sh to generate audit_report.json
 [v0.29.0] ✅ Completed: DriftDetectionWorkflow - Implemented drift report generation script
 [v0.28.0] ✅ Completed: ObservabilityBridgeAdapters - Implemented observability bridge adapters for Langfuse and OpenTelemetry
 [v0.27.0] ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
