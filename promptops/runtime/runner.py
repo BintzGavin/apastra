@@ -5,6 +5,7 @@ import shlex
 import yaml
 import json
 import jsonschema
+from promptops.runtime.config import load_project_config, apply_config_defaults
 
 def main():
     if len(sys.argv) != 4:
@@ -19,9 +20,30 @@ def main():
         print(f"Error: Run request file not found: {request_path}")
         sys.exit(1)
 
+
     if not os.path.exists(adapter_path):
         print(f"Error: Adapter config file not found: {adapter_path}")
         sys.exit(1)
+
+    # Load and apply project config
+    try:
+        project_config = load_project_config()
+        if project_config:
+            with open(request_path, 'r') as f:
+                run_request = json.load(f)
+
+            run_request = apply_config_defaults(run_request, project_config)
+
+            # Write the updated request to a temporary file to avoid mutating the original input
+            import tempfile
+            fd, temp_path = tempfile.mkstemp(suffix=".json")
+            with os.fdopen(fd, 'w') as f:
+                json.dump(run_request, f, indent=2)
+            request_path = temp_path
+    except Exception as e:
+        print(f"Error processing project config: {e}")
+        sys.exit(1)
+
 
     with open(adapter_path, 'r') as f:
         adapter_config = yaml.safe_load(f)

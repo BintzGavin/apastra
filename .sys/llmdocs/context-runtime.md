@@ -1,65 +1,33 @@
-# Context: RUNTIME Domain
+# RUNTIME Domain Context
 
 ## Section A: Architecture
-The promptops runtime resolves prompt templates deterministically. The resolution chain executes in this explicit order:
-1. **Local Override**: Resolves to a local file path if specified in the manifest. Includes memory caching based on the file's modification time.
-2. **Workspace Path**: Looks for the prompt file directly in `promptops/prompts/` within the repository. Includes memory caching based on the file's modification time.
-3. **Git Ref**: Fetches the prompt specification directly from git using a specified tag or commit SHA. Includes memory caching based on `(prompt_id, pin)`. Supports semver tag resolution for remote git URLs. If the target git host prevents archive downloads, it falls back to a shallow clone for tags/branches, or a full clone followed by checkout for specific commit SHAs.
-4. **Packaged Artifact**: Falls back to packaged assets when resolving remote references (e.g., via sha256).
-
+- **Resolution Chain**: local override -> workspace path -> git ref (SHA/tag) -> packaged artifact fallback.
+- **Config**: Project config (`promptops.config.yaml`) defaults are merged into suites at execution.
 
 ## Section B: File Tree
-
 ```
 promptops/
 ├── runtime/
-│   ├── resolve.py
-│   ├── render.py
-│   ├── digest.py
 │   ├── config.py
-│   ├── audit.py
-│   ├── canary.py
-│   ├── mcp_server.py
-│   ├── runner.py
-│   └── cli.py
+│   ├── index.py
+│   ├── resolve.py
+│   └── runner.py
 ├── resolver/
-│   ├── chain.py
 │   ├── git_ref.py
 │   ├── local.py
 │   ├── packaged.py
 │   └── workspace.py
-└── manifests/
-    └── consumption.py
 ```
 
 ## Section C: Public Interface
 ```python
-def resolve(prompt_id: str, ref_context=None, variables: dict=None, dataset_digest: str=None, harness_version: str=None, model_ids: list=None) -> tuple[str, dict]:
-    # Returns rendered_prompt_string, metadata_dict (including provenance if applicable)
-    # Metadata includes: prompt_digest, model_ids, dataset_digest, harness_version, estimated_cost
+def resolve(prompt_id: str, ref: str) -> dict: ...
+def load_project_config() -> dict: ...
+def apply_config_defaults(suite: dict, config: dict) -> dict: ...
 ```
-
-Exceptions:
-- `RuntimeError` if resolution fails, or schema validation fails.
-
-
-**MCP Integration:**
-- `list_suites()`: Discovers evaluation suites.
-- `run_evaluation(suite_id, revision_ref)`: Constructs run requests and invokes the runner.
 
 ## Section D: Manifest Format
-```yaml
-version: "1.0"
-prompts:
-  "my-stable-id":
-    id: "actual-prompt-id"
-    pin: "v1.0.0"          # Optional Git ref, package pin, or registry URI (npm:, pypi:, oci://)
-    override: "./local"    # Optional local override path
-    model: "gpt-4"         # Optional default model to use
-defaults:
-  model: "gpt-3.5-turbo"
-```
+Consumption manifest defines prompt versions per environment.
 
 ## Section E: Integration Points
-- **EVALUATION**: Harnesses call `resolve(prompt_id, ...)`, which returns the prompt template and a metadata block to attach to the runner execution payload.
-- **GOVERNANCE**: No direct API dependencies; relies on deterministic artifacts emitted by EVALUATION.
+EVALUATION uses `runner.py` to trigger harness execution. GOVERNANCE accesses resolving logic to audit prompts.
