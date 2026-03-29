@@ -51,7 +51,7 @@
       "type": "object",
       "description": "Cost or time limits for the execution.",
       "properties": {
-        "cost": {
+        "cost_budget": {
           "type": "number",
           "description": "Maximum allowed cost in dollars."
         },
