@@ -1,4 +1,5 @@
-**Version**: 1.102.0
+**Version**: 1.103.0
+[v1.103.0] ✅ Completed: AcceptableUsePolicyUpdate - Expanded and formalized the acceptable use policy for platform-level moderation.
 [v1.102.0] ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
 [v1.101.0] ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
 [v1.100.0] ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
