@@ -39,6 +39,7 @@ Gate Enforcement Flow:
 - `promptops/policies/moderation-approval-public-listing.md`
 - `promptops/policies/acceptable-use.md`
 - `promptops/policies/flake-quarantine.md`
+- `promptops/policies/approachable-terminology.md`
 
 - `promptops/policies/deprecation.md`
 - `promptops/policies/ownership-disputes.md`
@@ -62,6 +63,7 @@ Gate Enforcement Flow:
 - `promptops/policies/community-prompt-pack-acceptance.md`: Governance rules for accepting, reviewing, and publishing community-contributed prompt packs.
 - `promptops/policies/acceptable-use.md`: Formal Acceptable Use Policy outlining prohibited content, enforcement mechanisms, and consequences.
 - `promptops/policies/flake-quarantine.md`: Defines governance rules for quarantining flaky evaluation cases.
+- `promptops/policies/approachable-terminology.md`: Enforces consistent terminology in user-facing documentation ("agent" instead of "harness").
 - `promptops/policies/deprecation.md`: Formal append-only registry metadata store policy detailing deprecation notices.
 - `promptops/policies/ownership-disputes.md`: Formal append-only registry metadata store policy detailing ownership disputes and takedown appeals.
 - `promptops/policies/naming.md`: Naming rules for prompts, packages, and metrics.

@@ -339,3 +339,5 @@
 
 ### GOVERNANCE v1.106.0
 - ✅ Completed: FlakeQuarantinePolicy - Implemented governance policy for quarantining flaky evaluation cases.
+### GOVERNANCE v1.107.0
+- ✅ Completed: ApproachableTerminology - Implemented governance policy for approachable terminology.
