@@ -77,3 +77,9 @@
   - Refreshed cross-domain dashboards domain-status-overview.md and implementation-progress.md with new data
   - Regenerated context-docs.md
   - Updated last_verified dates in guides and ADRs
+
+### DOCS v0.13.0
+- ✅ Completed: Daily Documentation Review
+  - Generated API docs for missing schemas
+  - Refreshed cross-domain dashboards
+  - Updated `.sys/llmdocs/context-docs.md`
