@@ -1,4 +1,5 @@
-**Version**: 0.27.0
+**Version**: 0.28.0
+[v0.28.0] ✅ Completed: ObservabilityBridgeAdapters - Implemented observability bridge adapters for Langfuse and OpenTelemetry
 [v0.27.0] ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
 [v0.26.0] ✅ Completed: PromptReviewWorkflow - Implemented role-based agent skill prompt review workflow
 [v0.25.0] ✅ Completed: MultiModelComparison - Implemented multi-model comparison generation script

@@ -16,6 +16,7 @@ Harness execution flow:
 - Harness adapter consumes run request, resolves prompt using `promptops.runtime.resolve`, and generates split artifacts natively (`run_manifest.json`, `cases.jsonl`, `failures.json`, `artifact_refs.json`). It natively enforces `budgets` and `timeouts`.
   - `promptops/runs/generate_comparison_scorecard.py`
 - If inline assertions are used, the adapter leverages `promptops/runs/evaluate_assertions.py` to deterministically calculate per-case pass/fail scores. This also supports model-assisted, performance assertions (latency, cost), `is-valid-json-schema`, `answer-relevance`, `llm-rubric`, `similar`, and `factuality` assertion types.
+- The pipeline includes an observability bridge (`emit_observability.py`) that exports these artifacts to external systems like Langfuse or OpenTelemetry based on a provided configuration (`observability.yaml`).
 - Scorecard normalizer `promptops/runs/normalize.py` parses evaluator outputs from `cases.jsonl` and writes a distinct `scorecard.json` file.
 - Regression report generated and stored via `promptops/runs/generate_regression_report.sh <candidate> <baseline> <policy> <report_id>`, with ungated metrics surfaced as informational evidence.
 
@@ -26,6 +27,7 @@ Harness execution flow:
   - `promptops/evaluators/prompt-optimization-review.yaml`
 - `promptops/harnesses/`
 - `promptops/runs/`
+  - `promptops/runs/emit_observability.py`
   - `promptops/runs/compare.py`
   - `promptops/runs/generate_comparison_scorecard.py`
   - `promptops/runs/evaluate_assertions.py`
@@ -52,3 +54,4 @@ Baseline Schema (from CONTRACTS) `promptops/schemas/baseline.schema.json`:
 GOVERNANCE reads:
 - `derived-index/regressions/<report-id>.json` to evaluate policy gates (e.g. `status` field for pass/fail/warning decisions).
 - `derived-index/baselines/<baseline-id>.json` to find the `run_digest` needed to locate the baseline's `scorecard.json`
+- Observability Bridge (`emit_observability.py`) sends artifacts directly to OpenTelemetry/Langfuse endpoints for monitoring.

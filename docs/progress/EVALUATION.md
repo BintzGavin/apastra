@@ -305,3 +305,5 @@
 - ✅ Completed: PromptReviewWorkflow - Implemented role-based agent skill prompt review workflow
 ### EVALUATION v0.27.0
 - ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
+### EVALUATION v0.28.0
+- ✅ Completed: ObservabilityBridgeAdapters - Implemented observability bridge adapters for Langfuse and OpenTelemetry
