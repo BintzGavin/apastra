@@ -347,3 +347,6 @@
 
 ### GOVERNANCE v1.109.0
 - ✅ Completed: CommunityPromptPackAcceptance - Implemented community prompt pack acceptance policy.
+
+### GOVERNANCE v1.110.0
+- ✅ Completed: DriftAlertWorkflow - Implemented scheduled GitHub Actions workflow for canary suites and drift detection.
