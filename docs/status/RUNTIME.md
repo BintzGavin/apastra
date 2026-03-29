@@ -1,4 +1,5 @@
-**Version**: 1.86.0
+**Version**: 1.86.1
+[v1.86.1] ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
 [v1.86.0] ✅ Completed: ProjectConfigLoading - Implemented project config loading and defaults resolution in the runtime.
 [v1.85.0] ✅ Completed: CanarySuiteScheduling - Implemented drift detection via scheduled canary suites.
 [v1.84.0] ✅ Completed: MCPServerAdapter - Implemented MCP server adapter for discoverable tool evaluations

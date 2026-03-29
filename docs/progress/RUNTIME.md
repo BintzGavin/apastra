@@ -323,3 +323,6 @@
 
 ### RUNTIME v1.86.0
 - ✅ Completed: ProjectConfigLoading - Implemented project config loading and defaults resolution in the runtime.
+
+### RUNTIME v1.86.1
+- ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
