@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "apastra-flake-quarantine-record-v1",
+  "title": "Flake Quarantine Record",
+  "description": "A record that tracks and quarantines a flaky evaluation case.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the quarantine record."
+    },
+    "case_id": {
+      "type": "string",
+      "description": "The ID of the dataset case being quarantined."
+    },
+    "suite_id": {
+      "type": "string",
+      "description": "The ID of the suite where the case flakes."
+    },
+    "evaluator_id": {
+      "type": "string",
+      "description": "The evaluator that produced the flaky result."
+    },
+    "flake_rate": {
+      "type": "number",
+      "description": "A number representing the observed flake rate."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp when the case was quarantined."
+    },
+    "reason": {
+      "type": "string",
+      "description": "Explanation of why the case was quarantined."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "resolved"],
+      "description": "The current status of the quarantine (e.g., active, resolved)."
+    }
+  },
+  "required": [
+    "id",
+    "case_id",
+    "suite_id",
+    "evaluator_id",
+    "flake_rate",
+    "timestamp",
+    "reason",
+    "status"
+  ],
+  "additionalProperties": false
+}

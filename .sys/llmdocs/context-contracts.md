@@ -7,6 +7,11 @@
 
 ## Section A: Schema Inventory
 
+### `flake-quarantine-record.schema.json`
+- **$id**: `apastra-flake-quarantine-record-v1`
+- **Version**: 1.11.0
+- **Description**: A record that tracks and quarantines a flaky evaluation case.
+
 ### `release-descriptor.schema.json`
 - **$id**: `https://promptops.com/schemas/release-descriptor.schema.json`
 - **Version**: 1.9.0
@@ -220,6 +225,10 @@
   - **Description:** Schema for a vulnerability flag record appended to prompt packages.
 
 ## Section B: Validator Inventory
+
+### `validate-flake-quarantine-record.sh`
+- **Validates**: `flake-quarantine-record.schema.json`
+- **Syntax**: `./promptops/validators/validate-flake-quarantine-record.sh <path/to/record.json>`
 
 ### `validate-release-descriptor.sh`
 - **Validates**: `release-descriptor.schema.json`
