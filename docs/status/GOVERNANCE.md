@@ -1,4 +1,5 @@
-**Version**: 1.114.0
+**Version**: 1.114.1
+[v1.114.1] ✅ Completed: PromptDebtGovernance - Minimal plan exception: natively covered by PromptDebtAuditPolicy.
 [v1.114.0] ✅ Completed: NeverAgainRegression - Implemented governance policy for promoting production incidents into a never again regression suite.
 [v1.113.0] ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
 [v1.112.0] ✅ Completed: QuickEvalPolicy - Implemented governance policy for quick eval mode scope and graduation rules.

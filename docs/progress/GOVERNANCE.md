@@ -362,3 +362,6 @@
 
 ### GOVERNANCE v1.113.0
 - ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
+
+### GOVERNANCE v1.114.1
+- ✅ Completed: PromptDebtGovernance - Minimal plan exception: natively covered by PromptDebtAuditPolicy.
