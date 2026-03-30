@@ -316,3 +316,6 @@
 
 ### EVALUATION v0.31.0
 - ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.32.0
+- ✅ Completed: CostTrackingMetadata - Implemented total_cost tracking in run manifests and cost_delta in regression reports

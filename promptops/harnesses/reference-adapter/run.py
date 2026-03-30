@@ -15,6 +15,9 @@ def main():
 
     timestamp = datetime.datetime.now().isoformat() + "Z"
 
+    cost_budget = req.get("budgets", {}).get("cost", float("inf"))
+    total_cost = 0.05
+
     manifest = {
         "suite_id": req.get("suite_id", "default"),
         "timestamp": timestamp,
@@ -24,7 +27,8 @@ def main():
         },
         "harness_version": "1.0.0",
         "harness_identifier": "reference",
-        "status": "success",
+        "status": "budget_exceeded" if total_cost > cost_budget else "success",
+        "total_cost": total_cost,
         "environment": {},
         "model_ids": ["default"],
         "sampling_config": {},
