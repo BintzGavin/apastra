@@ -53,3 +53,7 @@
 ## 1.0.0 - DeliveryTargetReceipt
 **Learning:** `docs/vision.md` explicitly defines a "delivery target receipt" as the final step of the prompt revision lineage trace. A dedicated schema is required to correctly validate and formalize these records downstream without hallucinating state.
 **Action:** Audit and ensure all lineage trace end states defined in the vision document have explicit schema representations.
+
+## 1.15.0 - CostBudget
+**Learning:** The suite schemas natively incorporate cost_budget from the vision document, meaning explicit schema updates are sometimes preempted by initial designs.
+**Action:** Log a minimal plan exception when unexecuted plan requirements are fully satisfied by the existing codebase state to avoid redundant work.
