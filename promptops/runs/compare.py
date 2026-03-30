@@ -37,6 +37,10 @@ def main():
     baseline_metrics = baseline.get("scorecard", {}).get("normalized_metrics", {}) if "scorecard" in baseline else baseline.get("normalized_metrics", {})
     candidate_flake_rates = candidate.get("scorecard", {}).get("flake_rates", {}) if "scorecard" in candidate else candidate.get("flake_rates", {})
 
+    c_cost = candidate.get("manifest", {}).get("total_cost", candidate.get("total_cost", 0.0))
+    b_cost = baseline.get("manifest", {}).get("total_cost", baseline.get("total_cost", 0.0))
+    cost_delta = c_cost - b_cost
+
     status = "pass"
     evidence = []
     has_blocker = False
@@ -140,6 +144,7 @@ def main():
         "status": status,
         "baseline_ref": baseline_path,
         "candidate_ref": candidate_path,
+        "cost_delta": cost_delta,
         "evidence": evidence
     }
 
