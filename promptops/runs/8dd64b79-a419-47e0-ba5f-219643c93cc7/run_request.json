@@ -1,0 +1,1 @@
+{"suite_id": "test", "revision_ref": "v1", "model_matrix": ["gpt-4"], "evaluator_refs": ["eval1"], "prompt_digest": "sha256:123", "dataset_digest": "sha256:456", "evaluator_digest": "sha256:789", "harness_version": "v1.0"}
