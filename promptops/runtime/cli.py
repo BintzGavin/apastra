@@ -38,6 +38,33 @@ def main():
         report = scan_codebase(args.directory)
         print(json.dumps(report, indent=2))
         return
+    if len(sys.argv) > 1 and sys.argv[1] == "apastra-review":
+        parser = argparse.ArgumentParser(prog="promptops.runtime.cli apastra-review")
+        parser.add_argument("prompt_spec_path")
+        args = parser.parse_args(sys.argv[2:])
+        from promptops.runtime.agent_skills import run_review_skill
+        report = run_review_skill(args.prompt_spec_path)
+        print(json.dumps(report, indent=2))
+        return
+
+    if len(sys.argv) > 1 and sys.argv[1] == "apastra-red-team":
+        parser = argparse.ArgumentParser(prog="promptops.runtime.cli apastra-red-team")
+        parser.add_argument("prompt_spec_path")
+        args = parser.parse_args(sys.argv[2:])
+        from promptops.runtime.agent_skills import run_red_team_skill
+        cases = run_red_team_skill(args.prompt_spec_path)
+        print(json.dumps(cases, indent=2))
+        return
+
+    if len(sys.argv) > 1 and sys.argv[1] == "apastra-optimize":
+        parser = argparse.ArgumentParser(prog="promptops.runtime.cli apastra-optimize")
+        parser.add_argument("prompt_spec_path")
+        args = parser.parse_args(sys.argv[2:])
+        from promptops.runtime.agent_skills import run_optimize_skill
+        suggestions = run_optimize_skill(args.prompt_spec_path)
+        print(json.dumps(suggestions, indent=2))
+        return
+
 
     parser = argparse.ArgumentParser()
     parser.add_argument("prompt_id")

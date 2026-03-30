@@ -334,3 +334,6 @@
 - ✅ Completed: GitHubReleaseAssetResolution - Minimal Plan Exception. Changes already present.
 ## [v1.87.0] - RoleBasedAgentSkills
 - Planned spec for role based agent skills (Expansion 4).
+
+### RUNTIME v1.88.0
+- ✅ Completed: RoleBasedAgentSkills - Implemented specialized agent skills (Review, Red-team, Optimize) based on Expansion 4.
