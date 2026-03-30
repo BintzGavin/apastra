@@ -1,4 +1,5 @@
 **Version**: 1.15.2
+[v1.15.2] ✅ Completed: CommunityPromptPackSchema - Created community prompt pack schema and validator.
 [v1.15.2] ✅ Completed: ComparisonScorecardSchema - Minimal plan exception for ComparisonScorecardSchema as comparison-scorecard schema already exists.
 [v1.15.1] ✅ Completed: ObservabilityAdapterConfigSchema - Minimal plan exception for ObservabilityAdapterConfigSchema as observability adapter schemas already exist.
 [v1.15.0] ✅ Completed: CostBudget - Minimal plan exception for CostBudget as suite schemas already implement cost_budget.

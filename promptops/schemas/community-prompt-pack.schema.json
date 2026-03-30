@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://promptops.apastra.com/schemas/community-prompt-pack.schema.json",
+  "title": "Community Prompt Pack",
+  "description": "Curated starter packs like summarization, extraction to bootstrap the registry.",
+  "type": "object",
+  "required": ["id", "name", "description", "custodian"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Purpose of the pack."
+    },
+    "custodian": {
+      "type": "string",
+      "description": "The custodian org managing it."
+    },
+    "prompts": {
+      "type": "array",
+      "description": "References to the prompt files in the pack.",
+      "items": { "type": "string" }
+    },
+    "datasets": {
+      "type": "array",
+      "description": "References to the dataset files in the pack.",
+      "items": { "type": "string" }
+    },
+    "evaluators": {
+      "type": "array",
+      "description": "References to the evaluator files in the pack.",
+      "items": { "type": "string" }
+    },
+    "suites": {
+      "type": "array",
+      "description": "References to the suite files in the pack.",
+      "items": { "type": "string" }
+    },
+    "baselines": {
+      "type": "array",
+      "description": "References to the baseline files in the pack.",
+      "items": { "type": "string" }
+    },
+    "topics": {
+      "type": "array",
+      "description": "Topics like summarization, extraction, classification, code review.",
+      "items": { "type": "string" }
+    }
+  }
+}
