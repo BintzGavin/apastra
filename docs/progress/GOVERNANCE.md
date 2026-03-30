@@ -356,3 +356,6 @@
 
 ### GOVERNANCE v1.112.0
 - ✅ Completed: QuickEvalPolicy - Implemented governance policy for quick eval mode scope and graduation rules.
+
+### GOVERNANCE v1.113.0
+- ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.

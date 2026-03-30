@@ -64,6 +64,7 @@ Gate Enforcement Flow:
 - `promptops/policies/community-prompt-pack-acceptance.md`
 
 **Section C: Policy Inventory**
+- `promptops/policies/holdout-sets.md`: Defines governance rules for dataset holdouts to prevent overfitting.
 - `promptops/policies/artifact-storage-retention.md`: Defines the requirement for syncing derived artifacts to external long-term storage, overriding the 90-day CI retention limit.
 - `promptops/policies/community-prompt-pack-acceptance.md`: Governance rules for accepting, reviewing, and publishing community-contributed prompt packs.
 - `promptops/policies/acceptable-use.md`: Formal Acceptable Use Policy outlining prohibited content, enforcement mechanisms, and consequences.
