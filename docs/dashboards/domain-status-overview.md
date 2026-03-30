@@ -2,7 +2,7 @@
 title: "Domain Status Overview"
 description: "Current status of all PromptOps domains"
 audience: "all"
-last_verified: "2026-03-29"
+last_verified: "2026-03-30"
 source_files:
   - docs/status/GOVERNANCE.md
   - docs/status/EVALUATION.md

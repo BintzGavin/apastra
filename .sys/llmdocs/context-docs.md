@@ -29,6 +29,7 @@
 - `drift-report-reference.md`
 - `emergency-takedown-decision-reference.md`
 - `evaluator-reference.md`
+- `flake-quarantine-record-reference.md`
 - `harness-adapter-reference.md`
 - `mcp-tool-definition-reference.md`
 - `mirror-sync-receipt-reference.md`
