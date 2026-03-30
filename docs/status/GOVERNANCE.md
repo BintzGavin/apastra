@@ -1,5 +1,5 @@
-**Version**: 1.115.0
-[v1.115.0] ✅ Completed: TieredSuitesPolicy - Implemented governance policy defining tiered evaluation suites and release-candidate gates.
+**Version**: 1.116.0
+[v1.116.0] ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
 [v1.114.1] ✅ Completed: PromptDebtGovernance - Minimal plan exception: natively covered by PromptDebtAuditPolicy.
 [v1.114.0] ✅ Completed: NeverAgainRegression - Implemented governance policy for promoting production incidents into a never again regression suite.
 [v1.113.0] ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
