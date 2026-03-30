@@ -328,3 +328,5 @@
 
 ### EVALUATION v0.34.0
 - ✅ Completed: RedTeamAdversarialGeneration - Implemented red-team adversarial generation skill
+### EVALUATION v0.35.0
+- ✅ Completed: AuditCodebaseScanning - Implemented apastra-audit codebase scanning skill

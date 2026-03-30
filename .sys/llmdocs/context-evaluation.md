@@ -7,6 +7,7 @@ The EVALUATION domain executes run requests to generate append-only run artifact
 - **Scorecard Normalization**: Extracts normalized metrics from case evaluator outputs and calculates variance across trials. Outputs `scorecard.json`.
 - **Regression Report Generator**: `generate_regression_report.sh` compares the generated `scorecard.json` against a stored baseline and issues a pass/fail.
 - **Agent Skills**: `promptops/runs/generate_adversarial_cases.py` acts as a Red-team Adversarial QA skill, generating edge cases, prompt injections, and boundary violations.
+- **Codebase Auditing**: `promptops/runs/audit-shim.sh` acts as the apastra-audit skill to scan codebases for hardcoded prompts.
 
 ## Section B: File Tree
 ```

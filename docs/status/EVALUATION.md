@@ -1,4 +1,5 @@
-**Version**: 0.34.0
+**Version**: 0.35.0
+[v0.35.0] ✅ Completed: AuditCodebaseScanning - Implemented apastra-audit codebase scanning skill
 [v0.34.0] ✅ Completed: RedTeamAdversarialGeneration - Implemented red-team adversarial generation skill
 [v0.33.1] ✅ Completed: HarnessAdapterRunnerShim - Minimal Plan Exception. Changes already present.
 [v0.33.0] ✅ Completed: RunRequestDigestValidation6 - Verified schema update
