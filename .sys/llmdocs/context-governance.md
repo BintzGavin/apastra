@@ -69,6 +69,7 @@ Gate Enforcement Flow:
 - `promptops/policies/acceptable-use.md`: Formal Acceptable Use Policy outlining prohibited content, enforcement mechanisms, and consequences.
 - `promptops/policies/flake-quarantine.md`: Defines governance rules for quarantining flaky evaluation cases.
 - `promptops/policies/approachable-terminology.md`: Enforces consistent terminology in user-facing documentation ("agent" instead of "harness").
+- `promptops/policies/quick-eval.md`: Defines the scope, limitations, and graduation rules for quick eval files.
 - `promptops/policies/deprecation.md`: Formal append-only registry metadata store policy detailing deprecation notices.
 - `promptops/policies/ownership-disputes.md`: Formal append-only registry metadata store policy detailing ownership disputes and takedown appeals.
 - `promptops/policies/naming.md`: Naming rules for prompts, packages, and metrics.

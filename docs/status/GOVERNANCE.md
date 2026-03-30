@@ -1,4 +1,5 @@
-**Version**: 1.111.0
+**Version**: 1.112.0
+[v1.112.0] ✅ Completed: QuickEvalPolicy - Implemented governance policy for quick eval mode scope and graduation rules.
 [v1.111.0] ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
 [v1.110.0] ✅ Completed: DriftAlertWorkflow - Implemented scheduled GitHub Actions workflow for canary suites and drift detection.
 
