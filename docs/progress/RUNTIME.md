@@ -343,3 +343,6 @@
 
 ### RUNTIME v1.88.2
 - ✅ Completed: CommunityPromptPacks - Minimal Plan Exception. Changes already present.
+
+## [v1.88.3] - FinalizingPlans
+- Executed minimal plan exception as all runtime features have been completed.
