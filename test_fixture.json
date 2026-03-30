@@ -1,0 +1,7 @@
+{
+  "descriptor_id": "test-123",
+  "timestamp": "2023-10-01T12:00:00Z",
+  "prompt_digest": "sha256:abcd",
+  "environment": "prod",
+  "signatures": [{"key_id": "key1", "signature": "sig"}]
+}

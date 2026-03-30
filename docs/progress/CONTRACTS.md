@@ -329,3 +329,6 @@
 
 ### CONTRACTS v1.11.0
 - ✅ Completed: FlakeQuarantineRecord - Created schema and validator for flake quarantine records.
+
+### CONTRACTS v1.12.0
+- ✅ Completed: ReleaseDescriptor - Created release descriptor schema and validator.
