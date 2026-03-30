@@ -353,3 +353,6 @@
 
 ### GOVERNANCE v1.111.0
 - ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
+
+### GOVERNANCE v1.112.0
+- ✅ Completed: QuickEvalPolicy - Implemented governance policy for quick eval mode scope and graduation rules.
