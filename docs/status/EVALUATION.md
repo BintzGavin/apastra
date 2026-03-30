@@ -1,3 +1,5 @@
+**Version**: 0.33.0
+[v0.33.0] ✅ Completed: RunRequestDigestValidation6 - Verified schema update
 **Version**: 0.32.0
 [v0.32.0] ✅ Completed: CostTrackingMetadata - Implemented total_cost tracking in run manifests and cost_delta in regression reports
 [v0.31.0] ✅ Completed: Minimal Plan Exception Final - All plans officially complete
