@@ -1,4 +1,5 @@
-**Version**: 0.35.0
+**Version**: 0.36.0
+[v0.36.0] ✅ Completed: MCPIntegration - Implemented MCP Server adapter to expose evaluations as discoverable MCP tools
 [v0.35.0] ✅ Completed: AuditCodebaseScanning - Implemented apastra-audit codebase scanning skill
 [v0.34.0] ✅ Completed: RedTeamAdversarialGeneration - Implemented red-team adversarial generation skill
 [v0.33.1] ✅ Completed: HarnessAdapterRunnerShim - Minimal Plan Exception. Changes already present.

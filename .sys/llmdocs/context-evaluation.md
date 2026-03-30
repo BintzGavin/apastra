@@ -29,6 +29,7 @@ promptops/
     │   └── scorecard.json
     ├── generate_adversarial_cases.py
     ├── validate-run-request.sh
+    ├── mcp_server_adapter.py
     ├── runner-shim.sh
     ├── split_artifact.sh
     ├── normalize.py
