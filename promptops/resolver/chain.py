@@ -21,7 +21,7 @@ class ResolverChain:
 
         if rules and 'pin' in rules:
             pin = rules['pin']
-            if pin.startswith('sha256:') or pin.startswith('https://') or pin.startswith('oci://') or pin.startswith('npm:') or pin.startswith('pypi:'):
+            if pin.startswith('sha256:') or pin.startswith('https://') or pin.startswith('oci://') or pin.startswith('npm:') or pin.startswith('pypi:') or pin.startswith('github-release:'):
                 return PackagedResolver().resolve(target_id, pin)
             else:
                 return GitRefResolver().resolve(target_id, pin)
