@@ -15,6 +15,6 @@
 - **Dependencies**: None.
 
 #### 4. Test Plan
-- **Verification**: Run `bash promptops/validators/validate-community-prompt-pack.sh test-fixtures/valid-community-prompt-pack.json` where the fixture contains a valid pack configuration.
+- **Verification**: Create a valid JSON payload `test-fixture.json`, run `bash promptops/validators/validate-community-prompt-pack.sh test-fixture.json`, and remove `test-fixture.json` afterward.
 - **Success Criteria**: The validator exits with status 0, confirming the JSON matches the schema.
 - **Edge Cases**: Missing `id`, `name`, `description`, or `custodian` should be rejected. Invalid formats for references should be rejected.
