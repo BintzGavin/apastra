@@ -1,4 +1,5 @@
-**Version**: 1.88.0
+**Version**: 1.88.1
+[v1.88.1] ✅ Completed: MinimalPlanExceptionFinal - Minimal Plan Exception. Changes already present.
 [v1.88.0] ✅ Completed: RoleBasedAgentSkills - Implemented specialized agent skills (Review, Red-team, Optimize) based on Expansion 4.
 [v1.87.0] ⏳ Planned: RoleBasedAgentSkills - Planned spec for role based agent skills (Expansion 4).
 [v1.86.4] ✅ Completed: GitHubReleaseAssetResolution - Minimal Plan Exception. Changes already present.
