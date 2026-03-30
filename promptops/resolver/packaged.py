@@ -97,6 +97,46 @@ class PackagedResolver:
                             json.dump(data, out_f)
                         return data
 
+
+            elif ref.startswith('github-release:'):
+                import urllib.request
+                import urllib.error
+                import json
+                # format: github-release:owner/repo@tag
+                ref_path = ref[15:]
+                if '@' not in ref_path or '/' not in ref_path:
+                    raise RuntimeError(f"Invalid github-release ref: {ref}. Expected format github-release:owner/repo@tag")
+
+                repo_part, tag = ref_path.split('@', 1)
+                owner, repo = repo_part.split('/', 1)
+
+                api_url = f"https://api.github.com/repos/{owner}/{repo}/releases/tags/{tag}"
+                req = urllib.request.Request(api_url, headers={'User-Agent': 'Mozilla/5.0', 'Accept': 'application/vnd.github.v3+json'})
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    release_data = json.loads(response.read().decode('utf-8'))
+
+                asset = next((a for a in release_data.get('assets', []) if a['name'].endswith('.json')), None)
+                if not asset:
+                    raise RuntimeError(f"No JSON asset found in github release {ref}")
+
+                asset_url = asset['url']
+                req = urllib.request.Request(asset_url, headers={'User-Agent': 'Mozilla/5.0', 'Accept': 'application/octet-stream'})
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    asset_bytes = response.read()
+
+                try:
+                    data = json.loads(asset_bytes.decode('utf-8'))
+                except json.JSONDecodeError:
+                    raise RuntimeError(f"Invalid JSON payload in github release asset for {ref}")
+
+                # Use the 'promptops' key if it exists, otherwise use the whole json
+                if isinstance(data, dict) and 'promptops' in data:
+                    data = data['promptops']
+
+                with open(cache_path, 'w') as out_f:
+                    json.dump(data, out_f)
+                return data
+
             elif ref.startswith('oci://'):
                 oci_path = ref[6:]
                 if '/' not in oci_path:
@@ -173,7 +213,7 @@ class PackagedResolver:
         if (prompt_id, ref) in self.cache:
             return self.cache[(prompt_id, ref)]
 
-        if not (ref.startswith('sha256:') or ref.startswith('https://') or ref.startswith('oci://') or ref.startswith('npm:') or ref.startswith('pypi:')):
+        if not (ref.startswith('sha256:') or ref.startswith('https://') or ref.startswith('oci://') or ref.startswith('npm:') or ref.startswith('pypi:') or ref.startswith('github-release:')):
             raise RuntimeError(f"Failed to resolve packaged artifact '{prompt_id}' with ref '{ref}'")
 
         if ref.startswith('sha256:'):
@@ -200,7 +240,7 @@ class PackagedResolver:
 
             raise ValueError(f"Prompt ID '{prompt_id}' not found in package '{ref}'")
 
-        elif ref.startswith('https://') or ref.startswith('oci://') or ref.startswith('npm:') or ref.startswith('pypi:'):
+        elif ref.startswith('https://') or ref.startswith('oci://') or ref.startswith('npm:') or ref.startswith('pypi:') or ref.startswith('github-release:'):
             asset = self._fetch_remote_asset(ref)
 
             current_dir = os.path.dirname(os.path.abspath(__file__))
