@@ -347,3 +347,6 @@
 
 ### CONTRACTS v1.15.2
 - ✅ Completed: ComparisonScorecardSchema - Minimal plan exception for ComparisonScorecardSchema as comparison-scorecard schema already exists.
+
+### CONTRACTS v1.15.2
+- ✅ Completed: CommunityPromptPackSchema - Created community prompt pack schema and validator.
