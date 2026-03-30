@@ -365,3 +365,6 @@
 
 ### GOVERNANCE v1.114.1
 - ✅ Completed: PromptDebtGovernance - Minimal plan exception: natively covered by PromptDebtAuditPolicy.
+
+### GOVERNANCE v1.115.0
+- ✅ Completed: TieredSuitesPolicy - Implemented governance policy defining tiered evaluation suites and release-candidate gates.
