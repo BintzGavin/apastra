@@ -319,3 +319,6 @@
 
 ### EVALUATION v0.32.0
 - ✅ Completed: CostTrackingMetadata - Implemented total_cost tracking in run manifests and cost_delta in regression reports
+
+### EVALUATION v0.33.0
+- ✅ Completed: RunRequestDigestValidation6 - Verified schema update
