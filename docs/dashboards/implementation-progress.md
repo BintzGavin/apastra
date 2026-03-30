@@ -2,7 +2,7 @@
 title: "Implementation Progress"
 description: "Recent progress across all PromptOps domains"
 audience: "all"
-last_verified: "2026-03-29"
+last_verified: "2026-03-30"
 source_files:
   - docs/progress/GOVERNANCE.md
   - docs/progress/EVALUATION.md
@@ -351,6 +351,26 @@ source_files:
 ### GOVERNANCE v1.104.0
 - ✅ Completed: PromptDebtAuditPolicy - Implemented governance policy for prompt debt acceptable limits and remediation.
 
+### GOVERNANCE v1.105.0
+- ✅ Completed: MCPIntegration - Implemented MCP integration policy and delivery target.
+
+### GOVERNANCE v1.106.0
+- ✅ Completed: FlakeQuarantinePolicy - Implemented governance policy for quarantining flaky evaluation cases.
+### GOVERNANCE v1.107.0
+- ✅ Completed: ApproachableTerminology - Implemented governance policy for approachable terminology.
+
+### GOVERNANCE v1.108.0
+- ✅ Completed: ProjectLevelConfig - Implemented governance policy for project-level configurations and minimal file structure.
+
+### GOVERNANCE v1.109.0
+- ✅ Completed: CommunityPromptPackAcceptance - Implemented community prompt pack acceptance policy.
+
+### GOVERNANCE v1.110.0
+- ✅ Completed: DriftAlertWorkflow - Implemented scheduled GitHub Actions workflow for canary suites and drift detection.
+
+### GOVERNANCE v1.111.0
+- ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
+
 
 ## EVALUATION
 
@@ -661,6 +681,23 @@ source_files:
 - ✅ Completed: PromptReviewWorkflow - Implemented role-based agent skill prompt review workflow
 ### EVALUATION v0.27.0
 - ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
+### EVALUATION v0.28.0
+- ✅ Completed: ObservabilityBridgeAdapters - Implemented observability bridge adapters for Langfuse and OpenTelemetry
+
+### EVALUATION v0.29.0
+- ✅ Completed: DriftDetectionWorkflow - Implemented drift report generation script
+
+### EVALUATION v0.30.0
+- ✅ Completed: AuditSkillExecution - Implemented audit-shim.sh to generate audit_report.json
+
+### EVALUATION v0.31.0
+- ✅ Completed: Minimal Plan Exception Final - All plans officially complete
+
+### EVALUATION v0.32.0
+- ✅ Completed: CostTrackingMetadata - Implemented total_cost tracking in run manifests and cost_delta in regression reports
+
+### EVALUATION v0.33.0
+- ✅ Completed: RunRequestDigestValidation6 - Verified schema update
 
 
 ## CONTRACTS
@@ -991,6 +1028,18 @@ source_files:
 ### CONTRACTS v1.9.0
 - ✅ Completed: ReleaseDescriptor - Created release descriptor schema and validator.
 
+### CONTRACTS v1.10.0
+- ✅ Completed: ReleaseDescriptor - Created schema and validator for release descriptors.
+
+### CONTRACTS v1.11.0
+- ✅ Completed: FlakeQuarantineRecord - Created schema and validator for flake quarantine records.
+
+### CONTRACTS v1.12.0
+- ✅ Completed: ReleaseDescriptor - Created release descriptor schema and validator.
+
+### CONTRACTS v1.13.0
+- ✅ Completed: EmergencyTakedownRecord - Minimal plan exception for EmergencyTakedownRecord as it was implemented via EmergencyTakedownDecision.
+
 
 ## DOCS
 
@@ -1067,18 +1116,6 @@ source_files:
   - Regenerated `context-docs.md`
   - Updated `last_verified` dates in guides and ADRs
 
-### DOCS v0.13.0
-- ✅ Completed: Daily Documentation Review
-  - Generated API docs for missing schemas
-  - Refreshed cross-domain dashboards
-  - Updated `.sys/llmdocs/context-docs.md`
-
-### DOCS v0.13.0
-- ✅ Completed: Daily Documentation Review
-  - Generated API docs for missing schemas
-  - Refreshed cross-domain dashboards
-  - Updated `.sys/llmdocs/context-docs.md`
-
 ### DOCS v0.11.0
 - ✅ Completed: Daily Documentation Review
   - Updated API documentation to include digest-convention-reference.md
@@ -1094,17 +1131,10 @@ source_files:
 
 ### DOCS v0.14.0
 - ✅ Completed: Daily Documentation Review
-  - Generated API docs for missing schemas
+  - Generated API docs for flake-quarantine-record
   - Refreshed cross-domain dashboards
-  - Updated `.sys/llmdocs/context-docs.md`
+  - Updated context-docs.md
 
-
-
-### DOCS v0.13.0
-- ✅ Completed: Daily Documentation Review
-  - Generated API docs for missing schemas
-  - Refreshed cross-domain dashboards
-  - Updated `.sys/llmdocs/context-docs.md`
 
 ## RUNTIME
 
@@ -1430,3 +1460,15 @@ source_files:
 
 ### RUNTIME v1.83.0
 - ✅ Completed: CostTrackingMetadata - Included token cost estimates in resolved prompt metadata
+
+### RUNTIME v1.86.0
+- ✅ Completed: ProjectConfigLoading - Implemented project config loading and defaults resolution in the runtime.
+
+### RUNTIME v1.86.1
+- ✅ Completed: RegistryProtocolResolution - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.86.3
+- ✅ Completed: ObservabilityAdapters - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.86.4
+- ✅ Completed: GitHubReleaseAssetResolution - Minimal Plan Exception. Changes already present.
