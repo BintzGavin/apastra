@@ -1,4 +1,5 @@
-**Version**: 1.86.4
+**Version**: 1.87.0
+[v1.87.0] ⏳ Planned: RoleBasedAgentSkills - Planned spec for role based agent skills (Expansion 4).
 [v1.86.4] ✅ Completed: GitHubReleaseAssetResolution - Minimal Plan Exception. Changes already present.
 [v1.86.3] ✅ Completed: ObservabilityAdapters - Minimal Plan Exception. Changes already present.
 [v1.86.2] ✅ Completed: MultiModelComparison - Minimal Plan Exception. Changes already present.
