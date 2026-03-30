@@ -224,6 +224,18 @@
   - **Version:** 1.9.0
   - **Description:** Schema for a vulnerability flag record appended to prompt packages.
 
+### `release-descriptor.schema.json`
+- **$id**: `https://promptops.com/schemas/release-descriptor.schema.json`
+- **Version**: 1.12.0
+- **Description**: Schema for a release descriptor, posted to an internal API as part of abstract delivery targets.
+- **Key Fields**:
+  - `descriptor_id`: Unique identifier for this release descriptor
+  - `timestamp`: ISO-8601 timestamp of when the descriptor was created
+  - `prompt_digest`: The canonical digest of the prompt package being released
+  - `environment`: The environment this release is targeting
+  - `signatures`: Digital signatures ensuring the authenticity of the release
+
+
 ## Section B: Validator Inventory
 
 ### `validate-flake-quarantine-record.sh`
@@ -430,6 +442,11 @@
 - **Validator:** `validate-vulnerability-flag-record.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-vulnerability-flag-record.sh <target.json>`
   - **What it Validates:** Validates `vulnerability-flag-record.schema.json`.
+
+- **Validator:** `validate-release-descriptor.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-release-descriptor.sh <target.json>`
+  - **What it Validates:** Validates `release-descriptor.schema.json`.
+
 
 ## Section C: Source File Conventions
 - **Quick Evals:**
