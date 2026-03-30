@@ -338,3 +338,6 @@
 
 ### CONTRACTS v1.14.0
 - ✅ Completed: ReleaseDescriptor - Minimal plan exception for ReleaseDescriptor as it was already implemented in previous tasks.
+
+### CONTRACTS v1.15.0
+- ✅ Completed: CostBudget - Minimal plan exception for CostBudget as suite schemas already implement cost_budget.
