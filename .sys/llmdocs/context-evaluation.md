@@ -6,9 +6,13 @@ The EVALUATION domain executes run requests to generate append-only run artifact
 - **Run Artifact Generation**: Monolithic `run_artifact.json` is split into `run_manifest.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` for append-only storage.
 - **Scorecard Normalization**: Extracts normalized metrics from case evaluator outputs and calculates variance across trials. Outputs `scorecard.json`.
 - **Regression Report Generator**: `generate_regression_report.sh` compares the generated `scorecard.json` against a stored baseline and issues a pass/fail.
+- **Agent Skills**: `promptops/runs/generate_adversarial_cases.py` acts as a Red-team Adversarial QA skill, generating edge cases, prompt injections, and boundary violations.
 
 ## Section B: File Tree
 ```
+skills/
+├── red-team/
+│   └── SKILL.md
 promptops/
 ├── harnesses/
 │   └── reference-adapter/
@@ -22,6 +26,7 @@ promptops/
     │   ├── failures.json
     │   ├── artifact_refs.json
     │   └── scorecard.json
+    ├── generate_adversarial_cases.py
     ├── validate-run-request.sh
     ├── runner-shim.sh
     ├── split_artifact.sh
