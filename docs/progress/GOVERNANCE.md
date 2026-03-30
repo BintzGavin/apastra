@@ -1,3 +1,6 @@
+### GOVERNANCE v1.114.0
+- ✅ Completed: NeverAgainRegression - Implemented governance policy for promoting production incidents into a never again regression suite.
+
 ### GOVERNANCE v1.102.0
 - ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
 
