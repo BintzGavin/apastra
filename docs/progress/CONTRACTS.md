@@ -332,3 +332,6 @@
 
 ### CONTRACTS v1.12.0
 - ✅ Completed: ReleaseDescriptor - Created release descriptor schema and validator.
+
+### CONTRACTS v1.13.0
+- ✅ Completed: EmergencyTakedownRecord - Minimal plan exception for EmergencyTakedownRecord as it was implemented via EmergencyTakedownDecision.
