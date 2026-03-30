@@ -1,4 +1,5 @@
-**Version**: 1.88.1
+**Version**: 1.88.2
+[v1.88.2] ✅ Completed: CommunityPromptPacks - Minimal Plan Exception. Changes already present.
 [v1.88.1] ✅ Completed: MinimalPlanExceptionFinal - Minimal Plan Exception. Changes already present.
 [v1.88.0] ✅ Completed: RoleBasedAgentSkills - Implemented specialized agent skills (Review, Red-team, Optimize) based on Expansion 4.
 [v1.87.0] ⏳ Planned: RoleBasedAgentSkills - Planned spec for role based agent skills (Expansion 4).

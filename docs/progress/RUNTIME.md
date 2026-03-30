@@ -340,3 +340,6 @@
 
 ### RUNTIME v1.88.1
 - ✅ Completed: MinimalPlanExceptionFinal - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.2
+- ✅ Completed: CommunityPromptPacks - Minimal Plan Exception. Changes already present.
