@@ -332,3 +332,5 @@
 
 ### RUNTIME v1.86.4
 - ✅ Completed: GitHubReleaseAssetResolution - Minimal Plan Exception. Changes already present.
+## [v1.87.0] - RoleBasedAgentSkills
+- Planned spec for role based agent skills (Expansion 4).
