@@ -335,3 +335,6 @@
 
 ### CONTRACTS v1.13.0
 - ✅ Completed: EmergencyTakedownRecord - Minimal plan exception for EmergencyTakedownRecord as it was implemented via EmergencyTakedownDecision.
+
+### CONTRACTS v1.14.0
+- ✅ Completed: ReleaseDescriptor - Minimal plan exception for ReleaseDescriptor as it was already implemented in previous tasks.

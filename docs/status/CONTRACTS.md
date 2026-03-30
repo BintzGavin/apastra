@@ -1,4 +1,5 @@
-**Version**: 1.13.0
+**Version**: 1.14.0
+[v1.14.0] ✅ Completed: ReleaseDescriptor - Minimal plan exception for ReleaseDescriptor as it was already implemented in previous tasks.
 [v1.13.0] ✅ Completed: EmergencyTakedownRecord - Minimal plan exception for EmergencyTakedownRecord as it was implemented via EmergencyTakedownDecision.
 [v1.12.0] ✅ Completed: ReleaseDescriptor - Created release descriptor schema and validator.
 [v1.11.0] ✅ Completed: FlakeQuarantineRecord - Created schema and validator for flake quarantine records.
