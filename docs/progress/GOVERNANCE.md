@@ -368,3 +368,6 @@
 
 ### GOVERNANCE v1.115.0
 - ✅ Completed: TieredSuitesPolicy - Implemented governance policy defining tiered evaluation suites and release-candidate gates.
+
+### GOVERNANCE v1.116.0
+- ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
