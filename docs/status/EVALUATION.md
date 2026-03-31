@@ -1,4 +1,6 @@
-**Version**: 0.36.1
+**Version**: 0.36.2
+[v0.36.2] ✅ Completed: Minimal-Plan-Exception - Synced domain state.
+[v0.36.2] ✅ Completed: RegressionEngine - Minimal Plan Exception. Changes already present.
 [v0.36.1] ✅ Completed: AnswerRelevanceAssertion - Minimal Plan Exception. Changes already present.
 [v0.36.0] ✅ Completed: MCPIntegration - Implemented MCP Server adapter to expose evaluations as discoverable MCP tools
 [v0.35.0] ✅ Completed: AuditCodebaseScanning - Implemented apastra-audit codebase scanning skill
