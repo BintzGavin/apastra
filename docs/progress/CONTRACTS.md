@@ -350,3 +350,6 @@
 
 ### CONTRACTS v1.15.2
 - ✅ Completed: CommunityPromptPackSchema - Created community prompt pack schema and validator.
+
+### CONTRACTS v1.15.3
+- ✅ Completed: StarterPackSchema - Minimal plan exception for StarterPackSchema as community-prompt-pack schema already exists.
