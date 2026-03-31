@@ -1,4 +1,5 @@
-**Version**: 1.15.2
+**Version**: 1.15.3
+[v1.15.3] ✅ Completed: StarterPackSchema - Minimal plan exception for StarterPackSchema as community-prompt-pack schema already exists.
 [v1.15.2] ✅ Completed: CommunityPromptPackSchema - Created community prompt pack schema and validator.
 [v1.15.2] ✅ Completed: ComparisonScorecardSchema - Minimal plan exception for ComparisonScorecardSchema as comparison-scorecard schema already exists.
 [v1.15.1] ✅ Completed: ObservabilityAdapterConfigSchema - Minimal plan exception for ObservabilityAdapterConfigSchema as observability adapter schemas already exist.
