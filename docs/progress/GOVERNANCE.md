@@ -371,3 +371,6 @@
 
 ### GOVERNANCE v1.116.0
 - ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
+
+### GOVERNANCE v1.116.1
+- ✅ Completed: MinimalPlanExceptionFinal - Minimal plan exception: no governance changes required.

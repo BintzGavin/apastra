@@ -1,4 +1,5 @@
-**Version**: 1.116.0
+**Version**: 1.116.1
+[v1.116.1] ✅ Completed: MinimalPlanExceptionFinal - Minimal plan exception: no governance changes required.
 [v1.116.0] ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
 [v1.114.1] ✅ Completed: PromptDebtGovernance - Minimal plan exception: natively covered by PromptDebtAuditPolicy.
 [v1.114.0] ✅ Completed: NeverAgainRegression - Implemented governance policy for promoting production incidents into a never again regression suite.
