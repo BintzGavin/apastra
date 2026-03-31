@@ -7,7 +7,7 @@
 - **Create**: `promptops/runs/apply_project_config.py` (Script to load and apply `promptops.config.yaml`).
 - **Modify**: `promptops/harnesses/reference-adapter/run.py` (Update reference adapter to load defaults from config if not present in suite).
 - **Modify**: `promptops/runs/quick-eval.sh` (Update quick eval to use `promptops.config.yaml` defaults).
-- **Read-Only**: `docs/vision.md`, `README.md`.
+- **Read-Only**: `docs/vision.md`, `README.md`, `promptops/schemas/promptops-config.schema.json`.
 
 #### 3. Implementation Spec
 - **Harness Architecture**: Adapter should first check for explicit suite parameters (model, temperature, etc). If missing, it checks `promptops.config.yaml`.
@@ -18,7 +18,7 @@
   - If `defaults` section exists, use as fallback for suite matrix, config, and thresholds.
   - Minimal mode check: count files in `promptops/prompts/`. If <= 3, operate in simplified directory mode.
 - **Baseline and Regression Flow**: No changes.
-- **Dependencies**: CONTRACTS must specify schema for `promptops.config.yaml` (optional but recommended).
+- **Dependencies**: CONTRACTS schemas required (`promptops-config.schema.json`); RUNTIME resolver availability.
 
 #### 4. Test Plan
 - **Verification**: Run `promptops/runs/apply_project_config.py` against a sample `promptops.config.yaml` and verify values are correctly parsed. Execute `promptops/harnesses/reference-adapter/run.py` with an empty suite config to ensure defaults are applied.
