@@ -387,3 +387,6 @@
 
 ### GOVERNANCE v1.116.4
 - ✅ Completed: MinimalPlanExceptionFinal2 - Minimal plan exception: no governance changes required.
+
+### GOVERNANCE v1.117.0
+- ✅ Completed: TakedownsPolicy - Implemented formal append-only takedown record policy.

@@ -95,7 +95,7 @@ Gate Enforcement Flow:
 - `promptops/policies/cost-budget-governance.md`: Defines rules for enforcing cost limits on evaluation suites and preventing promotion of expensive runs.
 - `promptops/policies/multi-model-promotion.md`: Governance rules for promoting a specific model+prompt combination from a multi-model comparison scorecard.
 
-- `promptops/policies/takedowns.md`: Defines process for handling takedown requests.
+- `promptops/policies/takedowns.md`: Defines process for handling takedown requests via append-only takedown-record.schema.json.
 - `promptops/policies/appeals.md`: Defines process for appealing moderation decisions.
 
 
