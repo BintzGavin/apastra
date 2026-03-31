@@ -346,3 +346,6 @@
 
 ## [v1.88.3] - FinalizingPlans
 - Executed minimal plan exception as all runtime features have been completed.
+
+### RUNTIME v1.88.4
+- ✅ Completed: v1.52.0 - Minimal Plan Exception. Changes already present.
