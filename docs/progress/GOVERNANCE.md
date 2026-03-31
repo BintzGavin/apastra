@@ -1,3 +1,6 @@
+### GOVERNANCE v1.116.5
+- ✅ Completed: DriftAlertPolicies - Minimal plan exception: natively covered by existing drift-alerts.md in promptops/policies/.
+
 ### GOVERNANCE v1.116.3
 - ✅ Completed: TieredSuitesPolicy - Minimal plan exception: natively covered by existing tier property in suite.schema.json.
 
