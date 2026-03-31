@@ -342,3 +342,6 @@
 
 ### EVALUATION v0.36.2
 - ✅ Completed: Minimal-Plan-Exception - Synced domain state.
+
+### EVALUATION v0.37.0
+- ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
