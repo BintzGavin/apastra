@@ -1,3 +1,7 @@
+### GOVERNANCE v1.116.3
+- ✅ Completed: TieredSuitesPolicy - Minimal plan exception: natively covered by existing tier property in suite.schema.json.
+
+
 ### GOVERNANCE v1.114.0
 - ✅ Completed: NeverAgainRegression - Implemented governance policy for promoting production incidents into a never again regression suite.
 
