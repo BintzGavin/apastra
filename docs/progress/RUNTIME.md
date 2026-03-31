@@ -1,3 +1,6 @@
+### RUNTIME v1.88.7
+- ✅ Completed: ApproachableTerminology - Minimal Plan Exception. Changes already present.
+
 
 ### RUNTIME v1.85.0
 - ✅ Completed: CanarySuiteScheduling - Implemented drift detection via scheduled canary suites.

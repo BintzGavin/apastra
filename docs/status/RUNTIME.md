@@ -1,4 +1,5 @@
-**Version**: 1.88.6
+**Version**: 1.88.7
+[v1.88.7] ✅ Completed: ApproachableTerminology - Minimal Plan Exception. Changes already present.
 [v1.88.6] ✅ Completed: GitRefRemoteSHA - Fix shallow clone failures when resolving remote git URLs by commit SHA.
 [v1.88.4] ✅ Completed: v1.52.0 - Minimal Plan Exception. Changes already present.
 [v1.88.3] ✅ Completed: FinalizingPlans - Minimal Plan Exception. Changes already present.
