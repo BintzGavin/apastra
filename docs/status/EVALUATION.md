@@ -1,5 +1,4 @@
-**Version**: 0.38.0
-[v0.38.0] ✅ Completed: CostBudgetEnforcement - Implemented cost budget enforcement in harness adapters
+**Version**: 0.37.1
 [v0.37.0] ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
 [v0.37.1] ✅ Completed: CostTrackingMetadata - Minimal Plan Exception. Changes already present.
 [v0.36.2] ✅ Completed: Minimal-Plan-Exception - Synced domain state.

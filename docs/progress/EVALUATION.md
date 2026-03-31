@@ -348,6 +348,3 @@
 
 ### EVALUATION v0.37.1
 - ✅ Completed: CostTrackingMetadata - Minimal Plan Exception. Changes already present.
-
-### EVALUATION v0.38.0
-- ✅ Completed: CostBudgetEnforcement - Implemented cost budget enforcement in harness adapters

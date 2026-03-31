@@ -1,0 +1,1 @@
+{"status": "pass", "evidence": [{"metric": "cost", "status": "pass", "candidate": 0.05, "baseline": 0.1, "delta": -0.05, "message": "Cost within budget"}]}
