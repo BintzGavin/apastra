@@ -15,8 +15,12 @@ def main():
 
     timestamp = datetime.datetime.now().isoformat() + "Z"
 
-    cost_budget = req.get("budgets", {}).get("cost", float("inf"))
+    cost_budget = req.get("budgets", {}).get("cost_budget", float("inf"))
+    if cost_budget == float("inf"):
+        cost_budget = req.get("budgets", {}).get("cost", float("inf"))
     total_cost = 0.05
+
+    status = "budget_exceeded" if total_cost > cost_budget else "success"
 
     manifest = {
         "suite_id": req.get("suite_id", "default"),
@@ -27,7 +31,7 @@ def main():
         },
         "harness_version": "1.0.0",
         "harness_identifier": "reference",
-        "status": "budget_exceeded" if total_cost > cost_budget else "success",
+        "status": status,
         "total_cost": total_cost,
         "environment": {},
         "model_ids": ["default"],
@@ -42,6 +46,10 @@ def main():
 
     with open(os.path.join(out_dir, "run_manifest.json"), 'w') as f:
         json.dump(manifest, f)
+
+    if status == "budget_exceeded":
+        with open(os.path.join(out_dir, "failures.json"), 'w') as f:
+            json.dump([{"reason": "Cost budget exceeded"}], f)
 
     scorecard = {
         "suite_id": req.get("suite_id", "default"),
