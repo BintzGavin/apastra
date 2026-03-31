@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apastra.com/schemas/mcp-server-adapter.schema.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the MCP server adapter."
+    },
+    "type": {
+      "type": "string",
+      "const": "mcp_server_adapter",
+      "description": "Must be 'mcp_server_adapter'."
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional list of capabilities provided by the MCP server."
+    },
+    "entrypoint": {
+      "type": "string",
+      "description": "The command to start the MCP server."
+    },
+    "digest": {
+      "type": "string",
+      "description": "Content digest stored inline."
+    }
+  },
+  "required": ["id", "type", "entrypoint"]
+}
