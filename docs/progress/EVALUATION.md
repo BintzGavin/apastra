@@ -336,3 +336,9 @@
 
 ### EVALUATION v0.36.1
 - ✅ Completed: AnswerRelevanceAssertion - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.36.2
+- ✅ Completed: RegressionEngine - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.36.2
+- ✅ Completed: Minimal-Plan-Exception - Synced domain state.
