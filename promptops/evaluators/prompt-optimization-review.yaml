@@ -1,9 +1,7 @@
+$schema: ../schemas/evaluator.schema.json
 id: prompt-optimization-review
 type: judge
 metrics:
   - optimization_score
-description: "Evaluate the given prompt spec for token efficiency."
 config:
   rubric: "Evaluate the given prompt spec for token efficiency. 1. Identify repetitive instructions. 2. Suggest compression techniques. 3. Estimate cost reduction. 4. Score from 0.0 to 1.0 based on how optimized the prompt is."
-metric_versions:
-  optimization_score: "1.0.0"
