@@ -333,3 +333,6 @@
 
 ### EVALUATION v0.36.0
 - ✅ Completed: MCPIntegration - Implemented MCP Server adapter to expose evaluations as discoverable MCP tools
+
+### EVALUATION v0.36.1
+- ✅ Completed: AnswerRelevanceAssertion - Minimal Plan Exception. Changes already present.
