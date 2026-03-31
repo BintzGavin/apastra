@@ -345,3 +345,6 @@
 
 ### EVALUATION v0.37.0
 - ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
+
+### EVALUATION v0.37.1
+- ✅ Completed: CostTrackingMetadata - Minimal Plan Exception. Changes already present.
