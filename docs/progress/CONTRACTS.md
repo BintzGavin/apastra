@@ -353,3 +353,6 @@
 
 ### CONTRACTS v1.15.3
 - ✅ Completed: StarterPackSchema - Minimal plan exception for StarterPackSchema as community-prompt-pack schema already exists.
+
+### CONTRACTS v1.16.0
+- ✅ Completed: MCPServerAdapterSchema - Created schema and validator for mcp-server-adapter.

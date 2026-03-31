@@ -7,6 +7,12 @@
 
 ## Section A: Schema Inventory
 
+### `promptops/schemas/mcp-server-adapter.schema.json`
+- **ID:** `https://apastra.com/schemas/mcp-server-adapter.schema.json`
+- **Description:** JSON Schema for MCP Server Adapters.
+- **Required Fields:** `id`, `type`, `entrypoint`
+- **Optional Fields:** `capabilities`, `digest`
+
 ### `flake-quarantine-record.schema.json`
 - **$id**: `apastra-flake-quarantine-record-v1`
 - **Version**: 1.11.0
@@ -237,6 +243,11 @@
 
 
 ## Section B: Validator Inventory
+
+### `validate-mcp-server-adapter.sh`
+- **Validator:** `validate-mcp-server-adapter.sh`
+  - **Invocation Syntax:** `./promptops/validators/validate-mcp-server-adapter.sh <target.json>`
+  - **What it Validates:** Validates `mcp-server-adapter.schema.json`.
 
 ### `validate-flake-quarantine-record.sh`
 - **Validates**: `flake-quarantine-record.schema.json`
