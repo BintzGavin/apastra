@@ -1,4 +1,5 @@
-**Version**: 1.116.5
+**Version**: 1.116.6
+[v1.116.6] 🛑 Blocked: CapabilityTaggingPolicy - waiting for EVALUATION domain to add tags or capabilities to suite.schema.json
 [v1.116.5] ✅ Completed: DriftAlertPolicies - Minimal plan exception: natively covered by existing drift-alerts.md in promptops/policies/.
 [v1.116.4] ✅ Completed: MinimalPlanExceptionFinal2 - Minimal plan exception: no governance changes required.
 [v1.116.3] ✅ Completed: TieredSuitesPolicy - Minimal plan exception: natively covered by existing tier property in suite.schema.json.
