@@ -1,3 +1,6 @@
+### GOVERNANCE v1.116.6
+- 🛑 Blocked: CapabilityTaggingPolicy - waiting for EVALUATION domain to add tags or capabilities to suite.schema.json
+
 ### GOVERNANCE v1.116.5
 - ✅ Completed: DriftAlertPolicies - Minimal plan exception: natively covered by existing drift-alerts.md in promptops/policies/.
 
