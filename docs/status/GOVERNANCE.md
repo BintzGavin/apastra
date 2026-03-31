@@ -1,4 +1,5 @@
-**Version**: 1.116.3
+**Version**: 1.116.4
+[v1.116.4] ✅ Completed: MinimalPlanExceptionFinal2 - Minimal plan exception: no governance changes required.
 [v1.116.3] ✅ Completed: TieredSuitesPolicy - Minimal plan exception: natively covered by existing tier property in suite.schema.json.
 [v1.116.2] ❌ Blocked: TieredSuitesPolicy - waiting for EVALUATION domain to add tier or tags to suite.schema.json
 [v1.116.1] ✅ Completed: MinimalPlanExceptionFinal - Minimal plan exception: no governance changes required.
