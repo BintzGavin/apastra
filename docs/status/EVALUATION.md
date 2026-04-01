@@ -1,4 +1,5 @@
-**Version**: 0.40.16
+**Version**: 0.40.17
+[v0.40.17] ✅ Completed: MinimalPlanExceptionFinal12 - Minimal Plan Exception. Changes already present.
 [v0.40.16] ✅ Completed: DriftDetection - Minimal Plan Exception. Changes already present.
 [v0.40.15] ✅ Completed: MinimalPlanExceptionFinal11 - Minimal Plan Exception. Changes already present.
 [v0.40.14] ✅ Completed: v0.49.0 - Minimal Plan Exception. Changes already present.
