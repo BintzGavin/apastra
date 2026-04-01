@@ -1,4 +1,5 @@
-**Version**: 1.118.2
+**Version**: 1.118.3
+[v1.118.3] ✅ Completed: MinimalPlanExceptionFinal8 - Minimal plan exception: no governance changes required.
 [v1.118.2] ✅ Completed: MinimalPlanExceptionFinal7 - Minimal plan exception: no governance changes required.
 [v1.118.1] ✅ Completed: MinimalPlanExceptionFinal4 - Minimal plan exception: no governance changes required.
 [v1.118.0] ✅ Completed: TakedownAppealsPolicy - Implemented formal append-only takedown appeals policy.
