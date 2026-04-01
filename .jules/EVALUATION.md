@@ -55,3 +55,7 @@
 ## [v0.26.0] - AuditSkillExecution
 **Learning:** Discovered the need for an Audit Skill execution flow to scan codebases for prompt debt as defined in the vision docs.
 **Action:** Spec'd the implementation of audit-shim.sh to generate audit_report.json.
+
+## 0.40.14 - Minimal Plan Exceptions
+**Learning:** Found several specs (LLMRubricAssertion, FactualityAssertion, SimilarAssertion, RunRequestDigestValidation series, DriftDetectionCanaryShim, CommunityPromptPacks, ProjectLevelConfigAndMinimalMode, MinimalModeSupport, v0.49.0) whose functional intent is already present in the codebase.
+**Action:** Logged as minimal plan exceptions and updated domain status properly.

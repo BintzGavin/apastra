@@ -1,3 +1,17 @@
+**Version**: 0.40.14
+[v0.40.14] ✅ Completed: v0.49.0 - Minimal Plan Exception. Changes already present.
+[v0.40.13] ✅ Completed: RunRequestDigestValidation5 - Minimal Plan Exception. Changes already present.
+[v0.40.12] ✅ Completed: RunRequestDigestValidation4 - Minimal Plan Exception. Changes already present.
+[v0.40.11] ✅ Completed: MinimalModeSupport - Minimal Plan Exception. Changes already present.
+[v0.40.10] ✅ Completed: ProjectLevelConfigAndMinimalMode - Minimal Plan Exception. Changes already present.
+[v0.40.9] ✅ Completed: CommunityPromptPacks - Minimal Plan Exception. Changes already present.
+[v0.40.8] ✅ Completed: DriftDetectionCanaryShim - Minimal Plan Exception. Changes already present.
+[v0.40.7] ✅ Completed: RunRequestDigestValidation3 - Minimal Plan Exception. Changes already present.
+[v0.40.6] ✅ Completed: RunRequestDigestValidation2 - Minimal Plan Exception. Changes already present.
+[v0.40.5] ✅ Completed: v0.95.0-RunRequestDigestValidation - Minimal Plan Exception. Changes already present.
+[v0.40.4] ✅ Completed: SimilarAssertion - Minimal Plan Exception. Changes already present.
+[v0.40.3] ✅ Completed: FactualityAssertion - Minimal Plan Exception. Changes already present.
+[v0.40.2] ✅ Completed: LLMRubricAssertion - Minimal Plan Exception. Changes already present.
 **Version**: 0.40.1
 [v0.40.1] ✅ Completed: ApproachableTerminology - Minimal Plan Exception. Changes already present.
 [v0.40.0] ✅ Completed: FactualityAndSimilarAssertions - Implemented factuality and similar assertion types

@@ -360,3 +360,18 @@
 
 ### EVALUATION v0.40.1
 - ✅ Completed: ApproachableTerminology - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.40.14
+- ✅ Completed: v0.49.0 - Minimal Plan Exception. Changes already present.
+- ✅ Completed: RunRequestDigestValidation5 - Minimal Plan Exception. Changes already present.
+- ✅ Completed: RunRequestDigestValidation4 - Minimal Plan Exception. Changes already present.
+- ✅ Completed: MinimalModeSupport - Minimal Plan Exception. Changes already present.
+- ✅ Completed: ProjectLevelConfigAndMinimalMode - Minimal Plan Exception. Changes already present.
+- ✅ Completed: CommunityPromptPacks - Minimal Plan Exception. Changes already present.
+- ✅ Completed: DriftDetectionCanaryShim - Minimal Plan Exception. Changes already present.
+- ✅ Completed: RunRequestDigestValidation3 - Minimal Plan Exception. Changes already present.
+- ✅ Completed: RunRequestDigestValidation2 - Minimal Plan Exception. Changes already present.
+- ✅ Completed: v0.95.0-RunRequestDigestValidation - Minimal Plan Exception. Changes already present.
+- ✅ Completed: SimilarAssertion - Minimal Plan Exception. Changes already present.
+- ✅ Completed: FactualityAssertion - Minimal Plan Exception. Changes already present.
+- ✅ Completed: LLMRubricAssertion - Minimal Plan Exception. Changes already present.
