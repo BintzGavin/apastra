@@ -377,3 +377,6 @@
 - ✅ Completed: LLMRubricAssertion - Minimal Plan Exception. Changes already present.
 ### EVALUATION v0.40.15
 - ✅ Completed: MinimalPlanExceptionFinal11 - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.40.16
+- ✅ Completed: DriftDetection - Minimal Plan Exception. Changes already present.
