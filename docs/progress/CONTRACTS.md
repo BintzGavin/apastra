@@ -371,3 +371,6 @@
 
 ### CONTRACTS v1.16.0
 - ✅ Completed: MCPServerAdapterSchema - Created schema and validator for mcp-server-adapter.
+
+### CONTRACTS v1.16.6
+- ✅ Completed: MinimalPlanExceptionFinal10 - Logged minimal plan exception for an empty backlog.
