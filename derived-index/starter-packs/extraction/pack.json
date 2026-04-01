@@ -1,0 +1,12 @@
+{
+  "id": "extraction-starter",
+  "name": "Starter Pack: extraction",
+  "description": "A curated starter pack for extraction tasks.",
+  "custodian": "promptops-community",
+  "prompts": ["extraction-prompt.yaml"],
+  "datasets": ["extraction-dataset.json"],
+  "evaluators": ["extraction-evaluator.yaml"],
+  "suites": ["extraction-suite.yaml"],
+  "baselines": [],
+  "topics": ["extraction"]
+}

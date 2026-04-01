@@ -1,0 +1,12 @@
+{
+  "id": "code-review-starter",
+  "name": "Starter Pack: code-review",
+  "description": "A curated starter pack for code-review tasks.",
+  "custodian": "promptops-community",
+  "prompts": ["code-review-prompt.yaml"],
+  "datasets": ["code-review-dataset.json"],
+  "evaluators": ["code-review-evaluator.yaml"],
+  "suites": ["code-review-suite.yaml"],
+  "baselines": [],
+  "topics": ["code-review"]
+}

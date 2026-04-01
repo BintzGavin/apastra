@@ -351,3 +351,6 @@
 
 ### EVALUATION v0.38.0
 - ✅ Completed: CostBudgetEnforcement - Implemented cost budget enforcement in harness adapters
+
+### EVALUATION v0.39.0
+- ✅ Completed: StarterPacksGeneration - Implemented starter packs generation script
