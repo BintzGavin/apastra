@@ -1,3 +1,6 @@
+### GOVERNANCE v1.118.1
+- ✅ Completed: MinimalPlanExceptionFinal4 - Minimal plan exception: no governance changes required.
+
 ### GOVERNANCE v1.116.6
 - 🛑 Blocked: CapabilityTaggingPolicy - waiting for EVALUATION domain to add tags or capabilities to suite.schema.json
 

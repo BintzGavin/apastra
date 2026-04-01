@@ -1,4 +1,5 @@
-**Version**: 1.118.0
+**Version**: 1.118.1
+[v1.118.1] ✅ Completed: MinimalPlanExceptionFinal4 - Minimal plan exception: no governance changes required.
 [v1.118.0] ✅ Completed: TakedownAppealsPolicy - Implemented formal append-only takedown appeals policy.
 [v1.117.0] ✅ Completed: TakedownsPolicy - Implemented formal append-only takedown record policy.
 [v1.116.6] 🛑 Blocked: CapabilityTaggingPolicy - waiting for EVALUATION domain to add tags or capabilities to suite.schema.json
