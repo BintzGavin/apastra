@@ -1,4 +1,5 @@
-**Version**: 1.16.0
+**Version**: 1.16.1
+[v1.16.1] ✅ Completed: MinimalPlanExceptionFinal6 - Logged minimal plan exception for an empty backlog.
 [v1.16.0] ✅ Completed: MCPServerAdapterSchema - Created schema and validator for mcp-server-adapter.
 [v1.15.3] ✅ Completed: StarterPackSchema - Minimal plan exception for StarterPackSchema as community-prompt-pack schema already exists.
 [v1.15.2] ✅ Completed: CommunityPromptPackSchema - Created community prompt pack schema and validator.
