@@ -1,61 +1,54 @@
 # EVALUATION Domain Context
 
 ## Section A: Architecture
-The EVALUATION domain executes run requests to generate append-only run artifacts.
-- **Run Request Validation**: `validate-run-request.sh` ensures `prompt_digest`, `dataset_digest`, `evaluator_digest`, and `harness_version` are present.
-- **Run Artifact Generation**: Monolithic `run_artifact.json` is split into `run_manifest.json`, `cases.jsonl`, `failures.json`, and `artifact_refs.json` for append-only storage.
-- **Scorecard Normalization**: Extracts normalized metrics from case evaluator outputs and calculates variance across trials. Outputs `scorecard.json`.
-- **Regression Report Generator**: `generate_regression_report.sh` compares the generated `scorecard.json` against a stored baseline and issues a pass/fail.
-- **Agent Skills**: `promptops/runs/generate_adversarial_cases.py` acts as a Red-team Adversarial QA skill, generating edge cases, prompt injections, and boundary violations.
-- **Codebase Auditing**: `promptops/runs/audit-shim.sh` acts as the apastra-audit skill to scan codebases for hardcoded prompts.
+The execution engine receives a `run_request.json` defining a test suite. It resolves dependencies, triggers the harness adapter per `evaluate_assertions.py`, and generates a unified test summary in a `run_artifact.json`. It can produce `scorecard.json` metrics for external policy gates.
 
 ## Section B: File Tree
 ```
-skills/
-├── red-team/
-│   └── SKILL.md
 promptops/
-├── harnesses/
-│   └── reference-adapter/
+├── harnesses/                  # Harness adapter implementations
+│   └── <adapter-id>/
 │       ├── adapter.yaml
-│       └── run.py
-    ├── generate-starter-packs.sh
-└── runs/
-    ├── <run-id>/
-    │   ├── run_request.json
-    │   ├── run_manifest.json
-    │   ├── cases.jsonl
-    │   ├── failures.json
-    │   ├── artifact_refs.json
-    │   └── scorecard.json
-    ├── generate_adversarial_cases.py
-    ├── validate-run-request.sh
-    ├── mcp_server_adapter.py
-    ├── runner-shim.sh
-    ├── split_artifact.sh
-    ├── normalize.py
-    ├── establish_baseline.sh
-    └── generate_regression_report.sh
+│       └── run.ts
+└── runs/                       # Run requests and artifacts
+    └── <run-id>/
+        ├── run_request.json
+        ├── run_artifact.json
+        ├── scorecard.json
+        ├── cases.jsonl
+        └── artifact_refs.json
 
 derived-index/
-├── baselines/
-│   └── <suite-id>.json
-└── regressions/
+├── baselines/                  # Named baselines
+│   └── <baseline-id>.json
+└── regressions/                # Regression reports
     └── <report-id>.json
 ```
 
 ## Section C: Run Artifact Format
-- **`run_manifest.json`**: Contains digests (`prompt_digest`, `dataset_digest`, `evaluator_digest`), `harness_version`, `model_ids`, and `sampling_config`.
-- **`scorecard.json`**: Contains aggregated `metrics` (value, threshold, pass/fail status).
-- **`cases.jsonl`**: Individual case records.
-- **`failures.json`**: Case failures.
-- **`artifact_refs.json`**: Large raw outputs.
+**run_artifact.json**
+- `run_id` (string, required)
+- `dataset_digest` (string, required)
+- `harness_version` (string, required)
+- `metrics` (object, optional)
+- `digest` (string, required) - sha256 of content
+
+**scorecard.json**
+- `run_id` (string, required)
+- `metrics` (object, required)
+- `pass` (boolean, required)
 
 ## Section D: Baseline and Regression Format
-- **Baseline**: `derived-index/baselines/<suite-id>.json` contains `baseline_run_id`, `digest`, and a `scorecard` snapshot. Written once, never overwritten.
-- **Regression Report**: `derived-index/regressions/<report-id>.json` contains candidate vs. baseline scorecard metrics. Contains pass/fail status based on policy gates.
+**Baseline** (`<baseline-id>.json`)
+- `run_id` (string, required)
+- `digest` (string, required)
+- `scorecard` (object, required)
+
+**Regression Report** (`<report-id>.json`)
+- `candidate_id` (string, required)
+- `baseline_id` (string, required)
+- `delta` (object, required)
+- `pass` (boolean, required)
 
 ## Section E: Integration Points
-GOVERNANCE reads:
-- `derived-index/regressions/<report-id>.json` to gate promotions based on pass/fail status.
-- `derived-index/baselines/<suite-id>.json` digests to verify what candidate runs were compared against.
+- **GOVERNANCE**: Reads `<report-id>.json` and `<baseline-id>.json` digests to make automated deployment/promotion decisions based on policy thresholds.

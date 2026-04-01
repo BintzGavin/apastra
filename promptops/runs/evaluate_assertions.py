@@ -139,7 +139,7 @@ def evaluate_assertions(output: str, assertions: list, metadata: dict = None) ->
                 passed = float(metadata.get("latency", 0)) <= float(assert_value)
             elif base_type == "cost":
                 passed = float(metadata.get("cost", 0.0)) <= float(assert_value)
-            elif base_type in ("answer-relevance", "llm-rubric", "similar", "factuality"):
+            elif base_type in ("answer-relevance", "llm-rubric"):
                 if "judge_callable" in metadata:
                     passed = metadata["judge_callable"](output, assert_value)
                 elif assert_value:
@@ -149,6 +149,39 @@ def evaluate_assertions(output: str, assertions: list, metadata: dict = None) ->
                         passed = str(assert_value).lower() in output.lower()
                 else:
                     passed = True
+            elif base_type == "similar":
+                threshold = assertion.get("threshold", 0.8)
+                reference = assert_value
+                if isinstance(assert_value, dict):
+                    threshold = assert_value.get("threshold", threshold)
+                    reference = assert_value.get("value", "")
+
+                if "judge_callable" in metadata:
+                    try:
+                        score = metadata["judge_callable"](output, reference, type="similar")
+                    except TypeError:
+                        score = metadata["judge_callable"](output, reference)
+                    if isinstance(score, bool):
+                        passed = score
+                    else:
+                        try:
+                            passed = float(score) >= float(threshold)
+                        except (ValueError, TypeError):
+                            passed = bool(score)
+                else:
+                    passed = str(reference).lower() in output.lower()
+            elif base_type == "factuality":
+                if "judge_callable" in metadata:
+                    try:
+                        score = metadata["judge_callable"](output, assert_value, type="factuality")
+                    except TypeError:
+                        score = metadata["judge_callable"](output, assert_value)
+                    passed = bool(score)
+                else:
+                    if isinstance(assert_value, list):
+                        passed = all(str(v).lower() in output.lower() for v in assert_value)
+                    else:
+                        passed = str(assert_value).lower() in output.lower()
             else:
                 # Unknown assertion type, default to fail
                 passed = False

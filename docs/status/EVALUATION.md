@@ -1,4 +1,5 @@
-**Version**: 0.39.0
+**Version**: 0.40.0
+[v0.40.0] ✅ Completed: FactualityAndSimilarAssertions - Implemented factuality and similar assertion types
 [v0.39.0] ✅ Completed: StarterPacksGeneration - Implemented starter packs generation script
 [v0.38.0] ✅ Completed: CostBudgetEnforcement - Implemented cost budget enforcement in harness adapters
 [v0.37.0] ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator

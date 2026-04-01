@@ -354,3 +354,6 @@
 
 ### EVALUATION v0.39.0
 - ✅ Completed: StarterPacksGeneration - Implemented starter packs generation script
+
+### EVALUATION v0.40.0
+- ✅ Completed: FactualityAndSimilarAssertions - Implemented factuality and similar assertion types
