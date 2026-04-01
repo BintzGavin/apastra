@@ -1,4 +1,5 @@
-**Version**: 1.88.8
+**Version**: 1.88.9
+[v1.88.9] ✅ Completed: NPM-PyPI-Resolver - Minimal Plan Exception. Changes already present.
 [v1.88.8] ✅ Completed: LocalNameMappingResolution - Minimal Plan Exception. Changes already present.
 [v1.88.7] ✅ Completed: ApproachableTerminology - Minimal Plan Exception. Changes already present.
 [v1.88.6] ✅ Completed: GitRefRemoteSHA - Fix shallow clone failures when resolving remote git URLs by commit SHA.
