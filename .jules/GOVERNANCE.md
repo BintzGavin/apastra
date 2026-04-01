@@ -97,3 +97,6 @@
 ## 1.94.0 - Community Report Records Policy Spec
 **Learning:** `docs/vision.md` specifically requires the append-only registry metadata store to include community reporting, but no formal policy existed to define this standard or align it with the `community-report-record.schema.json`.
 **Action:** Created a plan to implement a community report records policy to govern the reporting procedures and ensure auditable checkpoints.
+## 1.118.5 - MinimalPlanExceptionFinal10
+**Learning:** The backlog is empty or blocked on cross-domain schema dependencies (e.g. CapabilityTaggingPolicy waiting for tags in suite.schema.json).
+**Action:** No governance changes required.
