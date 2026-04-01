@@ -357,3 +357,6 @@
 
 ### EVALUATION v0.40.0
 - ✅ Completed: FactualityAndSimilarAssertions - Implemented factuality and similar assertion types
+
+### EVALUATION v0.40.1
+- ✅ Completed: ApproachableTerminology - Minimal Plan Exception. Changes already present.

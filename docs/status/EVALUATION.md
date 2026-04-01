@@ -1,4 +1,5 @@
-**Version**: 0.40.0
+**Version**: 0.40.1
+[v0.40.1] ✅ Completed: ApproachableTerminology - Minimal Plan Exception. Changes already present.
 [v0.40.0] ✅ Completed: FactualityAndSimilarAssertions - Implemented factuality and similar assertion types
 [v0.39.0] ✅ Completed: StarterPacksGeneration - Implemented starter packs generation script
 [v0.38.0] ✅ Completed: CostBudgetEnforcement - Implemented cost budget enforcement in harness adapters
