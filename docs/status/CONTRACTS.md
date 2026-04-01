@@ -1,4 +1,5 @@
-**Version**: 1.16.5
+**Version**: 1.16.6
+[v1.16.6] ✅ Completed: MinimalPlanExceptionFinal10 - Logged minimal plan exception for an empty backlog.
 [v1.16.5] ✅ Completed: MinimalPlanExceptionFinal9 - Logged minimal plan exception for an empty backlog.
 [v1.16.4] ✅ Completed: ReleaseDescriptor - Minimal plan exception for ReleaseDescriptor as it was already implemented in previous tasks.
 [v1.16.3] ✅ Completed: MinimalPlanExceptionFinal8 - Logged minimal plan exception for an empty backlog.
