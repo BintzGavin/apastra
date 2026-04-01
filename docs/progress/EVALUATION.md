@@ -375,3 +375,5 @@
 - ✅ Completed: SimilarAssertion - Minimal Plan Exception. Changes already present.
 - ✅ Completed: FactualityAssertion - Minimal Plan Exception. Changes already present.
 - ✅ Completed: LLMRubricAssertion - Minimal Plan Exception. Changes already present.
+### EVALUATION v0.40.15
+- ✅ Completed: MinimalPlanExceptionFinal11 - Minimal Plan Exception. Changes already present.

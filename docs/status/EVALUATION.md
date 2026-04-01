@@ -1,4 +1,5 @@
-**Version**: 0.40.14
+**Version**: 0.40.15
+[v0.40.15] ✅ Completed: MinimalPlanExceptionFinal11 - Minimal Plan Exception. Changes already present.
 [v0.40.14] ✅ Completed: v0.49.0 - Minimal Plan Exception. Changes already present.
 [v0.40.13] ✅ Completed: RunRequestDigestValidation5 - Minimal Plan Exception. Changes already present.
 [v0.40.12] ✅ Completed: RunRequestDigestValidation4 - Minimal Plan Exception. Changes already present.
