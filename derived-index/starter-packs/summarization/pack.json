@@ -1,0 +1,12 @@
+{
+  "id": "summarization-starter",
+  "name": "Starter Pack: summarization",
+  "description": "A curated starter pack for summarization tasks.",
+  "custodian": "promptops-community",
+  "prompts": ["summarization-prompt.yaml"],
+  "datasets": ["summarization-dataset.json"],
+  "evaluators": ["summarization-evaluator.yaml"],
+  "suites": ["summarization-suite.yaml"],
+  "baselines": [],
+  "topics": ["summarization"]
+}

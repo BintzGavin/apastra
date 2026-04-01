@@ -1,0 +1,12 @@
+{
+  "id": "classification-starter",
+  "name": "Starter Pack: classification",
+  "description": "A curated starter pack for classification tasks.",
+  "custodian": "promptops-community",
+  "prompts": ["classification-prompt.yaml"],
+  "datasets": ["classification-dataset.json"],
+  "evaluators": ["classification-evaluator.yaml"],
+  "suites": ["classification-suite.yaml"],
+  "baselines": [],
+  "topics": ["classification"]
+}

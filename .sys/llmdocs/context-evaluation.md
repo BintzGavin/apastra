@@ -19,6 +19,7 @@ promptops/
 │   └── reference-adapter/
 │       ├── adapter.yaml
 │       └── run.py
+    ├── generate-starter-packs.sh
 └── runs/
     ├── <run-id>/
     │   ├── run_request.json
