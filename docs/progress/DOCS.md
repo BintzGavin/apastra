@@ -1,3 +1,10 @@
+### DOCS v0.14.0
+- ✅ Completed: Daily Documentation Review
+  - Generated API docs for community-prompt-pack and mcp-server-adapter
+  - Refreshed cross-domain dashboards
+  - Updated `.sys/llmdocs/context-docs.md`
+  - Updated `last_verified` dates in guides and ADRs
+
 ### DOCS v0.12.0
 - ✅ Completed: Daily Documentation Review
   - Generated API documentation for audit-report schema
