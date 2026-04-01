@@ -1,3 +1,6 @@
+### RUNTIME v1.88.12
+- ✅ Completed: MinimalPlanExceptionFinal3 - Minimal Plan Exception. Changes already present.
+
 ### RUNTIME v1.88.11
 - ✅ Completed: MinimalPlanExceptionFinal2 - Minimal Plan Exception. Changes already present.
 
