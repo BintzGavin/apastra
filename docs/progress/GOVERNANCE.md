@@ -390,3 +390,6 @@
 
 ### GOVERNANCE v1.117.0
 - ✅ Completed: TakedownsPolicy - Implemented formal append-only takedown record policy.
+
+### GOVERNANCE v1.118.0
+- ✅ Completed: TakedownAppealsPolicy - Implemented formal append-only takedown appeals policy.

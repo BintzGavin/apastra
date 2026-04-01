@@ -1,4 +1,5 @@
-**Version**: 1.117.0
+**Version**: 1.118.0
+[v1.118.0] ✅ Completed: TakedownAppealsPolicy - Implemented formal append-only takedown appeals policy.
 [v1.117.0] ✅ Completed: TakedownsPolicy - Implemented formal append-only takedown record policy.
 [v1.116.6] 🛑 Blocked: CapabilityTaggingPolicy - waiting for EVALUATION domain to add tags or capabilities to suite.schema.json
 [v1.116.5] ✅ Completed: DriftAlertPolicies - Minimal plan exception: natively covered by existing drift-alerts.md in promptops/policies/.
