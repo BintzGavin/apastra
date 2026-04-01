@@ -2,7 +2,7 @@
 title: "Implementation Progress"
 description: "Recent progress across all PromptOps domains"
 audience: "all"
-last_verified: "2026-03-30"
+last_verified: "2026-04-01"
 source_files:
   - docs/progress/GOVERNANCE.md
   - docs/progress/EVALUATION.md
@@ -14,6 +14,19 @@ source_files:
 # Implementation Progress
 
 ## GOVERNANCE
+
+### GOVERNANCE v1.116.6
+- 🛑 Blocked: CapabilityTaggingPolicy - waiting for EVALUATION domain to add tags or capabilities to suite.schema.json
+
+### GOVERNANCE v1.116.5
+- ✅ Completed: DriftAlertPolicies - Minimal plan exception: natively covered by existing drift-alerts.md in promptops/policies/.
+
+### GOVERNANCE v1.116.3
+- ✅ Completed: TieredSuitesPolicy - Minimal plan exception: natively covered by existing tier property in suite.schema.json.
+
+
+### GOVERNANCE v1.114.0
+- ✅ Completed: NeverAgainRegression - Implemented governance policy for promoting production incidents into a never again regression suite.
 
 ### GOVERNANCE v1.102.0
 - ✅ Completed: RoleBasedAgentSkills - Implemented governance policies and required capabilities for role-based agent skills (Review, Red-team, Optimize).
@@ -371,6 +384,33 @@ source_files:
 ### GOVERNANCE v1.111.0
 - ✅ Completed: MissingPoliciesAndTargets - Implemented missing delivery targets (OCI, npm, PyPI) and takedown/appeals governance policies.
 
+### GOVERNANCE v1.112.0
+- ✅ Completed: QuickEvalPolicy - Implemented governance policy for quick eval mode scope and graduation rules.
+
+### GOVERNANCE v1.113.0
+- ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
+
+### GOVERNANCE v1.114.1
+- ✅ Completed: PromptDebtGovernance - Minimal plan exception: natively covered by PromptDebtAuditPolicy.
+
+### GOVERNANCE v1.115.0
+- ✅ Completed: TieredSuitesPolicy - Implemented governance policy defining tiered evaluation suites and release-candidate gates.
+
+### GOVERNANCE v1.116.0
+- ✅ Completed: HoldoutSetsPolicy - Implemented governance policy for dataset holdout sets to prevent overfitting.
+
+### GOVERNANCE v1.116.1
+- ✅ Completed: MinimalPlanExceptionFinal - Minimal plan exception: no governance changes required.
+
+### GOVERNANCE v1.116.4
+- ✅ Completed: MinimalPlanExceptionFinal2 - Minimal plan exception: no governance changes required.
+
+### GOVERNANCE v1.117.0
+- ✅ Completed: TakedownsPolicy - Implemented formal append-only takedown record policy.
+
+### GOVERNANCE v1.118.0
+- ✅ Completed: TakedownAppealsPolicy - Implemented formal append-only takedown appeals policy.
+
 
 ## EVALUATION
 
@@ -698,6 +738,38 @@ source_files:
 
 ### EVALUATION v0.33.0
 - ✅ Completed: RunRequestDigestValidation6 - Verified schema update
+
+### EVALUATION v0.33.1
+- ✅ Completed: HarnessAdapterRunnerShim - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.34.0
+- ✅ Completed: RedTeamAdversarialGeneration - Implemented red-team adversarial generation skill
+### EVALUATION v0.35.0
+- ✅ Completed: AuditCodebaseScanning - Implemented apastra-audit codebase scanning skill
+
+### EVALUATION v0.36.0
+- ✅ Completed: MCPIntegration - Implemented MCP Server adapter to expose evaluations as discoverable MCP tools
+
+### EVALUATION v0.36.1
+- ✅ Completed: AnswerRelevanceAssertion - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.36.2
+- ✅ Completed: RegressionEngine - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.36.2
+- ✅ Completed: Minimal-Plan-Exception - Synced domain state.
+
+### EVALUATION v0.37.0
+- ✅ Completed: PromptOptimizationAnalysis - Implemented prompt optimization analysis evaluator
+
+### EVALUATION v0.37.1
+- ✅ Completed: CostTrackingMetadata - Minimal Plan Exception. Changes already present.
+
+### EVALUATION v0.38.0
+- ✅ Completed: CostBudgetEnforcement - Implemented cost budget enforcement in harness adapters
+
+### EVALUATION v0.39.0
+- ✅ Completed: StarterPacksGeneration - Implemented starter packs generation script
 
 
 ## CONTRACTS
@@ -1040,8 +1112,36 @@ source_files:
 ### CONTRACTS v1.13.0
 - ✅ Completed: EmergencyTakedownRecord - Minimal plan exception for EmergencyTakedownRecord as it was implemented via EmergencyTakedownDecision.
 
+### CONTRACTS v1.14.0
+- ✅ Completed: ReleaseDescriptor - Minimal plan exception for ReleaseDescriptor as it was already implemented in previous tasks.
+
+### CONTRACTS v1.15.0
+- ✅ Completed: CostBudget - Minimal plan exception for CostBudget as suite schemas already implement cost_budget.
+
+### CONTRACTS v1.15.1
+- ✅ Completed: ObservabilityAdapterConfigSchema - Minimal plan exception for ObservabilityAdapterConfigSchema as observability adapter schemas already exist.
+
+### CONTRACTS v1.15.2
+- ✅ Completed: ComparisonScorecardSchema - Minimal plan exception for ComparisonScorecardSchema as comparison-scorecard schema already exists.
+
+### CONTRACTS v1.15.2
+- ✅ Completed: CommunityPromptPackSchema - Created community prompt pack schema and validator.
+
+### CONTRACTS v1.15.3
+- ✅ Completed: StarterPackSchema - Minimal plan exception for StarterPackSchema as community-prompt-pack schema already exists.
+
+### CONTRACTS v1.16.0
+- ✅ Completed: MCPServerAdapterSchema - Created schema and validator for mcp-server-adapter.
+
 
 ## DOCS
+
+### DOCS v0.14.0
+- ✅ Completed: Daily Documentation Review
+  - Generated API docs for community-prompt-pack and mcp-server-adapter
+  - Refreshed cross-domain dashboards
+  - Updated `.sys/llmdocs/context-docs.md`
+  - Updated `last_verified` dates in guides and ADRs
 
 ### DOCS v0.12.0
 - ✅ Completed: Daily Documentation Review
@@ -1137,6 +1237,17 @@ source_files:
 
 
 ## RUNTIME
+
+### RUNTIME v1.88.9
+- ✅ Completed: NPM-PyPI-Resolver - Minimal Plan Exception. Changes already present.
+
+
+### RUNTIME v1.88.8
+- ✅ Completed: LocalNameMappingResolution - Minimal Plan Exception. Changes already present.
+
+
+### RUNTIME v1.88.7
+- ✅ Completed: ApproachableTerminology - Minimal Plan Exception. Changes already present.
 
 
 ### RUNTIME v1.85.0
@@ -1472,3 +1583,23 @@ source_files:
 
 ### RUNTIME v1.86.4
 - ✅ Completed: GitHubReleaseAssetResolution - Minimal Plan Exception. Changes already present.
+## [v1.87.0] - RoleBasedAgentSkills
+- Planned spec for role based agent skills (Expansion 4).
+
+### RUNTIME v1.88.0
+- ✅ Completed: RoleBasedAgentSkills - Implemented specialized agent skills (Review, Red-team, Optimize) based on Expansion 4.
+
+### RUNTIME v1.88.1
+- ✅ Completed: MinimalPlanExceptionFinal - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.2
+- ✅ Completed: CommunityPromptPacks - Minimal Plan Exception. Changes already present.
+
+## [v1.88.3] - FinalizingPlans
+- Executed minimal plan exception as all runtime features have been completed.
+
+### RUNTIME v1.88.4
+- ✅ Completed: v1.52.0 - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.6
+- ✅ Completed: GitRefRemoteSHA - Fix shallow clone failures when resolving remote git URLs by commit SHA.

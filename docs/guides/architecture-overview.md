@@ -2,7 +2,7 @@
 title: "Architecture Overview"
 description: "High-level overview of the PromptOps architecture"
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-03-25"
+last_verified: "2026-04-01"
 source_files:
   - "README.md"
 ---

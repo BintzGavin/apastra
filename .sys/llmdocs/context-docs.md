@@ -17,6 +17,7 @@
 - `automated-scan-record-reference.md`
 - `baseline-reference.md`
 - `canary-suite-reference.md`
+- `community-prompt-pack-reference.md`
 - `community-report-record-reference.md`
 - `comparison-scorecard-reference.md`
 - `consumption-manifest-reference.md`
@@ -31,6 +32,7 @@
 - `evaluator-reference.md`
 - `flake-quarantine-record-reference.md`
 - `harness-adapter-reference.md`
+- `mcp-server-adapter-reference.md`
 - `mcp-tool-definition-reference.md`
 - `mirror-sync-receipt-reference.md`
 - `moderation-approval-for-public-listing-reference.md`

@@ -2,7 +2,7 @@
 title: "Repo Topology"
 description: "Understanding supported repository topologies"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-03-25"
+last_verified: "2026-04-01"
 source_files:
   - "README.md"
 ---
