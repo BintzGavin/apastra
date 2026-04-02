@@ -61,6 +61,20 @@
         }
       }
     },
+    "tier": {
+      "type": "string",
+      "description": "Execution tier of the suite.",
+      "enum": ["smoke", "regression", "full", "release-candidate"],
+      "default": "smoke"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Capability tags for the suite.",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
     "thresholds": {
       "type": "object",
       "description": "Pass/fail criteria mapped to specific metrics.",

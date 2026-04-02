@@ -484,7 +484,12 @@
   - Naming: `package.yaml` or `package.json`
   - Structure: Lives in `promptops/prompts/<package-id>/`
   - Required fields: `id` (string), `digest` (string), `specs` (array).
-- **Datasets:**
+- **Suites:**
+  - Naming: `suite.yaml` or `suite.json`
+  - Structure: Lives in `promptops/suites/<suite-id>/`
+  - Required fields: `id` (string), `name` (string), `datasets` (array), `evaluators` (array), `model_matrix` (array).
+  - Optional fields: `description`, `trials`, `budgets`, `thresholds`, `tier` (string), `tags` (array).
+
   - Naming: `manifest.json` or `manifest.yaml` and `cases.jsonl`
   - Structure: Lives in `promptops/datasets/<dataset-id>/`
   - Required fields in manifest: `id`, `version`, `schema_version`, `digest`
