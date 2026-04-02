@@ -67,6 +67,25 @@
       "additionalProperties": {
         "type": "number"
       }
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "smoke",
+        "regression",
+        "full",
+        "release-candidate"
+      ],
+      "default": "smoke",
+      "description": "Execution tier of the benchmark suite."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "description": "Capability tags associated with the suite."
     }
   },
   "required": [
