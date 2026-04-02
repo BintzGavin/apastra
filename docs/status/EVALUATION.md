@@ -1,4 +1,5 @@
-**Version**: 0.40.17
+**Version**: 0.40.18
+[v0.40.18] ✅ Completed: ObservabilityBridgeAdapters - Minimal Plan Exception. Changes already present.
 [v0.40.17] ✅ Completed: MinimalPlanExceptionFinal12 - Minimal Plan Exception. Changes already present.
 [v0.40.16] ✅ Completed: DriftDetection - Minimal Plan Exception. Changes already present.
 [v0.40.15] ✅ Completed: MinimalPlanExceptionFinal11 - Minimal Plan Exception. Changes already present.

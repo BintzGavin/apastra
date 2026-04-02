@@ -1,7 +1,7 @@
 # EVALUATION Domain Context
 
 ## Section A: Architecture
-The execution engine receives a `run_request.json` defining a test suite. It resolves dependencies, triggers the harness adapter per `evaluate_assertions.py`, and generates a unified test summary in a `run_artifact.json`. It can produce `scorecard.json` metrics for external policy gates.
+The execution engine receives a `run_request.json` defining a test suite. It resolves dependencies, triggers the harness adapter per `evaluate_assertions.py`, and generates a unified test summary in a `run_artifact.json`. It can produce `scorecard.json` metrics for external policy gates. Observability tools can consume outputs via `emit_observability.py` to push to Langfuse or OpenTelemetry.
 
 ## Section B: File Tree
 ```
@@ -11,12 +11,13 @@ promptops/
 │       ├── adapter.yaml
 │       └── run.ts
 └── runs/                       # Run requests and artifacts
-    └── <run-id>/
-        ├── run_request.json
-        ├── run_artifact.json
-        ├── scorecard.json
-        ├── cases.jsonl
-        └── artifact_refs.json
+    ├── <run-id>/
+    │   ├── run_request.json
+    │   ├── run_artifact.json
+    │   ├── scorecard.json
+    │   ├── cases.jsonl
+    │   └── artifact_refs.json
+    └── emit_observability.py   # Script to emit artifacts to observability systems
 
 derived-index/
 ├── baselines/                  # Named baselines
