@@ -1,4 +1,5 @@
-**Version**: 1.118.7
+**Version**: 1.118.8
+[v1.118.8] ✅ Completed: HoldoutSetsPolicy - Minimal plan exception: no governance changes required.
 [v1.118.7] ✅ Completed: MinimalPlanExceptionFinal12 - Minimal plan exception: no governance changes required.
 [v1.118.6] ✅ Completed: MinimalPlanExceptionFinal11 - Minimal plan exception: no governance changes required.
 [v1.118.5] ✅ Completed: MinimalPlanExceptionFinal10 - Minimal plan exception: no governance changes required.
