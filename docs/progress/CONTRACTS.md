@@ -1,3 +1,6 @@
+### CONTRACTS v1.16.9
+- ✅ Completed: MinimalPlanExceptionFinal12 - Logged minimal plan exception for an empty backlog.
+
 ### CONTRACTS v1.16.8
 - ✅ Completed: HoldoutSets - Minimal plan exception for the holdout-sets requirement.
 

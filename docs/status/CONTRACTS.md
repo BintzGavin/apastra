@@ -1,4 +1,5 @@
-**Version**: 1.16.8
+**Version**: 1.16.9
+[v1.16.9] ✅ Completed: MinimalPlanExceptionFinal12 - Logged minimal plan exception for an empty backlog.
 [v1.16.8] ✅ Completed: HoldoutSets - Minimal plan exception for the holdout-sets requirement.
 [v1.16.7] ✅ Completed: MinimalPlanExceptionFinal11 - Logged minimal plan exception for an empty backlog.
 [v1.16.6] ✅ Completed: MinimalPlanExceptionFinal10 - Logged minimal plan exception for an empty backlog.
