@@ -3,6 +3,7 @@ import sys
 import json
 import os
 import datetime
+import subprocess
 
 def main():
     req_path = sys.argv[1]
@@ -10,6 +11,25 @@ def main():
 
     with open(req_path, 'r') as f:
         req = json.load(f)
+
+    # Apply project level defaults
+    try:
+        result = subprocess.run([sys.executable, 'promptops/runs/apply_project_config.py'], capture_output=True, text=True)
+        if result.returncode == 0:
+            project_config = json.loads(result.stdout)
+            defaults = project_config.get("defaults", {})
+
+            # Apply defaults to suite context if not present
+            if "model" in defaults and "model_ids" not in req:
+                req["model_ids"] = [defaults["model"]]
+            if "temperature" in defaults:
+                req.setdefault("sampling_config", {})
+                req["sampling_config"].setdefault("temperature", defaults["temperature"])
+            if "max_tokens" in defaults:
+                req.setdefault("sampling_config", {})
+                req["sampling_config"].setdefault("max_tokens", defaults["max_tokens"])
+    except Exception as e:
+        print(f"Warning: Could not apply project config defaults: {e}", file=sys.stderr)
 
     os.makedirs(out_dir, exist_ok=True)
 
