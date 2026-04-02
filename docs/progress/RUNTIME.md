@@ -1,3 +1,6 @@
+### RUNTIME v1.88.31
+- ✅ Completed: MinimalPlanExceptionFinal12 - Minimal Plan Exception. Changes already present.
+
 ### RUNTIME v1.88.30
 - ✅ Completed: LocalNameMappingResolution - Minimal Plan Exception. Changes already present.
 
