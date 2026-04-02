@@ -13,6 +13,20 @@
       "type": "string",
       "description": "Human-readable name of the suite."
     },
+    "tier": {
+      "type": "string",
+      "enum": ["smoke", "regression", "full", "release-candidate"],
+      "default": "smoke",
+      "description": "Execution tier of the suite."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "description": "Capability tags for the suite."
+    },
     "description": {
       "type": "string",
       "description": "Optional detailed description of the suite's purpose."
