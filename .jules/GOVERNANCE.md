@@ -100,3 +100,6 @@
 ## 1.118.5 - MinimalPlanExceptionFinal10
 **Learning:** The backlog is empty or blocked on cross-domain schema dependencies (e.g. CapabilityTaggingPolicy waiting for tags in suite.schema.json).
 **Action:** No governance changes required.
+## [1.119.0] - Evidence Cases Policy
+**Learning:** Understanding that requiring explicit evidence cases acts as a key mitigation against benchmark gaming, enforcing qualitative proof over mere aggregate metrics optimization.
+**Action:** Always map explicit system vision requirements regarding benchmark gaming directly to governance policies.
