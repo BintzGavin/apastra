@@ -1,4 +1,5 @@
-**Version**: 0.41.0
+**Version**: 0.41.1
+[v0.41.1] ✅ Completed: MinimalPlanExceptionFinal13 - All plans officially complete
 [v0.41.0] ✅ Completed: ProjectLevelConfig - Implemented project-level defaults support
 [v0.40.18] ✅ Completed: ObservabilityBridgeAdapters - Minimal Plan Exception. Changes already present.
 [v0.40.17] ✅ Completed: MinimalPlanExceptionFinal12 - Minimal Plan Exception. Changes already present.
