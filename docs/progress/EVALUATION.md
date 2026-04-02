@@ -1,3 +1,6 @@
+### EVALUATION v0.41.2
+- ✅ Completed: Minimal-Plan-Exception - Minimal Plan Exception. Changes already present.
+
 ### EVALUATION v0.41.1
 - ✅ Completed: MinimalPlanExceptionFinal13 - All plans officially complete
 
