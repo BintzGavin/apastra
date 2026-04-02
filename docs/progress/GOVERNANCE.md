@@ -1,3 +1,6 @@
+### GOVERNANCE v1.118.6
+- ✅ Completed: MinimalPlanExceptionFinal11 - Minimal plan exception: no governance changes required.
+
 ### GOVERNANCE v1.118.5
 - ✅ Completed: MinimalPlanExceptionFinal10 - Minimal plan exception: no governance changes required.
 
