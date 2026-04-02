@@ -1,4 +1,5 @@
-**Version**: 0.41.2
+**Version**: 0.41.3
+[v0.41.3] ✅ Completed: MinimalPlanExceptionFinal14 - All plans officially complete
 [v0.41.2] ✅ Completed: Minimal-Plan-Exception - Minimal Plan Exception. Changes already present.
 [v0.41.1] ✅ Completed: MinimalPlanExceptionFinal13 - All plans officially complete
 [v0.41.0] ✅ Completed: ProjectLevelConfig - Implemented project-level defaults support
