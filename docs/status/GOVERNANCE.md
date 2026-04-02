@@ -1,4 +1,5 @@
-**Version**: 1.119.5
+**Version**: 1.119.6
+[v1.119.6] 🛑 Blocked: CapabilityTaggingPolicy - waiting for EVALUATION domain to add tags or capabilities to suite.schema.json
 [v1.119.5] ✅ Completed: MinimalPlanExceptionFinal15 - Minimal plan exception: no governance changes required.
 [v1.119.4] ✅ Completed: DeliveryTargets - Minimal plan exception: natively covered by existing target files in promptops/delivery/.
 [v1.119.3] ✅ Completed: HoldoutSetsPolicy - Minimal plan exception: natively covered by existing promptops/policies/holdout-sets.md.
