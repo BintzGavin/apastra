@@ -383,3 +383,6 @@
 
 ### CONTRACTS v1.16.6
 - ✅ Completed: MinimalPlanExceptionFinal10 - Logged minimal plan exception for an empty backlog.
+
+### CONTRACTS v1.17.0
+- ✅ Completed: PublicInterface - Added public_interface schema enforcement to prompt-package.schema.json.

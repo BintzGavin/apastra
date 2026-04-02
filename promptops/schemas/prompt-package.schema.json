@@ -29,11 +29,42 @@
     "metadata": {
       "type": "object",
       "description": "Optional metadata (e.g., provenance, author)."
+    },
+    "public_interface": {
+      "type": "object",
+      "description": "Explicit API declaration for the versioned package.",
+      "properties": {
+        "prompt_id": {
+          "type": "string",
+          "description": "ID of the primary prompt."
+        },
+        "variables_schema": {
+          "type": "object",
+          "description": "JSON Schema for input variables."
+        },
+        "output_schema": {
+          "type": "object",
+          "description": "JSON Schema for the expected output."
+        },
+        "tool_contract": {
+          "type": "object",
+          "description": "Schema or contract for tool usage."
+        }
+      },
+      "required": [
+        "prompt_id",
+        "variables_schema"
+      ]
     }
   },
   "required": [
     "id",
     "digest",
     "specs"
-  ]
+  ],
+  "dependentRequired": {
+    "version": [
+      "public_interface"
+    ]
+  }
 }

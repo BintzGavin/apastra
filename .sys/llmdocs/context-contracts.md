@@ -7,6 +7,17 @@
 
 ## Section A: Schema Inventory
 
+### `prompt-package.schema.json`
+- **$id**: `apastra-prompt-package-v1`
+- **Version**: 1.17.0
+- **Description**: Immutable bundle of prompt specs with a manifest and content digest.
+- **Key Fields**:
+  - `id`: Stable identifier for the package.
+  - `digest`: Content digest of the package.
+  - `specs`: Array of included prompt spec IDs/digests.
+  - `version`: Optional semantic version.
+  - `public_interface`: Required if `version` is present. Defines API (prompt_id, variables_schema, output_schema, tool_contract).
+
 ### `promptops/schemas/mcp-server-adapter.schema.json`
 - **ID:** `https://apastra.com/schemas/mcp-server-adapter.schema.json`
 - **Description:** JSON Schema for MCP Server Adapters.
