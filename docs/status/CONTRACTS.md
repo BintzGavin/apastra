@@ -1,4 +1,5 @@
-**Version**: 1.17.1
+**Version**: 1.17.2
+[v1.17.2] ✅ Completed: MinimalPlanExceptionFinal14 - Logged minimal plan exception for an empty backlog.
 [v1.17.1] ✅ Completed: MinimalPlanExceptionFinal13 - Logged minimal plan exception for an empty backlog.
 [v1.17.0] ✅ Completed: PublicInterface - Added public_interface schema enforcement to prompt-package.schema.json.
 [v1.16.9] ✅ Completed: MinimalPlanExceptionFinal12 - Logged minimal plan exception for an empty backlog.
