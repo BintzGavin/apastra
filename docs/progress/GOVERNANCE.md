@@ -1,3 +1,6 @@
+### GOVERNANCE v1.120.0
+- ✅ Completed: CapabilityTaggingPolicy - Implemented capability tagging policy
+
 ### GOVERNANCE v1.119.4
 - ✅ Completed: DeliveryTargets - Minimal plan exception: natively covered by existing target files in promptops/delivery/.
 
