@@ -411,3 +411,6 @@
 
 ### GOVERNANCE v1.118.0
 - ✅ Completed: TakedownAppealsPolicy - Implemented formal append-only takedown appeals policy.
+
+### GOVERNANCE v1.118.8
+- ✅ Completed: HoldoutSetsPolicy - Minimal plan exception: no governance changes required.
