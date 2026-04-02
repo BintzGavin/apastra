@@ -223,7 +223,8 @@
 
 - **ID:** `https://apastra.com/schemas/promptops/suite.schema.json`
   - **Version:** 1.9.0
-  - **Description:** Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
+  - **Description:** Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, thresholds, capability tags, and execution tier.
+  - **New Fields:** `tier` (string), `tags` (array of strings)
 
 - **ID:** `apastra-takedown-appeal-record-v1`
   - **Version:** 1.9.0
