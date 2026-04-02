@@ -1,3 +1,6 @@
+### EVALUATION v0.41.1
+- ✅ Completed: MinimalPlanExceptionFinal13 - All plans officially complete
+
 # EVALUATION Progress
 
 ### EVALUATION v0.40.18
