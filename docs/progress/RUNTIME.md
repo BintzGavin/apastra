@@ -1,3 +1,33 @@
+### RUNTIME v1.88.30
+- ✅ Completed: LocalNameMappingResolution - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.29
+- ✅ Completed: PackagedResolverSignatureVerification - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.28
+- ✅ Completed: PackagedResolverInMemoryCaching - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.27
+- ✅ Completed: ResolverProvenanceMetadata - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.26
+- ✅ Completed: WorkspaceResolverCaching - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.25
+- ✅ Completed: MinimalRuntimeMetadataModelIDs - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.24
+- ✅ Completed: LocalResolverCaching - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.23
+- ✅ Completed: v1.52.0 - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.22
+- ✅ Completed: ConsumptionManifestValidation - Minimal Plan Exception. Changes already present.
+
+### RUNTIME v1.88.21
+- ✅ Completed: Directory-Resolver - Minimal Plan Exception. Changes already present.
+
 ### RUNTIME v1.88.19
 - ✅ Completed: MinimalPlanExceptionFinal10 - Minimal Plan Exception. Changes already present.
 
