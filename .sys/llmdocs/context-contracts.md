@@ -500,6 +500,7 @@
   - Naming: `suite.yaml` or `suite.json`
   - Structure: Lives in `promptops/suites/<suite-id>/`
   - Required fields: `id` (string), `name` (string), `datasets` (array), `evaluators` (array), `model_matrix` (array).
+  - Optional fields: `tier` (string), `tags` (array).
 
 ## Section D: Digest Convention
 - Computed across the canonical representation of the file.

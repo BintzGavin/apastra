@@ -67,6 +67,25 @@
       "additionalProperties": {
         "type": "number"
       }
+    },
+    "tier": {
+      "type": "string",
+      "description": "The execution tier of the suite.",
+      "enum": [
+        "smoke",
+        "regression",
+        "full",
+        "release-candidate"
+      ],
+      "default": "smoke"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Capability tags for filtering or policy enforcement.",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
     }
   },
   "required": [
