@@ -1,4 +1,4 @@
-**Version**: 1.18.0
+**Version**: 1.19.0
 [v1.18.0] ✅ Completed: SuiteCapabilityTagging - Added tier and tags capability fields to suite.schema.json
 [v1.17.4] ✅ Completed: MinimalPlanExceptionFinal16 - Logged minimal plan exception for an empty backlog.
 [v1.17.3] ✅ Completed: MinimalPlanExceptionFinal15 - Logged minimal plan exception for an empty backlog.
@@ -76,3 +76,4 @@
 [v0.4.0] ✅ Completed: evaluator-schema - Created evaluator.schema.json and validate-evaluator.sh
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
+[v1.19.0] ✅ Completed: RejectRecordSchema - Created schema and validator for reject records.

@@ -407,3 +407,6 @@
 
 ### CONTRACTS v1.17.4
 - ✅ Completed: MinimalPlanExceptionFinal16 - Logged minimal plan exception for an empty backlog.
+
+### CONTRACTS v1.19.0
+- ✅ Completed: RejectRecordSchema - Created schema and validator for reject records.
