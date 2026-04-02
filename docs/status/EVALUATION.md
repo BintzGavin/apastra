@@ -1,4 +1,5 @@
-**Version**: 0.41.7
+**Version**: 0.41.8
+[v0.41.8] ✅ Completed: MinimalPlanExceptionFinal18 - All plans officially complete
 [v0.41.7] ✅ Completed: MinimalPlanExceptionFinal17 - All plans officially complete
 [v0.41.6] ✅ Completed: MinimalPlanExceptionFinal16 - All plans officially complete
 [v0.41.5] ✅ Completed: MinimalPlanExceptionFinal15 - All plans officially complete
