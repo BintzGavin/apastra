@@ -384,5 +384,8 @@
 ### EVALUATION v0.40.16
 - ✅ Completed: DriftDetection - Minimal Plan Exception. Changes already present.
 
+### EVALUATION v0.41.0
+- ✅ Completed: ProjectLevelConfig - Implemented project-level defaults support
+
 ### EVALUATION v0.40.17
 - ✅ Completed: MinimalPlanExceptionFinal12 - Minimal Plan Exception. Changes already present.
