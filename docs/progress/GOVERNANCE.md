@@ -426,3 +426,6 @@
 
 ### GOVERNANCE v1.118.8
 - ✅ Completed: HoldoutSetsPolicy - Minimal plan exception: no governance changes required.
+
+### GOVERNANCE v1.119.3
+- ✅ Completed: HoldoutSetsPolicy - Minimal plan exception: natively covered by existing promptops/policies/holdout-sets.md.

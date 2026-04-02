@@ -1,4 +1,5 @@
-**Version**: 1.119.2
+**Version**: 1.119.3
+[v1.119.3] ✅ Completed: HoldoutSetsPolicy - Minimal plan exception: natively covered by existing promptops/policies/holdout-sets.md.
 [v1.119.2] ✅ Completed: v1.48.0 - Minimal plan exception: no governance changes required.
 [v1.119.1] ✅ Completed: MinimalPlanExceptionFinal14 - Minimal plan exception: no governance changes required.
 [v1.119.0] ✅ Completed: EvidenceCasesPolicy - Create evidence cases policy
