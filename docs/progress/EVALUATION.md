@@ -1,3 +1,6 @@
+### EVALUATION v0.41.4
+- ✅ Completed: Minimal-Plan-Exception - Synced domain state.
+
 ### EVALUATION v0.41.3
 - ✅ Completed: MinimalPlanExceptionFinal14 - All plans officially complete
 
