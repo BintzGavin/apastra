@@ -1,3 +1,6 @@
+### GOVERNANCE v1.119.1
+- ✅ Completed: MinimalPlanExceptionFinal14 - Minimal plan exception: no governance changes required.
+
 ### GOVERNANCE v1.119.0
 - ✅ Completed: EvidenceCasesPolicy - Create evidence cases policy
 
