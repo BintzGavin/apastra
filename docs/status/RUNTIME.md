@@ -1,4 +1,5 @@
-**Version**: 1.88.19
+**Version**: 1.88.20
+[v1.88.20] ✅ Completed: MinimalPlanExceptionFinal11 - Minimal Plan Exception. Changes already present.
 [v1.88.19] ✅ Completed: MinimalPlanExceptionFinal10 - Minimal Plan Exception. Changes already present.
 [v1.88.18] ✅ Completed: MinimalPlanExceptionFinal9 - Minimal Plan Exception. Changes already present.
 [v1.88.17] ✅ Completed: MinimalPlanExceptionFinal8 - Minimal Plan Exception. Changes already present.
