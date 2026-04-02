@@ -20,3 +20,4 @@ promptops/manifests/ @apastra/runtime-team
 promptops/resolver/ @apastra/runtime-team
 promptops/runtime/ @apastra/runtime-team
 promptops.config.yaml @apastra/governance-admins
+promptops/policies/capability-tagging.md @apastra/governance-admins

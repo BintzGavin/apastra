@@ -65,6 +65,7 @@ Gate Enforcement Flow:
 - `promptops/policies/community-prompt-pack-acceptance.md`
 
 **Section C: Policy Inventory**
+- `promptops/policies/capability-tagging.md`: Governs how suite tags map to human oversight and automated promotion gates.
 - `promptops/policies/never-again-regression.md`: Defines governance for promoting production incidents into a mandatory "never again" regression suite.
 - `promptops/policies/artifact-storage-retention.md`: Defines the requirement for syncing derived artifacts to external long-term storage, overriding the 90-day CI retention limit.
 - `promptops/policies/community-prompt-pack-acceptance.md`: Governance rules for accepting, reviewing, and publishing community-contributed prompt packs.
