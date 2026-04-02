@@ -222,7 +222,7 @@
   - **Description:** Schema for an append-only artifact structure for package submissions to a public registry.
 
 - **ID:** `https://apastra.com/schemas/promptops/suite.schema.json`
-  - **Version:** 1.9.0
+  - **Version:** 1.18.0
   - **Description:** Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.
 
 - **ID:** `apastra-takedown-appeal-record-v1`
@@ -500,6 +500,7 @@
   - Naming: `suite.yaml` or `suite.json`
   - Structure: Lives in `promptops/suites/<suite-id>/`
   - Required fields: `id` (string), `name` (string), `datasets` (array), `evaluators` (array), `model_matrix` (array).
+  - Optional fields: `description`, `trials`, `budgets`, `thresholds`, `tier`, `tags`.
 
 ## Section D: Digest Convention
 - Computed across the canonical representation of the file.
