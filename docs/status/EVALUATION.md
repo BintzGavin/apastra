@@ -1,3 +1,5 @@
+**Version**: 0.41.4
+[v0.41.4] ✅ Completed: Minimal-Plan-Exception - Synced domain state.
 **Version**: 0.41.3
 [v0.41.3] ✅ Completed: MinimalPlanExceptionFinal14 - All plans officially complete
 [v0.41.2] ✅ Completed: Minimal-Plan-Exception - Minimal Plan Exception. Changes already present.
