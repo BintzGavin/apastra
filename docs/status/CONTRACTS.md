@@ -1,4 +1,5 @@
-**Version**: 1.19.0
+**Version**: 1.19.1
+[v1.19.1] ✅ Completed: MinimalPlanExceptionFinal17 - Logged minimal plan exception for an empty backlog.
 [v1.18.0] ✅ Completed: SuiteCapabilityTagging - Added tier and tags capability fields to suite.schema.json
 [v1.17.4] ✅ Completed: MinimalPlanExceptionFinal16 - Logged minimal plan exception for an empty backlog.
 [v1.17.3] ✅ Completed: MinimalPlanExceptionFinal15 - Logged minimal plan exception for an empty backlog.
