@@ -1,4 +1,5 @@
-**Version**: 1.88.46
+**Version**: 1.88.47
+[v1.88.47] ✅ Completed: MinimalPlanExceptionFinal27 - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.88.45] ✅ Completed: MinimalPlanExceptionFinal26 - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.88.44] ✅ Completed: MinimalPlanExceptionFinal25 - Executed the final minimal plan exception for the RUNTIME domain.
 [v1.88.43] ✅ Completed: MinimalPlanExceptionFinal24 - Executed the final minimal plan exception for the RUNTIME domain.
