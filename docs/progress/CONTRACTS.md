@@ -1,3 +1,7 @@
+### CONTRACTS v1.19.2
+
+- ✅ Completed: MinimalPlanExceptionFinal18 - Logged a minimal plan exception because the domain backlog is completely empty.
+
 ### CONTRACTS v1.19.1
 - ✅ Completed: MinimalPlanExceptionFinal17 - Logged minimal plan exception for an empty backlog.
 
