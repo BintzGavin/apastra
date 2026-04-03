@@ -1,3 +1,6 @@
+### RUNTIME v1.88.38
+- ✅ Completed: MinimalPlanExceptionFinal19 - Executed the final minimal plan exception for the RUNTIME domain.
+
 ### RUNTIME v1.88.37
 - ✅ Completed: MinimalPlanExceptionFinal18 - Executed the final minimal plan exception for the RUNTIME domain.
 
