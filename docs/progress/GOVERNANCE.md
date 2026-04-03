@@ -1,3 +1,6 @@
+### GOVERNANCE v1.121.1
+- ✅ Completed: MinimalPlanExceptionFinal16 - Minimal plan exception: no governance changes required.
+
 ### GOVERNANCE v1.121.0
 - ✅ Completed: DeliveryTargetReleaseDescriptor - Implement a delivery target config for posting signed release descriptors to an internal API.
 
