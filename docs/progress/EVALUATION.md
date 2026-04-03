@@ -1,3 +1,6 @@
+### EVALUATION v0.41.18
+- ✅ Completed: MinimalPlanExceptionFinal28 - All plans officially complete
+
 ### EVALUATION v0.41.17
 - ✅ Completed: MinimalPlanExceptionFinal27 - All plans officially complete
 
