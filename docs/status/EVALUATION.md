@@ -3,7 +3,8 @@
 [v0.41.13] ✅ Completed: MinimalPlanExceptionFinal23 - All plans officially complete
 [v0.41.12] ✅ Completed: MinimalPlanExceptionFinal22 - All plans officially complete
 [v0.41.11] ✅ Completed: MinimalPlanExceptionFinal21 - All plans officially complete
-**Version**: 0.41.16
+**Version**: 0.41.17
+[v0.41.17] ✅ Completed: MinimalPlanExceptionFinal27 - All plans officially complete
 [v0.41.16] ✅ Completed: MinimalPlanExceptionFinal26 - All plans officially complete
 [v0.41.10] ✅ Completed: MinimalPlanExceptionFinal20 - Logged final completion exception for empty backlog
 [v0.41.9] ✅ Completed: MinimalPlanExceptionFinal19 - All plans officially complete
