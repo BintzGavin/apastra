@@ -1,0 +1,5 @@
+type: internal_api
+repo: internal
+endpoint: https://api.internal/delivery
+auth_header: "${INTERNAL_API_TOKEN}"
+payload_format: release_descriptor

@@ -1,3 +1,7 @@
+### GOVERNANCE v1.121.0
+- ✅ Completed: DeliveryTargetReleaseDescriptor - Implement a delivery target config for posting signed release descriptors to an internal API.
+
+
 ### GOVERNANCE v1.120.0
 - ✅ Completed: CapabilityTaggingPolicy - Implemented capability tagging policy
 

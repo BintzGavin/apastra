@@ -1,4 +1,6 @@
-**Version**: 1.120.0
+**Version**: 1.121.0
+[v1.121.0] ✅ Completed: DeliveryTargetReleaseDescriptor - Implement a delivery target config for posting signed release descriptors to an internal API.
+
 [v1.120.0] ✅ Completed: CapabilityTaggingPolicy - Implemented capability tagging policy
 [v1.119.5] ✅ Completed: MinimalPlanExceptionFinal15 - Minimal plan exception: no governance changes required.
 [v1.119.4] ✅ Completed: DeliveryTargets - Minimal plan exception: natively covered by existing target files in promptops/delivery/.

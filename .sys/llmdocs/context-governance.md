@@ -29,6 +29,7 @@ Gate Enforcement Flow:
 - `promptops/delivery/npm-target.yaml`
 - `promptops/delivery/pypi-target.yaml`
 - `promptops/delivery/observability.yaml`
+- `promptops/delivery/release-descriptor-target.yaml`
 - `promptops/policies/mcp-integration.md`
 - `promptops/delivery/mcp-server-target.yaml`
 - `promptops/delivery/oci-target.yaml`
@@ -120,6 +121,7 @@ Gate Enforcement Flow:
 - `promptops/delivery/prod-target.yaml`: Target type `github_pr`, channel `prod`
 - `promptops/delivery/oci-target.yaml`: Target type `oci`
 - `promptops/delivery/npm-target.yaml`: Target type `npm`
+- `promptops/delivery/release-descriptor-target.yaml`: Target type `internal_api`
 - `promptops/delivery/pypi-target.yaml`: Target type `pypi`
 - `promptops/delivery/observability.yaml`: Obserability adapters target.
 - `promptops/delivery/mcp-server-target.yaml`: Declarative config to sync approved prompt packages to the MCP server.
