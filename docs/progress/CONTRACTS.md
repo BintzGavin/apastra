@@ -1,3 +1,6 @@
+### CONTRACTS v1.19.6
+- ✅ Completed: MinimalPlanExceptionFinal22 - Logged minimal plan exception for an empty backlog.
+
 ### CONTRACTS v1.19.5
 - ✅ Completed: MinimalPlanExceptionFinal21 - Logged minimal plan exception for an empty backlog.
 
