@@ -435,3 +435,5 @@
 
 ### RUNTIME v1.88.6
 - ✅ Completed: GitRefRemoteSHA - Fix shallow clone failures when resolving remote git URLs by commit SHA.
+### RUNTIME v1.88.36
+- ✅ Completed: MinimalPlanExceptionFinal17 - Executed the final minimal plan exception for the RUNTIME domain.
