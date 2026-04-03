@@ -1,4 +1,5 @@
-**Version**: 1.19.4
+**Version**: 1.19.5
+[v1.19.5] ✅ Completed: MinimalPlanExceptionFinal21 - Logged minimal plan exception for an empty backlog.
 [v1.19.4] ✅ Completed: MinimalPlanExceptionFinal20 - Logged minimal plan exception for an empty backlog.
 [v1.19.3] ✅ Completed: MinimalPlanExceptionFinal19 - Logged minimal plan exception for an empty backlog.
 [v1.19.2] ✅ Completed: MinimalPlanExceptionFinal18 - Logged minimal plan exception for an empty backlog.
