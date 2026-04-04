@@ -1,4 +1,5 @@
-**Version**: 1.122.0
+**Version**: 1.123.0
+[v1.123.0] ✅ Completed: HoldoutSetsPolicy - Created formal holdout sets policy document.
 [v1.122.0] ✅ Completed: CapabilityTaggingPolicy - Create capability tagging policy
 [v1.121.7] ✅ Completed: MinimalPlanExceptionFinal22 - Minimal plan exception: no governance changes required.
 [v1.121.6] ✅ Completed: MinimalPlanExceptionFinal21 - Minimal plan exception: no governance changes required.
