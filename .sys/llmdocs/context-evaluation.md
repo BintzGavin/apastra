@@ -1,12 +1,13 @@
 # EVALUATION Domain Context
 
 ## Section A: Architecture
-The execution engine receives a `run_request.json` defining a test suite. It resolves dependencies, triggers the harness adapter per `evaluate_assertions.py`, and generates a unified test summary in a `run_artifact.json`. It can produce `scorecard.json` metrics for external policy gates. Observability tools can consume outputs via `emit_observability.py` to push to Langfuse or OpenTelemetry.
+The execution engine receives a `run_request.json` defining a test suite. It resolves dependencies, triggers the harness adapter per `evaluate_assertions.py`, and generates a unified test summary in a `run_artifact.json`. It can produce `scorecard.json` metrics for external policy gates. Observability tools can consume outputs via `emit_observability.py` to push to Langfuse or OpenTelemetry. It also supports prompt optimization analysis via `optimization-analyzer.py` which reads `run_artifact.json` and produces an `OptimizationReport`.
 
 ## Section B: File Tree
 ```
 promptops/
 ├── harnesses/                  # Harness adapter implementations
+│   ├── optimization-analyzer.py # Analyzes tokens and cost savings
 │   └── <adapter-id>/
 │       ├── adapter.yaml
 │       └── run.ts
@@ -38,6 +39,12 @@ derived-index/
 - `run_id` (string, required)
 - `metrics` (object, required)
 - `pass` (boolean, required)
+
+**prompt-optimization-report** (`report.json`)
+- `original_tokens` (integer, required)
+- `compressed_tokens` (integer, required)
+- `cost_savings_estimate` (number, required)
+- `compression_suggestions` (array of objects, required)
 
 ## Section D: Baseline and Regression Format
 **Baseline** (`<baseline-id>.json`)
