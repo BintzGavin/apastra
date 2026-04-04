@@ -1,4 +1,5 @@
-**Version**: 1.121.7
+**Version**: 1.122.0
+[v1.122.0] ✅ Completed: CapabilityTaggingPolicy - Create capability tagging policy
 [v1.121.7] ✅ Completed: MinimalPlanExceptionFinal22 - Minimal plan exception: no governance changes required.
 [v1.121.6] ✅ Completed: MinimalPlanExceptionFinal21 - Minimal plan exception: no governance changes required.
 [v1.121.5] ✅ Completed: MinimalPlanExceptionFinal20 - Minimal plan exception: no governance changes required.
