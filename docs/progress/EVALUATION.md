@@ -1,3 +1,6 @@
+### EVALUATION v0.42.0
+- ✅ Completed: SpecPromptOptimization - Implemented prompt optimization capability
+
 ### EVALUATION v0.41.19
 - ✅ Completed: MinimalPlanExceptionFinal29 - All plans officially complete
 

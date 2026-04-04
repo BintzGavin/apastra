@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "original_tokens": {
+      "type": "integer"
+    },
+    "compressed_tokens": {
+      "type": "integer"
+    },
+    "cost_savings_estimate": {
+      "type": "number"
+    },
+    "compression_suggestions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "original_text": {
+            "type": "string"
+          },
+          "suggested_text": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": ["original_text", "suggested_text", "reason"]
+      }
+    }
+  },
+  "required": [
+    "original_tokens",
+    "compressed_tokens",
+    "cost_savings_estimate",
+    "compression_suggestions"
+  ]
+}
