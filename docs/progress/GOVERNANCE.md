@@ -1,5 +1,11 @@
+### GOVERNANCE v1.122.0
+- ✅ Completed: CapabilityTaggingPolicy - Create capability tagging policy
+
+
+
 ### GOVERNANCE v1.121.7
 - ✅ Completed: MinimalPlanExceptionFinal22 - Minimal plan exception: no governance changes required.
+
 
 ### GOVERNANCE v1.121.6
 - ✅ Completed: MinimalPlanExceptionFinal21 - Minimal plan exception: no governance changes required.
@@ -24,7 +30,6 @@
 
 
 ### GOVERNANCE v1.120.0
-- ✅ Completed: CapabilityTaggingPolicy - Implemented capability tagging policy
 
 ### GOVERNANCE v1.119.4
 - ✅ Completed: DeliveryTargets - Minimal plan exception: natively covered by existing target files in promptops/delivery/.
@@ -60,7 +65,6 @@
 - ✅ Completed: MinimalPlanExceptionFinal4 - Minimal plan exception: no governance changes required.
 
 ### GOVERNANCE v1.116.6
-- 🛑 Blocked: CapabilityTaggingPolicy - waiting for EVALUATION domain to add tags or capabilities to suite.schema.json
 
 ### GOVERNANCE v1.116.5
 - ✅ Completed: DriftAlertPolicies - Minimal plan exception: natively covered by existing drift-alerts.md in promptops/policies/.

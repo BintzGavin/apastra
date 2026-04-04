@@ -1,24 +1,42 @@
 # Capability Tagging Policy
 
-## 1. Schema Alignment
-This policy governs the use of the `tags` array defined in `suite.schema.json`. Every tag applied to a suite maps directly to specific governance, review, and promotion requirements.
+## Overview
+This policy governs how capability tags defined in the `suite.schema.json` are interpreted during the promotion process. Capability tags serve as an auditable link between test suite metadata and the governance promotion gates required for release.
 
-## 2. Standard Tag Definitions & Routing
-The following standard tags determine review routing:
+## Tag Categories
 
-- **`pii` / `phi` / `pci`**:
-  - **Requirement**: Mandatory review by `@promptops-security` and `@promptops-legal`.
-  - **Promotion**: Automated promotion to public channels is prohibited; requires manual human approval checkpoint.
-- **`financial-advice` / `medical-advice`**:
-  - **Requirement**: Mandatory review by specialized domain experts (e.g., `@promptops-medical-reviewers`).
-- **`experimental`**:
-  - **Requirement**: Bypasses strict threshold regression gates for non-production environments.
-  - **Promotion**: Cannot be promoted to `release` or `oci` channels.
-- **`code-generation` / `exec`**:
-  - **Requirement**: Requires elevated security sandbox checks.
+### 1. Risk-Based Tags
+Tags that denote high-risk execution or content.
 
-## 3. Unknown or Missing Tags
-- If a suite contains **empty** or **unregistered tags** not explicitly documented in this policy, it will default to a **restricted review path**, requiring mandatory approval by `@promptops-governance-admins` before any promotion can occur.
+- `risk:high-impact`: Indicates the suite involves core business logic or sensitive operations.
+  - **Review Requirement**: Requires explicit approval from the `@promptops-core` CODEOWNERS team before promotion.
+  - **Automated Gates**: All regression tests must pass with a 100% threshold.
 
-## 4. Enforcement
-- Promotion pipelines (e.g., `.github/workflows/promote.yaml`) will dynamically parse the `tags` field from the evaluated `suite.schema.json` and block promotion if the required mapped reviewers have not approved the PR.
+- `risk:compliance`: Indicates the suite tests regulatory or compliance boundaries.
+  - **Review Requirement**: Requires review by `@promptops-compliance` CODEOWNERS team.
+  - **Automated Gates**: Must not be skipped under any execution tier.
+
+### 2. Execution Characteristics
+Tags that denote how the suite behaves during evaluation.
+
+- `execution:costly`: Indicates the suite uses expensive model tiers or large datasets.
+  - **Review Requirement**: Requires cost-budget approval if exceeding predefined limits.
+  - **Automated Gates**: Cannot be run in `smoke` or `regression` tiers unless specifically triggered by budget overrides.
+
+- `execution:flaky`: Indicates the suite contains non-deterministic tests known for intermittent failures.
+  - **Review Requirement**: Warning flags raised to the PR author.
+  - **Automated Gates**: Excluded from hard blocking regression gates, provided failures are documented in the PR context.
+
+### 3. Subject Matter Domain
+Tags indicating the core subject area of the evaluation suite.
+
+- `domain:security`: Focuses on security, adversarial red-teaming, and jailbreak detection.
+  - **Review Requirement**: Requires sign-off from `@promptops-security`.
+- `domain:reasoning`: Focuses on complex reasoning, math, and logic tasks.
+  - **Review Requirement**: Standard domain reviewer approval.
+
+## Fallback Rule (Unregistered or Empty Tags)
+If a suite contains no tags, or contains only unregistered tags not defined in this document:
+- It will default to the **most restrictive review path**.
+- It requires approval from a designated primary gatekeeper (`@promptops-gatekeepers`).
+- Automated promotions are strictly disabled.
