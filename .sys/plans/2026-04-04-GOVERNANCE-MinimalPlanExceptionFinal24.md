@@ -4,9 +4,9 @@
 - **Impact**: Acknowledges the current state without introducing unnecessary changes.
 
 #### 2. File Inventory
-- **Create**: [`.sys/plans/2026-04-04-GOVERNANCE-MinimalPlanExceptionFinal23.md`]
+- **Create**: [`.sys/plans/2026-04-04-GOVERNANCE-MinimalPlanExceptionFinal24.md`]
 - **Modify**: []
-- **Read-Only**: []
+- **Read-Only**: [`docs/vision.md`, `README.md`, `docs/status/GOVERNANCE.md`]
 
 #### 3. Implementation Spec
 - **Policy Architecture**: N/A
@@ -17,6 +17,6 @@
 - **Dependencies**: None
 
 #### 4. Test Plan
-- **Verification**: Ensure the file `.sys/plans/2026-04-04-GOVERNANCE-MinimalPlanExceptionFinal23.md` is created.
+- **Verification**: Ensure the file `.sys/plans/2026-04-04-GOVERNANCE-MinimalPlanExceptionFinal24.md` is created.
 - **Success Criteria**: The new plan is created with the correct format.
 - **Edge Cases**: N/A
