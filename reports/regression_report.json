@@ -1,0 +1,8 @@
+{
+  "candidate_id": "dummy-candidate",
+  "baseline_id": "dummy-baseline",
+  "status": "pass",
+  "pass": true,
+  "delta": {},
+  "evidence": []
+}
