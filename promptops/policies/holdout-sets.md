@@ -1,20 +1,27 @@
-# Dataset Holdout Sets Policy
+# Holdout Sets Policy
 
-## 1. Purpose and Scope
-To prevent overfitting and benchmark gaming, all release candidate suites MUST utilize dedicated holdout datasets. This policy establishes the governance expectations for dataset holdouts during pre-release validation.
+## 1. Purpose
+This policy establishes governance requirements for the use of holdout datasets during the release candidate validation process. Its primary objective is to prevent overfitting and "benchmark gaming" by ensuring that models and prompts are evaluated against unseen data before promotion to production.
 
-## 2. Definition of a Valid Holdout Set
-A valid holdout set is a versioned dataset (e.g., JSONL) that:
-- Is distinct and isolated from datasets used for routine developer iteration and training.
-- Accurately represents the target distribution of inputs the prompt or model will encounter in production.
-- Contains sufficient examples to provide statistical confidence in the evaluation metrics.
+## 2. Applicability
+This policy applies to all validation suites designated as "release candidates" across all domains.
 
-## 3. Requirements
-- **Release Candidates:** All suites designated as release candidates must include at least one valid holdout set in their configuration.
-- **Exclusion from Iteration:** Holdout datasets must not be used during routine development, prompt engineering, or model fine-tuning to maintain their integrity as an unbiased evaluation standard.
-- **Policy Enforcement:** The regression policy engine will evaluate release candidates against these holdout sets. Promotion to production channels requires passing results on the holdout sets.
-- **Promotion Records:** Promotion records must explicitly reflect the evaluation results against the designated holdout sets for release candidates.
+## 3. Policy Rules
 
-## 4. Maintenance and Rotation
-- **Rotation:** Holdout sets should be periodically rotated or updated to prevent gradual overfitting over time (e.g., when the production data distribution shifts).
-- **Integrity:** When a holdout set is updated, the previous version should be preserved to maintain the integrity and comparability of historical benchmarks.
+### 3.1. Requirement of Holdout Sets
+All suites designated as release candidates MUST be validated against a designated holdout set before they can be considered for promotion.
+
+### 3.2. Integrity of Holdout Sets
+Holdout datasets MUST be strictly excluded from routine developer iteration, training, and quick-eval pipelines. They are reserved exclusively for final release candidate validation.
+
+### 3.3. Evaluation Enforcement
+The regression policy engine MUST evaluate release candidates against the designated holdout sets. A passing result against the holdout set is a hard requirement for promotion.
+
+### 3.4. Promotion Records
+Promotion records MUST explicitly reflect passing validation results against the required holdout sets. A promotion record lacking this evidence is considered invalid.
+
+### 3.5. Rotation and Refresh
+Holdout sets should be periodically rotated or refreshed to maintain their effectiveness as an unseen validation benchmark. When rotating, care must be taken to maintain the integrity and comparability of historical benchmarks where feasible.
+
+## 4. Enforcement
+This policy is enforced mechanically via the regression policy engine and promotion workflow constraints. Any attempt to bypass holdout evaluation for a release candidate will result in a blocked promotion.

@@ -1,3 +1,6 @@
+### GOVERNANCE v1.123.0
+- ✅ Completed: HoldoutSetsPolicy - Created formal holdout sets policy document.
+
 ### GOVERNANCE v1.122.0
 - ✅ Completed: CapabilityTaggingPolicy - Create capability tagging policy
 

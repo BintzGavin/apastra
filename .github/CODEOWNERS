@@ -21,3 +21,4 @@ promptops/resolver/ @apastra/runtime-team
 promptops/runtime/ @apastra/runtime-team
 promptops.config.yaml @apastra/governance-admins
 promptops/policies/capability-tagging.md @apastra/governance-admins
+promptops/policies/holdout-sets.md @apastra/governance-admins

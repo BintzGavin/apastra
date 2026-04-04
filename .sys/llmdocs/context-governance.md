@@ -7,7 +7,8 @@
 ## Section B: File Tree
 ```
 promptops/policies/
-└── capability-tagging.md
+├── capability-tagging.md
+└── holdout-sets.md
 promptops/delivery/
 derived-index/promotions/
 .github/
@@ -19,6 +20,9 @@ derived-index/promotions/
 - **capability-tagging.md**: Maps execution tier capabilities to required reviews and bypass constraints.
   - Metrics: risk, execution, domain
   - Thresholds: Varies by specific tag combination
+- **holdout-sets.md**: Establishes requirements for holdout datasets during validation.
+  - Metrics: holdout_pass
+  - Thresholds: true (must pass against holdout set)
 
 ## Section D: Promotion Record Format
 - id: string
@@ -35,3 +39,4 @@ derived-index/promotions/
 
 ## Section F: CODEOWNERS Summary
 - `promptops/policies/capability-tagging.md` -> `@promptops-governance`
+- `promptops/policies/holdout-sets.md` -> `@promptops-governance`
