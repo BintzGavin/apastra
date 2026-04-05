@@ -1,4 +1,4 @@
-**Version**: 1.19.9
+**Version**: 1.20.0
 [v1.19.9] ✅ Completed: MinimalPlanExceptionFinal25 - Logged minimal plan exception for an empty backlog.
 [v1.19.8] ✅ Completed: MinimalPlanExceptionFinal24 - Logged minimal plan exception for an empty backlog.
 [v1.19.7] ✅ Completed: MinimalPlanExceptionFinal23 - Logged minimal plan exception for an empty backlog.
@@ -86,3 +86,4 @@
 [v0.3.0] ✅ Completed: dataset-schema - Created dataset-manifest.schema.json, dataset-case.schema.json, and validate-dataset.sh
 [v0.2.0] ✅ Completed: prompt-spec-schema - Created prompt-spec.schema.json and validate-prompt-spec.sh
 [v1.19.0] ✅ Completed: RejectRecordSchema - Created schema and validator for reject records.
+[v1.20.0] ✅ Completed: PromptOptimizationReportValidator - Created validator script for prompt-optimization-report schema.

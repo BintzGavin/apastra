@@ -468,7 +468,7 @@
 - **Validator:** `validate-release-descriptor.sh`
   - **Invocation Syntax:** `./promptops/validators/validate-release-descriptor.sh <target.json>`
   - **What it Validates:** Validates `release-descriptor.schema.json`.
-
+- `promptops/validators/validate-prompt-optimization-report.sh <file.json>`: Validates prompt optimization reports.
 
 ## Section C: Source File Conventions
 - **Quick Evals:**
