@@ -1,4 +1,6 @@
-**Version**: 0.14.0
+**Version**: 0.15.0
+[v0.15.0] ✅ Completed: Daily Documentation Review - Generated API reference for prompt-optimization-report and reject-record schemas, refreshed domain-status-overview dashboard, and updated context-docs.md.
+
 [v0.14.0] ✅ Completed: Daily Documentation Review - Generated API reference for flake-quarantine-record, community-prompt-pack and mcp-server-adapter, refreshed dashboards, and regenerated context-docs.md.
 
 

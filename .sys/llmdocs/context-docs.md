@@ -44,6 +44,7 @@
 - `policy-exception-record-reference.md`
 - `promotion-record-reference.md`
 - `prompt-package-reference.md`
+- `prompt-optimization-report-reference.md`
 - `prompt-spec-reference.md`
 - `promptops-config-reference.md`
 - `provenance-attestation-reference.md`
@@ -51,6 +52,7 @@
 - `quick-eval-reference.md`
 - `regression-policy-reference.md`
 - `regression-report-reference.md`
+- `reject-record-reference.md`
 - `release-descriptor-reference.md`
 - `run-artifact-reference.md`
 - `run-case-reference.md`
