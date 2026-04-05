@@ -1,3 +1,9 @@
+### DOCS v0.15.0
+- ✅ Completed: Daily Documentation Review
+  - Generated API reference for prompt-optimization-report and reject-record schemas
+  - Refreshed domain-status-overview dashboard
+  - Updated context-docs.md
+
 ### DOCS v0.14.0
 - ✅ Completed: Daily Documentation Review
   - Generated API docs for community-prompt-pack and mcp-server-adapter

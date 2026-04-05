@@ -17,9 +17,9 @@ source_files:
 
 | Domain | Version |
 |---|---|
-| GOVERNANCE | 1.104.0 |
-| EVALUATION | 0.27.0 |
-| CONTRACTS | 1.9.0 |
-| DOCS | 0.13.0 |
-| RUNTIME | 1.85.0 |
+| GOVERNANCE | 1.123.0 |
+| EVALUATION | 0.42.0 |
+| CONTRACTS | 1.20.0 |
+| DOCS | 0.15.0 |
+| RUNTIME | 1.88.48 |
 
