@@ -1,3 +1,6 @@
+### CONTRACTS v1.20.0
+- ✅ Completed: PromptOptimizationReportValidator - Created validator script for prompt-optimization-report schema.
+
 ### CONTRACTS v1.19.9
 - ✅ Completed: MinimalPlanExceptionFinal25 - Logged minimal plan exception for an empty backlog.
 
