@@ -30,6 +30,7 @@ jobs:
         run: |
           git fetch origin promptops-artifacts || true
           git checkout origin/promptops-artifacts -- reports/regression_report.json || true
+          git checkout origin/promptops-artifacts -- reports/run_manifest.json || true
       - name: Check Regression Report Status
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
@@ -48,6 +49,29 @@ jobs:
 
           STATUS=$(jq -r .status "$REPORT")
           if [ "$STATUS" = "pass" ]; then
+          # Check Cost Budget
+          MANIFEST="reports/run_manifest.json"
+          if [ -f "$MANIFEST" ]; then
+            COST=$(jq -r ".total_cost // empty" "$MANIFEST")
+            if [ -n "$COST" ]; then
+              for SUITE in promptops/suites/*.yaml promptops/suites/*.json; do
+                if [ -f "$SUITE" ]; then
+                  if [[ "$SUITE" == *.yaml ]]; then
+                    BUDGET=$(yq -o json ".budgets.cost_budget" "$SUITE" 2>/dev/null | grep -v null || echo "")
+                  else
+                    BUDGET=$(jq -r ".budgets.cost_budget // empty" "$SUITE" 2>/dev/null)
+                  fi
+                  if [ -n "$BUDGET" ] && [ "$BUDGET" != "null" ]; then
+                    if awk -v cost="$COST" -v budget="$BUDGET" "BEGIN {exit !(cost > budget)}"; then
+                      echo "::error title=Cost Budget Exceeded::Suite $SUITE exceeded budget ($COST > $BUDGET)"
+                      exit 1
+                    fi
+                  fi
+                fi
+              done
+            fi
+          fi
+
             echo "Regression passed."
             exit 0
           else
