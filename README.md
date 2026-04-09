@@ -9,12 +9,6 @@ Git-native prompt operations for teams that want to treat prompts like software 
 
 Apastra keeps prompt specs, datasets, evaluators, suites, and baselines as plain files in your repo. Your coding agent reads those files to scaffold changes, run evals, compare against baselines, and validate contracts without requiring a hosted platform.
 
-## Watch the Workflow
-
-[![Apastra README demo](docs/assets/apastra-demo.gif)](docs/assets/apastra-demo.mp4)
-
-Silent 24-second walkthrough. Prefer the sharper version? Open the [MP4](docs/assets/apastra-demo.mp4).
-
 ## What Is This?
 
 Apastra is a file-based protocol and skill pack for prompt engineering workflows.
