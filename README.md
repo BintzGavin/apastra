@@ -1,84 +1,105 @@
-# apastra
+![Apastra - Lightweight Prompt Evaluation](docs/assets/apastra-hero.jpeg)
 
-Ship AI prompts with the same discipline as code. Version them, test them, catch regressions — all locally, using the agent in your IDE.
+[![Schema Validation](https://github.com/BintzGavin/apastra/actions/workflows/schema-validation.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/schema-validation.yml)
+[![Prompt Eval](https://github.com/BintzGavin/apastra/actions/workflows/prompt-eval.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/prompt-eval.yml)
+[![Regression Gate](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](#license)
 
-## Quick Start (5 minutes)
+Git-native prompt operations for teams that want to treat prompts like software assets.
 
-### 1. Install skills
+Apastra keeps prompt specs, datasets, evaluators, suites, and baselines as plain files in your repo. Your coding agent reads those files to scaffold changes, run evals, compare against baselines, and validate contracts without requiring a hosted platform.
+
+## Watch the Workflow
+
+[![Apastra README demo](docs/assets/apastra-demo.gif)](docs/assets/apastra-demo.mp4)
+
+Silent 24-second walkthrough. Prefer the sharper version? Open the [MP4](docs/assets/apastra-demo.mp4).
+
+## What Is This?
+
+Apastra is a file-based protocol and skill pack for prompt engineering workflows.
+
+| If you want to... | Apastra gives you... |
+|---|---|
+| Version prompts like code | YAML prompt specs with stable IDs, variables, and output contracts |
+| Test prompt behavior repeatedly | Datasets, evaluators, and suites stored in Git |
+| Catch quality regressions before shipping | Baselines, scorecards, and regression reports |
+| Stay local-first | Agent-driven workflows with optional GitHub Actions automation |
+| Keep things inspectable | Plain files, schema validation, and reviewable diffs |
+
+## Documentation
+
+- [Getting started](docs/guides/getting-started.md)
+- [Architecture overview](docs/guides/architecture-overview.md)
+- [API reference](docs/api)
+- [System vision](docs/vision.md)
+
+## Quick Start
+
+### 1. Install the skill pack
 
 ```bash
 npx skills add BintzGavin/apastra --all --full-depth -y
 ```
 
-This adds apastra skills to your IDE agent (Claude Code, Cursor, Amp, Codex, and 37 more). Your agent now knows how to evaluate, baseline, scaffold, and validate prompts.
+This installs the apastra skills into your IDE agent so it can scaffold prompt assets, run evals, set baselines, and validate the protocol.
 
-### 2. Scaffold your first prompt
+### 2. Scaffold your first prompt workflow
 
 Ask your agent:
 
 > "Use the apastra-scaffold skill to create a prompt spec, dataset, evaluator, and suite for summarizing text"
 
-Your agent will create:
+You will get a repo-native setup like:
 
-```
+```text
 promptops/
-├── prompts/summarize-v1.yaml       # Prompt template + variables
-├── datasets/summarize-smoke.jsonl   # Test cases (5 examples)
-├── evaluators/contains-keywords.yaml # Scoring rule
-└── suites/summarize-smoke.yaml      # Test configuration
+├── prompts/summarize-v1.yaml
+├── datasets/summarize-smoke.jsonl
+├── evaluators/contains-keywords.yaml
+└── suites/summarize-smoke.yaml
 ```
 
-### 3. Run your first eval
+### 3. Run an eval
 
 Ask your agent:
 
 > "Use the apastra-eval skill to run the summarize-smoke suite"
 
-Your agent reads the suite, runs each test case through the model, scores results, and reports:
+The agent loads the suite, renders the prompt for each case, calls the model, scores the outputs, and reports a scorecard.
 
-```
+```text
 Suite: summarize-smoke
-Status: PASS ✅
+Status: PASS
 
 Metrics:
-  keyword_recall: 0.85 (threshold: 0.60) ✅
+  keyword_recall: 0.85 (threshold: 0.60)
 ```
 
-### 4. Set a baseline
+### 4. Save a baseline
+
+Ask your agent:
 
 > "Use the apastra-baseline skill to set the current results as the baseline"
 
-Now future evals compare against this baseline. If you change the prompt and quality drops, the agent tells you.
+Future evals can now detect regressions automatically when prompt quality drops below the accepted threshold.
 
-That's it. No CI, no cloud, no API keys to configure. Your agent is the harness.
+That is enough to start using apastra locally. CI and release automation are available when you want them, but they are not required to get value from the repo.
 
----
+> **Note for AI agents:** This README is the quickstart. For the full architectural model and design principles, start with [`docs/vision.md`](docs/vision.md).
 
-> **🤖 Note for AI Agents**: This README is a quickstart guide. For the full architectural vision and system design principles, read [`docs/vision.md`](docs/vision.md).
-
-## What Is This?
-
-Apastra is a **file-based protocol** for managing AI prompts as versioned software assets. Prompts, test cases, scoring rules, and quality baselines are all files in your repo.
-
-| What you get | How it works |
-|---|---|
-| **Prompt versioning** | Prompt specs are YAML files with stable IDs, variable schemas, and output contracts |
-| **Automated evals** | Your IDE agent runs test suites against your prompts and scores the results |
-| **Regression detection** | Compare new results against known-good baselines to catch quality drops |
-| **Schema validation** | 23 JSON schemas ensure all files are correctly formatted |
-| **No infrastructure** | No CI, no cloud, no hosted platform — just files and your agent |
-
-## Installed Skills
+## Included Skills
 
 | Skill | What it does |
 |---|---|
 | `apastra-getting-started` | Project setup and onboarding walkthrough |
-| `apastra-eval` | Run evaluations (agent loads suites, calls model, scores, compares baselines) |
+| `apastra-eval` | Run evaluations from suites, score outputs, and compare baselines |
 | `apastra-baseline` | Establish and manage known-good baselines |
-| `apastra-scaffold` | Generate new prompt specs, datasets, evaluators, suites |
-| `apastra-validate` | Validate all files against JSON schemas |
+| `apastra-scaffold` | Generate prompt specs, datasets, evaluators, and suites |
+| `apastra-validate` | Validate protocol files against JSON schemas |
 
 Install individual skills:
+
 ```bash
 npx skills add BintzGavin/apastra/skills/eval
 npx skills add BintzGavin/apastra/skills/baseline
