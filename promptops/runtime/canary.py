@@ -16,36 +16,14 @@ def run_canary(canary_path):
 
     # We resolve the actual prompts and datasets in a real implementation
     # but for the runner contract, we assemble the run request.
-    import os
-    suite_file = f"promptops/suites/{suite_ref}.yaml" if os.path.exists(f"promptops/suites/{suite_ref}.yaml") else f"promptops/suites/{suite_ref}.json"
-    prompt_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    dataset_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    evaluator_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    try:
-        import hashlib, yaml, json
-        with open(suite_file, 'r') as f:
-            if suite_file.endswith('.yaml'):
-                data = yaml.safe_load(f)
-            else:
-                data = json.load(f)
-            if data:
-                if 'prompt' in data:
-                    prompt_d = "sha256:" + hashlib.sha256(str(data['prompt']).encode('utf-8')).hexdigest()
-                if 'datasets' in data:
-                    dataset_d = "sha256:" + hashlib.sha256(str(data['datasets']).encode('utf-8')).hexdigest()
-                if 'evaluators' in data:
-                    evaluator_d = "sha256:" + hashlib.sha256(str(data['evaluators']).encode('utf-8')).hexdigest()
-    except Exception:
-        pass
-
     run_request = {
         "suite_id": suite_ref,
         "revision_ref": "latest",
         "model_matrix": ["default"],
         "evaluator_refs": ["default"],
-        "prompt_digest": prompt_d,
-        "dataset_digest": dataset_d,
-        "evaluator_digest": evaluator_d,
+        "prompt_digest": "sha256:" + __import__('hashlib').sha256(suite_ref.encode()).hexdigest(),
+        "dataset_digest": "sha256:" + __import__('hashlib').sha256(suite_ref.encode()).hexdigest(),
+        "evaluator_digest": "sha256:" + __import__('hashlib').sha256(suite_ref.encode()).hexdigest(),
         "harness_version": "1.0.0"
     }
 

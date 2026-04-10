@@ -25,7 +25,7 @@ cases_path = os.path.join('$TMP_DIR', 'cases.jsonl')
 cases_content = ''
 with open(cases_path, 'w') as f:
     for case in data.get('cases', []):
-        case_json = json.dumps(case) + '\\n'
+        case_json = json.dumps(case) + '\n'
         f.write(case_json)
         cases_content += case_json
 

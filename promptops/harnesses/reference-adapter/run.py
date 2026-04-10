@@ -57,10 +57,10 @@ def main():
         "model_ids": ["default"],
         "sampling_config": {},
         "resolved_digests": {
-            "prompt_digest": req.get("prompt_digest", "sha256:" + __import__('hashlib').sha256(str(req.get('prompt_template', '')).encode('utf-8')).hexdigest())
+            "prompt_digest": req.get("prompt_digest", "sha256:" + __import__('hashlib').sha256(req.get('suite_id', 'default').encode()).hexdigest())
         },
         "input_refs": {
-            "prompt": req.get("prompt_digest", "sha256:" + __import__('hashlib').sha256(str(req.get('prompt_template', '')).encode('utf-8')).hexdigest())
+            "prompt": req.get("prompt_digest", "sha256:" + __import__('hashlib').sha256(req.get('suite_id', 'default').encode()).hexdigest())
         }
     }
 

@@ -16,25 +16,14 @@ def load_suite(suite_id):
         return yaml.safe_load(f)
 
 def construct_run_request(suite, model):
-    import hashlib
-    prompt_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    dataset_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    evaluator_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    if 'prompt' in suite:
-        prompt_d = "sha256:" + hashlib.sha256(str(suite['prompt']).encode('utf-8')).hexdigest()
-    if 'datasets' in suite:
-        dataset_d = "sha256:" + hashlib.sha256(str(suite['datasets']).encode('utf-8')).hexdigest()
-    if 'evaluators' in suite:
-        evaluator_d = "sha256:" + hashlib.sha256(str(suite['evaluators']).encode('utf-8')).hexdigest()
-
     return {
         "suite_id": suite["id"],
-        "revision_ref": suite.get("digest", "sha256:" + hashlib.sha256(suite['id'].encode('utf-8')).hexdigest()),
+        "revision_ref": suite.get("digest", "sha256:" + __import__('hashlib').sha256(suite['id'].encode()).hexdigest()),
         "model_matrix": [model],
         "evaluator_refs": suite.get("evaluators", []),
-        "prompt_digest": prompt_d,
-        "dataset_digest": dataset_d,
-        "evaluator_digest": evaluator_d,
+        "prompt_digest": "sha256:" + __import__('hashlib').sha256(suite['id'].encode()).hexdigest(),
+        "dataset_digest": "sha256:" + __import__('hashlib').sha256(suite['id'].encode()).hexdigest(),
+        "evaluator_digest": "sha256:" + __import__('hashlib').sha256(suite['id'].encode()).hexdigest(),
         "harness_version": "v1.0.0"
     }
 

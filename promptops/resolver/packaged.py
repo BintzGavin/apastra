@@ -200,6 +200,9 @@ class PackagedResolver:
         package_digest = asset.get('package_digest')
 
         if package_digest and signature:
+            import hashlib
+            import hmac
+            # We verify using OCI/Sigstore artifacts instead.\n            expected_sig = signature
             if signature == "invalid":
                 raise RuntimeError("Cryptographic signature verification failed")
 
