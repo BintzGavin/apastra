@@ -228,10 +228,6 @@ Five pre-built workflows gate merges and automate promotions:
 | `immutable-release.yml` | Tag push | Creates immutable GitHub releases |
 | `auto-merge.yml` | CI pass | Auto-merges PRs that pass all checks |
 
-### Autonomous Agent Loops
-
-For teams running autonomous coding agents, apastra includes a full agent system with 5 domain roles (CONTRACTS, RUNTIME, EVALUATION, GOVERNANCE, DOCS), each with planner/executor prompts and strict file ownership. See `.jules/prompts/` for the full agent prompt library. The architectural approach is described in [this blog post](https://agnt.one/blog/black-hole-architecture).
-
 ### Git-First Consumption
 
 Apps can pin prompts by commit SHA, tag, or semver — npm and pip both support Git dependencies natively:
