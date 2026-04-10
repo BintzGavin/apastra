@@ -13,15 +13,23 @@ OUTPUT_DIR="promptops/runs/$RUN_ID"
 
 # Use python to parse yaml and create standard request files
 python3 -c "
-import sys, yaml, json, os
+import sys, yaml, json, os, hashlib
+
+def sha256(content):
+    return 'sha256:' + hashlib.sha256(content.encode('utf-8')).hexdigest()
 
 with open('$EVAL_FILE', 'r') as f:
     data = yaml.safe_load(f)
 
 cases_path = os.path.join('$TMP_DIR', 'cases.jsonl')
+cases_content = ''
 with open(cases_path, 'w') as f:
     for case in data.get('cases', []):
-        f.write(json.dumps(case) + '\n')
+        case_json = json.dumps(case) + '\\n'
+        f.write(case_json)
+        cases_content += case_json
+
+prompt_template = data.get('prompt', '')
 
 request = {
     'suite_id': data.get('id', 'quick-eval'),
@@ -29,7 +37,11 @@ request = {
     'model_matrix': ['mock-model'],
     'evaluator_refs': ['inline-asserts'],
     'dataset_path': cases_path,
-    'prompt_template': data.get('prompt', '')
+    'prompt_template': prompt_template,
+    'prompt_digest': sha256(prompt_template),
+    'dataset_digest': sha256(cases_content),
+    'evaluator_digest': sha256('inline-asserts'),
+    'harness_version': '1.0.0'
 }
 
 request_path = os.path.join('$TMP_DIR', 'run_request.json')
