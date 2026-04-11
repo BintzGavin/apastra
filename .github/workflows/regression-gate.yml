@@ -49,9 +49,16 @@ jobs:
       - name: Fetch Artifacts Branch
         if: steps.changed-files.outputs.any_changed == 'true' && steps.artifacts-branch.outputs.exists == 'true'
         run: |
-          git fetch origin promptops-artifacts
-          git checkout origin/promptops-artifacts -- reports/regression_report.json
-          git checkout origin/promptops-artifacts -- reports/run_manifest.json
+          for i in {1..12}; do
+            git fetch origin promptops-artifacts || true
+            if git checkout origin/promptops-artifacts -- reports/regression_report.json && git checkout origin/promptops-artifacts -- reports/run_manifest.json; then
+              break
+            fi
+            echo "Artifacts not ready, retrying in 5s..."
+            sleep 5
+          done
+          git checkout origin/promptops-artifacts -- reports/regression_report.json || true
+          git checkout origin/promptops-artifacts -- reports/run_manifest.json || true
       - name: Check Regression Report Status
         if: steps.changed-files.outputs.any_changed == 'true' && steps.artifacts-branch.outputs.exists == 'true'
         run: |
