@@ -22,17 +22,38 @@ jobs:
             promptops/prompts/**
             promptops/datasets/**
             promptops/policies/*.yaml
-      - name: Skip Regression Gate
-        if: steps.changed-files.outputs.any_changed == 'false'
-        run: echo "Skipping regression gate for non-evaluable changes."
-      - name: Fetch Artifacts Branch
+      - name: Detect Artifacts Branch
+        id: artifacts-branch
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          git fetch origin promptops-artifacts || true
-          git checkout origin/promptops-artifacts -- reports/regression_report.json || true
-          git checkout origin/promptops-artifacts -- reports/run_manifest.json || true
+          if git ls-remote --exit-code --heads origin promptops-artifacts >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Skip Regression Gate
+        if: steps.changed-files.outputs.any_changed == 'false' || steps.artifacts-branch.outputs.exists == 'false'
+        run: |
+          if [ "${{ steps.changed-files.outputs.any_changed }}" = "false" ]; then
+            echo "Skipping regression gate for non-evaluable changes."
+            exit 0
+          fi
+
+          echo "Skipping regression gate because origin/promptops-artifacts is not initialized."
+          {
+            echo "## Regression Gate Skipped"
+            echo ""
+            echo "No \`promptops-artifacts\` branch exists on \`origin\`."
+            echo "This repository can run without PromptOps governance artifacts; downstream repos can enable enforcement by creating that branch and publishing regression evidence there."
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Fetch Artifacts Branch
+        if: steps.changed-files.outputs.any_changed == 'true' && steps.artifacts-branch.outputs.exists == 'true'
+        run: |
+          git fetch origin promptops-artifacts
+          git checkout origin/promptops-artifacts -- reports/regression_report.json
+          git checkout origin/promptops-artifacts -- reports/run_manifest.json
       - name: Check Regression Report Status
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true' && steps.artifacts-branch.outputs.exists == 'true'
         run: |
           REPORT="reports/regression_report.json"
           if [ ! -f "$REPORT" ]; then
@@ -49,28 +70,28 @@ jobs:
 
           STATUS=$(jq -r .status "$REPORT")
           if [ "$STATUS" = "pass" ]; then
-          # Check Cost Budget
-          MANIFEST="reports/run_manifest.json"
-          if [ -f "$MANIFEST" ]; then
-            COST=$(jq -r ".total_cost // empty" "$MANIFEST")
-            if [ -n "$COST" ]; then
-              for SUITE in promptops/suites/*.yaml promptops/suites/*.json; do
-                if [ -f "$SUITE" ]; then
-                  if [[ "$SUITE" == *.yaml ]]; then
-                    BUDGET=$(yq -o json ".budgets.cost_budget" "$SUITE" 2>/dev/null | grep -v null || echo "")
-                  else
-                    BUDGET=$(jq -r ".budgets.cost_budget // empty" "$SUITE" 2>/dev/null)
-                  fi
-                  if [ -n "$BUDGET" ] && [ "$BUDGET" != "null" ]; then
-                    if awk -v cost="$COST" -v budget="$BUDGET" "BEGIN {exit !(cost > budget)}"; then
-                      echo "::error title=Cost Budget Exceeded::Suite $SUITE exceeded budget ($COST > $BUDGET)"
-                      exit 1
+            # Check Cost Budget
+            MANIFEST="reports/run_manifest.json"
+            if [ -f "$MANIFEST" ]; then
+              COST=$(jq -r ".total_cost // empty" "$MANIFEST")
+              if [ -n "$COST" ]; then
+                for SUITE in promptops/suites/*.yaml promptops/suites/*.json; do
+                  if [ -f "$SUITE" ]; then
+                    if [[ "$SUITE" == *.yaml ]]; then
+                      BUDGET=$(yq -o json ".budgets.cost_budget" "$SUITE" 2>/dev/null | grep -v null || echo "")
+                    else
+                      BUDGET=$(jq -r ".budgets.cost_budget // empty" "$SUITE" 2>/dev/null)
+                    fi
+                    if [ -n "$BUDGET" ] && [ "$BUDGET" != "null" ]; then
+                      if awk -v cost="$COST" -v budget="$BUDGET" "BEGIN {exit !(cost > budget)}"; then
+                        echo "::error title=Cost Budget Exceeded::Suite $SUITE exceeded budget ($COST > $BUDGET)"
+                        exit 1
+                      fi
                     fi
                   fi
-                fi
-              done
+                done
+              fi
             fi
-          fi
 
             echo "Regression passed."
             exit 0
