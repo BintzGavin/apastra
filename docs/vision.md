@@ -5,7 +5,7 @@ Prompt versioning, evals, benchmarks, and delivery
 
 This document proposes a state-of-the-art PromptOps architecture that makes prompts behave like disciplined software assets while keeping day-to-day developer workflow low friction. The system is repo-native and uses GitHub as the canonical control plane for versioning, diffs, review, rollback, and auditability via pull requests, required status checks, branch protection, tags, releases, and audit logs.
 
-It is Black Hole Architecture aligned: file-based durable state is the source of truth; computation is stateless and replaceable; derived results are append-friendly and immutable where possible; end states and transitions are explicit; humans approve at clear checkpoints; autonomous agents can safely operate by generating files and PRs rather than mutating hidden databases. Execution is bring-your-own via a minimal harness contract (“run request in, run artifact out”), so the system does not lock teams into any evaluator framework, agent SDK, provider SDK, runtime, or hosted platform.
+It is built around a file-based, Git-native architecture: durable state is the source of truth; computation is stateless and replaceable; derived results are append-friendly and immutable where possible; end states and transitions are explicit; humans approve at clear checkpoints; automation can safely operate by generating files and PRs rather than mutating hidden databases. Execution is bring-your-own via a minimal harness contract (“run request in, run artifact out”), so the system does not lock teams into any evaluator framework, agent SDK, provider SDK, runtime, or hosted platform.
 
 Consumption is Git-first. Local overrides and git-ref pins (commit SHA or tag, optionally semver) are first-class, and repackaging/publishing is optional for local iteration. When teams want governed releases, optional packaging formats include GitHub Release assets (with optional immutability), OCI artifacts, and ecosystem wrappers (npm/PyPI), all anchored by content digests for reproducibility and provenance.
 
@@ -78,7 +78,7 @@ The system is “working” when these outcomes are routine:
 - Applied AI teams: need dataset discipline, judge calibration, multi-run variance tracking.
 - Agencies: need portable packaging and clear release lineage across client repos.
 
-## Core model: nouns, files, repo topology, and Black Hole Architecture mapping
+## Core model: nouns, files, repo topology, and architectural mapping
 
 ### Core nouns and definitions
 
@@ -101,9 +101,9 @@ The system is “working” when these outcomes are routine:
 | Delivery target | Declarative config describing how to sync an approved version to downstream systems. |
 | Consumption manifest | App-side file declaring pins, overrides, and mappings from prompt IDs to usage. |
 
-### Black Hole Architecture mapping
+### Architectural mapping
 
-This system’s Black Hole mapping is intentionally strict.
+This system’s file-based architectural mapping is intentionally strict.
 
 **Durable state (source of truth, in Git):** prompt specs, datasets, evaluators, suites, harness adapter specs, regression policies, delivery target specs, consumption manifests.
 
@@ -583,7 +583,7 @@ Git is still used internally for versioned review and audit, but the public inte
 
 Pragmatic product recommendation for v2: start with a single custodian to solve discoverability, naming, quality gates, and SDK ergonomics, then add federation/mirrors once the protocol is stable.
 
-### How the custodian model maps to Black Hole Architecture
+### How the custodian model maps to the file-based architecture
 
 Durable state (canonical):
 

@@ -11,7 +11,7 @@ echo "Scanning $TARGET_DIR for hardcoded prompts..."
 FINDINGS_FILE=$(mktemp)
 
 grep -rnEwi "prompt|system prompt|you are a helpful assistant" "$TARGET_DIR" \
-    --exclude-dir={.git,node_modules,venv,__pycache__,derived-index,.sys,promptops,.jules} \
+    --exclude-dir={.git,node_modules,venv,__pycache__,derived-index,promptops} \
     --exclude="*.json" \
     --exclude="*.md" \
     --exclude="*.yaml" \

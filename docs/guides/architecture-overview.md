@@ -9,7 +9,7 @@ source_files:
 
 # Architecture Overview
 
-The PromptOps system adopts a Black Hole Architecture paradigm where file-based durable state serves as the absolute source of truth. Computation is entirely stateless and replaceable, enabling teams to govern prompts like standard software assets via Git-based workflows.
+The PromptOps system is built around file-based durable state as the source of truth. Computation is stateless and replaceable, enabling teams to govern prompts like standard software assets via Git-based workflows.
 
 ## Core Tenets
 
