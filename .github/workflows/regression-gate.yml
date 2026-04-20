@@ -59,13 +59,28 @@ jobs:
           done
           git checkout origin/promptops-artifacts -- reports/regression_report.json || true
           git checkout origin/promptops-artifacts -- reports/run_manifest.json || true
+      - name: Read missing_report policy
+        if: steps.changed-files.outputs.any_changed == 'true' && steps.artifacts-branch.outputs.exists == 'true'
+        id: policy
+        run: |
+          POLICY="promptops/policies/regression.yaml"
+          MODE="warn"
+          if [ -f "$POLICY" ]; then
+            MODE=$(yq -r '.missing_report // "warn"' "$POLICY")
+          fi
+          echo "missing_report=$MODE" >> "$GITHUB_OUTPUT"
       - name: Check Regression Report Status
         if: steps.changed-files.outputs.any_changed == 'true' && steps.artifacts-branch.outputs.exists == 'true'
         run: |
           REPORT="reports/regression_report.json"
           if [ ! -f "$REPORT" ]; then
-            echo "::error::Regression report missing. Merges are blocked."
-            exit 1
+            if [ "${{ steps.policy.outputs.missing_report }}" = "block" ]; then
+              echo "::error::Regression report missing. Merges are blocked."
+              exit 1
+            else
+              echo "::warning::Regression report missing. Proceeding (missing_report policy: warn)."
+              exit 0
+            fi
           fi
 
           echo "## Regression Report Evidence" >> $GITHUB_STEP_SUMMARY

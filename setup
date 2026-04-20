@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Apastra setup script
+#
+# Run from your project root after cloning:
+#   git clone --single-branch --depth 1 https://github.com/BintzGavin/apastra.git .agent/skills/apastra
+#   .agent/skills/apastra/setup
+#
+# Installs:
+#   .agent/skills/apastra/   — skill instructions (only SKILL.md directories + this setup)
+#   .agent/scripts/apastra/  — runtime scripts (Python + shell validators)
+
+SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(pwd)"
+SCRIPTS_DEST="$PROJECT_ROOT/.agent/scripts/apastra"
+
+# Safety: verify we're running from inside an apastra clone
+if [ ! -d "$SKILL_DIR/promptops/runtime" ] || [ ! -f "$SKILL_DIR/SKILL.md" ]; then
+  echo "❌ Error: setup must be run from inside a cloned apastra repository."
+  echo "   Expected: $SKILL_DIR/promptops/runtime and $SKILL_DIR/SKILL.md"
+  exit 1
+fi
+
+echo "🔧 Installing apastra..."
+
+# Copy runtime scripts to .agent/scripts/apastra/
+mkdir -p "$SCRIPTS_DEST"
+cp -r "$SKILL_DIR/promptops/runtime"    "$SCRIPTS_DEST/"
+cp -r "$SKILL_DIR/promptops/runs"       "$SCRIPTS_DEST/"
+cp -r "$SKILL_DIR/promptops/resolver"   "$SCRIPTS_DEST/"
+cp -r "$SKILL_DIR/promptops/schemas"    "$SCRIPTS_DEST/"
+cp -r "$SKILL_DIR/promptops/validators" "$SCRIPTS_DEST/"
+cp -r "$SKILL_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"
+cp    "$SKILL_DIR/promptops/__init__.py" "$SCRIPTS_DEST/"
+
+find "$SCRIPTS_DEST" -name "*.sh" -exec chmod +x {} \;
+
+# Install Python dependencies
+echo "📦 Checking Python dependencies..."
+PY="$(command -v python3 || command -v python || true)"
+PIP_DEPS_OK=0
+if [ -n "$PY" ] && "$PY" -c "import yaml, jsonschema" &>/dev/null; then
+  echo "   pyyaml + jsonschema already present."
+  PIP_DEPS_OK=1
+else
+  PIP="$(command -v pip3 || command -v pip || true)"
+  if [ -n "$PIP" ]; then
+    # Try normal install, fall back to --user (PEP 668 on brew Python).
+    if "$PIP" install --quiet pyyaml jsonschema 2>/dev/null \
+      || "$PIP" install --quiet --user pyyaml jsonschema 2>/dev/null; then
+      PIP_DEPS_OK=1
+    fi
+  fi
+fi
+
+if [ "$PIP_DEPS_OK" -ne 1 ]; then
+  echo ""
+  echo "⚠️  Could not auto-install pyyaml + jsonschema."
+  echo "   The apastra runtime scripts require both. Install manually via one of:"
+  echo "     pipx install pyyaml && pipx install jsonschema"
+  echo "     python3 -m venv .venv && source .venv/bin/activate && pip install pyyaml jsonschema"
+  echo "     pip install --user pyyaml jsonschema"
+  echo "     pip install --break-system-packages pyyaml jsonschema   # not recommended"
+  echo ""
+fi
+
+# Clean up the clone — keep only skill directories and this setup script
+# Skill directories are identified by containing a SKILL.md file
+echo "🧹 Cleaning up installation..."
+cd "$SKILL_DIR"
+for entry in * .[!.]*; do
+  [ -e "$entry" ] || continue
+  case "$entry" in
+    setup|SKILL.md|LICENSE|README.md)
+      # Keep these top-level files
+      ;;
+    .git|.github|.gitignore|.gitattributes)
+      # Remove git/GitHub metadata
+      rm -rf "$entry"
+      ;;
+    *)
+      # Keep directories that contain a SKILL.md (these are individual skills)
+      if [ -d "$entry" ] && [ -f "$entry/SKILL.md" ]; then
+        continue
+      fi
+      # Remove everything else (promptops/, package.json, postinstall.sh, etc.)
+      rm -rf "$entry"
+      ;;
+  esac
+done
+
+echo ""
+echo "✅ Apastra installed"
+echo "   Skills:  .agent/skills/apastra/"
+echo "   Scripts: .agent/scripts/apastra/"
+echo ""
+echo "Tell your agent: 'Use the getting-started skill to set up PromptOps in this project'"

@@ -195,3 +195,28 @@ def evaluate_assertions(output: str, assertions: list, metadata: dict = None) ->
         results.append({f"assert_{assert_type}": 1.0 if passed else 0.0})
 
     return results
+
+
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) < 3:
+        print("Usage: python evaluate_assertions.py <output_text_file> <assertions.json> [metadata.json]")
+        print("  output_text_file: file containing the model output text")
+        print("  assertions.json:  JSON array of assertion objects")
+        print("  metadata.json:    optional JSON object with latency, cost, etc.")
+        sys.exit(1)
+
+    with open(sys.argv[1], 'r') as f:
+        output_text = f.read()
+
+    with open(sys.argv[2], 'r') as f:
+        assertions = json.load(f)
+
+    metadata = {}
+    if len(sys.argv) >= 4:
+        with open(sys.argv[3], 'r') as f:
+            metadata = json.load(f)
+
+    results = evaluate_assertions(output_text, assertions, metadata)
+    print(json.dumps(results, indent=2))

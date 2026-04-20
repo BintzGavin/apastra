@@ -1,4 +1,59 @@
 {
+  "name": "apastra",
+  "version": "1.0.0",
+  "description": "PromptOps — version, evaluate, and ship AI prompts as disciplined software assets",
+  "keywords": [
+    "apastra",
+    "promptops",
+    "prompts",
+    "evaluation",
+    "benchmarking",
+    "regression",
+    "ai-skills",
+    "agent-skills",
+    "skills.sh",
+    "claude",
+    "cursor",
+    "copilot"
+  ],
+  "homepage": "https://github.com/BintzGavin/apastra",
+  "bugs": {
+    "url": "https://github.com/BintzGavin/apastra/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BintzGavin/apastra.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Gavin Bintz",
+  "scripts": {
+    "postinstall": "bash postinstall.sh"
+  },
+  "files": [
+    "postinstall.sh",
+    "SKILL.md",
+    "baseline/**/*",
+    "eval/**/*",
+    "getting-started/**/*",
+    "red-team/**/*",
+    "scaffold/**/*",
+    "setup-ci/**/*",
+    "validate/**/*",
+    "promptops/runtime/**/*.py",
+    "promptops/runs/**/*.py",
+    "promptops/runs/**/*.sh",
+    "promptops/resolver/**/*.py",
+    "promptops/schemas/**/*.json",
+    "promptops/schemas/**/*.md",
+    "promptops/validators/**/*.sh",
+    "promptops/harnesses/**/*",
+    "promptops/policies/**/*",
+    "promptops/__init__.py",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "ajv": "^8.18.0",
     "ajv-cli": "^5.0.0",

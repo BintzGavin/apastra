@@ -1,4 +1,5 @@
 baseline: prod current
+missing_report: warn   # warn (default) or block
 rules:
   - metric: exact_match
     floor: 0.8

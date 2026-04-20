@@ -160,19 +160,24 @@ promptops/
 ├── suites/
 │   └── summarize-smoke.yaml    # Test configurations
 ├── schemas/                    # JSON schemas (from apastra)
-└── policies/                   # Regression policies
+├── policies/                   # Regression policies
+├── runtime/                    # Deterministic scripts (digest, render, runner)
+├── runs/                       # Run scripts (normalize, evaluate_assertions, compare)
+└── validators/                 # Shell scripts for schema validation
 derived-index/
 ├── baselines/                  # Known-good scorecards
 └── regressions/                # Regression reports
 ```
 
+The `runtime/`, `runs/`, and `validators/` directories are shipped with apastra and contain deterministic scripts. The skills call these scripts — you don't need to write or modify them.
+
 ## Next Steps
 
-1. Install the **eval** skill to run evaluations
-2. Install the **baseline** skill to establish your first baseline
-3. Install the **scaffold** skill to quickly generate new prompt specs
-4. Install the **validate** skill to check file formatting
-5. **Upgrade to CI**: Ready to automate pull request gating and releases with GitHub Actions? Install the **setup-ci** skill (`npx skills add BintzGavin/apastra/skills/setup-ci`).
+1. Use the **eval** skill to run your first evaluation
+2. Use the **baseline** skill to establish your first baseline
+3. Use the **scaffold** skill to quickly generate new prompt specs
+4. Use the **validate** skill to check file formatting
+5. **Upgrade to CI**: Use the **setup-ci** skill to add GitHub Actions for PR gating and releases
 
 ## Checklist
 

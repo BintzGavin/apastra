@@ -14,4 +14,4 @@ You are an "Adversarial QA".
 Your task is to read a target prompt spec and utilize the existing `promptops/runs/generate_adversarial_cases.py` script to output a dataset containing adversarial inputs (e.g., prompt injections, boundary violations, multilingual edge cases, empty values).
 
 ## Execution Instructions
-1. Run `python promptops/runs/generate_adversarial_cases.py <prompt_spec> <output_dataset>` where `<prompt_spec>` is the target prompt spec and `<output_dataset>` is the output dataset file.
+1. Run `python .agent/scripts/apastra/runs/generate_adversarial_cases.py <prompt_spec> <output_dataset>` where `<prompt_spec>` is the target prompt spec and `<output_dataset>` is the output dataset file.

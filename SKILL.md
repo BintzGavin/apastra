@@ -9,33 +9,33 @@ Skills for managing AI prompts with the same discipline as code — versioned fi
 
 ## Installation
 
-This is a **collection repository** containing multiple skills. Install individual skills by path:
+### Option 1 — Git clone (language-agnostic)
 
 ```bash
-# Start here — onboarding and project setup
-npx skills add BintzGavin/apastra/skills/getting-started
-
-# Core workflow skills
-npx skills add BintzGavin/apastra/skills/eval
-npx skills add BintzGavin/apastra/skills/baseline
-npx skills add BintzGavin/apastra/skills/scaffold
-npx skills add BintzGavin/apastra/skills/validate
-
-# Or install everything at once
-npx skills add BintzGavin/apastra --all
+git clone --single-branch --depth 1 https://github.com/BintzGavin/apastra.git .agent/skills/apastra
+.agent/skills/apastra/setup
 ```
+
+### Option 2 — npm
+
+```bash
+npm install apastra
+```
+
+Both methods install the skills to `.agent/skills/apastra/` and the runtime scripts to `.agent/scripts/apastra/`.
 
 ## Available Skills
 
 ### Getting Started
-- [skills/getting-started](skills/getting-started) — Project setup, first prompt spec, first evaluation. Start here.
+- [getting-started](getting-started) — Project setup, first prompt spec, first evaluation. Start here.
 
 ### Workflow Skills
-- [skills/eval](skills/eval) — Run evaluations using your IDE agent as the harness. Compare results against baselines.
-- [skills/baseline](skills/baseline) — Establish and manage evaluation baselines for regression detection.
-- [skills/scaffold](skills/scaffold) — Generate new prompt specs, datasets, evaluators, and suites from templates.
-- [skills/validate](skills/validate) — Validate all promptops files against JSON schemas.
-- [skills/setup-ci](skills/setup-ci) — Upgrade from local-first evaluation to automated GitHub Actions CI.
+- [eval](eval) — Run evaluations using your IDE agent as the harness. Compare results against baselines.
+- [baseline](baseline) — Establish and manage evaluation baselines for regression detection.
+- [scaffold](scaffold) — Generate new prompt specs, datasets, evaluators, and suites from templates.
+- [validate](validate) — Validate all promptops files against JSON schemas.
+- [red-team](red-team) — Generate adversarial test cases for robustness testing.
+- [setup-ci](setup-ci) — Upgrade from local-first evaluation to automated GitHub Actions CI.
 
 ## When to Use
 
