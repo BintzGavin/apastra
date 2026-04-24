@@ -1,7 +1,7 @@
 ![Apastra - Lightweight Prompt Evaluation](docs/assets/apastra-hero.jpeg)
 
-[![Schema Validation](https://github.com/BintzGavin/apastra/actions/workflows/schema-validation.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/schema-validation.yml)
-[![Prompt Eval](https://github.com/BintzGavin/apastra/actions/workflows/prompt-eval.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/prompt-eval.yml)
+[![npm version](https://img.shields.io/npm/v/apastra.svg)](https://www.npmjs.com/package/apastra)
+[![GitHub stars](https://img.shields.io/github/stars/BintzGavin/apastra?style=flat)](https://github.com/BintzGavin/apastra/stargazers)
 [![Regression Gate](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](#license)
 > **Disclaimer**: apastra is in active development and not ready for production use yet.
