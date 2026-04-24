@@ -282,7 +282,6 @@ Resolution order: local override → workspace → git ref → packaged artifact
 | `apastra-drift` | Canary suites that run on a schedule to catch post-ship quality erosion when model providers update silently |
 | `apastra-compare` | Multi-model evaluation — run a suite against N models and get a cost/quality/latency comparison scorecard |
 | `apastra-review` | "Paranoid staff prompt engineer" — reviews prompt specs for ambiguity, injection surface, variable hygiene, and output contract completeness |
-| `apastra-red-team` | Generates adversarial test cases: prompt injection attempts, edge-case inputs, multilingual stress tests |
 | `apastra-optimize` | Analyzes token usage, suggests prompt compression, estimates cost reduction |
 | Community prompt packs | Curated starter packs (summarization, extraction, classification, code review) installable as git dependencies with pre-built baselines |
 | Observability adapters | Lightweight bridges to emit run artifacts to Langfuse, OpenTelemetry, and other existing observability systems |

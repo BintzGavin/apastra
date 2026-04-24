@@ -171,6 +171,18 @@ Git submodules are a known alternative for embedding a repo at a pinned commit; 
 └─ .github/workflows/
 ```
 
+**Agent skill + runtime install layout**
+
+Apastra itself installs into the consumer's repo under a dedicated `.agent/` directory, orthogonal to the `promptops/` source tree:
+
+```text
+.agent/
+├─ skills/apastra/     # SKILL.md instructions loaded by the IDE agent
+└─ scripts/apastra/    # Deterministic runtime (Python + shell validators)
+```
+
+This keeps the protocol files (`promptops/`) owned by the consumer project and the apastra runtime (`.agent/scripts/apastra/`) cleanly isolated. Both `git clone … .agent/skills/apastra && setup` and `npm install apastra` produce the same layout, so topology choice (same-repo vs. separate-repo) and install method are independent decisions.
+
 **Artifacts branch (append-only indices)**
 
 ```text
@@ -706,7 +718,7 @@ A credible rollout plan should prioritize developer ergonomics and trust-buildin
 ## Appendices
 
 **A) One-paragraph product pitch**
-Black Hole PromptOps is a GitHub-native PromptOps layer that lets teams ship prompts with the same discipline as code: prompts and eval specs live as versioned files; bring-your-own harnesses execute suites; results are durable, append-only artifacts; regressions gate merges and promotions via required status checks; and approved prompt packages can be promoted to delivery targets with safe rollback. Local iteration stays frictionless because repackaging/publishing is optional and Git-first pins plus local overrides are the default.
+Apastra is a GitHub-native PromptOps layer that lets teams ship prompts with the same discipline as code: prompts and eval specs live as versioned files; bring-your-own harnesses execute suites; results are durable, append-only artifacts; regressions gate merges and promotions via required status checks; and approved prompt packages can be promoted to delivery targets with safe rollback. Local iteration stays frictionless because repackaging/publishing is optional and Git-first pins plus local overrides are the default.
 
 **B) Ten design decisions to lock early (recommended)**
 
@@ -857,13 +869,13 @@ The `model_matrix` field in suites already supports this structurally, but the c
 
 **Design principle: Role specialization. Different phases need different cognitive modes.**
 
-The current skills (eval, baseline, scaffold, validate) are workflow-oriented. The key insight is that the role matters as much as the task. Add role-aware skills:
+The current workflow-oriented skills (eval, baseline, scaffold, validate, setup-ci) leave room for role-specialized agents. Red-team has shipped; Review and Optimize remain as proposed expansions.
 
-| Skill | Agent role | What it does |
-|---|---|---|
-| Review | "Paranoid staff prompt engineer" | Reviews a prompt spec for ambiguity, injection surface, variable hygiene, output contract completeness, cost estimation. |
-| Red-team | "Adversarial QA" | Generates adversarial test cases: prompt injection attempts, edge-case inputs, multilingual stress tests, format-breaking inputs. |
-| Optimize | "Performance engineer" | Analyzes a prompt's token usage, suggests compression techniques, identifies unnecessary instructions, estimates cost reduction. |
+| Skill | Status | Agent role | What it does |
+|---|---|---|---|
+| Red-team | **Shipped** | "Adversarial QA" | Generates adversarial test cases: prompt injection attempts, edge-case inputs, multilingual stress tests, format-breaking inputs. |
+| Review | Proposed | "Paranoid staff prompt engineer" | Reviews a prompt spec for ambiguity, injection surface, variable hygiene, output contract completeness, cost estimation. |
+| Optimize | Proposed | "Performance engineer" | Analyzes a prompt's token usage, suggests compression techniques, identifies unnecessary instructions, estimates cost reduction. |
 
 These do not require new infrastructure — they are agent skill files that leverage existing protocol files but with specialized judgment.
 
@@ -959,13 +971,17 @@ The primary objection to running evals is "it costs money." Making costs explici
 
 ## Expansion priority sequence
 
-| Priority | Action | Effort | Impact |
-|---|---|---|---|
-| P0 | Audit skill (zero-config first contact) | ~2 days | Solves cold-start and discoverability problem |
-| P0 | Project-level config + simplified minimal mode | ~1 day | Reduces onboarding friction by 50% |
-| P1 | Review + red-team skills (role-based) | ~3 days | Role differentiation and prompt hardening |
-| P1 | Drift detection (canary suites) | ~2 days | Post-ship quality — unique differentiator |
-| P2 | Multi-model comparison | ~2 days | Solves daily pain for model-switching teams |
-| P2 | Starter packs (5-10 packs) | ~1 week | Bootstraps community and registry path |
-| P3 | Observability adapters | ~3 days | Bridge strategy — reduce either/or friction |
-| P3 | MCP integration | ~2 days | Future-proofs for tool-calling evaluation |
+Shipped items are marked ✅; unshipped items carry their original priority.
+
+| Priority | Action | Status | Effort | Impact |
+|---|---|---|---|---|
+| P0 | Audit skill (zero-config first contact) | Unshipped | ~2 days | Solves cold-start and discoverability problem |
+| P0 | Project-level config + simplified minimal mode | Unshipped | ~1 day | Reduces onboarding friction by 50% |
+| P1 | Red-team skill (role-based) | ✅ Shipped | — | Adversarial test-case generation |
+| P1 | Review + optimize skills (role-based) | Unshipped | ~2 days | Role differentiation and prompt hardening |
+| P1 | Drift detection (canary suites) | Partial — `canary-drift-detection.yml` workflow exists; no canary skill yet | ~2 days | Post-ship quality — unique differentiator |
+| P2 | Multi-model comparison | Unshipped | ~2 days | Solves daily pain for model-switching teams |
+| P2 | Starter packs (5-10 packs) | Unshipped | ~1 week | Bootstraps community and registry path |
+| P3 | Observability adapters | Unshipped | ~3 days | Bridge strategy — reduce either/or friction |
+| P3 | MCP integration | Unshipped | ~2 days | Future-proofs for tool-calling evaluation |
+| P3 | Setup-CI skill (install workflows into a consumer repo) | ✅ Shipped | — | One-shot CI installation for new adopters |
