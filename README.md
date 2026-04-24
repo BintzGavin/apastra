@@ -5,10 +5,6 @@
 [![Regression Gate](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](#license)
 
-Git-native prompt operations for teams that want to treat prompts like software assets.
-
-Apastra keeps prompt specs, datasets, evaluators, suites, and baselines as plain files in your repo. Your coding agent reads those files to scaffold changes, run evals, compare against baselines, and validate contracts without requiring a hosted platform.
-
 ## What Is This?
 
 Apastra is a file-based protocol and skill pack for prompt engineering workflows.
