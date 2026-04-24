@@ -34,11 +34,27 @@ Apastra is a file-based protocol and skill pack for prompt engineering workflows
 
 ### 1. Install the skill pack
 
+Two install paths — pick whichever fits your project.
+
+**Option A — Git clone (language-agnostic, recommended):**
+
 ```bash
-npx skills add BintzGavin/apastra --all --full-depth -y
+git clone --single-branch --depth 1 https://github.com/BintzGavin/apastra.git .agent/skills/apastra
+.agent/skills/apastra/setup
 ```
 
-This installs the apastra skills into your IDE agent so it can scaffold prompt assets, run evals, set baselines, and validate the protocol.
+**Option B — npm:**
+
+```bash
+npm install apastra
+```
+
+Either path installs to the same layout:
+
+- `.agent/skills/apastra/` — SKILL.md instructions your agent loads
+- `.agent/scripts/apastra/` — deterministic Python runtime + shell validators
+
+The `setup` script auto-installs `pyyaml` and `jsonschema` (falls back to clear manual-install guidance on PEP-668 environments). npm's `postinstall.sh` does the same.
 
 ### 2. Scaffold your first prompt workflow
 
@@ -93,13 +109,10 @@ That is enough to start using apastra locally. CI and release automation are ava
 | `apastra-baseline` | Establish and manage known-good baselines |
 | `apastra-scaffold` | Generate prompt specs, datasets, evaluators, and suites |
 | `apastra-validate` | Validate protocol files against JSON schemas |
+| `apastra-red-team` | Generate adversarial test cases |
+| `apastra-setup-ci` | Install the GitHub Actions workflows for regression gating and release |
 
-Install individual skills:
-
-```bash
-npx skills add BintzGavin/apastra/skills/eval
-npx skills add BintzGavin/apastra/skills/baseline
-```
+All skills install together — there is no per-skill install path. Once installed under `.agent/skills/apastra/`, your agent discovers each sub-skill by its `SKILL.md`.
 
 ## Core Concepts
 
@@ -173,25 +186,26 @@ A baseline is a saved scorecard from a passing run. Future evals compare against
 
 ## File Structure
 
+### In your project (after install)
+
 ```
-promptops/
-├── prompts/          # Prompt specs (YAML)
-├── datasets/         # Test cases (JSONL)
-├── evaluators/       # Scoring rules (YAML)
-├── suites/           # Test configurations (YAML)
-├── schemas/          # 23 JSON schemas for all file types
-├── validators/       # Shell scripts for schema validation
-├── policies/         # Regression policies (allowed thresholds)
-├── harnesses/        # Reference harness adapter (optional)
-├── resolver/         # Prompt resolution chain (Python)
-├── runtime/          # Digest computation, resolution runtime
-├── runs/             # Run artifacts, scorecard normalizer, comparator
-├── manifests/        # Consumption manifests
-└── delivery/         # Delivery targets
+.agent/
+├── skills/apastra/       # Agent-facing SKILL.md files (eval, baseline, scaffold, …)
+└── scripts/apastra/      # Deterministic runtime (Python + shell validators)
+promptops/                # Created by the scaffold skill on first use
+├── prompts/              # Prompt specs (YAML)
+├── datasets/             # Test cases (JSONL)
+├── evaluators/           # Scoring rules (YAML)
+├── suites/               # Test configurations (YAML)
+└── policies/             # Regression policies (allowed thresholds)
 derived-index/
-├── baselines/        # Known-good scorecards
-└── regressions/      # Regression reports
+├── baselines/            # Known-good scorecards
+└── regressions/          # Regression reports
 ```
+
+### In this repo (what gets shipped)
+
+`promptops/` here contains the runtime source that lands in your project's `.agent/scripts/apastra/` at install time — schemas, validators, resolver, runs, harnesses. You do not copy this directory into your project directly; `setup` / `postinstall.sh` does that.
 
 ## How the Agent Runs Evals
 
@@ -210,7 +224,7 @@ flowchart TD
   H --> J[Regression report: PASS/FAIL]
 ```
 
-No external runtime. No Python scripts to install. The agent reads the protocol files and executes the workflow.
+Deterministic steps (prompt rendering, digest computation, scorecard normalization, baseline comparison, schema validation) are delegated to Python + shell scripts under `.agent/scripts/apastra/`. Your agent handles the LLM-dependent parts: calling the model and grading with judge evaluators. No hosted service, no SaaS dependency — just files, scripts, and your agent.
 
 ---
 
