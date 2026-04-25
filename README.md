@@ -5,6 +5,16 @@
 [![Regression Gate](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](#license)
 
+## Evaluate the prompts your agents depend on
+
+Apastra is a lightweight eval layer for modern engineering workflows.
+
+Use it to test Claude Code prompts, Cursor rules, Codex instructions, agent skills, review prompts, planning prompts, or any other AI instructions that affect how work gets done.
+
+The goal is simple: keep prompts in git, run them against repeatable test cases, score the outputs, and catch regressions before bad instructions spread through your workflow
+
+If a prompt is part of your development process, Apastra gives you a way to version it, test it, and baseline it like the rest of your code.
+
 ## What Is This?
 
 Apastra is a file-based protocol and skill pack for prompt engineering workflows.
