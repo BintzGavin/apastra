@@ -238,15 +238,33 @@ When you're ready for more structure, apastra supports:
 
 ### GitHub Actions CI
 
-Five pre-built workflows gate merges and automate promotions:
+Apastra ships three tiers of workflows. Pick the tier that matches your governance needs.
+
+**Basic CI (2 workflows)** — a minimal PR-gate + release pair for teams upgrading from local-first:
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `prompt-eval.yml` | PRs touching `promptops/**` | Delegates to `regression-gate.yml` to block merges on regression |
+| `prompt-release.yml` | Tag push | Delegates to `immutable-release.yml` to cut an immutable release |
+
+**Full CI (6 workflows)** — fine-grained control for teams needing explicit promotion, delivery, and approval records:
 
 | Workflow | Trigger | What it does |
 |---|---|---|
 | `regression-gate.yml` | Pull requests | Blocks merge if regression is detected |
-| `promote.yml` | Manual or release publish | Creates append-only promotion records |
+| `auto-merge.yml` | CI pass | Auto-merges PRs that pass all checks |
+| `promote.yml` | Manual / release publish | Creates append-only promotion records |
 | `deliver.yml` | After promotion | Syncs approved versions to delivery targets |
 | `immutable-release.yml` | Tag push | Creates immutable GitHub releases |
-| `auto-merge.yml` | CI pass | Auto-merges PRs that pass all checks |
+| `record-approval.yml` | Manual | Appends a machine-readable approval state record |
+
+**Canary + hygiene (3 workflows)** — post-ship drift detection and supply-chain basics:
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `canary-drift-detection.yml` | Hourly cron + manual | Runs canary suites against prod baselines; catches silent model drift |
+| `schema-validation.yml` | PRs touching `promptops/prompts/**` or `promptops/datasets/**` | Validates protocol files against JSON schemas |
+| `secret-scan.yml` | PRs touching `promptops/prompts/**` or `promptops/datasets/**` | Scans prompts and datasets for leaked secrets |
 
 ### Git-First Consumption
 
