@@ -3,11 +3,29 @@ Prompt versioning, evals, benchmarks, and delivery
 
 ## Executive summary
 
-This document proposes a state-of-the-art PromptOps architecture that makes prompts behave like disciplined software assets while keeping day-to-day developer workflow low friction. The system is repo-native and uses GitHub as the canonical control plane for versioning, diffs, review, rollback, and auditability via pull requests, required status checks, branch protection, tags, releases, and audit logs.
+This document describes the current Apastra PromptOps architecture and the remaining product vision. Apastra makes prompts behave like disciplined software assets while keeping day-to-day developer workflow low friction. The system is repo-native and uses GitHub as the canonical control plane for versioning, diffs, review, rollback, and auditability via pull requests, required status checks, branch protection, tags, releases, and audit logs.
 
 It is built around a file-based, Git-native architecture: durable state is the source of truth; computation is stateless and replaceable; derived results are append-friendly and immutable where possible; end states and transitions are explicit; humans approve at clear checkpoints; automation can safely operate by generating files and PRs rather than mutating hidden databases. Execution is bring-your-own via a minimal harness contract (“run request in, run artifact out”), so the system does not lock teams into any evaluator framework, agent SDK, provider SDK, runtime, or hosted platform.
 
 Consumption is Git-first. Local overrides and git-ref pins (commit SHA or tag, optionally semver) are first-class, and repackaging/publishing is optional for local iteration. When teams want governed releases, optional packaging formats include GitHub Release assets (with optional immutability), OCI artifacts, and ecosystem wrappers (npm/PyPI), all anchored by content digests for reproducibility and provenance.
+
+### Current implementation snapshot
+
+Apastra has moved beyond the original proposal into a shipped skill pack plus deterministic runtime. The current codebase provides:
+
+- **Installable skill pack:** root `SKILL.md` plus `getting-started`, `eval`, `baseline`, `scaffold`, `validate`, `red-team`, and `setup-ci` skills.
+- **Runtime and protocol source:** Python runtime modules, resolver chain, runner, schema validators, harness adapters, and shell utilities under `promptops/`.
+- **Schema coverage:** JSON schemas and generated API reference pages for prompt specs, datasets, suites, evaluators, run requests/artifacts, scorecards, baselines, regression reports, approvals, promotions, delivery targets, consumption manifests, MCP definitions, observability adapters, canaries, quick evals, community registry records, moderation records, takedowns, provenance, and related governance records.
+- **Evaluation modes:** full suite mode and quick eval mode, with inline assertions for lightweight deterministic checks and optional model-assisted checks.
+- **Governance workflows:** schema validation, secret scanning, regression gate, approval recording, immutable release, promotion, delivery sync, prompt-eval, prompt-release, and a canary drift workflow scaffold.
+- **Runtime helpers:** digest computation, prompt rendering/resolution, runner validation, assertion evaluation, project-level config defaults, audit scanning, canary execution, multi-model comparison, observability emission, MCP server tools, and role-helper entry points for review/red-team/optimization.
+
+Important drift from the initial vision:
+
+- The **agent-as-harness** posture is now the primary developer experience. "BYO harness" remains the technical contract, but user-facing docs should speak in terms of the user's IDE agent running evals.
+- The first wedge is now **local-first evaluation and quick evals**, not governed publishing.
+- Several originally proposed expansions are now at least partially implemented: audit scanning, project config defaults, canaries, multi-model comparison, MCP integration, observability adapters, and review/optimization runtime helpers.
+- The public registry and federation model remain a longer-term v2 direction. The codebase already contains many of the schemas and policy records needed for that direction, but it does not yet ship a hosted registry service or public SDK.
 
 ## Landscape research on existing prompt, eval, and packaging architectures
 
@@ -29,7 +47,7 @@ Key architectural takeaways from the landscape:
 - Platform prompt registries solve “runtime hot swaps” and collaboration with non-engineers, but shift the source of truth away from GitHub; this complicates audit, diffs, and release gates unless you build a production-grade sync and governance layer.
 - Observability platforms solve “debug what happened” but don’t inherently solve “pin what shipped” in downstream applications, which is a packaging and promotion problem.
 
-This proposal synthesizes the strengths (PR feedback loops, flexible harnesses, append-only run artifacts, and compatible packaging) into a GitHub-native system that stays portable.
+This architecture synthesizes the strengths (PR feedback loops, flexible harnesses, append-only run artifacts, and compatible packaging) into a GitHub-native system that stays portable.
 
 ## System thesis, principles, end states, non-goals, and users
 
@@ -51,7 +69,7 @@ Prompts should be treated like versioned software assets with a declared interfa
 
 **Concrete end states**
 
-The system is “working” when these outcomes are routine:
+The system is “working” when these outcomes are routine. In the current repository, the file formats, runtime pieces, and workflow scaffolding are largely present; some workflows still depend on consumer configuration, artifact branch initialization, and real harness/model integration.
 
 - A prompt revision can be traced from source commit → PR review → benchmark runs → regression decision → release tag/release asset → promotion record → delivery target receipt.
 - Prompts can live inside an app repo or in a dedicated prompt repo without changing the conceptual model or consumption contract.
@@ -60,6 +78,14 @@ The system is “working” when these outcomes are routine:
 - Regression policies can gate merges and promotions via required status checks and protected branches.
 - Approved prompt versions are promoted via explicit promotion records; rollback is a promotion to a prior digest, not “edit in place”.
 - Autonomous agents can operate safely because the repo contains machine-readable state; no hidden mutable database is required.
+
+**Current product surface**
+
+- Local-first workflows are shipped through the Apastra skill pack: getting started, eval, baseline, scaffold, validate, red-team, and setup-ci.
+- Quick evals are first-class for small projects: one file can contain the prompt, cases, inline assertions, and thresholds.
+- The deterministic runtime handles rendering, resolution, digesting, assertion evaluation, artifact validation, baseline/regression helper scripts, project config defaults, canaries, comparisons, audit scanning, observability emission, and MCP tool exposure.
+- CI is optional but scaffolded. Basic workflows (`prompt-eval.yml`, `prompt-release.yml`) wrap lower-level governance workflows; enterprise workflows exist for regression gates, approval records, promotion, delivery, immutable releases, schema validation, and secret scanning.
+- Public registry governance is represented by schemas and policy docs, not by a running registry service.
 
 **Non-goals**
 
@@ -89,27 +115,34 @@ The system is “working” when these outcomes are routine:
 | Provider artifact | A distribution wrapper around a prompt package (git ref, release asset, OCI artifact, npm/PyPI wrapper). |
 | Dataset | Versioned evaluation cases (usually JSONL) with content digest and schema. |
 | Evaluator | Scoring definition: deterministic checks, schema validation, rubric/judge config, or human review hooks. |
+| Inline assertion | Per-case check embedded directly in a dataset case or quick eval case for low-friction scoring. |
 | Suite | Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds. |
+| Quick eval | Single-file eval format that combines prompt, cases, assertions, and thresholds for rapid smoke tests. |
 | Harness adapter | Executable integration that can run suites and emit structured run artifacts. |
 | Run request | Immutable “work order” file for running a suite against a revision. |
 | Run artifact | Durable output of the run: manifest, scorecard, per-case records, raw artifact references, failures. |
 | Scorecard | Normalized metrics summary for a run, including metric definitions and metric versioning. |
 | Baseline | A named reference run/digest for regression comparison. |
 | Regression report | Policy-evaluated candidate vs baseline comparison: pass/fail, warnings, evidence deltas. |
+| Canary suite | Scheduled or on-demand suite for detecting provider/model/output drift after shipping. |
+| Drift report | Candidate canary results compared against a production baseline or expected behavior. |
 | Approval state | Machine-readable record that a revision/package passed required checks and human review. |
 | Promotion record | Append-only record binding an approved digest/version to a channel and evidence links. |
 | Delivery target | Declarative config describing how to sync an approved version to downstream systems. |
+| Observability adapter | Declarative bridge for emitting run artifacts to systems such as Langfuse or OpenTelemetry sinks. |
+| MCP server adapter | Runtime integration that exposes PromptOps actions, such as listing suites and running evals, as MCP tools. |
 | Consumption manifest | App-side file declaring pins, overrides, and mappings from prompt IDs to usage. |
+| Community registry record | v2 governance state for public prompt-pack submission, moderation, provenance, deprecation, takedown, appeals, reporting, namespace claims, and mirror sync. |
 
 ### Architectural mapping
 
 This system’s file-based architectural mapping is intentionally strict.
 
-**Durable state (source of truth, in Git):** prompt specs, datasets, evaluators, suites, harness adapter specs, regression policies, delivery target specs, consumption manifests.
+**Durable state (source of truth, in Git):** prompt specs, quick evals, datasets, evaluators, suites, canary suites, harness adapter specs, project config, regression policies, delivery target specs, observability adapter specs, MCP tool definitions, consumption manifests, and governance/policy records.
 
-**Stateless compute (workers):** GitHub Actions jobs, self-hosted runners, internal schedulers, notebooks, CLIs. Workers read run requests and emit run artifacts. Workers are replaceable and should be horizontally scalable.
+**Stateless compute (workers):** IDE agents, GitHub Actions jobs, self-hosted runners, internal schedulers, notebooks, CLIs, and MCP tools. Workers read run requests and emit run artifacts. Workers are replaceable and should be horizontally scalable.
 
-**Append-friendly immutable artifacts (derived state):** run artifacts, regression reports, promotion records. These should be immutable records. Store small indexes in Git; store large raw outputs (transcripts, traces) in an open-ended artifact backend referenced by digest. GitHub Actions artifacts default to 90-day retention and should not be treated as the long-term archive.
+**Append-friendly immutable artifacts (derived state):** run artifacts, comparison scorecards, drift reports, audit reports, regression reports, approval states, promotion records, delivery target receipts, mirror sync receipts, takedown/deprecation records, and provenance attestations. These should be immutable records. Store small indexes in Git; store large raw outputs (transcripts, traces) in an open-ended artifact backend referenced by digest. GitHub Actions artifacts default to 90-day retention and should not be treated as the long-term archive.
 
 **Human checkpoints:** PR review; explicit approvals for promotion and policy changes via CODEOWNERS and branch protection.
 
@@ -143,12 +176,15 @@ Git submodules are a known alternative for embedding a repo at a pinned commit; 
 │  ├─ prompts/            # prompt specs (source)
 │  ├─ datasets/           # JSONL + manifests (source)
 │  ├─ evaluators/         # evaluator specs (source)
+│  ├─ evals/              # quick eval files (source)
 │  ├─ suites/             # suites (source)
+│  ├─ canaries/           # scheduled drift checks (source)
 │  ├─ harnesses/          # harness adapter specs (source)
 │  ├─ policies/           # regression + promotion policies (source)
 │  ├─ delivery/           # delivery targets (source)
 │  └─ manifests/
 │     └─ consumption.yaml # app pins + overrides (source)
+├─ promptops.config.yaml  # optional project-level defaults
 ├─ derived-index/         # small append-friendly indices (optional)
 │  ├─ baselines/
 │  └─ promotions/
@@ -163,10 +199,13 @@ Git submodules are a known alternative for embedding a repo at a pinned commit; 
 │  ├─ prompts/
 │  ├─ datasets/
 │  ├─ evaluators/
+│  ├─ evals/
 │  ├─ suites/
+│  ├─ canaries/
 │  ├─ harnesses/
 │  ├─ policies/
 │  └─ delivery/
+├─ promptops.config.yaml  # optional defaults for local and CI runs
 ├─ dist/                  # optional packaging output (not required for dev)
 └─ .github/workflows/
 ```
@@ -195,8 +234,14 @@ artifacts/
     artifact_refs.json
   reports/YYYY/MM/DD/<report_id>/
     regression_report.json
+    drift_report.json
+    audit_report.json
+  approvals/YYYY/MM/DD/<approval_id>/
+    approval_state.json
   promotions/YYYY/MM/DD/<promotion_id>/
     promotion_record.json
+  receipts/YYYY/MM/DD/<receipt_id>/
+    delivery_target_receipt.json
 ```
 
 This “artifacts branch” pattern reduces merge conflicts and keeps derived artifacts out of the source-of-truth branch while remaining Git-native.
@@ -434,16 +479,28 @@ thresholds:
 
 ### Consolidated CI mode
 
-For teams upgrading from local-first to CI, the system offers a simplified two-workflow setup alongside the full six-workflow enterprise setup:
+For teams upgrading from local-first to CI, the codebase now includes a simplified two-workflow setup alongside the lower-level governance workflows that power enterprise-style enforcement:
 
 **Basic CI (2 workflows):**
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `prompt-eval.yml` | Pull requests (changes to `promptops/**`) | Runs regression suites against the PR's changes and posts results. Blocks merge if regressions detected. |
-| `prompt-release.yml` | Tag push (e.g., `v1.x.x`) | Creates an immutable release and appends a promotion record. |
+| `prompt-eval.yml` | Pull requests (changes to `promptops/**`) | Delegates to `regression-gate.yml`, which checks prompt-relevant changes against regression evidence when an artifacts branch exists. |
+| `prompt-release.yml` | Tag push (e.g., `v1.x.x`) | Delegates to `immutable-release.yml`, packages `promptops/`, computes a digest, attests build provenance, and creates a GitHub Release. |
 
-**Full CI (6 workflows):** For enterprise teams needing fine-grained control — separate regression gate, auto-merge, promote, deliver, immutable release, and approval recording workflows.
+**Additional governance workflows in this repo:**
+
+| Workflow | Current role |
+|---|---|
+| `schema-validation.yml` | Validates changed prompt and dataset files with schema validators. |
+| `secret-scan.yml` | Blocks obvious secrets in prompts and datasets. |
+| `regression-gate.yml` | Reads regression evidence from `promptops-artifacts` and fails on policy violations or cost-budget overruns. |
+| `record-approval.yml` | Appends approval-state records to the artifacts branch. |
+| `promote.yml` | Requires matching approval state, appends promotion records, and invokes delivery. |
+| `deliver.yml` | Reads promotion records and matches delivery targets for channel sync. Current implementation logs target execution rather than integrating a real external delivery backend. |
+| `immutable-release.yml` | Packages prompts, computes digest, creates an attested release asset. |
+| `canary-drift-detection.yml` | Scheduled/manual drift workflow scaffold; current steps are placeholders around the canary/drift report flow. |
+| `auto-merge.yml` | Repository automation for trusted maintainers/bots; not core to the PromptOps protocol. |
 
 ### Policy-driven regression detection model
 
@@ -546,16 +603,21 @@ Reusable workflows allow platform teams to standardize automation across many re
 
 ### Phased build plan
 
-| Phase | What to build | Value unlocked |
-|---|---|---|
-| Spec + validation | JSON/YAML schemas and validators for core files | Agents and humans share a stable machine-readable protocol |
-| Git-first resolver + minimal runtime | Resolve prompts from workspace, local override, git refs | Low-friction consumption without publishing |
-| Deterministic digest tooling | Canonicalization + digests for prompts/datasets | Reproducibility and meaningful lineage |
-| Harness adapter runner | Run request → harness → run artifact | BYO compute becomes real |
-| Regression policy engine | Baselines + blockers/warnings + diff reports | Merge gating on real quality evidence |
-| GitHub integration | Checks/status reporting, reusable workflows, CODEOWNERS patterns | Org-wide PromptOps standardization. |
-| Release + promotion | Tags/releases, immutable release option, promotion records | Governed distribution and rollback. |
-| Optional hardening | OCI artifacts, attestations, verification UX | Supply-chain integrity and scalable distribution. |
+| Phase | Current status | What exists now | Remaining work |
+|---|---|---|---|
+| Spec + validation | Shipped, broad | JSON schemas, shell validators, API reference docs, schema-validation workflow | Tighten cross-reference checks and keep docs generated as schemas evolve |
+| Git-first resolver + minimal runtime | Shipped baseline | Resolver chain for local/workspace/git-ref/packaged paths, render/resolve CLI, consumption manifest schema | Harden remote fetching/caching and user-facing resolver errors |
+| Deterministic digest tooling | Shipped baseline | `promptops/runtime/digest.py`, digest convention docs, digest fields across schemas | Finalize canonical YAML/JSON normalization guarantees |
+| Harness adapter runner | Shipped baseline | Runner validates run-request input and required run artifacts; reference adapter exists | Add more production adapters and real model-provider harness examples |
+| Quick eval + inline assertions | Shipped | `quick-eval` schema/script, inline assertion evaluator, eval skill instructions | Improve single-command UX and richer assertion reporting |
+| Regression policy engine | Partial | Baseline skill, regression report schema/script, regression-gate workflow reading artifact evidence | Make end-to-end local comparison smoother and initialize artifacts branch automatically |
+| Project config defaults | Shipped baseline | `promptops.config.yaml` schema and runtime default application | Document precedence and expand config coverage |
+| GitHub integration | Shipped scaffolding | Basic and governance workflows, CODEOWNERS/ruleset examples, setup-ci skill | Replace placeholder workflow steps with real adapter execution where needed |
+| Release + promotion | Partial | Immutable release workflow with digest/provenance attestation, approval-state workflow, promotion and delivery records | Integrate real downstream delivery target implementations |
+| Drift/canary detection | Partial | Canary schema/runtime and scheduled workflow scaffold | Wire canaries to real baseline comparison, alerting, and rollback policy |
+| MCP + observability | Partial | MCP server tools for listing/running suites; observability adapter schema/runtime mock emission | Package MCP dependencies cleanly and implement real sink adapters |
+| Public registry/federation | Schema/policy foundation | Registry, moderation, provenance, takedown, appeal, namespace, mirror, and community-pack schemas/policies | Build hosted registry/API/SDK and operational moderation workflows |
+| Optional hardening | Partial | GitHub artifact attestations in release workflow; provenance schemas | Add signature verification UX, OCI packaging, and stronger supply-chain profiles |
 
 ### Open questions
 
@@ -750,37 +812,71 @@ Apastra is a GitHub-native PromptOps layer that lets teams ship prompts with the
 | “Floating latest prompt” in production | No rollback safety and unclear lineage |
 | Building a UI-first platform before the spec | Protocol instability and ecosystem lock-in |
 
-**D) Minimal viable internal schema inventory**
+**D) Current internal schema inventory**
 
 | File type | One-line explanation |
 |---|---|
 | `prompt.yaml` | Prompt spec with stable ID, vars schema, output contract, metadata |
+| `quick_eval.yaml` | Single-file prompt + cases + assertions + thresholds |
 | `dataset_manifest.yaml` | Dataset identity, schema version, digest, provenance |
 | `dataset.jsonl` | Append-friendly test cases with stable `case_id`s |
 | `evaluator.yaml` | Scoring definition; judge config is versioned here |
 | `suite.yaml` | Benchmark suite: datasets, evaluators, model matrix, trials, budgets |
+| `canary_suite.yaml` | Scheduled drift check linked to a suite and alert policy |
 | `harness_adapter.yaml` | How to invoke harness + capabilities + required env vars |
+| `promptops_config.yaml` | Project-level defaults for models, sampling config, thresholds, and baseline behavior |
 | `run_request.json` | Immutable instruction: suite + revision + config |
 | `run_manifest.json` | Resolved digests + model IDs + env metadata + status |
 | `scorecard.json` | Normalized metrics + metric versions + variance |
+| `comparison_scorecard.json` | Cross-model scorecard with cost, quality, and latency tradeoffs |
 | `cases.jsonl` | Per-case results and pointers to raw outputs |
 | `artifact_refs.json` | URIs + digests to large raw artifacts |
+| `run_failures.json` | Structured failures emitted by a harness |
 | `regression_policy.yaml` | Baseline rules + thresholds + blockers/warnings |
 | `regression_report.json` | Candidate vs baseline outcome + evidence |
+| `drift_report.json` | Canary or production drift comparison outcome |
+| `audit_report.json` | Prompt-debt/codebase audit findings |
+| `approval_state.json` | Human and check approval decision for a revision |
 | `promotion_record.json` | Append-only promotion binding digest/version to channel |
 | `delivery_target.yaml` | Declarative target sync config |
+| `delivery_target_receipt.json` | Receipt for a delivery target sync |
+| `release_descriptor.yaml` | Released package metadata, digest, and evidence refs |
+| `provider_artifact.json` | Distribution wrapper around released prompt package material |
 | `consumption.yaml` | App-side pins, overrides, and prompt-ID mappings |
+| `mcp_server_adapter.yaml` | MCP server integration metadata |
+| `mcp_tool_definition.json` | MCP tool contract used by tool-calling prompt evals |
+| `observability_adapter_config.yaml` | Adapter config for emitting run artifacts to external observability systems |
+| `prompt_optimization_report.json` | Optimization/review output for prompt hardening |
+| `agent_skill.json` | Agent skill metadata for role-based workflows |
+| `community_prompt_pack.json` | Public/community prompt-pack metadata |
+| `submission_record.json` | Public registry package submission event |
+| `moderation_decision_record.json` | Public listing moderation outcome |
+| `moderation_escalation_record.json` | Escalation path for high-risk moderation cases |
+| `moderation_approval_for_public_listing.json` | Explicit approval state for public registry listing |
+| `community_report_record.json` | Community-submitted report against a prompt pack |
+| `policy_exception_record.json` | Approved exception to a published policy |
+| `vulnerability_flag_record.json` | Security or safety vulnerability flag against a package |
+| `takedown_record.json` | Takedown decision record |
+| `takedown_appeal_record.json` | Appeal against a takedown |
+| `emergency_takedown_decision.json` | Fast-path takedown action and justification |
+| `ownership_dispute_record.json` | Namespace or ownership dispute event |
+| `namespace_claim_record.json` | Claim to a package namespace |
+| `trusted_publisher_provenance.json` | Trusted publisher evidence |
+| `provenance_attestation.json` | Build/publish provenance evidence |
+| `deprecation_record.json` | Deprecation notice and replacement guidance |
+| `mirror_sync_receipt.json` | Receipt for registry mirror sync |
+| `flake_quarantine_record.json` | Quarantine record for flaky eval cases |
 
-**E) Repo build handoff for an autonomous coding agent**
+**E) Implementation status handoff for an autonomous coding agent**
 
-Build in this order:
+The original build order is mostly complete. Treat this as a maintenance and hardening map, not a greenfield task list:
 
-1) Define schemas + validators for prompt spec, suite, run request, run manifest, scorecard, regression policy.
-2) Implement the resolver: local override → workspace → git ref retrieval (tag/SHA) → packaged artifact.
-3) Implement deterministic digest computation for prompts and datasets (canonicalization rules).
-4) Implement minimal consumption runtime: resolve prompt ID → render template → return structured prompt + metadata.
-5) Implement runner shim: invoke harness adapter with run request; collect run artifact directory.
-6) Implement regression engine: compare scorecards, emit regression report, and publish a GitHub check/status result via the appropriate API surface.
+1) Keep schemas and validators authoritative; add or update docs when schema fields change.
+2) Harden resolver behavior across local override, workspace, git-ref, and packaged artifact paths.
+3) Finalize canonical digest normalization rules for YAML/JSON and package bundles.
+4) Improve the local eval path: quick evals, inline assertions, baseline comparison, and clear scorecard reporting.
+5) Expand real harness adapters beyond the reference adapter and document provider-specific examples.
+6) Complete the governance loop: generate regression/drift reports, persist them on `promptops-artifacts`, and surface GitHub checks/statuses consistently.
 
 **F) Topology recommendation matrix**
 
@@ -816,18 +912,20 @@ Six "forcing questions" to stress-test product viability:
 | Observation surprises | Promptfoo → OpenAI acquisition. Role-based agent workflows mainstreaming. SKILL.md ecosystem. | The promptfoo acquisition validates the category and simultaneously removes the dominant OSS competitor from neutrality. |
 | Future-fit | Agent-as-harness, file-based protocol, SKILL.md native. | Perfectly aligned with the emerging thesis that small teams use agents as multipliers. This system is the quality layer those agents need. |
 
-## Proposed expansions
+## Expansion backlog and current drift
 
 ### Expansion 1: Audit skill — zero-config first contact
 
 **Design principle: Narrowest wedge. Make the first 60 seconds undeniable.**
 
-A new skill that scans an existing codebase for hardcoded prompts (in strings, template literals, YAML, env vars) and generates a report:
+Current state: the runtime scanner exists as `promptops/runtime/audit.py`, with a CLI entry point (`python -m promptops.runtime.cli audit`) and `audit-shim.sh`. A dedicated `apastra-audit` skill has not been added yet.
+
+The scanner looks for hardcoded prompts (in strings, template literals, YAML, env vars) and generates a report:
 
 - How many prompts exist and where.
 - Which ones have no tests, no versioning, no variable schema.
 - A severity score ("prompt debt").
-- Auto-generated scaffold suggestions for the top 3 riskiest prompts.
+- Auto-generated scaffold suggestions for the top 3 riskiest prompts. This remains proposed; the current scanner reports findings and a debt score.
 
 Today's onboarding requires the user to already believe they need promptops. The audit skill creates the belief by showing them their exposure.
 
@@ -837,7 +935,9 @@ Today's onboarding requires the user to already believe they need promptops. The
 
 The current vision covers pre-ship quality (regression gating) thoroughly but does not address post-ship quality erosion — the primary unaddressed pain in production AI systems. Model providers update silently. Prompts that passed last week may fail today.
 
-A new "drift detection" capability:
+Current state: canary and drift primitives are partially implemented. The repo contains `canary-suite` and `drift-report` schemas, `promptops/runtime/canary.py`, `promptops/runs/generate_drift_report.sh`, a sample `promptops/canaries/test-canary.yaml`, and `.github/workflows/canary-drift-detection.yml`. The workflow still contains placeholder shell steps around alerting and rollback.
+
+The intended drift detection capability:
 
 - Define a **canary suite** — a small set of critical assertions that run on a schedule (cron, CI, or agent-triggered).
 - When model provider updates cause output drift, the canary suite catches it.
@@ -857,6 +957,8 @@ alert:
 
 **Design principle: Demand reality. Teams are constantly switching and comparing models.**
 
+Current state: multi-model comparison has a runtime path via `promptops/runtime/compare.py`, `promptops/runs/compare.py`, `generate_comparison_scorecard.py`, the `comparison-scorecard` schema, and a baseline-skill command reference. The core comparison scorecard exists; UX and promotion-candidate handling still need polish.
+
 Extend the existing `model_matrix` concept with a first-class comparison experience:
 
 - Run a suite against N models simultaneously.
@@ -869,13 +971,13 @@ The `model_matrix` field in suites already supports this structurally, but the c
 
 **Design principle: Role specialization. Different phases need different cognitive modes.**
 
-The current workflow-oriented skills (eval, baseline, scaffold, validate, setup-ci) leave room for role-specialized agents. Red-team has shipped; Review and Optimize remain as proposed expansions.
+The current workflow-oriented skills (eval, baseline, scaffold, validate, setup-ci) leave room for role-specialized agents. Red-team has shipped as a user-facing skill. Review and Optimize have runtime CLI entry points (`apastra-review`, `apastra-optimize`) but no dedicated skill directories yet.
 
 | Skill | Status | Agent role | What it does |
 |---|---|---|---|
 | Red-team | **Shipped** | "Adversarial QA" | Generates adversarial test cases: prompt injection attempts, edge-case inputs, multilingual stress tests, format-breaking inputs. |
-| Review | Proposed | "Paranoid staff prompt engineer" | Reviews a prompt spec for ambiguity, injection surface, variable hygiene, output contract completeness, cost estimation. |
-| Optimize | Proposed | "Performance engineer" | Analyzes a prompt's token usage, suggests compression techniques, identifies unnecessary instructions, estimates cost reduction. |
+| Review | Runtime helper shipped; skill missing | "Paranoid staff prompt engineer" | Reviews a prompt spec for ambiguity, injection surface, variable hygiene, output contract completeness, cost estimation. |
+| Optimize | Runtime helper shipped; skill missing | "Performance engineer" | Analyzes a prompt's token usage, suggests compression techniques, identifies unnecessary instructions, estimates cost reduction. |
 
 These do not require new infrastructure — they are agent skill files that leverage existing protocol files but with specialized judgment.
 
@@ -883,7 +985,7 @@ These do not require new infrastructure — they are agent skill files that leve
 
 **Design principle: Make something people want — then make it easy to share.**
 
-The public prompt library registry described in the v2 section above is the right long-term target. The immediate version:
+Current state: starter pack artifacts exist under `derived-index/starter-packs/` for summarization, extraction, classification, and code-review, with a generator script. The public prompt library registry described in the v2 section above is still the long-term target. The immediate version:
 
 - Curate 10-20 "starter packs" as GitHub repos under a custodian org:
   - Summarization — prompts, datasets, evaluators for text summarization.
@@ -899,7 +1001,9 @@ This bootstraps the registry without building the registry. Git is the registry.
 
 **Design principle: Status quo pain — teams already have observability; don't replace it.**
 
-Lightweight adapters that emit run artifacts to existing observability systems:
+Current state: the repo includes an observability adapter schema, a sample `promptops/delivery/observability.yaml`, `promptops/runtime/observability.py`, and `promptops/runs/emit_observability.py`. Emission is currently a validated/mock bridge, not a production integration with external systems.
+
+Lightweight adapters should emit run artifacts to existing observability systems:
 
 ```yaml
 # promptops/delivery/observability.yaml
@@ -914,11 +1018,11 @@ adapters:
 
 The vision correctly identifies observability platforms as complementary, not competitive. Without a bridge, teams choose either this system or their observability stack. The bridge removes the choice.
 
-## Proposed refinements
+## Refinements backlog
 
 ### Refinement 1: Simplified minimal file structure
 
-The current `promptops/` directory has 13 subdirectories. For a solo builder, this is intimidating. Proposal:
+The current `promptops/` source tree is broad because it ships both protocol/runtime internals and example project files. For consumer projects, the README and skills now steer toward a smaller first setup. The remaining refinement is for scaffolding to create the smallest useful structure by default.
 
 **Minimal mode** (auto-detected when ≤3 prompt specs exist):
 
@@ -929,9 +1033,11 @@ promptops/
 └── baselines/
 ```
 
-The full structure activates progressively as complexity grows. The scaffolding agent should create only what is needed.
+The full structure should activate progressively as complexity grows. The scaffolding agent should create only what is needed.
 
 ### Refinement 2: Project-level defaults via config file
+
+Current state: this is implemented at the runtime layer. `promptops.config.yaml` / `.yml` is discovered by walking upward from the current working directory, validated against `promptops-config.schema.json`, and applied before runner execution. Documentation and UX still need to make the precedence rules obvious.
 
 ```yaml
 # promptops.config.yaml
@@ -950,14 +1056,14 @@ This prevents repetitive configuration across suites and accelerates initial onb
 
 ### Refinement 3: MCP integration
 
-The system should integrate with the Model Context Protocol (MCP), the dominant tool-calling standard in 2026:
+Current state: MCP integration is partially implemented. The repo includes MCP-related schemas and `promptops/runtime/mcp_server.py`, which exposes suite listing and evaluation execution as MCP tools. Packaging/dependency setup and richer tool coverage remain to be finished.
 
 - Support MCP tool definitions as part of prompt specs (for tool-calling prompt evaluation).
 - Provide an MCP server adapter so agents can discover and invoke evals as MCP tools.
 
 ### Refinement 4: First-class cost tracking
 
-The assertion types include `cost` and `latency`, but cost tracking should be elevated:
+Current state: assertion evaluation supports `cost` and `latency`, `regression-gate.yml` checks `run_manifest.total_cost` against suite `budgets.cost_budget`, and comparison scorecards include cost/quality/latency tradeoffs. Cost tracking should still be elevated across all run artifacts:
 
 - Every run manifest should include total cost (input tokens × price + output tokens × price).
 - Regression reports should include cost delta.
@@ -971,17 +1077,17 @@ The primary objection to running evals is "it costs money." Making costs explici
 
 ## Expansion priority sequence
 
-Shipped items are marked ✅; unshipped items carry their original priority.
+Shipped and partial items reflect the current codebase.
 
 | Priority | Action | Status | Effort | Impact |
 |---|---|---|---|---|
-| P0 | Audit skill (zero-config first contact) | Unshipped | ~2 days | Solves cold-start and discoverability problem |
-| P0 | Project-level config + simplified minimal mode | Unshipped | ~1 day | Reduces onboarding friction by 50% |
+| P0 | Audit skill (zero-config first contact) | Partial — runtime scanner and CLI exist; dedicated skill missing | ~1 day | Solves cold-start and discoverability problem |
+| P0 | Project-level config + simplified minimal mode | Partial — config runtime exists; minimal scaffolding still needs polish | ~1 day | Reduces onboarding friction |
 | P1 | Red-team skill (role-based) | ✅ Shipped | — | Adversarial test-case generation |
-| P1 | Review + optimize skills (role-based) | Unshipped | ~2 days | Role differentiation and prompt hardening |
-| P1 | Drift detection (canary suites) | Partial — `canary-drift-detection.yml` workflow exists; no canary skill yet | ~2 days | Post-ship quality — unique differentiator |
-| P2 | Multi-model comparison | Unshipped | ~2 days | Solves daily pain for model-switching teams |
-| P2 | Starter packs (5-10 packs) | Unshipped | ~1 week | Bootstraps community and registry path |
-| P3 | Observability adapters | Unshipped | ~3 days | Bridge strategy — reduce either/or friction |
-| P3 | MCP integration | Unshipped | ~2 days | Future-proofs for tool-calling evaluation |
+| P1 | Review + optimize skills (role-based) | Partial — runtime helpers and CLI entry points exist; skill docs missing | ~1 day | Role differentiation and prompt hardening |
+| P1 | Drift detection (canary suites) | Partial — schemas/runtime/sample/workflow exist; alerting/rollback path is placeholder | ~2 days | Post-ship quality differentiator |
+| P2 | Multi-model comparison | Partial — runtime comparison and schema exist; UX/promotion flow missing | ~1 day | Solves daily pain for model-switching teams |
+| P2 | Starter packs (5-10 packs) | Partial — generated packs exist for several domains | ~2-4 days | Bootstraps community and registry path |
+| P3 | Observability adapters | Partial — schema/runtime mock emission exists | ~2 days | Bridge strategy; reduce either/or friction |
+| P3 | MCP integration | Partial — MCP server exposes suite list/run tools | ~2 days | Future-proofs for tool-calling evaluation |
 | P3 | Setup-CI skill (install workflows into a consumer repo) | ✅ Shipped | — | One-shot CI installation for new adopters |
