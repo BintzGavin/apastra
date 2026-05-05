@@ -7,6 +7,12 @@ description: Quick setup guide for apastra PromptOps. Create your first prompt s
 
 Set up prompt versioning and evaluation in any project. No CI, no cloud, no framework — just files and your IDE agent.
 
+## Generic coding agent megaprompt
+
+To install Apastra **in any foreign repository** via a **generic coding agent** (interactive choices, eval triage, phased upgrades), copy [`megaprompt.md`](megaprompt.md). The same text is inlined in the repo root [`README.md`](../README.md) inside a `<details>` collapsible—**keep those two copies in sync manually** when editing this file.
+
+After scaffolding, start from [`templates/promptops-README.md`](templates/promptops-README.md) when creating a comprehensive `promptops/README.md` in the target repo.
+
 ## What Is Apastra?
 
 Apastra treats AI prompts as versioned software assets. Prompts, test cases, and scoring rules are files in your repo. Your IDE agent runs evaluations, compares results against baselines, and catches regressions — all locally.

@@ -27,7 +27,9 @@ Both methods install the skills to `.agent/skills/apastra/` and the runtime scri
 ## Available Skills
 
 ### Getting Started
+
 - [getting-started](getting-started) — Project setup, first prompt spec, first evaluation. Start here.
+- [getting-started/megaprompt.md](getting-started/megaprompt.md) — Copy/paste onboarding megaprompt for **generic coding agents** working in arbitrary repositories.
 
 ### Workflow Skills
 - [eval](eval) — Run evaluations using your IDE agent as the harness. Compare results against baselines.
