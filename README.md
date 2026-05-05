@@ -36,6 +36,8 @@ Apastra is a file-based protocol and skill pack for prompt engineering workflows
 
 ## Quick Start
 
+**Adding Apastra inside another repository with a coding agent?** Start from the [**generic agent megaprompt**](getting-started/megaprompt.md) for interactive file discovery, eval triage, phased baselines, and optional CI—rather than only the minimal four steps below. The same prompt is also available in a collapsible block under [**Generic coding agent onboarding megaprompt**](#generic-coding-agent-onboarding-megaprompt).
+
 ### 1. Install the skill pack
 
 Two install paths — pick whichever fits your project.
