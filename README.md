@@ -1,5 +1,8 @@
 Apastra - Lightweight Prompt Evaluation
 
+<img width="3168" height="1344" alt="apastra-hero" src="https://github.com/user-attachments/assets/08f9de78-6491-47dc-94df-b2bbc8878bce" />
+
+
 [npm version](https://www.npmjs.com/package/apastra)
 [Regression Gate](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml)
 [License](#license)
