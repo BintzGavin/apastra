@@ -14,7 +14,6 @@ The goal is simple: keep your prompts in git, run them against repeatable test c
 
 If any instructions given to an AI are part of your development or production workflow, Apastra gives you a way to version, test, and baseline them like the rest of your code.
 
-
 ## What is an eval actually?
 
 Evaluating AI prompts via deterministic tests instead of just guessing how they are working. Like unit tests for your prompts.
@@ -22,7 +21,6 @@ Evaluating AI prompts via deterministic tests instead of just guessing how they 
 ## What Is This?
 
 Apastra is a file-based protocol and skill pack for evaluating your agent's skills and prompts. 
-
 
 
 | If you want to...                         | Apastra gives you...                                               |
@@ -36,7 +34,7 @@ Apastra is a file-based protocol and skill pack for evaluating your agent's skil
 
 ## Agent onboarding megaprompt
 
-**Adopting Apastra in your own codebase** and want a single, copy-paste workflow for an AI assistant? Use `**[getting-started/megaprompt.md](getting-started/megaprompt.md)`**. It walks through install, choosing **one** first eval to prove the setup (`**apastra-writing-evals`** for design, `**apastra-scaffold**` for files), then optional baselines and CI—step by step, with pauses for decisions. That file is the **only** place the full prompt lives (this README just points to it).
+**Adopting Apastra in your own codebase** and want a single, copy-paste workflow for an AI assistant? Use `**[getting-started/megaprompt.md](getting-started/megaprompt.md)`**. It walks through install, choosing one first eval to prove the setup (`**apastra-writing-evals`** for design, `**apastra-scaffold**` for files), then optional baselines and CI—step by step, with pauses for decisions. That file is the **only** place the full prompt lives (this README just points to it).
 
 ## Is this actually lightweight?
 
@@ -300,7 +298,7 @@ Apastra ships three tiers of workflows. Pick the tier that matches your governan
 | Workflow                     | Trigger                                                        | What it does                                                          |
 | ---------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------- |
 | `canary-drift-detection.yml` | Hourly cron + manual                                           | Runs canary suites against prod baselines; catches silent model drift |
-| `schema-validation.yml`      | PRs touching `promptops/prompts/`** or `promptops/datasets/**` | Validates protocol files against JSON schemas                         |
+| `schema-validation.yml`      | PRs touching `promptops/prompts/`** or `promptops/datasets/`** | Validates protocol files against JSON schemas                         |
 | `secret-scan.yml`            | PRs touching `promptops/prompts/**` or `promptops/datasets/**` | Scans prompts and datasets for leaked secrets                         |
 
 
@@ -342,15 +340,16 @@ Resolution order: local override → workspace → git ref → packaged artifact
 
 Shipped skills are listed under **Included Skills** above (including `apastra-red-team`). Everything here is **extra surface area**: some pieces already exist in the runtime or as schemas, while the agent-facing skill or production hardening is still to come. For depth and evolving status, see [docs/vision.md](docs/vision.md) (expansion backlog).
 
-| Capability | Status | Today / next |
-| ---------- | ------ | ------------ |
-| **`apastra-audit`** — scan for hardcoded prompts and "prompt debt" | Partial — runtime | `promptops/runtime/audit.py`, CLI `audit`, `audit-shim.sh`. **Missing:** dedicated `apastra-audit` skill. |
-| **Drift / canaries** — scheduled checks for post-ship model drift | Partial — runtime + CI scaffold | `promptops/runtime/canary.py`, canary schemas and samples, drift report helpers, `canary-drift-detection.yml`. **Missing:** reliable alerting/rollback wiring in workflows. |
-| **`apastra-compare`** — multi-model runs and comparison scorecards | Partial — runtime | `promptops/runtime/compare.py`, CLI `compare`, comparison scorecard schema. **Missing:** polished UX and promotion-candidate flows. |
-| **`apastra-review`** — strict prompt-spec review | Partial — CLI helper | `apastra-review` entry point in `promptops/runtime/cli.py`. **Missing:** skill pack directory and guided agent workflow. |
-| **`apastra-optimize`** — token/cost-oriented prompt tightening | Partial — CLI helper | `apastra-optimize` entry point in `promptops/runtime/cli.py`. **Missing:** skill pack directory and guided agent workflow. |
-| **Community / starter packs** | Partial — artifacts | Starter pack JSON under `derived-index/starter-packs/` (summarization, extraction, classification, code review). **Missing:** curated installable repos and public registry story. |
-| **Observability adapters** | Partial — schema + bridge | Adapter schema, `promptops/delivery/observability.yaml`, `promptops/runtime/observability.py`, `promptops/runs/emit_observability.py` (Langfuse / OpenTelemetry shapes). **Missing:** production-grade emission to real sinks. |
+
+| Capability                                                         | Status                          | Today / next                                                                                                                                                                                                                   |
+| ------------------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `**apastra-audit`** — scan for hardcoded prompts and "prompt debt" | Partial — runtime               | `promptops/runtime/audit.py`, CLI `audit`, `audit-shim.sh`. **Missing:** dedicated `apastra-audit` skill.                                                                                                                      |
+| **Drift / canaries** — scheduled checks for post-ship model drift  | Partial — runtime + CI scaffold | `promptops/runtime/canary.py`, canary schemas and samples, drift report helpers, `canary-drift-detection.yml`. **Missing:** reliable alerting/rollback wiring in workflows.                                                    |
+| `**apastra-compare`** — multi-model runs and comparison scorecards | Partial — runtime               | `promptops/runtime/compare.py`, CLI `compare`, comparison scorecard schema. **Missing:** polished UX and promotion-candidate flows.                                                                                            |
+| `**apastra-review`** — strict prompt-spec review                   | Partial — CLI helper            | `apastra-review` entry point in `promptops/runtime/cli.py`. **Missing:** skill pack directory and guided agent workflow.                                                                                                       |
+| `**apastra-optimize`** — token/cost-oriented prompt tightening     | Partial — CLI helper            | `apastra-optimize` entry point in `promptops/runtime/cli.py`. **Missing:** skill pack directory and guided agent workflow.                                                                                                     |
+| **Community / starter packs**                                      | Partial — artifacts             | Starter pack JSON under `derived-index/starter-packs/` (summarization, extraction, classification, code review). **Missing:** curated installable repos and public registry story.                                             |
+| **Observability adapters**                                         | Partial — schema + bridge       | Adapter schema, `promptops/delivery/observability.yaml`, `promptops/runtime/observability.py`, `promptops/runs/emit_observability.py` (Langfuse / OpenTelemetry shapes). **Missing:** production-grade emission to real sinks. |
 
 
 ## Planned Refinements
