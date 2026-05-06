@@ -6,11 +6,11 @@ Apastra - Lightweight Prompt Evaluation
 
 ## Evaluate the prompts your agents depend on
 
-Apastra is a lightweight eval layer for modern engineering workflows.
+Apastra is an eval framework for modern agent-driven engineering workflows.
 
-Use it to test agent skills, review prompts, planning prompts, or any other AI instructions that affect how work gets done.
+Use it to test your agents' skills, review flows, planning flows, or any other AI instructions that affect how work gets done.
 
-The goal is simple: keep your skills and prompts in git, run them against repeatable test cases, score the outputs, and catch regressions in how they perform across different models and harnesses before bad instructions spread through your workflow
+The goal is simple: keep your prompts in git, run them against repeatable test cases, score the outputs, and catch regressions in how they perform across different models and harnesses before bad instructions spread through your workflow.
 
 If any instructions given to an AI are part of your development or production workflow, Apastra gives you a way to version, test, and baseline them like the rest of your code.
 
