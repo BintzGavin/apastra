@@ -2,9 +2,9 @@
 <img width="3168" height="1344" alt="apastra-hero" src="https://github.com/user-attachments/assets/08f9de78-6491-47dc-94df-b2bbc8878bce" />
 
 
-[npm version](https://www.npmjs.com/package/apastra)
-[Regression Gate](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml)
-[License](#license)
+[![npm version](https://img.shields.io/npm/v/apastra.svg)](https://www.npmjs.com/package/apastra)
+[![Regression Gate](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](#license)
 
 ## Evaluate the prompts your agents depend on
 
@@ -301,7 +301,7 @@ Apastra ships three tiers of workflows. Pick the tier that matches your governan
 | ---------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------- |
 | `canary-drift-detection.yml` | Hourly cron + manual                                           | Runs canary suites against prod baselines; catches silent model drift |
 | `schema-validation.yml`      | PRs touching `promptops/prompts/`** or `promptops/datasets/`** | Validates protocol files against JSON schemas                         |
-| `secret-scan.yml`            | PRs touching `promptops/prompts/**` or `promptops/datasets/**` | Scans prompts and datasets for leaked secrets                         |
+| `secret-scan.yml`            | PRs touching `promptops/prompts/`** or `promptops/datasets/**` | Scans prompts and datasets for leaked secrets                         |
 
 
 ### Git-First Consumption
