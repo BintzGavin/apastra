@@ -8,29 +8,41 @@ Apastra - Lightweight Prompt Evaluation
 
 Apastra is a lightweight eval layer for modern engineering workflows.
 
-Use it to test Claude Code prompts, Cursor rules, Codex instructions, agent skills, review prompts, planning prompts, or any other AI instructions that affect how work gets done.
+Use it to test agent skills, review prompts, planning prompts, or any other AI instructions that affect how work gets done.
 
-The goal is simple: keep prompts in git, run them against repeatable test cases, score the outputs, and catch regressions before bad instructions spread through your workflow
+The goal is simple: keep your skills and prompts in git, run them against repeatable test cases, score the outputs, and catch regressions in how they perform across different models and harnesses before bad instructions spread through your workflow
 
-If a prompt is part of your development process, Apastra gives you a way to version it, test it, and baseline it like the rest of your code.
+If any instructions given to an AI are part of your development or production workflow, Apastra gives you a way to version, test, and baseline them like the rest of your code.
+
+
+## What is an eval actually?
+
+Evaluating AI prompts via deterministic tests instead of just guessing how they are working. Like unit tests for your prompts.
 
 ## What Is This?
 
-Apastra is a file-based protocol and skill pack for prompt engineering workflows.
+Apastra is a file-based protocol and skill pack for evaluating your agent's skills and prompts. 
+
 
 
 | If you want to...                         | Apastra gives you...                                               |
 | ----------------------------------------- | ------------------------------------------------------------------ |
-| Version prompts like code                 | YAML prompt specs with stable IDs, variables, and output contracts |
 | Test prompt behavior repeatedly           | Datasets, evaluators, and suites stored in Git                     |
 | Catch quality regressions before shipping | Baselines, scorecards, and regression reports                      |
 | Stay local-first                          | Agent-driven workflows with optional GitHub Actions automation     |
 | Keep things inspectable                   | Plain files, schema validation, and reviewable diffs               |
+| Version prompts like code                 | YAML prompt specs with stable IDs, variables, and output contracts |
 
 
 ## Agent onboarding megaprompt
 
 **Adopting Apastra in your own codebase** and want a single, copy-paste workflow for an AI assistant? Use `**[getting-started/megaprompt.md](getting-started/megaprompt.md)`**. It walks through install, choosing **one** first eval to prove the setup (`**apastra-writing-evals`** for design, `**apastra-scaffold**` for files), then optional baselines and CI—step by step, with pauses for decisions. That file is the **only** place the full prompt lives (this README just points to it).
+
+## Is this actually lightweight?
+
+Yes. It just sits in a folder and the agent calls it when needed. It uses some python scripts to run deterministic evals, but otherwise it's just yaml files. The only cost is when you run the evals, which is opt-in. So you can use it as much or as little as you want.
+
+It has gotten more capable since it started (e.g. adding GitHub Actions support for automated regression testing). But the initial install and first eval are still very slim and you incrementally opt-in to everything else from there. You can also just ignore it and never use it and it will have no impact on you. Until you decide to opt into the GitHub actions CI at least.
 
 ## Documentation
 
@@ -42,7 +54,7 @@ Apastra is a file-based protocol and skill pack for prompt engineering workflows
 
 ## Quick Start
 
-**Installing Apastra into a different project with help from an AI assistant?** Use `**[getting-started/megaprompt.md](getting-started/megaprompt.md)`**—see **Agent onboarding megaprompt** above. The numbered steps below are for day-to-day use **after** Apastra is already in your repo.
+**Installing Apastra into your repo with help from a coding agent?** Use `**[getting-started/megaprompt.md](getting-started/megaprompt.md)`**—see **Agent onboarding megaprompt** above. The numbered steps below are for day-to-day use **after** Apastra is already in your repo.
 
 ### 1. Install the skill pack
 
