@@ -186,6 +186,10 @@ The harness matters because the same model can produce different results in diff
 
 ## Writing Good Evals
 
+For **interactive eval design**, follow **`apastra-writing-evals`** (paired workflow with disciplined link-sharing to external docs).
+
+The reference material below summarizes execution-time reminders; authoritative patterns for **design sessions** belong in **`apastra-writing-evals`** + [`https://bintzgavin-apastra-14.mintlify.app/guides/writing-evals`](https://bintzgavin-apastra-14.mintlify.app/guides/writing-evals).
+
 ### The Eval Maturity Ladder
 
 | Level | What | When | Apastra tools |

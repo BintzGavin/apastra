@@ -28,11 +28,13 @@ Replace every `TODO_*` marker below with repo-specific truth as you adopt Apastr
 | `source_relpath` | When cases map to originating instruction files, keep the relative path explicit for traceability. |
 | Suites | Name after behavior + breadth (`skills-smoke`, `rules-heavy`, …). |
 
-Maintain a lightweight **mapping table** (here or beside suites) tying **source files ↔ prompt IDs ↔ suites**:
+Maintain a lightweight **mapping table** once you graduate beyond onboarding (start with the flagship suite):
 
 | Suite | Sources covered | Prompt spec IDs | Dataset files |
 | --- | --- | --- | --- |
-| `TODO_SUITE` | `TODO_PATH_GLOB` | `TODO_IDS` | `TODO_DATASETS.jsonl` |
+| `TODO_FLAGSHIP_SUITE` | `TODO_PATH` | `TODO_IDS` | `TODO_DATASETS.jsonl` |
+
+Add rows as coverage expands; keep onboarding evals sharply scoped first.
 
 ## How to run workflows
 

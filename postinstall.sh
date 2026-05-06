@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # npm postinstall — runs when someone does: npm install apastra
-# Copies skills to .agent/skills/apastra/ and scripts to .agent/scripts/apastra/
+# Copies skills to .agent/skills/apastra/, scripts to .agent/scripts/apastra/,
+# and symlinks skills into .claude/skills/ and .agents/skills/ (unless APASTRA_NO_SKILL_SYMLINKS=1).
 
 set -euo pipefail
 
@@ -67,6 +68,22 @@ if [ "$PIP_DEPS_OK" -ne 1 ]; then
   echo ""
 fi
 
+# Same symlink layout as ./setup (see vercel-labs/skills Supported Agents table).
+_symlink_target_rel="../../.agent/skills/apastra"
+if [ "${APASTRA_NO_SKILL_SYMLINKS:-}" != "1" ]; then
+  echo "🔗 Linking skills → .claude/skills/ and .agents/skills/"
+  for _root in .claude .agents; do
+    _parent="$PROJECT_ROOT/$_root/skills"
+    mkdir -p "$_parent"
+    if [ -e "$_parent/apastra" ] && [ ! -L "$_parent/apastra" ]; then
+      echo "   ⚠️  Skip $_parent/apastra (exists and is not a symlink — remove or move it to retry)"
+      continue
+    fi
+    ln -sfn "$_symlink_target_rel" "$_parent/apastra"
+    echo "   → $_parent/apastra"
+  done
+fi
+
 echo "✅ Apastra installed"
-echo "   Skills:  .agent/skills/apastra/"
+echo "   Skills:  .agent/skills/apastra/ (canonical)"
 echo "   Scripts: .agent/scripts/apastra/"

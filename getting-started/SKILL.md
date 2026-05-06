@@ -7,11 +7,11 @@ description: Quick setup guide for apastra PromptOps. Create your first prompt s
 
 Set up prompt versioning and evaluation in any project. No CI, no cloud, no framework — just files and your IDE agent.
 
-## Generic coding agent megaprompt
+## Onboarding megaprompt
 
-To install Apastra **in any foreign repository** via a **generic coding agent** (interactive choices, eval triage, phased upgrades), copy [`megaprompt.md`](megaprompt.md). The same text is inlined in the repo root [`README.md`](../README.md) inside a `<details>` collapsible—**keep those two copies in sync manually** when editing this file.
+Use [`megaprompt.md`](megaprompt.md) when adopting Apastra in **another repository** with **no README context**. It phases install → one flagship eval (**`apastra-writing-evals`**, **`apastra-scaffold`**) → optional baselines / CI. The playbook lives **only** in that file (**not duplicated** in the root README).
 
-After scaffolding, start from [`templates/promptops-README.md`](templates/promptops-README.md) when creating a comprehensive `promptops/README.md` in the target repo.
+Then iterate coverage with [`writing-evals`](../writing-evals) and scaffold `promptops/README.md` from [`templates/promptops-README.md`](templates/promptops-README.md).
 
 ## What Is Apastra?
 

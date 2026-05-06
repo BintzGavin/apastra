@@ -29,9 +29,11 @@ Both methods install the skills to `.agent/skills/apastra/` and the runtime scri
 ### Getting Started
 
 - [getting-started](getting-started) — Project setup, first prompt spec, first evaluation. Start here.
-- [getting-started/megaprompt.md](getting-started/megaprompt.md) — Copy/paste onboarding megaprompt for **generic coding agents** working in arbitrary repositories.
+- [getting-started/megaprompt.md](getting-started/megaprompt.md) — Copy/paste onboarding playbook for adopting Apastra in **other repositories**.
 
 ### Workflow Skills
+
+- [writing-evals](writing-evals) — Design evals interactively (paired workflow; link-sharing discipline to the Writing evals article).
 - [eval](eval) — Run evaluations using your IDE agent as the harness. Compare results against baselines.
 - [baseline](baseline) — Establish and manage evaluation baselines for regression detection.
 - [scaffold](scaffold) — Generate new prompt specs, datasets, evaluators, and suites from templates.
@@ -44,6 +46,7 @@ Both methods install the skills to `.agent/skills/apastra/` and the runtime scri
 Use these skills when:
 
 - Managing AI prompts that need version control and quality gates
+- **Designing evals** interactively before generating suites (use `apastra-writing-evals`)
 - Running evaluations locally without CI or cloud infrastructure
 - Detecting prompt regressions before shipping
 - Establishing baselines for prompt quality tracking
@@ -68,4 +71,4 @@ View all skills and source code at: https://github.com/BintzGavin/apastra
 > **Local-First vs. CI Upgrades:**
 > Developers using this project prefer a zero-infrastructure **local-first** approach. They evaluate prompts locally using you as their test runner. However, if they need enterprise-grade governance, they can upgrade to automated pull request gating using the `apastra-setup-ci` skill. The file formats remain exactly the same.
 > 
-> As an external agent using these skills, your job is to enforce this discipline. Never mutate a file ad-hoc if there is a structured prompt spec for it. If you are told to "evaluate a prompt", follow the exact file-based pipeline defined in the `apastra-eval` skill.
+> As an external agent using these skills, your job is to enforce this discipline. Never mutate a file ad-hoc if there is a structured prompt spec for it. If you need to **design or refine what an eval measures**, follow **`apastra-writing-evals`**. If you are told to **run** an evaluation, follow the **`apastra-eval`** skill exactly.

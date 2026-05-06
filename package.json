@@ -35,6 +35,7 @@
     "baseline/**/*",
     "eval/**/*",
     "getting-started/**/*",
+    "writing-evals/**/*",
     "red-team/**/*",
     "scaffold/**/*",
     "setup-ci/**/*",
