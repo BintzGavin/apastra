@@ -16,6 +16,8 @@ Paste this:
 Go to https://github.com/BintzGavin/apastra and start onboarding
 ```
 
+Have no idea what an eval even is but know you're supposed to care? Don't worry, it'll walk you through everything step by step and explain how to write good ones. Your agent will stop multiple times to ask clarifying questions and explain how to write good evals, etc. The flow is partly inspired by `gstack` by Garry Tan and by the `/grill-me` skill from Matt Pocock so it's very interactive.
+
 ## Eval the prompts and skills your coding agents depend on
 
 Apastra is a lightweight way to run evals locally. It's language agnostic and works in any codebase. It includes a slim python runtime for deterministic checks, some skills, and some schemas defined in markdown, that's it. (Go version planned)
@@ -42,7 +44,7 @@ Apastra is a file-based protocol and skill pack for evaluating your agent's skil
 
 ## Is this actually lightweight?
 
-Yes. It just sits in a folder and the agent calls it when needed. It uses some python scripts to run deterministic evals, but otherwise it's just yaml files. The only cost is when you run the evals, which is opt-in. So you can use it as much or as little as you want.
+Yes. It just sits in a folder and the agent calls it when it feels like it or when you tell it to. It uses some python scripts to run deterministic evals, but otherwise it's just yaml files. The only cost is when you run the evals, which is opt-in. So you can use it as much or as little as you want.
 
 It has gotten more capable since it started (e.g. adding GitHub Actions support for automated regression testing). But the initial install and first eval are still very slim and you incrementally opt-in to everything else from there. You can also just ignore it and never use it and it will have no impact on you. Until you decide to opt into the GitHub actions CI at least.
 
