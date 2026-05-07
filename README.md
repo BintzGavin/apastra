@@ -17,6 +17,7 @@
 ![C++](https://shieldcn.dev/badge/C%2B%2B-00599C.svg?logo=cplusplus&logoColor=fff&variant=branded)
 ![Java](https://shieldcn.dev/badge/Java-ED8B00.svg?logo=ri%3AFaJava&logoColor=fff&variant=branded)
 ![Kotlin](https://shieldcn.dev/badge/Kotlin-7f52ff.svg?logo=kotlin)
+etc.
 
 
 ## Quick Start
