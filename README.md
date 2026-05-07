@@ -27,7 +27,7 @@ Paste this:
 Go to https://github.com/BintzGavin/apastra and start onboarding
 ```
 
-Have no idea what an eval even is but know you're supposed to care? Don't worry, it'll walk you through everything step by step and explain how to write good ones. Your agent will stop multiple times to ask clarifying questions and explain how to write good evals, etc. The flow is partly inspired by `gstack` by Garry Tan and by the `/grill-me` skill from Matt Pocock so it's very interactive.
+Have no idea what an eval even is but know you're supposed to care? Don't worry, it'll walk you through everything step by step and explain how to write good ones. Your agent will stop multiple times to ask clarifying questions about what you actually care about. The flow is partly inspired by `gstack` by Garry Tan and by the `/grill-me` skill from Matt Pocock so it's very interactive.
 
 ## Eval the prompts and skills your coding agents depend on
 
