@@ -8,7 +8,8 @@
 ![Merged PRs](https://shieldcn.dev/github/merged-prs/BintzGavin/apastra.svg?gradient=34d399,10b981,047857)
 ![License](https://shieldcn.dev/github/license/BintzGavin/apastra.svg?gradient=a855f7,c026d3,6d28d9)
 
-Works with projects written in:
+#### Works with projects written in:
+
 ![TypeScript](https://shieldcn.dev/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=fff&variant=branded)
 ![Python](https://shieldcn.dev/badge/Python-3776AB.svg?logo=python&logoColor=fff&variant=branded)
 ![Rust](https://shieldcn.dev/badge/Rust-000000.svg?logo=rust&logoColor=fff&variant=branded)
