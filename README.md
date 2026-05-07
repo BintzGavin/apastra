@@ -4,7 +4,6 @@
 
 [![Homepage](https://shieldcn.dev/badge/Homepage-link-2563eb.svg?gradient=fb7185,f472b6,c084fc)](https://bintzgavin-apastra-14.mintlify.app/)
 ![Last commit](https://shieldcn.dev/github/last-commit/BintzGavin/apastra.svg?gradient=22d3ee,3b82f6,6366f1)
-![Merged PRs](https://shieldcn.dev/github/merged-prs/BintzGavin/apastra.svg?gradient=34d399,10b981,047857)
 ![License](https://shieldcn.dev/github/license/BintzGavin/apastra.svg?gradient=a855f7,c026d3,6d28d9)
 
 #### Works with projects written in:
