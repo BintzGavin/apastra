@@ -2,11 +2,11 @@
 <img width="3168" height="1344" alt="apastra-hero" src="https://github.com/user-attachments/assets/08f9de78-6491-47dc-94df-b2bbc8878bce" />
 
 
-[![Homepage](https://www.shieldcn.dev/badge/Homepage-link-2563eb.svg?variant=ghost)](https://bintzgavin-apastra-14.mintlify.app/)
-![GitHub Stars](https://www.shieldcn.dev/github/stars/BintzGavin/apastra.svg?variant=secondary)
-![Last commit](https://www.shieldcn.dev/github/last-commit/BintzGavin/apastra.svg?variant=secondary)
-![Merged PRs](https://www.shieldcn.dev/github/merged-prs/BintzGavin/apastra.svg?variant=ghost)
-![License](https://www.shieldcn.dev/github/license/BintzGavin/apastra.svg?variant=ghost)
+[![Homepage](https://shieldcn.dev/badge/Homepage-link-2563eb.png?variant=default)](https://bintzgavin-apastra-14.mintlify.app/)
+![GitHub Stars](https://shieldcn.dev/github/stars/BintzGavin/apastra.png?variant=default)
+![Last commit](https://shieldcn.dev/github/last-commit/BintzGavin/apastra.png?variant=default)
+![Merged PRs](https://shieldcn.dev/github/merged-prs/BintzGavin/apastra.png?variant=default)
+![License](https://shieldcn.dev/github/license/BintzGavin/apastra.png?variant=default)
 
 ## Quick Start
 
