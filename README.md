@@ -2,16 +2,17 @@
 <img width="3168" height="1344" alt="apastra-hero" src="https://github.com/user-attachments/assets/08f9de78-6491-47dc-94df-b2bbc8878bce" />
 
 
-[![Homepage](https://shieldcn.dev/badge/Homepage-link-2563eb.png?variant=default)](https://bintzgavin-apastra-14.mintlify.app/)
-![GitHub Stars](https://shieldcn.dev/github/stars/BintzGavin/apastra.png?variant=default)
-![Last commit](https://shieldcn.dev/github/last-commit/BintzGavin/apastra.png?variant=default)
-![Merged PRs](https://shieldcn.dev/github/merged-prs/BintzGavin/apastra.png?variant=default)
-![License](https://shieldcn.dev/github/license/BintzGavin/apastra.png?variant=default)
+[![Homepage](https://shieldcn.dev/badge/Homepage-link-2563eb.svg?gradient=fb7185,f472b6,c084fc)](https://bintzgavin-apastra-14.mintlify.app/)
+![GitHub Stars](https://shieldcn.dev/github/stars/BintzGavin/apastra.svg?gradient=ec4899,f97316,fbbf24)
+![Last commit](https://shieldcn.dev/github/last-commit/BintzGavin/apastra.svg?gradient=22d3ee,3b82f6,6366f1)
+![Merged PRs](https://shieldcn.dev/github/merged-prs/BintzGavin/apastra.svg?gradient=34d399,10b981,047857)
+![License](https://shieldcn.dev/github/license/BintzGavin/apastra.svg?gradient=a855f7,c026d3,6d28d9)
 
 ## Quick Start
 
 **Installing Apastra into your repo with help from a coding agent?**
 Paste this:
+
 ```
 Go to https://github.com/BintzGavin/apastra and start onboarding
 ```
@@ -300,7 +301,7 @@ Apastra ships three tiers of workflows. Pick the tier that matches your governan
 | ---------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------- |
 | `canary-drift-detection.yml` | Hourly cron + manual                                           | Runs canary suites against prod baselines; catches silent model drift |
 | `schema-validation.yml`      | PRs touching `promptops/prompts/`** or `promptops/datasets/`** | Validates protocol files against JSON schemas                         |
-| `secret-scan.yml`            | PRs touching `promptops/prompts/`** or `promptops/datasets/**` | Scans prompts and datasets for leaked secrets                         |
+| `secret-scan.yml`            | PRs touching `promptops/prompts/`** or `promptops/datasets/`** | Scans prompts and datasets for leaked secrets                         |
 
 
 ### Git-First Consumption
