@@ -8,6 +8,16 @@
 ![Merged PRs](https://shieldcn.dev/github/merged-prs/BintzGavin/apastra.svg?gradient=34d399,10b981,047857)
 ![License](https://shieldcn.dev/github/license/BintzGavin/apastra.svg?gradient=a855f7,c026d3,6d28d9)
 
+Works with projects written in:
+![TypeScript](https://shieldcn.dev/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=fff&variant=branded)
+![Python](https://shieldcn.dev/badge/Python-3776AB.svg?logo=python&logoColor=fff&variant=branded)
+![Rust](https://shieldcn.dev/badge/Rust-000000.svg?logo=rust&logoColor=fff&variant=branded)
+![Go](https://shieldcn.dev/badge/Go-00ADD8.svg?logo=go&logoColor=fff&variant=branded)
+![C++](https://shieldcn.dev/badge/C%2B%2B-00599C.svg?logo=cplusplus&logoColor=fff&variant=branded)
+![Java](https://shieldcn.dev/badge/Java-ED8B00.svg?logo=ri%3AFaJava&logoColor=fff&variant=branded)
+![Kotlin](https://shieldcn.dev/badge/Kotlin-7f52ff.svg?logo=kotlin)
+
+
 ## Quick Start
 
 **Installing Apastra into your repo with help from a coding agent?**
