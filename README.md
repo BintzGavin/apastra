@@ -2,19 +2,25 @@
 <img width="3168" height="1344" alt="apastra-hero" src="https://github.com/user-attachments/assets/08f9de78-6491-47dc-94df-b2bbc8878bce" />
 
 
-[![npm version](https://img.shields.io/npm/v/apastra.svg)](https://www.npmjs.com/package/apastra)
-[![Regression Gate](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml/badge.svg)](https://github.com/BintzGavin/apastra/actions/workflows/regression-gate.yml)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](#license)
+[![Homepage](https://www.shieldcn.dev/badge/Homepage-link-2563eb.svg?variant=ghost)](https://bintzgavin-apastra-14.mintlify.app/)
+![GitHub Stars](https://www.shieldcn.dev/github/stars/BintzGavin/apastra.svg?variant=secondary)
+![Last commit](https://www.shieldcn.dev/github/last-commit/BintzGavin/apastra.svg?variant=secondary)
+![Merged PRs](https://www.shieldcn.dev/github/merged-prs/BintzGavin/apastra.svg?variant=ghost)
+![License](https://www.shieldcn.dev/github/license/BintzGavin/apastra.svg?variant=ghost)
 
-## Evaluate the prompts your agents depend on
+## Quick Start
 
-Apastra is an eval framework for modern agent-driven engineering workflows.
+**Installing Apastra into your repo with help from a coding agent?**
+Paste this:
+```
+Go to https://github.com/BintzGavin/apastra and start onboarding
+```
+
+## Eval the prompts and skills your coding agents depend on
+
+Apastra is a lightweight way to run evals locally. It's language agnostic and works in any codebase. It includes a slim python runtime for deterministic checks, some skills, and some schemas defined in markdown, that's it. (Go version planned)
 
 Use it to test your agents' skills, review flows, planning flows, or any other AI instructions that affect how work gets done.
-
-The goal is simple: keep your prompts in git, run them against repeatable test cases, score the outputs, and catch regressions in how they perform across different models and harnesses before bad instructions spread through your workflow.
-
-If any instructions given to an AI are part of your development or production workflow, Apastra gives you a way to version, test, and baseline them like the rest of your code.
 
 ## What is an eval actually?
 
@@ -34,10 +40,6 @@ Apastra is a file-based protocol and skill pack for evaluating your agent's skil
 | Version prompts like code                 | YAML prompt specs with stable IDs, variables, and output contracts |
 
 
-## Agent onboarding megaprompt
-
-**Adopting Apastra in your own codebase** and want a single, copy-paste workflow for an AI assistant? Use `**[getting-started/megaprompt.md](getting-started/megaprompt.md)`**. It walks through install, choosing one first eval to prove the setup (`**apastra-writing-evals`** for design, `**apastra-scaffold**` for files), then optional baselines and CI—step by step, with pauses for decisions. That file is the **only** place the full prompt lives (this README just points to it).
-
 ## Is this actually lightweight?
 
 Yes. It just sits in a folder and the agent calls it when needed. It uses some python scripts to run deterministic evals, but otherwise it's just yaml files. The only cost is when you run the evals, which is opt-in. So you can use it as much or as little as you want.
@@ -46,15 +48,10 @@ It has gotten more capable since it started (e.g. adding GitHub Actions support 
 
 ## Documentation
 
-- **[Onboarding megaprompt](getting-started/megaprompt.md)** — structured, agent-led setup when you are adding Apastra to **your** repository (not the quick steps below, which assume you are already in a project with Apastra installed).
 - [Getting started](docs/guides/getting-started.md)
 - [Architecture overview](docs/guides/architecture-overview.md)
 - [API reference](docs/api)
 - [System vision](docs/vision.md)
-
-## Quick Start
-
-**Installing Apastra into your repo with help from a coding agent?** Use `**[getting-started/megaprompt.md](getting-started/megaprompt.md)`**—see **Agent onboarding megaprompt** above. The numbered steps below are for day-to-day use **after** Apastra is already in your repo.
 
 ### 1. Install the skill pack
 
