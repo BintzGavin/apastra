@@ -1,0 +1,67 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
+            "timeout": 10,
+            "statusMessage": "Loading Apastra context"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
+            "timeout": 10,
+            "statusMessage": "Checking Apastra prompt context"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
+            "timeout": 10,
+            "statusMessage": "Checking Bash safety"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
+            "timeout": 60,
+            "statusMessage": "Validating Apastra changes"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
+            "timeout": 60,
+            "statusMessage": "Checking Apastra validation"
+          }
+        ]
+      }
+    ]
+  }
+}

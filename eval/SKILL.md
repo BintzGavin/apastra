@@ -15,6 +15,7 @@ Use this skill when you want to:
 - Evaluate a prompt against test cases
 - Run a quick eval file (single-file prompt + cases + assertions)
 - Compare results against a baseline to detect regressions
+- Preserve trace evidence for tool calls, validation failures, retries, or stopping conditions
 - Get a scorecard with metrics for a prompt change
 
 ## Two Evaluation Modes
@@ -56,7 +57,7 @@ For each case in the dataset:
 
 1. **Render the template**: The agent substitutes `{{variable}}` placeholders with values from the case's `inputs`. (For reference, this follows the same logic as `.agent/scripts/apastra/runtime/render.py`.)
 
-2. **Call the model**: Send the rendered prompt to the model and capture the response. If `trials > 1`, run multiple times.
+2. **Call the model**: Send the rendered prompt to the model and capture the response. If `trials > 1`, run multiple times. When the harness or agent hooks expose trace data, also capture tool calls, tool arguments, retries, duration, cost/tokens, validation feedback, stopping decisions, and raw intermediate outputs.
 
 3. **Score the output** using two sources:
 
@@ -74,9 +75,9 @@ For each case in the dataset:
 
    This returns a JSON array of `{"assert_<type>": 1.0 or 0.0}` results.
 
-4. **Record the result** as one JSONL line in `cases.jsonl`:
+4. **Record the result** as one JSONL line in `cases.jsonl`. Include trace or artifact references when available so failures can be debugged without relying only on final prose. Do not store raw secrets or private transcripts in Git; store sanitized evidence or references with digests:
 ```json
-{"case_id": "<id>", "inputs": {}, "output": "<response>", "evaluator_outputs": [{"<metric>": <score>}]}
+{"case_id": "<id>", "inputs": {}, "output": "<response>", "evaluator_outputs": [{"<metric>": <score>}], "artifact_refs": []}
 ```
 
 ### Step 5: Normalize into Scorecard
@@ -125,6 +126,7 @@ Write to `promptops/runs/<suite-id>-<YYYY-MM-DD-HHmmss>/`:
 - `scorecard.json` — aggregated metrics (output of normalize.py)
 - `cases.jsonl` — per-case results
 - `run_manifest.json` — metadata: timestamp, model, harness, suite ID, prompt digest
+- `artifact_refs.json` — optional references/digests for raw outputs, logs, or traces when the harness can provide them
 
 ---
 
@@ -138,7 +140,7 @@ Read `promptops/evals/<eval-id>.yaml`. It contains `id`, `prompt`, `cases`, and 
 
 For each case:
 1. Render the prompt template with the case's `inputs`
-2. Call the model
+2. Call the model and capture the final output; capture trace metadata when the harness exposes it
 3. Write the output to a temp file and run assertions:
    ```bash
    python .agent/scripts/apastra/runs/evaluate_assertions.py <output.txt> <assertions.json>
@@ -190,20 +192,30 @@ For **interactive eval design**, follow **`apastra-writing-evals`** (paired work
 
 The reference material below summarizes execution-time reminders; authoritative patterns for **design sessions** belong in **`apastra-writing-evals`** + [`https://bintzgavin-apastra-14.mintlify.app/guides/writing-evals`](https://bintzgavin-apastra-14.mintlify.app/guides/writing-evals).
 
+### Execution-Time Priorities
+
+- Prefer **outcome evidence** when available: file diffs, database state, API side effects, test results, expected artifacts, or exact business outputs.
+- Add **step evidence** when a single decision matters: route chosen, tool name, required arguments, handoff target, clarification request.
+- Add **trace evidence** when silent failures are plausible: required/forbidden tool calls, retry behavior, stopping conditions, duration, cost/tokens, or references to raw traces.
+- Do not force exact tool order unless dependency order is part of the requirement. Prefer required/forbidden, any-order, subset, or superset-style checks when multiple valid paths exist.
+
 ### The Eval Maturity Ladder
 
 | Level | What | When | Apastra tools |
 |---|---|---|---|
-| 1. Deterministic checks | `contains`, `is-json`, `regex` | Always | Inline assertions, quick eval |
-| 2. AI-graded checks | `llm-rubric`, `similar` | When deterministic can't capture quality | Judge evaluators |
-| 3. Baseline comparison | Compare scorecards | When you need regression detection | Baseline skill, policies |
-| 4. Human review | Spot-checks | To calibrate AI judges | Manual review |
+| 1. Deterministic checks | `contains`, `is-json`, `regex`, required artifact | Default | Inline assertions, quick eval |
+| 2. Executable checks | test passes, command succeeds, file exists | When output has observable state | Harness + run artifacts |
+| 3. AI-graded checks | `llm-rubric`, `similar`, factuality | When deterministic checks cannot capture quality | Judge evaluators |
+| 4. Baseline comparison | Compare scorecards | When you need regression detection | Baseline skill, policies |
+| 5. Human review | Spot-check traces and labels | To calibrate judges and catch bad graders | Manual review |
 
 ### Designing Test Cases
 
 - Start from **real failures**, not hypotheticals
-- Cover: happy path, edge cases, adversarial, format compliance, safety
-- Prioritize **volume over perfection**: 50 cases with automated grading > 10 with careful review
+- Start with two sharp cases: one happy path and one edge, adversarial, or negative-control case
+- Expand toward 20–50 cases only after the first cases expose useful signal
+- Cover realistic noise, format compliance, safety, ambiguous inputs, and prior regressions as needed
+- Read failed outputs/traces before changing thresholds; a green scorecard with the wrong grader is false comfort
 
 ### Assertion Types
 

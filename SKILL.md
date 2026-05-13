@@ -1,11 +1,11 @@
 ---
 name: apastra
-description: PromptOps skills for versioning, evaluating, and shipping AI prompts as disciplined software assets. Agent-as-harness — your IDE agent runs evals, compares baselines, and gates quality.
+description: PromptOps skills for versioning, evaluating, tracing, and shipping AI prompts as disciplined software assets. Agent-as-harness — your IDE agent runs evals, compares baselines, surfaces trace evidence, and gates quality.
 ---
 
 # Apastra PromptOps Skills
 
-Skills for managing AI prompts with the same discipline as code — versioned files, automated evaluations, regression detection, and baseline tracking. Your IDE agent **is** the harness.
+Skills for managing AI prompts with the same discipline as code — versioned files, automated evaluations, trace evidence, regression detection, and baseline tracking. Your IDE agent **is** the harness.
 
 ## Installation
 
@@ -22,19 +22,20 @@ git clone --single-branch --depth 1 https://github.com/BintzGavin/apastra.git .a
 npm install apastra
 ```
 
-Both methods install the skills to `.agent/skills/apastra/` and the runtime scripts to `.agent/scripts/apastra/`.
+Both methods install the skills to `.agent/skills/apastra/`, the runtime scripts to `.agent/scripts/apastra/`, and project-local Codex/Claude Code hooks unless hook installation is disabled.
 
 ## Available Skills
 
 ### Getting Started
 
 - [getting-started](getting-started) — Project setup, first prompt spec, first evaluation. Start here.
-- [getting-started/megaprompt.md](getting-started/megaprompt.md) — Copy/paste onboarding playbook for adopting Apastra in **other repositories**.
+- [getting-started/onboarding.md](getting-started/onboarding.md) — Copy/paste onboarding playbook for adopting Apastra in **other repositories**.
 
 ### Workflow Skills
 
 - [writing-evals](writing-evals) — Design evals interactively (paired workflow; link-sharing discipline to the Writing evals article).
 - [eval](eval) — Run evaluations using your IDE agent as the harness. Compare results against baselines.
+- [trace](trace) — Inspect agent traces and convert tool-call evidence into eval cases or artifact refs.
 - [baseline](baseline) — Establish and manage evaluation baselines for regression detection.
 - [scaffold](scaffold) — Generate new prompt specs, datasets, evaluators, and suites from templates.
 - [validate](validate) — Validate all promptops files against JSON schemas.
@@ -48,6 +49,7 @@ Use these skills when:
 - Managing AI prompts that need version control and quality gates
 - **Designing evals** interactively before generating suites (use `apastra-writing-evals`)
 - Running evaluations locally without CI or cloud infrastructure
+- Debugging agent behavior from traces, hook feedback, or saved tool-call logs
 - Detecting prompt regressions before shipping
 - Establishing baselines for prompt quality tracking
 - Scaffolding new prompt specs, test datasets, or evaluator definitions
@@ -66,6 +68,7 @@ View all skills and source code at: https://github.com/BintzGavin/apastra
 > Prompts must be treated like disciplined software assets. Apastra is a **file-based protocol**. There is no hidden database, no mandatory SaaS platform, and no forced framework. 
 > - **Durable state lives in Git**: Prompts, test datasets, evaluator scoring rules, benchmark suites, baselines, and regression policies are all defined as flat files (YAML/JSON).
 > - **The Agent is the Harness**: You (the external IDE agent) perform the computation. You read the suites, run the test cases, apply the scoring rules, and compare the results to the baselines.
+> - **Trace Evidence Matters**: Hooks expose useful evidence about prompts, tool calls, validation failures, and stopping conditions. Use that evidence to debug agent behavior and create regression cases, but do not persist raw secrets or full private transcripts by default.
 > - **Append-only Artifacts**: When you run evaluations, you generate run manifests, scorecards, and evidence records. You never overwrite a baseline; you archive and append.
 > 
 > **Local-First vs. CI Upgrades:**

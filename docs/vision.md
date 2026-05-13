@@ -17,12 +17,14 @@ Apastra has moved beyond the original proposal into a shipped skill pack plus de
 - **Runtime and protocol source:** Python runtime modules, resolver chain, runner, schema validators, harness adapters, and shell utilities under `promptops/`.
 - **Schema coverage:** JSON schemas and generated API reference pages for prompt specs, datasets, suites, evaluators, run requests/artifacts, scorecards, baselines, regression reports, approvals, promotions, delivery targets, consumption manifests, MCP definitions, observability adapters, canaries, quick evals, community registry records, moderation records, takedowns, provenance, and related governance records.
 - **Evaluation modes:** full suite mode and quick eval mode, with inline assertions for lightweight deterministic checks and optional model-assisted checks.
+- **Agent trace surface:** Codex and Claude Code hooks plus an `apastra-trace` skill expose useful tool-call, validation, and stopping-condition evidence during local agent work.
 - **Governance workflows:** schema validation, secret scanning, regression gate, approval recording, immutable release, promotion, delivery sync, prompt-eval, prompt-release, and a canary drift workflow scaffold.
 - **Runtime helpers:** digest computation, prompt rendering/resolution, runner validation, assertion evaluation, project-level config defaults, audit scanning, canary execution, multi-model comparison, observability emission, MCP server tools, and role-helper entry points for review/red-team/optimization.
 
 Important drift from the initial vision:
 
 - The **agent-as-harness** posture is now the primary developer experience. "BYO harness" remains the technical contract, but user-facing docs should speak in terms of the user's IDE agent running evals.
+- Agent hooks make the **agent trace** a first-class feedback surface. Hooks are the tap; durable storage still belongs in run artifacts, artifact references, or external observability systems.
 - The first wedge is now **local-first evaluation and quick evals**, not governed publishing.
 - Several originally proposed expansions are now at least partially implemented: audit scanning, project config defaults, canaries, multi-model comparison, MCP integration, observability adapters, and review/optimization runtime helpers.
 - The public registry and federation model remain a longer-term v2 direction. The codebase already contains many of the schemas and policy records needed for that direction, but it does not yet ship a hosted registry service or public SDK.
@@ -61,6 +63,7 @@ Prompts should be treated like versioned software assets with a declared interfa
 - Developer ergonomics dominates. Consumption must be simpler than authoring. Local iteration must not require publishing artifacts.
 - Git-first consumption is first-class: local overrides and git ref pins (commit SHA, tag, optionally semver tags) are the default, not an escape hatch. npm and pip both support Git/VCS dependency forms, so the design can leverage existing developer muscle memory.
 - BYO harness is mandatory. The system defines a minimal harness contract and durable artifact formats. Harnesses can be swapped without rewriting source-of-truth concepts.
+- Trace evidence beats vibes. Tool calls, validation feedback, retries, and stopping conditions should be inspectable when they affect quality.
 - File-based durable state; stateless compute. Runners do work and emit artifacts; they do not own hidden state.
 - Append-friendly immutable artifacts. Runs, reports, and promotions are records. Avoid in-place mutation.
 - Explicit end states and transitions. Human checkpoints are clear and enforceable.
@@ -75,6 +78,7 @@ The system is “working” when these outcomes are routine. In the current repo
 - Prompts can live inside an app repo or in a dedicated prompt repo without changing the conceptual model or consumption contract.
 - Developers can consume prompts by pinning a commit SHA, tag, or semver tag in a consumption manifest, with local override for fast iteration.
 - Any benchmark run has durable inputs and environment metadata recorded (prompt digest, dataset digest, evaluator digest, harness version, model IDs, sampling config) sufficient for replay within the constraints of non-determinism.
+- Agent failures can be debugged from trace evidence and converted into regression cases instead of remaining as one-off transcript anecdotes.
 - Regression policies can gate merges and promotions via required status checks and protected branches.
 - Approved prompt versions are promoted via explicit promotion records; rollback is a promotion to a prior digest, not “edit in place”.
 - Autonomous agents can operate safely because the repo contains machine-readable state; no hidden mutable database is required.
@@ -116,6 +120,7 @@ The system is “working” when these outcomes are routine. In the current repo
 | Dataset | Versioned evaluation cases (usually JSONL) with content digest and schema. |
 | Evaluator | Scoring definition: deterministic checks, schema validation, rubric/judge config, or human review hooks. |
 | Inline assertion | Per-case check embedded directly in a dataset case or quick eval case for low-friction scoring. |
+| Agent trace evidence | Sanitized tool-call, validation, retry, timing, and stopping-condition evidence captured from an agent run or hook event. |
 | Suite | Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds. |
 | Quick eval | Single-file eval format that combines prompt, cases, assertions, and thresholds for rapid smoke tests. |
 | Harness adapter | Executable integration that can run suites and emit structured run artifacts. |
@@ -218,9 +223,11 @@ Apastra itself installs into the consumer's repo under a dedicated `.agent/` dir
 .agent/
 ├─ skills/apastra/     # SKILL.md instructions loaded by the IDE agent
 └─ scripts/apastra/    # Deterministic runtime (Python + shell validators)
+.codex/                # Codex hook config for context, trace, and validation feedback
+.claude/settings.json  # Claude Code hook config for the same feedback loop
 ```
 
-This keeps the protocol files (`promptops/`) owned by the consumer project and the apastra runtime (`.agent/scripts/apastra/`) cleanly isolated. Both `git clone … .agent/skills/apastra && setup` and `npm install apastra` produce the same layout, so topology choice (same-repo vs. separate-repo) and install method are independent decisions.
+This keeps the protocol files (`promptops/`) owned by the consumer project and the apastra runtime (`.agent/scripts/apastra/`) cleanly isolated. The hook config is project-local and points at the installed Apastra hook runner. Both `git clone … .agent/skills/apastra && setup` and `npm install apastra` produce the same layout, so topology choice (same-repo vs. separate-repo) and install method are independent decisions.
 
 **Artifacts branch (append-only indices)**
 
@@ -582,6 +589,7 @@ Agents can safely operate when state is explicit and file-based:
 
 - Agents propose prompt edits by opening PRs that change prompt specs and suites.
 - Agents generate run requests and trigger workflows.
+- Hooks expose prompt-submit, tool-use, validation, and stop events so agents can use trace feedback while they work.
 - Agents summarize regression reports and attach evidence to PR discussions.
 - Agents prepare promotion record PRs, but humans approve promotions.
 
@@ -610,6 +618,7 @@ Reusable workflows allow platform teams to standardize automation across many re
 | Deterministic digest tooling | Shipped baseline | `promptops/runtime/digest.py`, digest convention docs, digest fields across schemas | Finalize canonical YAML/JSON normalization guarantees |
 | Harness adapter runner | Shipped baseline | Runner validates run-request input and required run artifacts; reference adapter exists | Add more production adapters and real model-provider harness examples |
 | Quick eval + inline assertions | Shipped | `quick-eval` schema/script, inline assertion evaluator, eval skill instructions | Improve single-command UX and richer assertion reporting |
+| Agent hooks + trace evidence | Shipped baseline | Codex/Claude hook configs, shared hook runner, `apastra-trace` skill | Add opt-in persisted hook event logs and richer trace-to-eval conversion helpers |
 | Regression policy engine | Partial | Baseline skill, regression report schema/script, regression-gate workflow reading artifact evidence | Make end-to-end local comparison smoother and initialize artifacts branch automatically |
 | Project config defaults | Shipped baseline | `promptops.config.yaml` schema and runtime default application | Document precedence and expand config coverage |
 | GitHub integration | Shipped scaffolding | Basic and governance workflows, CODEOWNERS/ruleset examples, setup-ci skill | Replace placeholder workflow steps with real adapter execution where needed |
@@ -971,11 +980,12 @@ The `model_matrix` field in suites already supports this structurally, but the c
 
 **Design principle: Role specialization. Different phases need different cognitive modes.**
 
-The current workflow-oriented skills (eval, baseline, scaffold, validate, setup-ci) leave room for role-specialized agents. Red-team has shipped as a user-facing skill. Review and Optimize have runtime CLI entry points (`apastra-review`, `apastra-optimize`) but no dedicated skill directories yet.
+The current workflow-oriented skills (eval, trace, baseline, scaffold, validate, setup-ci) leave room for role-specialized agents. Red-team and Trace have shipped as user-facing skills. Review and Optimize have runtime CLI entry points (`apastra-review`, `apastra-optimize`) but no dedicated skill directories yet.
 
 | Skill | Status | Agent role | What it does |
 |---|---|---|---|
 | Red-team | **Shipped** | "Adversarial QA" | Generates adversarial test cases: prompt injection attempts, edge-case inputs, multilingual stress tests, format-breaking inputs. |
+| Trace | **Shipped** | "Forensic evaluator" | Turns hook feedback, tool-call traces, and run artifacts into sanitized evidence, eval cases, and artifact references. |
 | Review | Runtime helper shipped; skill missing | "Paranoid staff prompt engineer" | Reviews a prompt spec for ambiguity, injection surface, variable hygiene, output contract completeness, cost estimation. |
 | Optimize | Runtime helper shipped; skill missing | "Performance engineer" | Analyzes a prompt's token usage, suggests compression techniques, identifies unnecessary instructions, estimates cost reduction. |
 
