@@ -15,6 +15,24 @@ Use this skill when you want to:
 - Create an evaluator for a new scoring rule
 - Set up a new suite tying everything together
 
+## Before Scaffolding Eval Files
+
+If the user has not already agreed on an eval design, pause and invoke **`apastra-writing-evals`** or ask for the missing design brief. Do not silently choose behavior, cases, and thresholds from a vague request.
+
+Minimum design brief before creating eval files:
+- target source or prompt behavior
+- real or realistic failure mode
+- primary eval surface: outcome, step, or trace
+- two starter cases
+- grader type and threshold
+- what is intentionally out of scope
+
+When you scaffold from a completed design:
+- keep the first pass narrow unless the user explicitly chooses broader coverage
+- encode deterministic or executable checks before judge rubrics when they fit
+- preserve traceability with stable IDs, suite descriptions, tags, and dataset case `metadata.source_relpath` when cases map to instruction files
+- use exact tool-call order only when the requirement depends on order; otherwise prefer required/forbidden tools, any-order, subset, or superset-style expectations
+
 ## Scaffolding a Prompt Spec
 
 When asked to create a new prompt (e.g., "scaffold a prompt for email classification"):
@@ -64,8 +82,9 @@ Create `promptops/datasets/<id>.jsonl` — one JSON object per line:
 - `inputs` is **required** — keys must match the prompt spec's `variables`
 - `expected_outputs` is optional — used by evaluators for checking
 - `metadata` is optional — useful for tagging difficulty, domain, etc.
-- Aim for 5-10 cases in a smoke dataset, 50+ in a regression dataset
-- Include edge cases: empty inputs, very long inputs, adversarial inputs
+- For onboarding, start with two sharp cases: one happy path and one edge/adversarial/negative-control case
+- Aim for 5-10 cases in a smoke dataset after the first two show signal, and 20-50+ in a regression dataset once the behavior is stable
+- Include edge cases that match the failure mode: empty inputs, very long inputs, adversarial inputs, ambiguous inputs, noisy context, prior regressions
 
 ## Scaffolding an Evaluator
 
@@ -136,6 +155,8 @@ config:
 - `type` is **required** — must be one of: `deterministic`, `schema`, `judge`
 - `metrics` is **required** — array of metric names this evaluator produces (minimum 1)
 - For `judge` evaluators: always version the rubric — changing it changes what the metric means
+- For subjective judges: prefer narrow labels or anchored 1/3/5 scores over broad 1-10 scales
+- For tool/agent behavior: prefer deterministic trace checks when tool names, arguments, required artifacts, or forbidden calls are observable
 
 ## Scaffolding a Suite
 
@@ -226,8 +247,8 @@ thresholds:
 ```
 
 ### When to Use Quick Eval vs Full Suite
-- **Quick eval**: 1-5 test cases, simple assertions, rapid iteration
-- **Full suite**: 10+ cases, reusable evaluators, baseline tracking, regression detection
+- **Quick eval**: 1-5 test cases, simple assertions, rapid iteration, or early evidence gathering
+- **Full suite**: reusable evaluators, shared datasets, baseline tracking, regression detection, multiple models/trials, or CI readiness
 
 ## Scaffolding a Dataset with Inline Assertions
 
@@ -249,4 +270,3 @@ Model-assisted: `similar`, `llm-rubric`, `factuality`, `answer-relevance`.
 Performance: `latency`, `cost`.
 
 Negate any type with `not-` prefix (e.g., `not-contains`, `not-is-json`).
-

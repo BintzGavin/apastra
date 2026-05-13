@@ -2,11 +2,13 @@
 # npm postinstall — runs when someone does: npm install apastra
 # Copies skills to .agent/skills/apastra/, scripts to .agent/scripts/apastra/,
 # and symlinks skills into .claude/skills/ and .agents/skills/ (unless APASTRA_NO_SKILL_SYMLINKS=1).
+# Also installs Codex and Claude Code hooks unless APASTRA_NO_AGENT_HOOKS=1.
 
 set -euo pipefail
 
 PACKAGE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(pwd)"
+PROJECT_ROOT="${INIT_CWD:-$(pwd)}"
+PROJECT_ROOT="$(cd "$PROJECT_ROOT" && pwd)"
 
 # Don't run if we're inside the apastra package itself (dev mode)
 if [ "$PROJECT_ROOT" = "$PACKAGE_DIR" ]; then
@@ -36,9 +38,11 @@ cp -r "$PACKAGE_DIR/promptops/resolver"   "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/schemas"    "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/validators" "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"
+cp -r "$PACKAGE_DIR/promptops/hooks"      "$SCRIPTS_DEST/"
 cp    "$PACKAGE_DIR/promptops/__init__.py" "$SCRIPTS_DEST/"
 
 find "$SCRIPTS_DEST" -name "*.sh" -exec chmod +x {} \;
+find "$SCRIPTS_DEST/hooks" -name "*.py" -exec chmod +x {} \; 2>/dev/null || true
 
 # Check Python dependencies
 echo "📦 Checking Python dependencies..."
@@ -68,6 +72,15 @@ if [ "$PIP_DEPS_OK" -ne 1 ]; then
   echo ""
 fi
 
+if [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
+  if [ -n "$PY" ] && [ -f "$SCRIPTS_DEST/hooks/agent_hook.py" ]; then
+    echo "🪝 Installing Codex and Claude Code hooks..."
+    "$PY" "$SCRIPTS_DEST/hooks/agent_hook.py" --install-agent-configs "$PROJECT_ROOT" "$SCRIPTS_DEST/hooks/agent_hook.py"
+  else
+    echo "⚠️  Skipping agent hooks: python3 or agent_hook.py was not available."
+  fi
+fi
+
 # Same symlink layout as ./setup (see vercel-labs/skills Supported Agents table).
 _symlink_target_rel="../../.agent/skills/apastra"
 if [ "${APASTRA_NO_SKILL_SYMLINKS:-}" != "1" ]; then
@@ -87,3 +100,6 @@ fi
 echo "✅ Apastra installed"
 echo "   Skills:  .agent/skills/apastra/ (canonical)"
 echo "   Scripts: .agent/scripts/apastra/"
+if [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
+  echo "   Hooks:   .codex/ and .claude/settings.json"
+fi

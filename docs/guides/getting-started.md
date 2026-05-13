@@ -2,7 +2,7 @@
 title: "Getting Started"
 description: "A quick guide to getting started with Apastra"
 audience: "developers | platform-teams | agents | all"
-last_verified: "2026-04-01"
+last_verified: "2026-05-13"
 source_files:
   - "README.md"
 ---
@@ -25,7 +25,10 @@ Suites bind datasets, evaluators, and a model matrix into an executable benchmar
 Datasets provide versioned evaluation cases (typically JSONL format), while Evaluators define the scoring mechanism (e.g., deterministic checks, schema validation, rubric scoring).
 
 ### The Harness Contract
-Apastra is compute-agnostic. It implements a strict "run request in, run artifact out" contract. Your execution environment (a Python script, an internal scheduler, or an existing tool like OpenAI Evals) reads the run request and emits standardized artifacts.
+Apastra is compute-agnostic. It implements a strict "run request in, run artifact out" contract. Your execution environment (often your IDE agent, but also a Python script, internal scheduler, or existing tool like OpenAI Evals) reads the run request and emits standardized artifacts.
+
+### Agent Traces
+Codex and Claude Code hooks can expose trace context while the agent works: prompt-submit events, tool calls, validation feedback, retries, and stopping conditions. Apastra treats useful traces as evidence. Store sanitized summaries in run artifacts or link larger/private traces through `artifact_refs.json`.
 
 ### The Resolver and Consumption
 Apps consume prompts via a Git-first resolver. A `consumption.yaml` manifest defines the exact pins (tag, SHA, or semver tag) the application requires. The resolver supports a local override for fast, un-published iteration.
@@ -35,12 +38,13 @@ Apps consume prompts via a Git-first resolver. A `consumption.yaml` manifest def
 The default developer loop emphasizes local ergonomics:
 
 1. **Edit Prompt Specs**: Modify your prompt definition files locally.
-2. **Local Smoke Evaluation**: Run a quick local test suite using your harness implementation.
-3. **Open a PR**: Commit your changes and push them to a feature branch as you normally would.
-4. **CI Triggers Suites**: The GitHub Actions runner executes full regression suites against your changes.
-5. **Review Regression Report**: The results are generated and posted as a status check against your PR.
-6. **Merge on Passing Policy**: If the regression policy is satisfied, your PR is eligible to merge.
-7. **Optional Governed Release**: Release tags, immutable GitHub Releases, and promotion records are managed automatically post-merge.
+2. **Inspect Trace Evidence**: If a real agent failure motivated the change, use the trace evidence to define the behavior you want to lock down.
+3. **Local Smoke Evaluation**: Run a quick local test suite using your agent or harness implementation.
+4. **Open a PR**: Commit your changes and push them to a feature branch as you normally would.
+5. **CI Triggers Suites**: The GitHub Actions runner executes full regression suites against your changes.
+6. **Review Regression Report**: The results are generated and posted as a status check against your PR.
+7. **Merge on Passing Policy**: If the regression policy is satisfied, your PR is eligible to merge.
+8. **Optional Governed Release**: Release tags, immutable GitHub Releases, and promotion records are managed automatically post-merge.
 
 ## Repo Topologies
 

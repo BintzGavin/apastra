@@ -35,6 +35,8 @@ Apastra is a lightweight way to run evals locally. It's language agnostic and wo
 
 Use it to test your agents' skills, review flows, planning flows, or any other AI instructions that affect how work gets done.
 
+The newer hook layer exists to make that evidence easier to see while the agent is working. Codex and Claude Code hooks can surface trace context, validation feedback, and safety signals at the moment an agent reads a prompt, runs a tool, edits a file, or tries to stop. Apastra then turns the useful parts of those traces into durable eval cases, scorecards, and artifact references.
+
 ## What is an eval actually?
 
 Evaluating AI prompts via deterministic tests instead of just guessing how they are working. Like unit tests for your prompts.
@@ -50,6 +52,7 @@ Apastra is a file-based protocol and skill pack for evaluating your agent's skil
 | Catch quality regressions before shipping | Baselines, scorecards, and regression reports                      |
 | Stay local-first                          | Agent-driven workflows with optional GitHub Actions automation     |
 | Keep things inspectable                   | Plain files, schema validation, and reviewable diffs               |
+| Debug agent behavior from traces          | Hook context, tool-call evidence, and artifact references          |
 | Version prompts like code                 | YAML prompt specs with stable IDs, variables, and output contracts |
 
 
@@ -87,8 +90,9 @@ Either path installs to the same layout:
 
 - `.agent/skills/apastra/` — SKILL.md instructions your agent loads
 - `.agent/scripts/apastra/` — deterministic Python runtime + shell validators
+- `.codex/` and `.claude/` — project-local hooks for Codex and Claude Code
 
-The `setup` script auto-installs `pyyaml` and `jsonschema` (falls back to clear manual-install guidance on PEP-668 environments). npm's `postinstall.sh` does the same.
+The `setup` script auto-installs `pyyaml` and `jsonschema` (falls back to clear manual-install guidance on PEP-668 environments). npm's `postinstall.sh` does the same. It also installs Codex and Claude Code hooks that add Apastra context, expose trace/validation signals, block obvious secret/risky-command mistakes, and validate changed PromptOps files before the agent stops. Set `APASTRA_NO_AGENT_HOOKS=1` if you want the skills and runtime without lifecycle hooks.
 
 ### 2. Scaffold your first prompt workflow
 
@@ -142,6 +146,7 @@ That is enough to start using apastra locally. CI and release automation are ava
 | `apastra-getting-started` | Project setup and onboarding walkthrough                                                           |
 | `apastra-writing-evals`   | Interactive eval design (paired workflow; link-disciplined reference to the Writing evals article) |
 | `apastra-eval`            | Run evaluations from suites, score outputs, and compare baselines                                  |
+| `apastra-trace`           | Inspect agent traces and turn tool-call evidence into eval cases or artifact refs                  |
 | `apastra-baseline`        | Establish and manage known-good baselines                                                          |
 | `apastra-scaffold`        | Generate prompt specs, datasets, evaluators, and suites                                            |
 | `apastra-validate`        | Validate protocol files against JSON schemas                                                       |
@@ -236,6 +241,8 @@ A baseline is a saved scorecard from a passing run. Future evals compare against
 .agent/
 ├── skills/apastra/       # Agent-facing SKILL.md files (eval, baseline, scaffold, …)
 └── scripts/apastra/      # Deterministic runtime (Python + shell validators)
+.codex/                   # Codex hook config for context, trace, validation feedback
+.claude/                  # Claude Code hook config for the same feedback loop
 promptops/                # Created by the scaffold skill on first use
 ├── prompts/              # Prompt specs (YAML)
 ├── datasets/             # Test cases (JSONL)
@@ -270,7 +277,7 @@ flowchart TD
 
 
 
-Deterministic steps (prompt rendering, digest computation, scorecard normalization, baseline comparison, schema validation) are delegated to Python + shell scripts under `.agent/scripts/apastra/`. Your agent handles the LLM-dependent parts: calling the model and grading with judge evaluators. No hosted service, no SaaS dependency — just files, scripts, and your agent.
+Deterministic steps (prompt rendering, digest computation, scorecard normalization, baseline comparison, schema validation) are delegated to Python + shell scripts under `.agent/scripts/apastra/`. Your agent handles the LLM-dependent parts: calling the model and grading with judge evaluators. Hooks give the agent a better trace surface while it works; durable traces should be stored as run artifacts or `artifact_refs.json` entries, not as hidden platform state. No hosted service, no SaaS dependency — just files, scripts, and your agent.
 
 ---
 
@@ -344,6 +351,7 @@ Resolution order: local override → workspace → git ref → packaged artifact
 
 - **Files in Git are the source of truth** — not a database, not a platform
 - **Your agent is the harness** — no framework lock-in
+- **Trace evidence beats vibes** — tool calls, validation feedback, and stopping conditions should become inspectable evidence when they matter
 - **Append-only artifacts** — never mutate old results; create new records
 - **Reproducibility by default** — content digests, environment metadata
 - **Local-first, CI-optional** — start with zero infrastructure
@@ -370,6 +378,7 @@ Shipped skills are listed under **Included Skills** above (including `apastra-re
 - **Project-level config** — **shipped at runtime:** upward-discovered `promptops.config.yaml` / `.yml` with schema and default application; documentation of precedence rules still improving
 - **MCP integration** — **partial:** MCP server and tools in `promptops/runtime/mcp_server.py` (e.g. list suites, run evaluation); richer MCP definitions inside prompt specs and packaging remain roadmap
 - **First-class cost tracking** — total cost in every run manifest, cost delta in regression reports, optional `cost_budget` on suites
+- **Opt-in persisted hook traces** — hooks already surface trace and validation signals; next step is a redacted local event log that can be converted into eval cases without copying full transcripts
 
 ## License
 

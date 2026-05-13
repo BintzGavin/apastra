@@ -7,15 +7,15 @@ description: Quick setup guide for apastra PromptOps. Create your first prompt s
 
 Set up prompt versioning and evaluation in any project. No CI, no cloud, no framework — just files and your IDE agent.
 
-## Onboarding megaprompt
+## Onboarding playbook
 
-Use [`megaprompt.md`](megaprompt.md) when adopting Apastra in **another repository** with **no README context**. It phases install → one flagship eval (**`apastra-writing-evals`**, **`apastra-scaffold`**) → optional baselines / CI. The playbook lives **only** in that file (**not duplicated** in the root README).
+Use [`onboarding.md`](onboarding.md) when adopting Apastra in **another repository** with **no README context**. It phases install → one flagship eval (**`apastra-writing-evals`**, **`apastra-scaffold`**) → optional baselines / CI. The playbook lives **only** in that file (**not duplicated** in the root README).
 
 Then iterate coverage with [`writing-evals`](../writing-evals) and scaffold `promptops/README.md` from [`templates/promptops-README.md`](templates/promptops-README.md).
 
 ## What Is Apastra?
 
-Apastra treats AI prompts as versioned software assets. Prompts, test cases, and scoring rules are files in your repo. Your IDE agent runs evaluations, compares results against baselines, and catches regressions — all locally.
+Apastra treats AI prompts as versioned software assets. Prompts, test cases, scoring rules, and trace evidence are files or file references in your repo. Your IDE agent runs evaluations, compares results against baselines, and catches regressions — all locally. Codex and Claude Code hooks give the agent a better surface for context, validation feedback, and trace evidence while it works.
 
 ## Quick Setup
 
@@ -165,25 +165,24 @@ promptops/
 │   └── summarize-quick.yaml    # Quick eval files (prompt + cases + assertions)
 ├── suites/
 │   └── summarize-smoke.yaml    # Test configurations
+├── runs/                       # Run artifacts and trace references
 ├── schemas/                    # JSON schemas (from apastra)
-├── policies/                   # Regression policies
-├── runtime/                    # Deterministic scripts (digest, render, runner)
-├── runs/                       # Run scripts (normalize, evaluate_assertions, compare)
-└── validators/                 # Shell scripts for schema validation
+└── policies/                   # Regression policies
 derived-index/
 ├── baselines/                  # Known-good scorecards
 └── regressions/                # Regression reports
 ```
 
-The `runtime/`, `runs/`, and `validators/` directories are shipped with apastra and contain deterministic scripts. The skills call these scripts — you don't need to write or modify them.
+The deterministic `runtime/`, `runs/`, and `validators/` directories are shipped under `.agent/scripts/apastra/`. The skills call those scripts — you don't need to write or modify them.
 
 ## Next Steps
 
 1. Use the **eval** skill to run your first evaluation
-2. Use the **baseline** skill to establish your first baseline
-3. Use the **scaffold** skill to quickly generate new prompt specs
-4. Use the **validate** skill to check file formatting
-5. **Upgrade to CI**: Use the **setup-ci** skill to add GitHub Actions for PR gating and releases
+2. Use the **trace** skill when a real agent failure or hook event should become eval evidence
+3. Use the **baseline** skill to establish your first baseline
+4. Use the **scaffold** skill to quickly generate new prompt specs
+5. Use the **validate** skill to check file formatting
+6. **Upgrade to CI**: Use the **setup-ci** skill to add GitHub Actions for PR gating and releases
 
 ## Checklist
 
