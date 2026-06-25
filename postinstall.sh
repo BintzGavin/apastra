@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # npm postinstall — runs when someone does: npm install apastra
-# Copies skills to .agent/skills/apastra/, scripts to .agent/scripts/apastra/,
-# and symlinks skills into .claude/skills/ and .agents/skills/ (unless APASTRA_NO_SKILL_SYMLINKS=1).
-# Also installs Codex and Claude Code hooks unless APASTRA_NO_AGENT_HOOKS=1.
+#
+# Security posture:
+# - default postinstall is disclosure-only and does not mutate the consumer repo
+# - set APASTRA_POSTINSTALL_SETUP=1 to opt into project-local setup from npm install
+# - set APASTRA_INSTALL_PY_DEPS=1 to allow pip installs
+# - set APASTRA_INSTALL_AGENT_HOOKS=1 to allow Codex/Claude hook config writes
 
 set -euo pipefail
 
@@ -17,6 +20,37 @@ fi
 
 SKILLS_DEST="$PROJECT_ROOT/.agent/skills/apastra"
 SCRIPTS_DEST="$PROJECT_ROOT/.agent/scripts/apastra"
+
+cat <<EOF
+Apastra npm postinstall preflight
+
+Package:
+  $PACKAGE_DIR
+
+Project root:
+  $PROJECT_ROOT
+
+Default behavior:
+  No project files were created or modified by this postinstall.
+
+To install Apastra into this repo from npm, rerun with:
+  APASTRA_POSTINSTALL_SETUP=1 npm install apastra
+
+That opt-in setup will create or update:
+  .agent/skills/apastra/         agent-facing SKILL.md files
+  .agent/scripts/apastra/        runtime, schemas, validators, harnesses, hooks
+  .claude/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
+  .agents/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
+
+Additional opt-in actions:
+  APASTRA_INSTALL_PY_DEPS=1       allow pip install pyyaml jsonschema
+  APASTRA_INSTALL_AGENT_HOOKS=1   write .codex/config.toml, .codex/hooks.json, .claude/settings.json
+
+EOF
+
+if [ "${APASTRA_POSTINSTALL_SETUP:-}" != "1" ]; then
+  exit 0
+fi
 
 echo "🔧 Installing apastra..."
 
@@ -41,17 +75,20 @@ cp -r "$PACKAGE_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/hooks"      "$SCRIPTS_DEST/"
 cp    "$PACKAGE_DIR/promptops/__init__.py" "$SCRIPTS_DEST/"
 
+find "$SCRIPTS_DEST" -type d -name "__pycache__" -prune -exec rm -rf {} +
+find "$SCRIPTS_DEST" -type f \( -name "*.pyc" -o -name "*.pyo" -o -name "*.orig" -o -name "*.rej" \) -exec rm -f {} +
 find "$SCRIPTS_DEST" -name "*.sh" -exec chmod +x {} \;
 find "$SCRIPTS_DEST/hooks" -name "*.py" -exec chmod +x {} \; 2>/dev/null || true
 
-# Check Python dependencies
+# Check Python dependencies. Installing them is opt-in because npm postinstall
+# should not invoke another package manager unless the user explicitly allowed it.
 echo "📦 Checking Python dependencies..."
 PY="$(command -v python3 || command -v python || true)"
 PIP_DEPS_OK=0
 if [ -n "$PY" ] && "$PY" -c "import yaml, jsonschema" &>/dev/null; then
   echo "   pyyaml + jsonschema already present."
   PIP_DEPS_OK=1
-else
+elif [ "${APASTRA_INSTALL_PY_DEPS:-}" = "1" ]; then
   PIP="$(command -v pip3 || command -v pip || true)"
   if [ -n "$PIP" ]; then
     if "$PIP" install --quiet pyyaml jsonschema 2>/dev/null \
@@ -63,8 +100,10 @@ fi
 
 if [ "$PIP_DEPS_OK" -ne 1 ]; then
   echo ""
-  echo "⚠️  Could not auto-install pyyaml + jsonschema."
-  echo "   The apastra runtime scripts require both. Install manually via one of:"
+  echo "⚠️  pyyaml + jsonschema are not available to python."
+  echo "   Apastra did not install them automatically."
+  echo "   To let npm postinstall use pip, rerun with APASTRA_INSTALL_PY_DEPS=1."
+  echo "   Or install manually via one of:"
   echo "     pipx install pyyaml && pipx install jsonschema"
   echo "     python3 -m venv .venv && source .venv/bin/activate && pip install pyyaml jsonschema"
   echo "     pip install --user pyyaml jsonschema"
@@ -72,13 +111,15 @@ if [ "$PIP_DEPS_OK" -ne 1 ]; then
   echo ""
 fi
 
-if [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
+if [ "${APASTRA_INSTALL_AGENT_HOOKS:-}" = "1" ] && [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
   if [ -n "$PY" ] && [ -f "$SCRIPTS_DEST/hooks/agent_hook.py" ]; then
     echo "🪝 Installing Codex and Claude Code hooks..."
     "$PY" "$SCRIPTS_DEST/hooks/agent_hook.py" --install-agent-configs "$PROJECT_ROOT" "$SCRIPTS_DEST/hooks/agent_hook.py"
   else
     echo "⚠️  Skipping agent hooks: python3 or agent_hook.py was not available."
   fi
+else
+  echo "🪝 Skipping agent hooks. Set APASTRA_INSTALL_AGENT_HOOKS=1 to install them."
 fi
 
 # Same symlink layout as ./setup (see vercel-labs/skills Supported Agents table).
@@ -100,6 +141,8 @@ fi
 echo "✅ Apastra installed"
 echo "   Skills:  .agent/skills/apastra/ (canonical)"
 echo "   Scripts: .agent/scripts/apastra/"
-if [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
+if [ "${APASTRA_INSTALL_AGENT_HOOKS:-}" = "1" ] && [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
   echo "   Hooks:   .codex/ and .claude/settings.json"
+else
+  echo "   Hooks:   skipped (opt in with APASTRA_INSTALL_AGENT_HOOKS=1)"
 fi

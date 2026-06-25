@@ -15,7 +15,14 @@ set -euo pipefail
 # Also symlinks that directory into .claude/skills/ and .agents/skills/ only (minimal set):
 # Claude Code uses the former; Cursor, Codex, OpenCode, Copilot, etc. use the latter per skills CLI.
 # Set APASTRA_NO_SKILL_SYMLINKS=1 to skip symlinks (e.g. Windows or symlink-averse environments).
-# Set APASTRA_NO_AGENT_HOOKS=1 to skip Codex and Claude Code hook installation.
+# Set APASTRA_INSTALL_AGENT_HOOKS=1 to install Codex and Claude Code hook config.
+# Set APASTRA_INSTALL_PY_DEPS=1 to allow setup to invoke pip for pyyaml/jsonschema.
+# Pass --dry-run to print the install plan without writing files.
+
+DRY_RUN=0
+if [ "${1:-}" = "--dry-run" ]; then
+  DRY_RUN=1
+fi
 
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(pwd)"
@@ -26,6 +33,47 @@ if [ ! -d "$SKILL_DIR/promptops/runtime" ] || [ ! -f "$SKILL_DIR/SKILL.md" ]; th
   echo "❌ Error: setup must be run from inside a cloned apastra repository."
   echo "   Expected: $SKILL_DIR/promptops/runtime and $SKILL_DIR/SKILL.md"
   exit 1
+fi
+
+cat <<EOF
+Apastra setup preflight
+
+Project root:
+  $PROJECT_ROOT
+
+Source:
+  $SKILL_DIR
+
+Will create or update:
+  .agent/scripts/apastra/        runtime, schemas, validators, harnesses, hooks
+  .claude/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
+  .agents/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
+
+Will remove from this cloned skill directory after copying runtime:
+  .git, .github, promptops/, package files, and other non-skill source files
+  (keeps setup, SKILL.md, LICENSE, README.md, and subdirectories with SKILL.md)
+
+Will only check by default:
+  Python modules pyyaml and jsonschema
+
+Opt-in actions:
+  APASTRA_INSTALL_PY_DEPS=1       allow pip install pyyaml jsonschema
+  APASTRA_INSTALL_AGENT_HOOKS=1   write .codex/config.toml, .codex/hooks.json, .claude/settings.json
+
+EOF
+
+if [ "$DRY_RUN" -eq 1 ]; then
+  echo "Dry run only; no files changed."
+  exit 0
+fi
+
+if [ "${APASTRA_ASSUME_YES:-}" != "1" ] && [ -t 0 ]; then
+  printf "Proceed with these Apastra setup changes? [y/N] "
+  read -r reply
+  case "$reply" in
+    y|Y|yes|YES) ;;
+    *) echo "Setup cancelled."; exit 1 ;;
+  esac
 fi
 
 echo "🔧 Installing apastra..."
@@ -41,17 +89,20 @@ cp -r "$SKILL_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/hooks"      "$SCRIPTS_DEST/"
 cp    "$SKILL_DIR/promptops/__init__.py" "$SCRIPTS_DEST/"
 
+find "$SCRIPTS_DEST" -type d -name "__pycache__" -prune -exec rm -rf {} +
+find "$SCRIPTS_DEST" -type f \( -name "*.pyc" -o -name "*.pyo" -o -name "*.orig" -o -name "*.rej" \) -exec rm -f {} +
 find "$SCRIPTS_DEST" -name "*.sh" -exec chmod +x {} \;
 find "$SCRIPTS_DEST/hooks" -name "*.py" -exec chmod +x {} \; 2>/dev/null || true
 
-# Install Python dependencies
+# Check Python dependencies. Installing them is opt-in because setup should not
+# invoke another package manager unless the user explicitly allowed it.
 echo "📦 Checking Python dependencies..."
 PY="$(command -v python3 || command -v python || true)"
 PIP_DEPS_OK=0
 if [ -n "$PY" ] && "$PY" -c "import yaml, jsonschema" &>/dev/null; then
   echo "   pyyaml + jsonschema already present."
   PIP_DEPS_OK=1
-else
+elif [ "${APASTRA_INSTALL_PY_DEPS:-}" = "1" ]; then
   PIP="$(command -v pip3 || command -v pip || true)"
   if [ -n "$PIP" ]; then
     # Try normal install, fall back to --user (PEP 668 on brew Python).
@@ -64,8 +115,10 @@ fi
 
 if [ "$PIP_DEPS_OK" -ne 1 ]; then
   echo ""
-  echo "⚠️  Could not auto-install pyyaml + jsonschema."
-  echo "   The apastra runtime scripts require both. Install manually via one of:"
+  echo "⚠️  pyyaml + jsonschema are not available to python."
+  echo "   Apastra did not install them automatically."
+  echo "   To let setup use pip, rerun with APASTRA_INSTALL_PY_DEPS=1."
+  echo "   Or install manually via one of:"
   echo "     pipx install pyyaml && pipx install jsonschema"
   echo "     python3 -m venv .venv && source .venv/bin/activate && pip install pyyaml jsonschema"
   echo "     pip install --user pyyaml jsonschema"
@@ -74,13 +127,15 @@ if [ "$PIP_DEPS_OK" -ne 1 ]; then
 fi
 
 # Install project-local hooks for supported coding agents.
-if [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
+if [ "${APASTRA_INSTALL_AGENT_HOOKS:-}" = "1" ] && [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
   if [ -n "$PY" ] && [ -f "$SCRIPTS_DEST/hooks/agent_hook.py" ]; then
     echo "🪝 Installing Codex and Claude Code hooks..."
     "$PY" "$SCRIPTS_DEST/hooks/agent_hook.py" --install-agent-configs "$PROJECT_ROOT" "$SCRIPTS_DEST/hooks/agent_hook.py"
   else
     echo "⚠️  Skipping agent hooks: python3 or agent_hook.py was not available."
   fi
+else
+  echo "🪝 Skipping agent hooks. Set APASTRA_INSTALL_AGENT_HOOKS=1 to install them."
 fi
 
 # Clean up the clone — keep only skill directories and this setup script
@@ -130,8 +185,10 @@ echo ""
 echo "✅ Apastra installed"
 echo "   Skills:  .agent/skills/apastra/ (canonical)"
 echo "   Scripts: .agent/scripts/apastra/"
-if [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
+if [ "${APASTRA_INSTALL_AGENT_HOOKS:-}" = "1" ] && [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
   echo "   Hooks:   .codex/ and .claude/settings.json"
+else
+  echo "   Hooks:   skipped (opt in with APASTRA_INSTALL_AGENT_HOOKS=1)"
 fi
 echo ""
 echo "Tell your agent: 'Use the getting-started skill to set up PromptOps in this project'"

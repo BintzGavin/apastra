@@ -13,16 +13,25 @@ Skills for managing AI prompts with the same discipline as code — versioned fi
 
 ```bash
 git clone --single-branch --depth 1 https://github.com/BintzGavin/apastra.git .agent/skills/apastra
+.agent/skills/apastra/setup --dry-run
 .agent/skills/apastra/setup
 ```
 
 ### Option 2 — npm
 
 ```bash
-npm install apastra
+APASTRA_POSTINSTALL_SETUP=1 npm install apastra
 ```
 
-Both methods install the skills to `.agent/skills/apastra/`, the runtime scripts to `.agent/scripts/apastra/`, and project-local Codex/Claude Code hooks unless hook installation is disabled.
+Plain `npm install apastra` is disclosure-only: it installs the package and prints what setup would create, but does not mutate the consumer repo. Use `APASTRA_POSTINSTALL_SETUP=1` for npm-managed project setup.
+
+Setup creates or updates `.agent/skills/apastra/`, `.agent/scripts/apastra/`, and discovery symlinks under `.claude/skills/` and `.agents/skills/` unless `APASTRA_NO_SKILL_SYMLINKS=1`.
+
+Opt-in actions:
+
+- `APASTRA_INSTALL_AGENT_HOOKS=1` writes project-local Codex/Claude Code hook config.
+- `APASTRA_INSTALL_PY_DEPS=1` allows setup/postinstall to invoke `pip` for `pyyaml` and `jsonschema`; otherwise Apastra only checks and prints manual guidance.
+- `APASTRA_ASSUME_YES=1` lets the git-clone setup proceed non-interactively after printing the preflight manifest.
 
 ## Available Skills
 

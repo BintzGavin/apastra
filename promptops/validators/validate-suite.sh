@@ -1,4 +1,8 @@
 #!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/lib/ajv.sh"
 
 # 1. Take input file path (YAML or JSON)
 INPUT_FILE=$1
@@ -13,9 +17,9 @@ if [ ! -f "$INPUT_FILE" ]; then
   exit 1
 fi
 
-# 2. Run ajv-cli against promptops/schemas/suite.schema.json
-# Note: ajv-cli parses YAML natively
-npx ajv-cli validate -s promptops/schemas/suite.schema.json -d "$INPUT_FILE" --spec=draft2020 --strict=false
+# 2. Run ajv-cli against promptops/schemas/suite.schema.json.
+# YAML inputs are converted explicitly before validation.
+apastra_ajv_validate promptops/schemas/suite.schema.json "$INPUT_FILE" --spec=draft2020 --strict=false
 
 # Capture the exit code
 EXIT_CODE=$?

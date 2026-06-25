@@ -1,4 +1,8 @@
 #!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/lib/ajv.sh"
 
 TARGET_FILE=$1
 
@@ -15,7 +19,7 @@ fi
 QUICK_EVAL_SCHEMA="promptops/schemas/quick-eval.schema.json"
 
 echo "Validating quick eval: $TARGET_FILE"
-npx ajv-cli validate -s "$QUICK_EVAL_SCHEMA" -r "promptops/schemas/dataset-case.schema.json" -d "$TARGET_FILE" --spec=draft2020 --strict=false
+apastra_ajv_validate "$QUICK_EVAL_SCHEMA" "$TARGET_FILE" -r "promptops/schemas/dataset-case.schema.json" --spec=draft2020 --strict=false
 
 if [ $? -ne 0 ]; then
   echo "Validation failed."

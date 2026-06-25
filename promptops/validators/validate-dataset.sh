@@ -1,4 +1,8 @@
 #!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/lib/ajv.sh"
 
 # 1. Take input arguments: path to manifest (YAML/JSON) and path to cases (JSONL).
 MANIFEST_FILE=$1
@@ -22,10 +26,10 @@ fi
 MANIFEST_SCHEMA="promptops/schemas/dataset-manifest.schema.json"
 CASE_SCHEMA="promptops/schemas/dataset-case.schema.json"
 
-# 2. Convert manifest YAML to JSON (ajv-cli parses YAML natively)
+# 2. Convert manifest YAML to JSON explicitly when needed.
 # 3. Run ajv-cli against dataset-manifest.schema.json with the manifest file.
 echo "Validating manifest: $MANIFEST_FILE"
-npx ajv-cli validate -s "$MANIFEST_SCHEMA" -d "$MANIFEST_FILE" --spec=draft2020 --strict=false
+apastra_ajv_validate "$MANIFEST_SCHEMA" "$MANIFEST_FILE" --spec=draft2020 --strict=false
 
 if [ $? -ne 0 ]; then
   echo "Manifest validation failed."
@@ -55,9 +59,7 @@ while IFS= read -r line; do
 
   # 5. Run ajv-cli against promptops/schemas/dataset-case.schema.json.
   # Capture output to avoid noisy success messages for every single line
-  OUTPUT=$(npx ajv-cli validate -s "$CASE_SCHEMA" -d "$TMP_FILE" --spec=draft2020 --strict=false 2>&1)
-
-  if [ $? -ne 0 ]; then
+  if ! OUTPUT=$(apastra_ajv_validate "$CASE_SCHEMA" "$TMP_FILE" --spec=draft2020 --strict=false 2>&1); then
     echo "Validation failed at line $LINE_NUM:"
     echo "$OUTPUT"
     VALIDATION_FAILED=1

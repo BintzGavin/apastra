@@ -223,11 +223,13 @@ Apastra itself installs into the consumer's repo under a dedicated `.agent/` dir
 .agent/
 ├─ skills/apastra/     # SKILL.md instructions loaded by the IDE agent
 └─ scripts/apastra/    # Deterministic runtime (Python + shell validators)
-.codex/                # Codex hook config for context, trace, and validation feedback
-.claude/settings.json  # Claude Code hook config for the same feedback loop
+.agents/skills/apastra # Discovery symlink for Codex/Cursor/OpenCode-style skill loaders
+.claude/skills/apastra # Discovery symlink for Claude Code
+.codex/                # Optional Codex hook config when APASTRA_INSTALL_AGENT_HOOKS=1
+.claude/settings.json  # Optional Claude Code hook config when APASTRA_INSTALL_AGENT_HOOKS=1
 ```
 
-This keeps the protocol files (`promptops/`) owned by the consumer project and the apastra runtime (`.agent/scripts/apastra/`) cleanly isolated. The hook config is project-local and points at the installed Apastra hook runner. Both `git clone … .agent/skills/apastra && setup` and `npm install apastra` produce the same layout, so topology choice (same-repo vs. separate-repo) and install method are independent decisions.
+This keeps the protocol files (`promptops/`) owned by the consumer project and the apastra runtime (`.agent/scripts/apastra/`) cleanly isolated. The hook config is project-local, points at the installed Apastra hook runner, and is installed only when the user opts in with `APASTRA_INSTALL_AGENT_HOOKS=1`. The git-clone `setup` script prints a preflight manifest before writing; npm `postinstall` is disclosure-only unless `APASTRA_POSTINSTALL_SETUP=1` is set. Topology choice (same-repo vs. separate-repo) and install method remain independent decisions, but install side effects must stay explicit.
 
 **Artifacts branch (append-only indices)**
 
@@ -455,29 +457,27 @@ The system supports a rich vocabulary of assertion types. These are deterministi
 
 For rapid iteration, the system supports a single-file "quick eval" format that combines prompt, cases, and assertions into one file. This eliminates the need to create four separate files for simple evaluations.
 
-**Quick eval format** (`promptops/evals/my-eval.yaml`):
+**Quick eval example** (`promptops/evals/agent-run-readiness.yaml`):
 
 ```yaml
-id: summarize-quick
+id: agent-run-readiness
 prompt: |
-  Summarize the following text in {{max_length}} or fewer words: {{text}}
+  Evaluate a completed AI-agent implementation run for release readiness.
+  Return JSON with decision, outcome_evidence, step_evidence, trace_evidence, risks, and next_action.
 cases:
-  - id: short-article
+  - case_id: validated-promptops-change
+    metadata:
+      evidence_surfaces: [outcome, step, trace]
     inputs:
-      text: "The quick brown fox jumps over the lazy dog."
-      max_length: "10"
+      final_response: "Updated the quick eval and validation passed."
+      outcome_evidence: "[QE-OUTCOME-001] Changed promptops/evals/agent-run-readiness.yaml."
+      step_evidence: "[QE-STEP-001] Ran quick-eval validation after editing promptops/evals/."
+      trace_evidence: "[QE-TRACE-001] validation_status=passed before final response."
     assert:
-      - type: icontains
-        value: "fox"
-      - type: not-contains
-        value: "Lorem ipsum"
-  - id: empty-input
-    inputs:
-      text: ""
-      max_length: "10"
-    assert:
-      - type: regex
-        value: ".*"
+      - type: is-valid-json-schema
+        value: { type: object, required: [decision, outcome_evidence, step_evidence, trace_evidence] }
+      - type: contains-all
+        value: ['"outcome_evidence"', '"step_evidence"', '"trace_evidence"', QE-OUTCOME-001, QE-STEP-001, QE-TRACE-001]
 thresholds:
   pass_rate: 1.0
 ```

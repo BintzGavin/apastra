@@ -1,6 +1,6 @@
 {
   "name": "apastra",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "PromptOps — version, evaluate, and ship AI prompts as disciplined software assets",
   "keywords": [
     "apastra",
@@ -52,14 +52,22 @@
     "promptops/harnesses/**/*",
     "promptops/policies/**/*",
     "promptops/__init__.py",
+    "!**/__pycache__/**",
+    "!**/*.pyc",
     "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "ajv": "^8.18.0",
+    "ajv": "^8.20.0",
     "ajv-cli": "^5.0.0",
     "ajv-formats": "^3.0.1"
+  },
+  "overrides": {
+    "brace-expansion": "^1.1.13",
+    "fast-json-patch": "^3.1.1",
+    "fast-uri": "^4.0.0",
+    "js-yaml": "^5.1.0"
   }
 }

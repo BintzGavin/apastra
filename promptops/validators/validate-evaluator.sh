@@ -1,4 +1,8 @@
 #!/bin/bash
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/lib/ajv.sh"
 
 # Validator script for evaluator specs
 
@@ -17,7 +21,7 @@ if [ ! -f "$TARGET_FILE" ]; then
 fi
 
 echo "Validating '$TARGET_FILE' against '$SCHEMA_PATH'..."
-npx ajv-cli validate -s "$SCHEMA_PATH" -d "$TARGET_FILE" --spec=draft2020 --strict=false
+apastra_ajv_validate "$SCHEMA_PATH" "$TARGET_FILE" --spec=draft2020 --strict=false
 
 if [ $? -eq 0 ]; then
   echo "Validation successful!"

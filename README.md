@@ -80,19 +80,33 @@ git clone --single-branch --depth 1 https://github.com/BintzGavin/apastra.git .a
 .agent/skills/apastra/setup
 ```
 
+Preview the exact writes first:
+
+```bash
+.agent/skills/apastra/setup --dry-run
+```
+
 **Option B — npm:**
 
 ```bash
-npm install apastra
+APASTRA_POSTINSTALL_SETUP=1 npm install apastra
 ```
 
-Either path installs to the same layout:
+Plain `npm install apastra` is disclosure-only: it installs the package and prints the setup plan, but does not create project files. Set `APASTRA_POSTINSTALL_SETUP=1` only when you want npm's postinstall step to copy Apastra into the current project.
+
+The install writes are:
 
 - `.agent/skills/apastra/` — SKILL.md instructions your agent loads
 - `.agent/scripts/apastra/` — deterministic Python runtime + shell validators
-- `.codex/` and `.claude/` — project-local hooks for Codex and Claude Code
+- `.claude/skills/apastra` and `.agents/skills/apastra` — discovery symlinks, unless `APASTRA_NO_SKILL_SYMLINKS=1`
 
-The `setup` script auto-installs `pyyaml` and `jsonschema` (falls back to clear manual-install guidance on PEP-668 environments). npm's `postinstall.sh` does the same. It also installs Codex and Claude Code hooks that add Apastra context, expose trace/validation signals, block obvious secret/risky-command mistakes, and validate changed PromptOps files before the agent stops. Set `APASTRA_NO_AGENT_HOOKS=1` if you want the skills and runtime without lifecycle hooks.
+Optional writes and commands are opt-in:
+
+- `APASTRA_INSTALL_AGENT_HOOKS=1` writes `.codex/config.toml`, `.codex/hooks.json`, and `.claude/settings.json` so Codex and Claude Code can surface trace/validation signals.
+- `APASTRA_INSTALL_PY_DEPS=1` allows setup/postinstall to invoke `pip` for `pyyaml` and `jsonschema`; otherwise Apastra only checks for them and prints manual install guidance.
+- `APASTRA_ASSUME_YES=1` lets the git-clone setup run non-interactively after printing the preflight manifest.
+
+The default install posture is local and inspectable: no hosted service, no telemetry sink, no hidden database, no automatic hook config, and no cross-package-manager dependency install unless you opt in.
 
 ### 2. Scaffold your first prompt workflow
 
@@ -189,27 +203,37 @@ metrics: [keyword_recall]
 
 ### Inline Assertions (Quick Mode)
 
-For simple checks, skip the evaluator file entirely — put assertions directly on your test cases:
+For simple checks, skip the evaluator file entirely — put assertions directly on your test cases. Prefer checks that prove the behavior you care about: final outcome first, then critical step choices, then trace evidence when the path matters.
 
 ```jsonl
-{"case_id": "case-1", "inputs": {"text": "..."}, "assert": [{"type": "contains", "value": "summary"}, {"type": "is-json"}]}
+{"case_id": "agent-run-ready", "inputs": {"final_response": "...", "trace_summary": "..."}, "assert": [{"type": "is-valid-json-schema", "value": {"type": "object"}}, {"type": "contains-all", "value": ["outcome_evidence", "step_evidence", "trace_evidence"]}]}
 ```
 
-Built-in assertion types: `equals`, `contains`, `icontains`, `contains-any`, `contains-all`, `regex`, `starts-with`, `is-json`, `contains-json`, `similar`, `llm-rubric`, `factuality`, `latency`, `cost`. Negate any with `not-` prefix (e.g. `not-contains`).
+Built-in assertion types: `equals`, `contains`, `icontains`, `contains-any`, `contains-all`, `regex`, `starts-with`, `is-json`, `contains-json`, `is-valid-json-schema`, `similar`, `llm-rubric`, `factuality`, `latency`, `cost`. Negate any with `not-` prefix (e.g. `not-contains`).
 
 ### Quick Eval (Single File)
 
-For rapid iteration, combine prompt + cases + assertions into one file (`promptops/evals/my-eval.yaml`):
+For rapid iteration, combine prompt + cases + assertions into one file. A strong release-readiness quick eval can separate final outcome, critical step, and trace evidence:
 
 ```yaml
-id: summarize-quick
-prompt: "Summarize in {{max_length}} words: {{text}}"
+id: agent-run-readiness
+prompt: |
+  Evaluate a completed AI-agent implementation run for release readiness.
+  Return JSON with decision, outcome_evidence, step_evidence, trace_evidence, risks, and next_action.
 cases:
-  - id: short
-    inputs: { text: "The fox jumps over the dog.", max_length: "10" }
+  - case_id: validated-promptops-change
+    metadata:
+      evidence_surfaces: [outcome, step, trace]
+    inputs:
+      final_response: "Updated the quick eval and validation passed."
+      outcome_evidence: "[QE-OUTCOME-001] Changed promptops/evals/agent-run-readiness.yaml."
+      step_evidence: "[QE-STEP-001] Ran quick-eval validation after editing promptops/evals/."
+      trace_evidence: "[QE-TRACE-001] validation_status=passed before final response."
     assert:
-      - type: icontains
-        value: "fox"
+      - type: is-valid-json-schema
+        value: { type: object, required: [decision, outcome_evidence, step_evidence, trace_evidence] }
+      - type: contains-all
+        value: ['"outcome_evidence"', '"step_evidence"', '"trace_evidence"', QE-OUTCOME-001, QE-STEP-001, QE-TRACE-001]
 thresholds:
   pass_rate: 1.0
 ```
