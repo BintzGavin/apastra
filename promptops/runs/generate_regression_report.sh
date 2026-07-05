@@ -27,11 +27,13 @@ if [ ! -f "$POLICY" ]; then
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TEMP_REPORT=$(mktemp --suffix=.json)
-trap 'rm -f "$TEMP_REPORT"' EXIT
+TEMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/apastra-regression.XXXXXX")
+TEMP_REPORT="$TEMP_DIR/regression-report.json"
+PYTHON_BIN="${PYTHON:-python3}"
+trap 'rm -rf "$TEMP_DIR"' EXIT
 
 echo "Generating regression report..."
-python "$SCRIPT_DIR/compare.py" "$CANDIDATE" "$BASELINE" "$POLICY" "$TEMP_REPORT"
+"$PYTHON_BIN" "$SCRIPT_DIR/compare.py" "$CANDIDATE" "$BASELINE" "$POLICY" "$TEMP_REPORT"
 
 echo "Validating regression report..."
 npx --yes ajv-cli validate -s "$SCRIPT_DIR/../schemas/regression-report.schema.json" -d "$TEMP_REPORT" --spec=draft2020 --strict=false -c ajv-formats >/dev/null

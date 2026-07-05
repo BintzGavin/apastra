@@ -2,11 +2,94 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "apastra-delivery-target-v1",
   "title": "Delivery Target Specification",
-  "description": "Schema for delivery target config.",
+  "description": "Schema for delivery target config across supported downstream sync mechanisms.",
   "type": "object",
   "properties": {
-    "type": { "type": "string", "description": "Type of delivery target, e.g., 'github_pr', 'oci_registry'" },
-    "repo": { "type": "string", "description": "Target repository if type is 'github_pr'" }
+    "type": {
+      "type": "string",
+      "enum": ["github_pr", "npm", "pypi", "oci", "internal_api", "mcp_server"],
+      "description": "Delivery target type."
+    },
+    "target_type": {
+      "type": "string",
+      "const": "mcp_server",
+      "description": "Legacy MCP delivery target type field."
+    },
+    "repo": {
+      "type": "string",
+      "description": "Target repository for GitHub PR or internal delivery targets."
+    },
+    "repository": {
+      "type": "string",
+      "description": "OCI repository path."
+    },
+    "registry": {
+      "type": "string",
+      "description": "Package or artifact registry host."
+    },
+    "scope": {
+      "type": "string",
+      "description": "Package scope for scoped registries."
+    },
+    "channel": {
+      "type": "string",
+      "description": "Promotion channel consumed by delivery workflows."
+    },
+    "channels": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Promotion channels exposed by multi-channel targets."
+    },
+    "credentials_ref": {
+      "type": "string",
+      "description": "Environment variable or secret reference used for delivery credentials."
+    },
+    "endpoint": {
+      "type": "string",
+      "description": "API or MCP endpoint for delivery."
+    },
+    "auth_header": {
+      "type": "string",
+      "description": "Header value or secret interpolation used for authenticated API delivery."
+    },
+    "payload_format": {
+      "type": "string",
+      "description": "Payload format sent to the delivery target."
+    },
+    "sync_on_promotion": {
+      "type": "boolean",
+      "description": "Whether the target should sync automatically after promotion."
+    }
   },
-  "required": ["type", "repo"]
+  "oneOf": [
+    {
+      "properties": { "type": { "const": "github_pr" } },
+      "required": ["type", "repo", "channel"]
+    },
+    {
+      "properties": { "type": { "const": "npm" } },
+      "required": ["type", "registry", "channel", "credentials_ref"]
+    },
+    {
+      "properties": { "type": { "const": "pypi" } },
+      "required": ["type", "registry", "channel", "credentials_ref"]
+    },
+    {
+      "properties": { "type": { "const": "oci" } },
+      "required": ["type", "registry", "repository", "channel", "credentials_ref"]
+    },
+    {
+      "properties": { "type": { "const": "internal_api" } },
+      "required": ["type", "endpoint", "payload_format"]
+    },
+    {
+      "properties": { "type": { "const": "mcp_server" } },
+      "required": ["type", "endpoint"]
+    },
+    {
+      "properties": { "target_type": { "const": "mcp_server" } },
+      "required": ["target_type", "endpoint", "channels"]
+    }
+  ],
+  "additionalProperties": false
 }

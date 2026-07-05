@@ -1,11 +1,19 @@
 #!/bin/bash
-if [[ "$1" == *.yaml ]] || [[ "$1" == *.yml ]]; then
-  TMP_JSON=$(mktemp --suffix=.json)
-  yq . "$1" > "$TMP_JSON"
-  npx ajv-cli validate -s promptops/schemas/regression-policy.schema.json -d "$TMP_JSON" --spec=draft2020 --strict=false
-  STATUS=$?
-  rm "$TMP_JSON"
-  exit $STATUS
-else
-  npx ajv-cli validate -s promptops/schemas/regression-policy.schema.json -d "$1" --spec=draft2020 --strict=false
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/lib/ajv.sh"
+
+INPUT_FILE="$1"
+
+if [ -z "$INPUT_FILE" ]; then
+  echo "Usage: $0 <regression-policy.json|yaml>"
+  exit 1
 fi
+
+if [ ! -f "$INPUT_FILE" ]; then
+  echo "File not found: $INPUT_FILE"
+  exit 1
+fi
+
+apastra_ajv_validate promptops/schemas/regression-policy.schema.json "$INPUT_FILE" --spec=draft2020 --strict=false

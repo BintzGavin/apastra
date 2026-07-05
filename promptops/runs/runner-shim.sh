@@ -9,6 +9,7 @@ fi
 ADAPTER_YAML=$1
 RUN_REQUEST=$2
 OUTPUT_DIR=$3
+PYTHON_BIN="${PYTHON:-python3}"
 
 if [ ! -f "$ADAPTER_YAML" ]; then
     echo "Error: Adapter YAML not found at $ADAPTER_YAML"
@@ -20,7 +21,20 @@ if [ ! -f "$RUN_REQUEST" ]; then
     exit 1
 fi
 
-ENTRYPOINT=$(yq -r .entrypoint "$ADAPTER_YAML")
+ENTRYPOINT=$("$PYTHON_BIN" - "$ADAPTER_YAML" <<'PY'
+import sys
+
+import yaml
+
+with open(sys.argv[1], "r", encoding="utf-8") as handle:
+    data = yaml.safe_load(handle) or {}
+
+entrypoint = data.get("entrypoint", "")
+if entrypoint is None:
+    entrypoint = ""
+print(entrypoint)
+PY
+)
 
 if [ -z "$ENTRYPOINT" ] || [ "$ENTRYPOINT" == "null" ]; then
     echo "Error: Could not extract entrypoint from $ADAPTER_YAML"
