@@ -1,27 +1,19 @@
 #!/bin/bash
 set -e
 
-SCHEMA_FILE="$(dirname "$0")/../schemas/provenance-attestation.schema.json"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$SCRIPT_DIR/lib/ajv.sh"
 
 if [ -z "$1" ]; then
-    echo "Usage: $0 <file.json>"
+    echo "Usage: $0 <provenance-attestation.json|yaml>"
     exit 1
 fi
 
-if ! command -v ajv >/dev/null 2>&1; then
-    echo "ajv-cli not found. Ensure it is installed."
+INPUT_FILE="$1"
+
+if [ ! -f "$INPUT_FILE" ]; then
+    echo "File not found: $INPUT_FILE"
     exit 1
 fi
 
-TMP_FILE=$(mktemp --suffix=.json)
-python3 -c 'import sys, yaml, json; json.dump(yaml.safe_load(sys.stdin), sys.stdout)' < "$1" > "$TMP_FILE"
-
-if ajv validate -c ajv-formats -s "$SCHEMA_FILE" -d "$TMP_FILE"; then
-    echo "Validation successful."
-    rm -f "$TMP_FILE"
-    exit 0
-else
-    echo "Validation failed."
-    rm -f "$TMP_FILE"
-    exit 1
-fi
+apastra_ajv_validate promptops/schemas/provenance-attestation.schema.json "$INPUT_FILE" --spec=draft2020 --strict=false -c ajv-formats

@@ -21,7 +21,10 @@ CREATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 mkdir -p derived-index/baselines/
 
-TEMP_JSON=$(mktemp --suffix=.json)
+TEMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/apastra-baseline.XXXXXX")
+TEMP_JSON="$TEMP_DIR/baseline.json"
+trap 'rm -rf "$TEMP_DIR"' EXIT
+
 cat <<JSON > "$TEMP_JSON"
 {
   "baseline_id": "${BASELINE_ID}",
@@ -33,7 +36,6 @@ JSON
 
 if ! npx --yes ajv-cli validate -s promptops/schemas/baseline.schema.json -d "$TEMP_JSON" --spec=draft2020 --strict=false -c ajv-formats; then
     echo "Validation failed against baseline.schema.json"
-    rm -f "$TEMP_JSON"
     exit 1
 fi
 
@@ -41,11 +43,9 @@ BASELINE_FILE="derived-index/baselines/${BASELINE_ID}.json"
 
 if [ -f "$BASELINE_FILE" ]; then
     echo "Error: Baseline ${BASELINE_ID} already exists."
-    rm -f "$TEMP_JSON"
     exit 1
 fi
 
 cp "$TEMP_JSON" "$BASELINE_FILE"
-rm -f "$TEMP_JSON"
 
 echo "Baseline successfully established at $BASELINE_FILE"

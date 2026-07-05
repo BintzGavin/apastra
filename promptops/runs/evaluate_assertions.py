@@ -6,57 +6,41 @@ def extract_json_blocks(text):
     """
     Finds potential JSON blocks (objects or arrays) in a string.
     Returns a list of strings that might be JSON.
-    Uses a simple brace matching approach.
+    Uses JSONDecoder so braces in prose do not create false positives.
     """
-    blocks = []
+    if not isinstance(text, str):
+        text = str(text)
 
-    # Try finding markdown code blocks first
+    blocks = []
+    seen = set()
+
     code_blocks = re.findall(r'```(?:json)?\s*(.*?)\s*```', text, re.DOTALL)
     for cb in code_blocks:
-        blocks.append(cb)
+        candidate = cb.strip()
+        if candidate and candidate not in seen:
+            blocks.append(candidate)
+            seen.add(candidate)
 
-    # Also try to find raw objects/arrays by matching brackets
-    # This is a basic approach, a full parser is complex
-
-    start_indices = []
-    for i, char in enumerate(text):
-        if char in ('{', '['):
-            start_indices.append(i)
-
-    for start in start_indices:
-        open_char = text[start]
-        close_char = '}' if open_char == '{' else ']'
-
-        count = 0
-        in_string = False
-        escape = False
-
-        for i in range(start, len(text)):
-            char = text[i]
-
-            if escape:
-                escape = False
-                continue
-
-            if char == '\\':
-                escape = True
-                continue
-
-            if char == '"':
-                in_string = not in_string
-                continue
-
-            if not in_string:
-                if char == open_char:
-                    count += 1
-                elif char == close_char:
-                    count -= 1
-
-                if count == 0:
-                    blocks.append(text[start:i+1])
-                    break
+    decoder = json.JSONDecoder()
+    for start, char in enumerate(text):
+        if char not in ("{", "["):
+            continue
+        try:
+            _, end = decoder.raw_decode(text[start:])
+        except ValueError:
+            continue
+        candidate = text[start:start + end]
+        if candidate not in seen:
+            blocks.append(candidate)
+            seen.add(candidate)
 
     return blocks
+
+def _invalid_assertion_result():
+    return {"assert_invalid": 0.0}
+
+def _contains_value(output, value):
+    return str(value) in output
 
 def evaluate_assertions(output: str, assertions: list, metadata: dict = None) -> list:
     """
@@ -71,7 +55,15 @@ def evaluate_assertions(output: str, assertions: list, metadata: dict = None) ->
         output = str(output)
 
     for assertion in assertions:
+        if not isinstance(assertion, dict):
+            results.append(_invalid_assertion_result())
+            continue
+
         assert_type = assertion.get("type", "")
+        if not isinstance(assert_type, str) or not assert_type:
+            results.append(_invalid_assertion_result())
+            continue
+
         assert_value = assertion.get("value")
 
         is_negated = False
@@ -86,19 +78,19 @@ def evaluate_assertions(output: str, assertions: list, metadata: dict = None) ->
             if base_type == "equals":
                 passed = (output == assert_value)
             elif base_type == "contains":
-                passed = (assert_value in output)
+                passed = _contains_value(output, assert_value)
             elif base_type == "icontains":
                 passed = (str(assert_value).lower() in output.lower())
             elif base_type == "contains-any":
                 if isinstance(assert_value, list):
-                    passed = any(val in output for val in assert_value)
+                    passed = any(_contains_value(output, val) for val in assert_value)
                 else:
-                    passed = (assert_value in output)
+                    passed = _contains_value(output, assert_value)
             elif base_type == "contains-all":
                 if isinstance(assert_value, list):
-                    passed = all(val in output for val in assert_value)
+                    passed = all(_contains_value(output, val) for val in assert_value)
                 else:
-                    passed = (assert_value in output)
+                    passed = _contains_value(output, assert_value)
             elif base_type == "regex":
                 # Ensure the regex matches anywhere in the string
                 passed = bool(re.search(assert_value, output))

@@ -66,7 +66,7 @@ jobs:
           POLICY="promptops/policies/regression.yaml"
           MODE="warn"
           if [ -f "$POLICY" ]; then
-            MODE=$(yq -r '.missing_report // "warn"' "$POLICY")
+            MODE=$(ruby -ryaml -e 'data = YAML.load_file(ARGV[0]) || {}; puts(data["missing_report"] || "warn")' "$POLICY")
           fi
           echo "missing_report=$MODE" >> "$GITHUB_OUTPUT"
       - name: Check Regression Report Status
@@ -100,7 +100,7 @@ jobs:
                 for SUITE in promptops/suites/*.yaml promptops/suites/*.json; do
                   if [ -f "$SUITE" ]; then
                     if [[ "$SUITE" == *.yaml ]]; then
-                      BUDGET=$(yq -o json ".budgets.cost_budget" "$SUITE" 2>/dev/null | grep -v null || echo "")
+                      BUDGET=$(ruby -ryaml -e 'data = YAML.load_file(ARGV[0]) || {}; value = data.dig("budgets", "cost_budget"); puts value unless value.nil?' "$SUITE" 2>/dev/null || echo "")
                     else
                       BUDGET=$(jq -r ".budgets.cost_budget // empty" "$SUITE" 2>/dev/null)
                     fi

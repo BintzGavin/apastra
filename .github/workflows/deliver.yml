@@ -22,6 +22,10 @@ jobs:
 
       - name: Sync to Targets
         run: |
+          read_yaml() {
+            ruby -ryaml -e 'data = YAML.load_file(ARGV[0]) || {}; value = data.dig(*ARGV[1].split(".")); puts value unless value.nil?' "$1" "$2"
+          }
+
           record="${{ inputs.promotion_record_path }}"
           if [ ! -f "$record" ]; then
             echo "::error::Promotion record not found at $record"
@@ -33,10 +37,10 @@ jobs:
           echo "Promoted digest $DIGEST to channel $CHANNEL"
 
           for target in promptops/delivery/*.yaml; do
-            TARGET_CHANNEL=$(yq .channel "$target" 2>/dev/null || echo "")
+            TARGET_CHANNEL=$(read_yaml "$target" channel 2>/dev/null || echo "")
             if [ "$TARGET_CHANNEL" == "$CHANNEL" ]; then
-               TYPE=$(yq .type "$target")
-               REPO=$(yq .repo "$target")
+               TYPE=$(read_yaml "$target" type)
+               REPO=$(read_yaml "$target" repo)
                echo "Executing sync for $TYPE to $REPO"
             fi
           done

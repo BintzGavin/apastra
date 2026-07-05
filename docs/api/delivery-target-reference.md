@@ -1,12 +1,13 @@
 # Delivery Target Specification Reference
 
-Schema for delivery target config.
+Schema for delivery target config across supported downstream sync mechanisms.
 
-## Properties
+## Supported targets
 
-### `type` (string, Required)
-Type of delivery target, e.g., 'github_pr', 'oci_registry'
-
-### `repo` (string, Required)
-Target repository if type is 'github_pr'
-
+- `github_pr`: requires `type`, `repo`, and `channel`.
+- `npm`: requires `type`, `registry`, `channel`, and `credentials_ref`.
+- `pypi`: requires `type`, `registry`, `channel`, and `credentials_ref`.
+- `oci`: requires `type`, `registry`, `repository`, `channel`, and `credentials_ref`.
+- `internal_api`: requires `type`, `endpoint`, and `payload_format`.
+- `mcp_server`: requires `type` and `endpoint`.
+- Legacy MCP target files may use `target_type: mcp_server` with `endpoint` and `channels`.

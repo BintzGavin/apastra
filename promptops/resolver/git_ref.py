@@ -6,6 +6,8 @@ import os
 import tempfile
 import shutil
 
+from promptops.resolver.workspace import validate_prompt_id
+
 def parse_version(v):
     # Remove 'v' prefix if present
     v = v.lstrip('v')
@@ -50,34 +52,36 @@ class GitRefResolver:
         self.cache = {}
 
     def _read_from_dir(self, directory, prompt_id):
+        prompt_id = validate_prompt_id(prompt_id)
+
         # Try flat yaml
         path = os.path.join(directory, "promptops", "prompts", f"{prompt_id}.yaml")
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 return yaml.safe_load(f)
 
         # Try flat json
         path = os.path.join(directory, "promptops", "prompts", f"{prompt_id}.json")
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 return json.load(f)
 
         # Try directory yaml
         path = os.path.join(directory, "promptops", "prompts", prompt_id, "prompt.yaml")
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 return yaml.safe_load(f)
 
         # Try directory json
         path = os.path.join(directory, "promptops", "prompts", prompt_id, "prompt.json")
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 return json.load(f)
 
         # Try quick eval yaml
         path = os.path.join(directory, "promptops", "evals", f"{prompt_id}.yaml")
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 data = yaml.safe_load(f)
                 if data and "prompt" in data:
                     return {"id": prompt_id, "template": data["prompt"], "variables": {}}
@@ -85,7 +89,7 @@ class GitRefResolver:
         # Try quick eval json
         path = os.path.join(directory, "promptops", "evals", f"{prompt_id}.json")
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 if data and "prompt" in data:
                     return {"id": prompt_id, "template": data["prompt"], "variables": {}}
@@ -94,6 +98,7 @@ class GitRefResolver:
 
     def resolve(self, prompt_id, pin):
         """Resolves a prompt package from a git ref."""
+        prompt_id = validate_prompt_id(prompt_id)
         cache_key = (prompt_id, pin)
         if cache_key in self.cache:
             return self.cache[cache_key]
