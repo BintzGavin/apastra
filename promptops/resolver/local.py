@@ -2,12 +2,14 @@ import os
 import json
 import yaml
 
+from promptops.resolver.workspace import validate_prompt_id
+
 def load_prompt_package(path):
     if path.endswith('.yaml') or path.endswith('.yml'):
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             return yaml.safe_load(f)
     elif path.endswith('.json'):
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
     return None
 
@@ -17,6 +19,8 @@ class LocalResolver:
 
     def resolve(self, prompt_id, override_path):
         """Resolves a prompt package from a local path."""
+        prompt_id = validate_prompt_id(prompt_id)
+
         if not os.path.exists(override_path):
             raise FileNotFoundError(f"Local override path not found: {override_path}")
 
