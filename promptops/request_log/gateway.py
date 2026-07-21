@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import http.client
 import json
+import logging
 import os
 import socket
 import threading
@@ -13,6 +14,9 @@ from urllib.parse import SplitResult, urlsplit, urlunsplit
 
 from .artifacts import RequestArtifactStore
 from .config import RequestLogConfig, SUPPORTED_ADAPTERS, SUPPORTED_PROVIDERS
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 HOP_BY_HOP_HEADERS = {
@@ -28,11 +32,27 @@ HOP_BY_HOP_HEADERS = {
 }
 
 
+class _ThreadingHTTPServerV6(ThreadingHTTPServer):
+    address_family = socket.AF_INET6
+
+
+def format_gateway_origin(host: str, port: int) -> str:
+    display_host = f"[{host}]" if ":" in host else host
+    return f"http://{display_host}:{port}"
+
+
+def _create_http_server(host: str, port: int, handler) -> ThreadingHTTPServer:
+    server_class = _ThreadingHTTPServerV6 if ":" in host else ThreadingHTTPServer
+    return server_class((host, port), handler)
+
+
 def _connection_header_tokens(headers) -> set[str]:
     tokens: set[str] = set()
     for name, value in headers:
         if name.lower() == "connection":
-            tokens.update(token.strip().lower() for token in value.split(",") if token.strip())
+            tokens.update(
+                token.strip().lower() for token in value.split(",") if token.strip()
+            )
     return tokens
 
 
@@ -73,7 +93,7 @@ class GatewayServer:
             raise RuntimeError("Gateway is not running")
         host, port = self._server.server_address[:2]
         display_host = "127.0.0.1" if host in {"0.0.0.0", "::"} else host
-        return f"http://{display_host}:{port}"
+        return format_gateway_origin(display_host, port)
 
     def start(self) -> "GatewayServer":
         if self._server is not None:
@@ -83,9 +103,13 @@ class GatewayServer:
             max_bytes=self.config.max_bytes,
         )
         handler = _handler(self.config, self.store)
-        self._server = ThreadingHTTPServer((self.config.bind_host, self.config.bind_port), handler)
+        self._server = _create_http_server(
+            self.config.bind_host, self.config.bind_port, handler
+        )
         self._server.daemon_threads = True
-        self._thread = threading.Thread(target=self._server.serve_forever, name="apastra-request-log", daemon=True)
+        self._thread = threading.Thread(
+            target=self._server.serve_forever, name="apastra-request-log", daemon=True
+        )
         self._thread.start()
         return self
 
@@ -95,8 +119,9 @@ class GatewayServer:
                 retention_days=self.config.retention_days,
                 max_bytes=self.config.max_bytes,
             )
-            self._server = ThreadingHTTPServer(
-                (self.config.bind_host, self.config.bind_port),
+            self._server = _create_http_server(
+                self.config.bind_host,
+                self.config.bind_port,
                 _handler(self.config, self.store),
             )
             self._server.daemon_threads = True
@@ -125,14 +150,17 @@ def _handler(config: RequestLogConfig, store: RequestArtifactStore):
 
         def do_GET(self):
             if self.path == "/health":
-                payload = json.dumps(
-                    {
-                        "status": "ok",
-                        "pid": os.getpid(),
-                        "save_dir": str(config.save_dir),
-                    },
-                    separators=(",", ":"),
-                ).encode("utf-8") + b"\n"
+                payload = (
+                    json.dumps(
+                        {
+                            "status": "ok",
+                            "pid": os.getpid(),
+                            "save_dir": str(config.save_dir),
+                        },
+                        separators=(",", ":"),
+                    ).encode("utf-8")
+                    + b"\n"
+                )
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length", str(len(payload)))
@@ -162,8 +190,16 @@ def _handler(config: RequestLogConfig, store: RequestArtifactStore):
             except ValueError as exc:
                 self._local_error(404, "route_not_found", str(exc))
                 return
-            if not config.enabled or route.adapter not in config.adapters or route.provider not in config.adapters[route.adapter]:
-                self._local_error(404, "route_not_enabled", "The provider/adapter route is not enabled")
+            if (
+                not config.enabled
+                or route.adapter not in config.adapters
+                or route.provider not in config.adapters[route.adapter]
+            ):
+                self._local_error(
+                    404,
+                    "route_not_enabled",
+                    "The provider/adapter route is not enabled",
+                )
                 return
 
             try:
@@ -183,34 +219,61 @@ def _handler(config: RequestLogConfig, store: RequestArtifactStore):
                     body,
                 )
             except OSError:
-                self._local_error(507, "log_write_failed", "The request could not be durably logged and was not forwarded")
+                self._local_error(
+                    507,
+                    "log_write_failed",
+                    "The request could not be durably logged and was not forwarded",
+                )
                 return
             except Exception:
-                self._local_error(500, "log_write_failed", "The request could not be logged and was not forwarded")
+                self._local_error(
+                    500,
+                    "log_write_failed",
+                    "The request could not be logged and was not forwarded",
+                )
                 return
 
             upstream = urlsplit(config.upstreams[route.provider])
-            connection: http.client.HTTPConnection | http.client.HTTPSConnection | None = None
+            connection: (
+                http.client.HTTPConnection | http.client.HTTPSConnection | None
+            ) = None
+            response_status: int | None = None
+            response_started = False
             try:
                 if upstream.scheme == "https":
-                    connection = http.client.HTTPSConnection(upstream.hostname, upstream.port or 443, timeout=300)
+                    connection = http.client.HTTPSConnection(
+                        upstream.hostname, upstream.port or 443, timeout=300
+                    )
                 else:
-                    connection = http.client.HTTPConnection(upstream.hostname, upstream.port or 80, timeout=300)
+                    connection = http.client.HTTPConnection(
+                        upstream.hostname, upstream.port or 80, timeout=300
+                    )
                 request_headers = list(self.headers.items())
-                request_hop_headers = HOP_BY_HOP_HEADERS | _connection_header_tokens(request_headers)
+                request_hop_headers = HOP_BY_HOP_HEADERS | _connection_header_tokens(
+                    request_headers
+                )
                 headers = {
                     name: value
                     for name, value in request_headers
-                    if name.lower() not in request_hop_headers | {"host", "content-length"}
+                    if name.lower()
+                    not in request_hop_headers | {"host", "content-length"}
                 }
                 if body or self.command in {"POST", "PUT", "PATCH"}:
                     headers["Content-Length"] = str(len(body))
-                connection.request(self.command, route.upstream_target, body=body or None, headers=headers)
+                connection.request(
+                    self.command,
+                    route.upstream_target,
+                    body=body or None,
+                    headers=headers,
+                )
                 response = connection.getresponse()
+                response_status = response.status
                 self.send_response(response.status, response.reason)
                 response_has_length = False
                 response_headers = response.getheaders()
-                response_hop_headers = HOP_BY_HOP_HEADERS | _connection_header_tokens(response_headers)
+                response_hop_headers = HOP_BY_HOP_HEADERS | _connection_header_tokens(
+                    response_headers
+                )
                 for name, value in response_headers:
                     lowered = name.lower()
                     if lowered in response_hop_headers:
@@ -222,29 +285,71 @@ def _handler(config: RequestLogConfig, store: RequestArtifactStore):
                     self.send_header("Connection", "close")
                     self.close_connection = True
                 self.end_headers()
+                response_started = True
                 while True:
-                    chunk = response.read(65536)
+                    chunk = response.read1(65536)
                     if not chunk:
                         break
                     self.wfile.write(chunk)
                     self.wfile.flush()
+                if response.length not in {None, 0}:
+                    raise http.client.IncompleteRead(b"")
                 duration = max(0, round((time.monotonic() - started) * 1000))
-                store.complete_request(artifact.request_id, response.status, duration)
-                store.prune(retention_days=config.retention_days, max_bytes=config.max_bytes)
+                self._record_terminal(artifact.request_id, response.status, duration)
             except (BrokenPipeError, ConnectionResetError):
                 duration = max(0, round((time.monotonic() - started) * 1000))
-                store.fail_request(artifact.request_id, "client_disconnect", duration)
+                self._record_terminal(
+                    artifact.request_id,
+                    response_status,
+                    duration,
+                    error_class="client_disconnect",
+                )
             except (OSError, http.client.HTTPException, socket.timeout):
                 duration = max(0, round((time.monotonic() - started) * 1000))
-                store.fail_request(artifact.request_id, "upstream_error", duration, 502)
-                if not self.wfile.closed:
+                recorded_status = response_status if response_started else 502
+                self._record_terminal(
+                    artifact.request_id,
+                    recorded_status,
+                    duration,
+                    error_class="upstream_error",
+                )
+                if not response_started and not self.wfile.closed:
                     try:
-                        self._local_error(502, "upstream_error", "The provider request failed")
+                        self._local_error(
+                            502, "upstream_error", "The provider request failed"
+                        )
                     except (BrokenPipeError, ConnectionResetError):
                         pass
+                elif response_started:
+                    self.close_connection = True
             finally:
                 if connection is not None:
                     connection.close()
+
+        def _record_terminal(
+            self,
+            request_id: str,
+            status: int | None,
+            duration_ms: int,
+            error_class: str | None = None,
+        ) -> None:
+            try:
+                if error_class is None:
+                    if status is None:
+                        raise ValueError(
+                            "completed request is missing a response status"
+                        )
+                    store.complete_request(request_id, status, duration_ms)
+                else:
+                    store.fail_request(request_id, error_class, duration_ms, status)
+                store.prune(
+                    retention_days=config.retention_days, max_bytes=config.max_bytes
+                )
+            except Exception as exc:
+                LOGGER.error(
+                    "Could not finalize request-log metadata or retention: %s",
+                    type(exc).__name__,
+                )
 
         def _read_request_body(self) -> bytes:
             transfer_encoding = self.headers.get("Transfer-Encoding", "").lower()
@@ -279,7 +384,9 @@ def _handler(config: RequestLogConfig, store: RequestArtifactStore):
             return body
 
         def _local_error(self, status: int, code: str, message: str) -> None:
-            payload = json.dumps({"error": {"type": code, "message": message}}, separators=(",", ":")).encode("utf-8")
+            payload = json.dumps(
+                {"error": {"type": code, "message": message}}, separators=(",", ":")
+            ).encode("utf-8")
             self.send_response(status)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(payload)))

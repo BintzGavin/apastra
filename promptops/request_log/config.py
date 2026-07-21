@@ -48,7 +48,9 @@ def default_log_dir(environment: dict[str, str] | None = None) -> Path:
     if sys.platform == "win32" and env.get("LOCALAPPDATA"):
         return Path(env["LOCALAPPDATA"]) / "Apastra" / "request-logs"
     if sys.platform == "darwin":
-        return Path.home() / "Library" / "Application Support" / "Apastra" / "request-logs"
+        return (
+            Path.home() / "Library" / "Application Support" / "Apastra" / "request-logs"
+        )
     if env.get("XDG_STATE_HOME"):
         return Path(env["XDG_STATE_HOME"]) / "apastra" / "request-logs"
     return Path.home() / ".local" / "state" / "apastra" / "request-logs"
@@ -85,15 +87,54 @@ class RequestLogConfig:
         )
 
     def validate(self) -> None:
+        type_errors: list[str] = []
+        if type(self.schema_version) is not int:
+            type_errors.append("schema_version must be an integer")
+        if type(self.enabled) is not bool:
+            type_errors.append("enabled must be a boolean")
+        if type(self.indefinite_retention_confirmed) is not bool:
+            type_errors.append("indefinite_retention_confirmed must be a boolean")
+        if type(self.retention_days) is not int:
+            type_errors.append("retention_days must be an integer")
+        if type(self.max_bytes) is not int:
+            type_errors.append("max_bytes must be an integer")
+        if type(self.bind_port) is not int:
+            type_errors.append("bind_port must be an integer")
+        if not isinstance(self.bind_host, str):
+            type_errors.append("bind_host must be a string")
+        if not isinstance(self.activation_mode, str):
+            type_errors.append("activation_mode must be a string")
+        if not isinstance(self.adapters, dict):
+            type_errors.append("adapters must be an object")
+        elif any(
+            not isinstance(adapter, str)
+            or not isinstance(providers, list)
+            or any(not isinstance(provider, str) for provider in providers)
+            for adapter, providers in self.adapters.items()
+        ):
+            type_errors.append("adapters must map names to provider string lists")
+        if not isinstance(self.upstreams, dict) or any(
+            not isinstance(provider, str) or not isinstance(origin, str)
+            for provider, origin in self.upstreams.items()
+        ):
+            type_errors.append("upstreams must map provider names to origin strings")
+        if type_errors:
+            raise ValueError(
+                "Invalid request-log configuration: " + "; ".join(type_errors)
+            )
         if self.schema_version != SCHEMA_VERSION:
-            raise ValueError(f"Unsupported request-log schema version: {self.schema_version}")
+            raise ValueError(
+                f"Unsupported request-log schema version: {self.schema_version}"
+            )
         try:
             if not ipaddress.ip_address(self.bind_host).is_loopback:
                 raise ValueError("Request logging must bind to a loopback address")
         except ValueError as exc:
             if "loopback" in str(exc):
                 raise
-            raise ValueError("Request logging must bind to a numeric loopback address") from exc
+            raise ValueError(
+                "Request logging must bind to a numeric loopback address"
+            ) from exc
         if not 0 <= self.bind_port <= 65535:
             raise ValueError("Gateway port must be between 0 and 65535")
         if self.activation_mode not in {"session", "persistent"}:
@@ -102,7 +143,9 @@ class RequestLogConfig:
             raise ValueError("Enabled request logging requires at least one adapter")
         if self.retention_days < 0 or self.max_bytes < 0:
             raise ValueError("Retention values cannot be negative")
-        if (self.retention_days == 0 or self.max_bytes == 0) and not self.indefinite_retention_confirmed:
+        if (
+            self.retention_days == 0 or self.max_bytes == 0
+        ) and not self.indefinite_retention_confirmed:
             raise ValueError("indefinite retention requires explicit confirmation")
         for adapter, providers in self.adapters.items():
             if adapter not in SUPPORTED_ADAPTERS:
@@ -111,7 +154,9 @@ class RequestLogConfig:
                 raise ValueError(f"Adapter {adapter} must select at least one provider")
             for provider in providers:
                 if provider not in SUPPORTED_ADAPTERS[adapter]:
-                    raise ValueError(f"Adapter {adapter} does not support provider {provider}")
+                    raise ValueError(
+                        f"Adapter {adapter} does not support provider {provider}"
+                    )
         for provider in SUPPORTED_PROVIDERS:
             origin = self.upstreams.get(provider)
             if not origin:
@@ -120,7 +165,9 @@ class RequestLogConfig:
             try:
                 parsed.port
             except ValueError as exc:
-                raise ValueError(f"Upstream for {provider} must be an HTTP(S) origin") from exc
+                raise ValueError(
+                    f"Upstream for {provider} must be an HTTP(S) origin"
+                ) from exc
             if (
                 parsed.scheme not in {"http", "https"}
                 or not parsed.hostname
@@ -145,7 +192,9 @@ class RequestLogConfig:
         known_fields = {item.name for item in fields(cls)}
         unknown_fields = sorted(set(values) - known_fields)
         if unknown_fields:
-            raise ValueError(f"Unknown request-log configuration field: {', '.join(unknown_fields)}")
+            raise ValueError(
+                f"Unknown request-log configuration field: {', '.join(unknown_fields)}"
+            )
         try:
             values["save_dir"] = Path(values.get("save_dir") or default_log_dir())
             config = cls(**values).normalized()
@@ -156,7 +205,9 @@ class RequestLogConfig:
 
 
 class ConfigStore:
-    def __init__(self, root: Path | str | None = None, environment: dict[str, str] | None = None):
+    def __init__(
+        self, root: Path | str | None = None, environment: dict[str, str] | None = None
+    ):
         self.root = Path(root) if root is not None else default_config_dir(environment)
         self.root = self.root.expanduser().resolve()
         self.path = self.root / "request-log.json"
@@ -167,14 +218,19 @@ class ConfigStore:
         try:
             data = json.loads(self.path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
-            raise ValueError(f"Could not read request-log configuration: {exc}") from exc
+            raise ValueError(
+                f"Could not read request-log configuration: {exc}"
+            ) from exc
         if not isinstance(data, dict):
             raise ValueError("Request-log configuration must be a JSON object")
         return RequestLogConfig.from_dict(data)
 
     def save(self, config: RequestLogConfig) -> RequestLogConfig:
         normalized = config.normalized()
-        payload = json.dumps(normalized.to_dict(), indent=2, sort_keys=True).encode("utf-8") + b"\n"
+        payload = (
+            json.dumps(normalized.to_dict(), indent=2, sort_keys=True).encode("utf-8")
+            + b"\n"
+        )
         self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
         _chmod_private(self.root, directory=True)
         temp_path = self.root / f".{self.path.name}.{os.getpid()}.tmp"

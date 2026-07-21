@@ -12,7 +12,11 @@ from urllib.parse import urlsplit
 
 from promptops.request_log.artifacts import RequestArtifactStore
 from promptops.request_log.config import RequestLogConfig
-from promptops.request_log.gateway import GatewayServer, _connection_header_tokens, parse_gateway_route
+from promptops.request_log.gateway import (
+    GatewayServer,
+    _connection_header_tokens,
+    parse_gateway_route,
+)
 
 
 class FakeProviderHandler(BaseHTTPRequestHandler):
@@ -31,7 +35,9 @@ class FakeProviderHandler(BaseHTTPRequestHandler):
                 "body": body,
                 "authorization": self.headers.get("Authorization"),
                 "api_key": self.headers.get("x-api-key"),
-                "headers": {name.lower(): value for name, value in self.headers.items()},
+                "headers": {
+                    name.lower(): value for name, value in self.headers.items()
+                },
                 "header_names": [name.lower() for name, _value in self.headers.items()],
             }
         )
@@ -72,6 +78,34 @@ class FakeProvider:
         self.thread.join(timeout=2)
 
 
+class DelayedChunkedProviderHandler(BaseHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"
+    first_chunk_sent = threading.Event()
+    release_response = threading.Event()
+    first_chunk = b'data: {"delta":"first"}\n\n'
+    second_chunk = b"data: [DONE]\n\n"
+
+    def do_POST(self):
+        self.rfile.read(int(self.headers.get("Content-Length", "0")))
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream")
+        self.send_header("Transfer-Encoding", "chunked")
+        self.end_headers()
+        self._write_chunk(self.__class__.first_chunk)
+        self.__class__.first_chunk_sent.set()
+        self.__class__.release_response.wait(timeout=2)
+        self._write_chunk(self.__class__.second_chunk)
+        self.wfile.write(b"0\r\n\r\n")
+        self.wfile.flush()
+
+    def _write_chunk(self, chunk):
+        self.wfile.write(f"{len(chunk):x}\r\n".encode("ascii") + chunk + b"\r\n")
+        self.wfile.flush()
+
+    def log_message(self, _format, *_args):
+        return
+
+
 def request(url, body, headers):
     req = urllib.request.Request(url, data=body, headers=headers, method="POST")
     with urllib.request.urlopen(req, timeout=5) as response:
@@ -79,7 +113,9 @@ def request(url, body, headers):
 
 
 class GatewayRouteTests(unittest.TestCase):
-    def test_connection_header_tokens_are_case_insensitive_trimmed_and_comma_separated(self):
+    def test_connection_header_tokens_are_case_insensitive_trimmed_and_comma_separated(
+        self,
+    ):
         tokens = _connection_header_tokens(
             [
                 ("cOnNeCtIoN", " keep-alive, X-Remove-Me "),
@@ -98,7 +134,11 @@ class GatewayRouteTests(unittest.TestCase):
         self.assertEqual(route.log_path, "/v1/responses")
 
     def test_unknown_provider_or_adapter_is_rejected(self):
-        for path in ("/gemini/codex/v1/models", "/openai/cursor/v1/responses", "/openai/codex"):
+        for path in (
+            "/gemini/codex/v1/models",
+            "/openai/cursor/v1/responses",
+            "/openai/codex",
+        ):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 parse_gateway_route(path)
 
@@ -121,21 +161,23 @@ class GatewayIntegrationTests(unittest.TestCase):
             with GatewayServer(config, store) as gateway:
                 url = f"{gateway.base_url}/{provider}/{adapter}{upstream_path}?trace=forwarded"
                 parsed = urlsplit(url)
-                connection = http.client.HTTPConnection(parsed.hostname, parsed.port, timeout=5)
+                connection = http.client.HTTPConnection(
+                    parsed.hostname, parsed.port, timeout=5
+                )
                 try:
                     connection.request(
                         "POST",
                         parsed.path + "?" + parsed.query,
                         body=body,
                         headers={
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer openai-super-secret",
-                        "x-api-key": "anthropic-super-secret",
-                        "Cookie": "session=super-secret",
-                        "Proxy-Authorization": "Basic super-secret",
-                        "X-Remove-Me": "hop-by-hop-request",
-                        "Host": "client-supplied.invalid",
-                        "Connection": "keep-alive, X-Remove-Me",
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer openai-super-secret",
+                            "x-api-key": "anthropic-super-secret",
+                            "Cookie": "session=super-secret",
+                            "Proxy-Authorization": "Basic super-secret",
+                            "X-Remove-Me": "hop-by-hop-request",
+                            "Host": "client-supplied.invalid",
+                            "Connection": "keep-alive, X-Remove-Me",
                         },
                     )
                     response = connection.getresponse()
@@ -174,7 +216,9 @@ class GatewayIntegrationTests(unittest.TestCase):
             self.assertGreaterEqual(shown["metadata"]["duration_ms"], 1)
             self.assertIsNone(shown["metadata"]["error_class"])
             self.assertEqual(shown["raw_body"], body)
-            persisted = b"\n".join(path.read_bytes() for path in root.rglob("*") if path.is_file())
+            persisted = b"\n".join(
+                path.read_bytes() for path in root.rglob("*") if path.is_file()
+            )
             self.assertNotIn(b"openai-super-secret", persisted)
             self.assertNotIn(b"anthropic-super-secret", persisted)
             self.assertNotIn(b"session=super-secret", persisted)
@@ -184,9 +228,93 @@ class GatewayIntegrationTests(unittest.TestCase):
         body = b'{ "model":"gpt-test", "instructions":"system", "input":[{"role":"user","content":"hello"}], "tools":[{"type":"function","name":"shell"}], "reasoning":{"effort":"high"} }\n'
         self.run_capture("openai", "codex", "/v1/responses", body)
 
+    @unittest.skipUnless(socket.has_ipv6, "IPv6 is unavailable")
+    def test_numeric_ipv6_loopback_binds_and_produces_a_valid_origin(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = RequestLogConfig(
+                enabled=True,
+                adapters={"generic": ["openai"]},
+                save_dir=Path(temp_dir) / "logs",
+                bind_host="::1",
+                bind_port=0,
+            )
+
+            with GatewayServer(
+                config, RequestArtifactStore(config.save_dir)
+            ) as gateway:
+                self.assertTrue(gateway.base_url.startswith("http://[::1]:"))
+
     def test_exact_anthropic_claude_code_request_and_streaming_response(self):
         body = b'{"model":"claude-test","system":[{"type":"text","text":"system"}],"messages":[{"role":"user","content":"hello"}],"tools":[{"name":"shell","input_schema":{"type":"object"}}],"max_tokens":1000}'
         self.run_capture("anthropic", "claude-code", "/v1/messages", body)
+
+    def test_chunked_sse_reaches_the_client_before_the_upstream_finishes(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            DelayedChunkedProviderHandler.first_chunk_sent = threading.Event()
+            DelayedChunkedProviderHandler.release_response = threading.Event()
+            upstream = ThreadingHTTPServer(
+                ("127.0.0.1", 0), DelayedChunkedProviderHandler
+            )
+            upstream_thread = threading.Thread(
+                target=upstream.serve_forever, daemon=True
+            )
+            upstream_thread.start()
+            origin = f"http://127.0.0.1:{upstream.server_address[1]}"
+            config = RequestLogConfig(
+                enabled=True,
+                adapters={"generic": ["openai"]},
+                save_dir=Path(temp_dir) / "logs",
+                bind_port=0,
+                upstreams={"openai": origin, "anthropic": origin},
+            )
+            store = RequestArtifactStore(config.save_dir)
+            connection = None
+            reader = None
+            received = threading.Event()
+            received_body = []
+            try:
+                with GatewayServer(config, store) as gateway:
+                    parsed = urlsplit(gateway.base_url)
+                    connection = http.client.HTTPConnection(
+                        parsed.hostname, parsed.port, timeout=5
+                    )
+                    connection.request(
+                        "POST", "/openai/generic/v1/responses", body=b"{}"
+                    )
+                    response = connection.getresponse()
+                    self.assertTrue(
+                        DelayedChunkedProviderHandler.first_chunk_sent.wait(timeout=1)
+                    )
+
+                    def read_first_chunk():
+                        received_body.append(
+                            response.read(
+                                len(DelayedChunkedProviderHandler.first_chunk)
+                            )
+                        )
+                        received.set()
+
+                    reader = threading.Thread(target=read_first_chunk, daemon=True)
+                    reader.start()
+                    streamed_before_completion = received.wait(timeout=0.3)
+                    DelayedChunkedProviderHandler.release_response.set()
+                    reader.join(timeout=2)
+
+                self.assertTrue(
+                    streamed_before_completion, "gateway buffered the live SSE response"
+                )
+                self.assertEqual(
+                    received_body, [DelayedChunkedProviderHandler.first_chunk]
+                )
+            finally:
+                DelayedChunkedProviderHandler.release_response.set()
+                if connection is not None:
+                    connection.close()
+                if reader is not None:
+                    reader.join(timeout=2)
+                upstream.shutdown()
+                upstream.server_close()
+                upstream_thread.join(timeout=2)
 
     def test_chunked_request_is_reassembled_and_logged_as_exact_bytes(self):
         with tempfile.TemporaryDirectory() as temp_dir, FakeProvider() as upstream:
@@ -201,13 +329,18 @@ class GatewayIntegrationTests(unittest.TestCase):
             chunks = [b'{"model":"gpt-test",', b'"input":"exact chunked body"}']
             with GatewayServer(config, store) as gateway:
                 parsed = urlsplit(gateway.base_url)
-                connection = http.client.HTTPConnection(parsed.hostname, parsed.port, timeout=5)
+                connection = http.client.HTTPConnection(
+                    parsed.hostname, parsed.port, timeout=5
+                )
                 try:
                     connection.request(
                         "POST",
                         "/openai/generic/v1/responses",
                         body=iter(chunks),
-                        headers={"Content-Type": "application/json", "Authorization": "Bearer chunk-secret"},
+                        headers={
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer chunk-secret",
+                        },
                         encode_chunked=True,
                     )
                     response = connection.getresponse()
@@ -219,8 +352,14 @@ class GatewayIntegrationTests(unittest.TestCase):
             expected = b"".join(chunks)
             self.assertEqual(FakeProviderHandler.requests[0]["body"], expected)
             row = store.list_requests()[0]
-            self.assertEqual(store.show_request(row["request_id"])["raw_body"], expected)
-            persisted = b"\n".join(path.read_bytes() for path in Path(temp_dir).rglob("*") if path.is_file())
+            self.assertEqual(
+                store.show_request(row["request_id"])["raw_body"], expected
+            )
+            persisted = b"\n".join(
+                path.read_bytes()
+                for path in Path(temp_dir).rglob("*")
+                if path.is_file()
+            )
             self.assertNotIn(b"chunk-secret", persisted)
 
     def test_empty_post_is_forwarded_and_logged_with_zero_length(self):
@@ -242,14 +381,18 @@ class GatewayIntegrationTests(unittest.TestCase):
 
             self.assertEqual(status, 200)
             self.assertEqual(FakeProviderHandler.requests[0]["body"], b"")
-            self.assertEqual(FakeProviderHandler.requests[0]["headers"]["content-length"], "0")
+            self.assertEqual(
+                FakeProviderHandler.requests[0]["headers"]["content-length"], "0"
+            )
             row = store.list_requests()[0]
             self.assertEqual(store.show_request(row["request_id"])["raw_body"], b"")
 
     def test_provider_error_status_and_body_reach_client_without_body_persistence(self):
         with tempfile.TemporaryDirectory() as temp_dir, FakeProvider() as upstream:
             FakeProviderHandler.response_status = 429
-            FakeProviderHandler.response_body = b'{"error":{"message":"provider-only-response"}}'
+            FakeProviderHandler.response_body = (
+                b'{"error":{"message":"provider-only-response"}}'
+            )
             config = RequestLogConfig(
                 enabled=True,
                 adapters={"generic": ["openai"]},
@@ -266,13 +409,19 @@ class GatewayIntegrationTests(unittest.TestCase):
                         {"Content-Type": "application/json"},
                     )
                 self.assertEqual(raised.exception.code, 429)
-                self.assertEqual(raised.exception.read(), FakeProviderHandler.response_body)
+                self.assertEqual(
+                    raised.exception.read(), FakeProviderHandler.response_body
+                )
                 raised.exception.close()
 
             row = store.list_requests()[0]
             self.assertEqual(row["response_status"], 429)
             self.assertIsNone(row["error_class"])
-            persisted = b"\n".join(path.read_bytes() for path in Path(temp_dir).rglob("*") if path.is_file())
+            persisted = b"\n".join(
+                path.read_bytes()
+                for path in Path(temp_dir).rglob("*")
+                if path.is_file()
+            )
             self.assertNotIn(b"provider-only-response", persisted)
 
     def test_unreachable_upstream_returns_502_and_records_coarse_failure(self):
@@ -285,7 +434,10 @@ class GatewayIntegrationTests(unittest.TestCase):
                 adapters={"generic": ["openai"]},
                 save_dir=Path(temp_dir) / "logs",
                 bind_port=0,
-                upstreams={"openai": unavailable_origin, "anthropic": unavailable_origin},
+                upstreams={
+                    "openai": unavailable_origin,
+                    "anthropic": unavailable_origin,
+                },
             )
             store = RequestArtifactStore(config.save_dir)
             with GatewayServer(config, store) as gateway:
@@ -303,6 +455,34 @@ class GatewayIntegrationTests(unittest.TestCase):
             self.assertEqual(row["response_status"], 502)
             self.assertEqual(row["error_class"], "upstream_error")
 
+    def test_failed_requests_apply_size_retention(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with socket.socket() as probe:
+                probe.bind(("127.0.0.1", 0))
+                unavailable_origin = f"http://127.0.0.1:{probe.getsockname()[1]}"
+            config = RequestLogConfig(
+                enabled=True,
+                adapters={"generic": ["openai"]},
+                save_dir=Path(temp_dir) / "logs",
+                max_bytes=1,
+                bind_port=0,
+                upstreams={
+                    "openai": unavailable_origin,
+                    "anthropic": unavailable_origin,
+                },
+            )
+            store = RequestArtifactStore(config.save_dir)
+            with GatewayServer(config, store) as gateway:
+                with self.assertRaises(urllib.error.HTTPError) as raised:
+                    request(
+                        f"{gateway.base_url}/openai/generic/v1/responses",
+                        b'{"model":"gpt-test"}',
+                        {"Content-Type": "application/json"},
+                    )
+                raised.exception.close()
+
+            self.assertEqual(store.list_requests(), [])
+
     def test_unconfigured_route_never_reaches_upstream(self):
         with tempfile.TemporaryDirectory() as temp_dir, FakeProvider() as upstream:
             config = RequestLogConfig(
@@ -312,9 +492,15 @@ class GatewayIntegrationTests(unittest.TestCase):
                 upstreams={"openai": upstream.origin, "anthropic": upstream.origin},
                 bind_port=0,
             )
-            with GatewayServer(config, RequestArtifactStore(config.save_dir)) as gateway:
+            with GatewayServer(
+                config, RequestArtifactStore(config.save_dir)
+            ) as gateway:
                 with self.assertRaises(urllib.error.HTTPError) as raised:
-                    request(f"{gateway.base_url}/anthropic/claude-code/v1/messages", b"{}", {"Content-Type": "application/json"})
+                    request(
+                        f"{gateway.base_url}/anthropic/claude-code/v1/messages",
+                        b"{}",
+                        {"Content-Type": "application/json"},
+                    )
 
             self.assertEqual(raised.exception.code, 404)
             raised.exception.close()
@@ -338,7 +524,11 @@ class GatewayIntegrationTests(unittest.TestCase):
             )
             with GatewayServer(config, FailingStore()) as gateway:
                 with self.assertRaises(urllib.error.HTTPError) as raised:
-                    request(f"{gateway.base_url}/openai/codex/v1/responses", b"{}", {"Content-Type": "application/json"})
+                    request(
+                        f"{gateway.base_url}/openai/codex/v1/responses",
+                        b"{}",
+                        {"Content-Type": "application/json"},
+                    )
 
             self.assertEqual(raised.exception.code, 507)
             raised.exception.close()

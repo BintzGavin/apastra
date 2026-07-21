@@ -51,14 +51,21 @@ class RequestArtifactStoreTests(unittest.TestCase):
             self.assertEqual(metadata["schema_version"], 1)
             self.assertEqual(metadata["request_id"], artifact.request_id)
             self.assertTrue(metadata["timestamp"].endswith("Z"))
-            self.assertEqual(datetime.fromisoformat(metadata["timestamp"].replace("Z", "+00:00")).tzinfo, timezone.utc)
+            self.assertEqual(
+                datetime.fromisoformat(
+                    metadata["timestamp"].replace("Z", "+00:00")
+                ).tzinfo,
+                timezone.utc,
+            )
             self.assertEqual(metadata["provider"], "openai")
             self.assertEqual(metadata["adapter"], "codex")
             self.assertEqual(metadata["method"], "POST")
             self.assertEqual(metadata["path"], "/v1/responses")
             self.assertEqual(metadata["content_type"], "application/json")
             self.assertEqual(metadata["body_bytes"], len(body))
-            self.assertEqual(metadata["body_sha256"], f"sha256:{hashlib.sha256(body).hexdigest()}")
+            self.assertEqual(
+                metadata["body_sha256"], f"sha256:{hashlib.sha256(body).hexdigest()}"
+            )
             self.assertEqual(metadata["response_status"], 200)
             self.assertEqual(metadata["duration_ms"], 12)
             self.assertIsNone(metadata["error_class"])
@@ -80,6 +87,7 @@ class RequestArtifactStoreTests(unittest.TestCase):
                 content_type="application/json",
                 body=b"{}",
             )
+            store.complete_request(old.request_id, 200, 1)
             unmarked = old.directory.parent / "do-not-delete"
             unmarked.mkdir()
             (unmarked / "notes.txt").write_text("keep")
@@ -97,9 +105,25 @@ class RequestArtifactStoreTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir) / "logs"
             store = RequestArtifactStore(root)
-            first = store.begin_request("openai", "codex", "POST", "/v1/responses", "application/json", b"a" * 80)
+            first = store.begin_request(
+                "openai",
+                "codex",
+                "POST",
+                "/v1/responses",
+                "application/json",
+                b"a" * 80,
+            )
+            store.complete_request(first.request_id, 200, 1)
             time.sleep(0.01)
-            second = store.begin_request("openai", "codex", "POST", "/v1/responses", "application/json", b"b" * 80)
+            second = store.begin_request(
+                "openai",
+                "codex",
+                "POST",
+                "/v1/responses",
+                "application/json",
+                b"b" * 80,
+            )
+            store.complete_request(second.request_id, 200, 1)
 
             removed = store.prune(retention_days=7, max_bytes=first.size_on_disk + 20)
 
@@ -107,11 +131,45 @@ class RequestArtifactStoreTests(unittest.TestCase):
             self.assertFalse(first.directory.exists())
             self.assertTrue(second.directory.exists())
 
+    def test_size_retention_does_not_delete_an_in_flight_request(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = RequestArtifactStore(Path(temp_dir) / "logs")
+            active = store.begin_request(
+                "openai",
+                "codex",
+                "POST",
+                "/v1/responses",
+                "application/json",
+                b"a" * 80,
+            )
+            completed = store.begin_request(
+                "openai",
+                "codex",
+                "POST",
+                "/v1/responses",
+                "application/json",
+                b"b" * 80,
+            )
+            store.complete_request(completed.request_id, 200, 1)
+
+            removed = store.prune(retention_days=7, max_bytes=completed.size_on_disk)
+
+            self.assertNotIn(active.request_id, removed)
+            self.assertTrue(active.directory.exists())
+            store.complete_request(active.request_id, 200, 2)
+
     def test_list_and_show_extract_model_without_changing_body(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             store = RequestArtifactStore(Path(temp_dir) / "logs")
             body = b'{"model":"claude-test","messages":[]}'
-            artifact = store.begin_request("anthropic", "claude-code", "POST", "/v1/messages", "application/json", body)
+            artifact = store.begin_request(
+                "anthropic",
+                "claude-code",
+                "POST",
+                "/v1/messages",
+                "application/json",
+                body,
+            )
             store.complete_request(artifact.request_id, 201, 4)
 
             rows = store.list_requests()

@@ -22,7 +22,9 @@ class RequestLogConfigTests(unittest.TestCase):
         self.assertEqual(config.max_bytes, DEFAULT_MAX_BYTES)
         self.assertEqual(config.bind_host, "127.0.0.1")
 
-    def test_config_round_trip_preserves_selected_adapters_and_private_permissions(self):
+    def test_config_round_trip_preserves_selected_adapters_and_private_permissions(
+        self,
+    ):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             store = ConfigStore(root / "config")
@@ -90,7 +92,9 @@ class RequestLogConfigTests(unittest.TestCase):
             store = ConfigStore(Path(temp_dir))
             store.path.write_text(json.dumps({"future_field": True}))
 
-            with self.assertRaisesRegex(ValueError, "Unknown request-log configuration field"):
+            with self.assertRaisesRegex(
+                ValueError, "Unknown request-log configuration field"
+            ):
                 store.load()
 
     def test_malformed_save_directory_reports_a_validation_error(self):
@@ -98,7 +102,9 @@ class RequestLogConfigTests(unittest.TestCase):
             store = ConfigStore(Path(temp_dir))
             store.path.write_text(json.dumps({"save_dir": ["not", "a", "path"]}))
 
-            with self.assertRaisesRegex(ValueError, "Invalid request-log configuration"):
+            with self.assertRaisesRegex(
+                ValueError, "Invalid request-log configuration"
+            ):
                 store.load()
 
     def test_malformed_typed_values_report_a_validation_error(self):
@@ -106,7 +112,27 @@ class RequestLogConfigTests(unittest.TestCase):
             store = ConfigStore(Path(temp_dir))
             store.path.write_text(json.dumps({"bind_port": "not-a-port"}))
 
-            with self.assertRaisesRegex(ValueError, "Invalid request-log configuration"):
+            with self.assertRaisesRegex(
+                ValueError, "Invalid request-log configuration"
+            ):
+                store.load()
+
+    def test_boolean_safety_fields_reject_string_values(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            store = ConfigStore(Path(temp_dir))
+            store.path.write_text(
+                json.dumps(
+                    {
+                        "enabled": "false",
+                        "adapters": {"codex": ["openai"]},
+                        "indefinite_retention_confirmed": "false",
+                    }
+                )
+            )
+
+            with self.assertRaisesRegex(
+                ValueError, "Invalid request-log configuration"
+            ):
                 store.load()
 
     def test_indefinite_retention_requires_explicit_acknowledgement(self):
