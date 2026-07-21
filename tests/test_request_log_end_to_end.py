@@ -10,6 +10,10 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+from promptops.request_log.adapters import (
+    ManagedConfigInstall,
+    persistent_config_bytes,
+)
 from promptops.request_log import cli as request_log_cli
 from promptops.request_log.cli import main
 from promptops.request_log.config import ConfigStore, RequestLogConfig
@@ -148,6 +152,51 @@ class AdapterEndToEndTests(unittest.TestCase):
 
 
 class PersistentCliTests(unittest.TestCase):
+    def test_start_terminates_child_when_readiness_wait_is_interrupted(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"generic": ["openai"]},
+                    save_dir=root / "logs",
+                    bind_port=65532,
+                )
+            )
+            process = mock.Mock(pid=43209)
+            process.poll.return_value = None
+            process.wait.return_value = 0
+
+            try:
+                with (
+                    mock.patch(
+                        "promptops.request_log.cli.subprocess.Popen",
+                        return_value=process,
+                    ),
+                    mock.patch(
+                        "promptops.request_log.cli._gateway_healthy",
+                        return_value=False,
+                    ),
+                    mock.patch(
+                        "promptops.request_log.cli.time.sleep",
+                        side_effect=KeyboardInterrupt,
+                    ),
+                    self.assertRaises(KeyboardInterrupt),
+                ):
+                    main(
+                        ["start", "--config-dir", str(store.root)],
+                        stdout=io.StringIO(),
+                        stderr=io.StringIO(),
+                    )
+
+                process.terminate.assert_called_once_with()
+                process.wait.assert_called_once_with(timeout=5)
+                self.assertNotIn(process.pid, request_log_cli._BACKGROUND_PROCESSES)
+                self.assertFalse((store.root / "gateway.pid").exists())
+            finally:
+                request_log_cli._BACKGROUND_PROCESSES.pop(process.pid, None)
+
     def test_start_terminates_child_if_pid_state_cannot_be_written(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -445,6 +494,48 @@ class PersistentCliTests(unittest.TestCase):
             self.assertFalse(
                 (store.root / "installs" / "codex" / "install.json").exists()
             )
+            self.assertEqual(store.load().activation_mode, "session")
+
+    def test_failed_gateway_start_rolls_back_a_retried_prepared_install(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_home = root / "codex"
+            codex_home.mkdir()
+            target = codex_home / "config.toml"
+            original = b'model = "gpt-test"\n'
+            target.write_bytes(original)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"]},
+                    save_dir=root / "logs",
+                    activation_mode="session",
+                )
+            )
+            applied = persistent_config_bytes(
+                "codex",
+                original,
+                "http://127.0.0.1:43123",
+                ["openai"],
+            )
+            install = ManagedConfigInstall(
+                store.root / "installs", "codex", target
+            )
+            install.apply(applied)
+            target.write_bytes(original)
+
+            with mock.patch("promptops.request_log.cli._start", return_value=1):
+                result = main(
+                    ["install", "--config-dir", str(store.root), "codex"],
+                    stdout=io.StringIO(),
+                    stderr=io.StringIO(),
+                    environment={**os.environ, "CODEX_HOME": str(codex_home)},
+                )
+
+            self.assertEqual(result, 1)
+            self.assertEqual(target.read_bytes(), original)
+            self.assertFalse(install.root.exists())
             self.assertEqual(store.load().activation_mode, "session")
 
     def test_persistent_install_honors_official_agent_config_locations(self):

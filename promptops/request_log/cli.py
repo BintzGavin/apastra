@@ -382,18 +382,18 @@ def _start(
     pid_path = store.root / "gateway.pid"
     try:
         _write_private(pid_path, f"{process.pid}\n".encode("ascii"))
-    except Exception:
+        for _ in range(40):
+            if _gateway_healthy(config):
+                print(f"Request-log gateway started (PID {process.pid}).", file=stdout)
+                return 0
+            if process.poll() is not None:
+                break
+            time.sleep(0.05)
+    except BaseException:
         _terminate_process(process)
         _BACKGROUND_PROCESSES.pop(process.pid, None)
         pid_path.unlink(missing_ok=True)
         raise
-    for _ in range(40):
-        if _gateway_healthy(config):
-            print(f"Request-log gateway started (PID {process.pid}).", file=stdout)
-            return 0
-        if process.poll() is not None:
-            break
-        time.sleep(0.05)
     _terminate_process(process)
     _BACKGROUND_PROCESSES.pop(process.pid, None)
     pid_path.unlink(missing_ok=True)
@@ -528,27 +528,26 @@ def _install(
     if args.dry_run:
         return 0
     install = ManagedConfigInstall(store.root / "installs", args.adapter, target)
-    was_installed = install.manifest_path.exists()
     previous_mode = config.activation_mode
-    install.apply(applied)
+    was_applied = install.apply(applied)
     try:
         config.activation_mode = "persistent"
         store.save(config)
     except Exception:
-        if not was_installed:
+        if not was_applied:
             install.restore()
         raise
     try:
         result = _start(store, stdout, stderr, environment)
     except BaseException:
-        if not was_installed:
+        if not was_applied:
             install.restore()
             config.activation_mode = previous_mode
             store.save(config)
         raise
     if result == 0:
         print(f"Persistent request logging installed for {args.adapter}.", file=stdout)
-    elif not was_installed:
+    elif not was_applied:
         install.restore()
         config.activation_mode = previous_mode
         store.save(config)

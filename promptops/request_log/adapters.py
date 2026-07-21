@@ -3,7 +3,6 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-import re
 import shutil
 import tempfile
 from dataclasses import dataclass, field
@@ -233,7 +232,8 @@ class ManagedConfigInstall:
         install._manifest()
         return install
 
-    def apply(self, applied: bytes) -> None:
+    def apply(self, applied: bytes) -> bool:
+        """Apply the managed config and report whether it was already applied."""
         if self.manifest_path.exists():
             self.ensure_restorable()
             manifest = self._manifest()
@@ -242,10 +242,15 @@ class ManagedConfigInstall:
                     f"disable request logging for {self.root.name} before changing its persistent provider routes"
                 )
             current = self.target.read_bytes() if self.target.exists() else b""
+            if _digest(current) == manifest["applied_digest"]:
+                return True
             if _digest(current) == manifest["original_digest"]:
                 self.target.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
                 _write_atomic_private(self.target, applied)
-            return
+                return False
+            raise RuntimeError(
+                f"{self.target} changed while Apastra prepared request logging"
+            )
         existed = self.target.exists()
         original = self.target.read_bytes() if existed else b""
         try:
@@ -277,6 +282,7 @@ class ManagedConfigInstall:
             finally:
                 shutil.rmtree(self.root, ignore_errors=True)
             raise
+        return False
 
     def ensure_restorable(self) -> bool:
         if not self.manifest_path.exists():
@@ -386,11 +392,42 @@ def _strip_jsonc(text: str) -> str:
             index += 2
             while index + 1 < len(text) and text[index : index + 2] != "*/":
                 index += 1
+            if index + 1 >= len(text):
+                raise ValueError("Unterminated JSONC block comment")
+            output.append(" ")
             index += 2
             continue
         output.append(character)
         index += 1
-    return re.sub(r",(?=\s*[}\]])", "", "".join(output))
+    return _strip_jsonc_trailing_commas("".join(output))
+
+
+def _strip_jsonc_trailing_commas(text: str) -> str:
+    output: list[str] = []
+    in_string = False
+    escaped = False
+    for index, character in enumerate(text):
+        if in_string:
+            output.append(character)
+            if escaped:
+                escaped = False
+            elif character == "\\":
+                escaped = True
+            elif character == '"':
+                in_string = False
+            continue
+        if character == '"':
+            in_string = True
+            output.append(character)
+            continue
+        if character == ",":
+            next_index = index + 1
+            while next_index < len(text) and text[next_index].isspace():
+                next_index += 1
+            if next_index < len(text) and text[next_index] in "}]":
+                continue
+        output.append(character)
+    return "".join(output)
 
 
 def _set_toml_top_level(original: bytes, key: str, value: str) -> bytes:

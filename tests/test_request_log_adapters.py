@@ -293,6 +293,46 @@ class PersistentAdapterTests(unittest.TestCase):
         self.assertEqual(parsed["providers"]["openai"]["headers"], {"x-test": "yes"})
         self.assertIn("/openai/pi/v1", parsed["providers"]["openai"]["baseUrl"])
 
+    def test_pi_jsonc_preserves_string_content_that_resembles_trailing_commas(self):
+        original = b'''{
+          "label": "literal,}",
+          "providers": {
+            "anthropic": {"note": "literal,]",},
+          },
+        }\n'''
+
+        applied = persistent_config_bytes(
+            "pi",
+            original,
+            "http://127.0.0.1:43123",
+            ["anthropic"],
+        )
+        parsed = json.loads(applied)
+
+        self.assertEqual(parsed["label"], "literal,}")
+        self.assertEqual(parsed["providers"]["anthropic"]["note"], "literal,]")
+        self.assertIn(
+            "/anthropic/pi/v1", parsed["providers"]["anthropic"]["baseUrl"]
+        )
+
+    def test_pi_rejects_an_unterminated_jsonc_block_comment(self):
+        with self.assertRaisesRegex(ValueError, "Unterminated JSONC block comment"):
+            persistent_config_bytes(
+                "pi",
+                b'{"providers":{"anthropic":{}}} /* unterminated',
+                "http://127.0.0.1:43123",
+                ["anthropic"],
+            )
+
+    def test_pi_rejects_jsonc_comments_that_would_merge_invalid_tokens(self):
+        with self.assertRaisesRegex(ValueError, "not valid JSON"):
+            persistent_config_bytes(
+                "pi",
+                b'{"limit":1/* missing comma */2,"providers":{"anthropic":{}}}',
+                "http://127.0.0.1:43123",
+                ["anthropic"],
+            )
+
     def test_install_restore_and_conflict_detection(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
