@@ -39,7 +39,7 @@ _BACKGROUND_PROCESSES: dict[int, subprocess.Popen] = {}
 
 @dataclass
 class _GatewayStartState:
-    spawned: bool | None = None
+    process: subprocess.Popen | None = None
 
 
 def main(
@@ -345,7 +345,7 @@ def _start(
     start_state: _GatewayStartState | None = None,
 ) -> int:
     if start_state is not None:
-        start_state.spawned = False
+        start_state.process = None
     config = store.load()
     if not config.enabled:
         raise RuntimeError("Request logging is disabled")
@@ -397,7 +397,7 @@ def _start(
             if _gateway_healthy(config):
                 print(f"Request-log gateway started (PID {process.pid}).", file=stdout)
                 if start_state is not None:
-                    start_state.spawned = True
+                    start_state.process = process
                 return 0
             if process.poll() is not None:
                 break
@@ -423,6 +423,18 @@ def _terminate_process(process: subprocess.Popen) -> None:
     except subprocess.TimeoutExpired:
         process.kill()
         process.wait(timeout=5)
+
+
+def _terminate_started_gateway(store: ConfigStore, process: subprocess.Popen) -> None:
+    _terminate_process(process)
+    _BACKGROUND_PROCESSES.pop(process.pid, None)
+    pid_path = store.root / "gateway.pid"
+    try:
+        recorded_pid = int(pid_path.read_text().strip())
+    except (OSError, ValueError):
+        return
+    if recorded_pid == process.pid:
+        pid_path.unlink(missing_ok=True)
 
 
 def _stop(store: ConfigStore, stdout: TextIO, stderr: TextIO) -> int:
@@ -559,8 +571,8 @@ def _install(
             install.commit()
     except BaseException:
         if not was_committed:
-            if start_state.spawned:
-                _stop(store, stdout, stderr)
+            if start_state.process is not None:
+                _terminate_started_gateway(store, start_state.process)
             install.restore()
             config.activation_mode = previous_mode
             store.save(config)

@@ -680,9 +680,12 @@ class PersistentCliTests(unittest.TestCase):
                     activation_mode="session",
                 )
             )
+            process = mock.Mock(pid=43210)
+            process.poll.return_value = None
+            process.wait.return_value = 0
 
             def start_gateway(store, stdout, stderr, environment, start_state):
-                start_state.spawned = True
+                start_state.process = process
                 return 0
 
             with (
@@ -693,7 +696,6 @@ class PersistentCliTests(unittest.TestCase):
                     "promptops.request_log.adapters.ManagedConfigInstall.commit",
                     side_effect=OSError("could not commit install state"),
                 ),
-                mock.patch("promptops.request_log.cli._stop", return_value=0) as stop,
             ):
                 result = main(
                     ["install", "--config-dir", str(store.root), "codex"],
@@ -703,12 +705,13 @@ class PersistentCliTests(unittest.TestCase):
                 )
 
             self.assertEqual(result, 2)
-            stop.assert_called_once()
+            process.terminate.assert_called_once_with()
+            process.wait.assert_called_once_with(timeout=5)
             self.assertEqual(target.read_bytes(), original)
             self.assertFalse((store.root / "installs" / "codex").exists())
             self.assertEqual(store.load().activation_mode, "session")
 
-    def test_manifest_commit_failure_stops_a_gateway_spawned_during_start(self):
+    def test_manifest_commit_failure_terminates_its_gateway_without_health(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             codex_home = root / "codex"
@@ -725,7 +728,7 @@ class PersistentCliTests(unittest.TestCase):
                     activation_mode="session",
                 )
             )
-            process = mock.Mock(pid=43210)
+            process = mock.Mock(pid=43211)
             process.poll.return_value = None
             process.wait.return_value = 0
 
@@ -744,8 +747,8 @@ class PersistentCliTests(unittest.TestCase):
                         side_effect=OSError("could not commit install state"),
                     ),
                     mock.patch(
-                        "promptops.request_log.cli._stop", return_value=0
-                    ) as stop,
+                        "promptops.request_log.cli._gateway_health", return_value=None
+                    ),
                 ):
                     result = main(
                         ["install", "--config-dir", str(store.root), "codex"],
@@ -755,8 +758,11 @@ class PersistentCliTests(unittest.TestCase):
                     )
 
                 self.assertEqual(result, 2)
-                stop.assert_called_once()
+                process.terminate.assert_called_once_with()
+                process.wait.assert_called_once_with(timeout=5)
+                self.assertNotIn(process.pid, request_log_cli._BACKGROUND_PROCESSES)
                 self.assertEqual(target.read_bytes(), original)
+                self.assertFalse((store.root / "gateway.pid").exists())
                 self.assertFalse((store.root / "installs" / "codex").exists())
                 self.assertEqual(store.load().activation_mode, "session")
             finally:
