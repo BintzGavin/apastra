@@ -562,9 +562,7 @@ class PersistentCliTests(unittest.TestCase):
                 "http://127.0.0.1:43123",
                 ["openai"],
             )
-            install = ManagedConfigInstall(
-                store.root / "installs", "codex", target
-            )
+            install = ManagedConfigInstall(store.root / "installs", "codex", target)
             install.apply(applied)
             target.write_bytes(original)
 
@@ -604,9 +602,7 @@ class PersistentCliTests(unittest.TestCase):
                 "http://127.0.0.1:43123",
                 ["openai"],
             )
-            install = ManagedConfigInstall(
-                store.root / "installs", "codex", target
-            )
+            install = ManagedConfigInstall(store.root / "installs", "codex", target)
             install.apply(applied)
 
             with mock.patch("promptops.request_log.cli._start", return_value=1):
@@ -652,9 +648,7 @@ class PersistentCliTests(unittest.TestCase):
                     0,
                 )
             applied = target.read_bytes()
-            install = ManagedConfigInstall(
-                store.root / "installs", "codex", target
-            )
+            install = ManagedConfigInstall(store.root / "installs", "codex", target)
 
             with mock.patch("promptops.request_log.cli._start", return_value=1):
                 result = main(
@@ -687,8 +681,14 @@ class PersistentCliTests(unittest.TestCase):
                 )
             )
 
+            def start_gateway(store, stdout, stderr, environment, start_state):
+                start_state.spawned = True
+                return 0
+
             with (
-                mock.patch("promptops.request_log.cli._start", return_value=0),
+                mock.patch(
+                    "promptops.request_log.cli._start", side_effect=start_gateway
+                ),
                 mock.patch(
                     "promptops.request_log.adapters.ManagedConfigInstall.commit",
                     side_effect=OSError("could not commit install state"),
@@ -707,6 +707,61 @@ class PersistentCliTests(unittest.TestCase):
             self.assertEqual(target.read_bytes(), original)
             self.assertFalse((store.root / "installs" / "codex").exists())
             self.assertEqual(store.load().activation_mode, "session")
+
+    def test_manifest_commit_failure_stops_a_gateway_spawned_during_start(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_home = root / "codex"
+            codex_home.mkdir()
+            target = codex_home / "config.toml"
+            original = b'model = "gpt-test"\n'
+            target.write_bytes(original)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"]},
+                    save_dir=root / "logs",
+                    activation_mode="session",
+                )
+            )
+            process = mock.Mock(pid=43210)
+            process.poll.return_value = None
+            process.wait.return_value = 0
+
+            try:
+                with (
+                    mock.patch(
+                        "promptops.request_log.cli._gateway_healthy",
+                        side_effect=[False, True],
+                    ),
+                    mock.patch(
+                        "promptops.request_log.cli.subprocess.Popen",
+                        return_value=process,
+                    ),
+                    mock.patch(
+                        "promptops.request_log.adapters.ManagedConfigInstall.commit",
+                        side_effect=OSError("could not commit install state"),
+                    ),
+                    mock.patch(
+                        "promptops.request_log.cli._stop", return_value=0
+                    ) as stop,
+                ):
+                    result = main(
+                        ["install", "--config-dir", str(store.root), "codex"],
+                        stdout=io.StringIO(),
+                        stderr=io.StringIO(),
+                        environment={**os.environ, "CODEX_HOME": str(codex_home)},
+                    )
+
+                self.assertEqual(result, 2)
+                stop.assert_called_once()
+                self.assertEqual(target.read_bytes(), original)
+                self.assertFalse((store.root / "installs" / "codex").exists())
+                self.assertEqual(store.load().activation_mode, "session")
+            finally:
+                request_log_cli._BACKGROUND_PROCESSES.pop(process.pid, None)
+                (store.root / "gateway.pid").unlink(missing_ok=True)
 
     def test_gateway_preflight_interrupt_rolls_back_a_new_install(self):
         with tempfile.TemporaryDirectory() as temp_dir:

@@ -10,7 +10,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable, TextIO
 
@@ -35,6 +35,11 @@ from .gateway import GatewayServer, format_gateway_origin
 
 
 _BACKGROUND_PROCESSES: dict[int, subprocess.Popen] = {}
+
+
+@dataclass
+class _GatewayStartState:
+    spawned: bool | None = None
 
 
 def main(
@@ -333,8 +338,14 @@ def _serve(store: ConfigStore, stderr: TextIO) -> int:
 
 
 def _start(
-    store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: dict[str, str]
+    store: ConfigStore,
+    stdout: TextIO,
+    stderr: TextIO,
+    environment: dict[str, str],
+    start_state: _GatewayStartState | None = None,
 ) -> int:
+    if start_state is not None:
+        start_state.spawned = False
     config = store.load()
     if not config.enabled:
         raise RuntimeError("Request logging is disabled")
@@ -385,6 +396,8 @@ def _start(
         for _ in range(40):
             if _gateway_healthy(config):
                 print(f"Request-log gateway started (PID {process.pid}).", file=stdout)
+                if start_state is not None:
+                    start_state.spawned = True
                 return 0
             if process.poll() is not None:
                 break
@@ -539,16 +552,14 @@ def _install(
             config.activation_mode = previous_mode
             store.save(config)
         raise
-    gateway_started = False
+    start_state = _GatewayStartState()
     try:
-        gateway_was_running = _gateway_healthy(config)
-        result = _start(store, stdout, stderr, environment)
-        gateway_started = result == 0 and not gateway_was_running
+        result = _start(store, stdout, stderr, environment, start_state)
         if result == 0:
             install.commit()
     except BaseException:
         if not was_committed:
-            if gateway_started:
+            if start_state.spawned:
                 _stop(store, stdout, stderr)
             install.restore()
             config.activation_mode = previous_mode
