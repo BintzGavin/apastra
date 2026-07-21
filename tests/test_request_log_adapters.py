@@ -416,6 +416,60 @@ class PersistentAdapterTests(unittest.TestCase):
                     self.assertEqual(target.read_bytes(), original)
                     self.assertFalse(install.root.exists())
 
+    def test_legacy_install_state_without_a_phase_is_treated_as_committed(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            target = root / "settings.json"
+            original = b'{"theme":"old"}\n'
+            applied = b'{"theme":"old","provider":{"openai":{}}}\n'
+            target.write_bytes(applied)
+            install = ManagedConfigInstall(root / "state", "opencode", target)
+            install.root.mkdir(parents=True)
+            install.backup_path.write_bytes(original)
+            install.manifest_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "adapter": "opencode",
+                        "target": str(target.resolve()),
+                        "target_existed": True,
+                        "original_digest": request_log_adapters._digest(original),
+                        "applied_digest": request_log_adapters._digest(applied),
+                    }
+                )
+            )
+
+            self.assertTrue(install.apply(applied))
+            install.restore()
+            self.assertEqual(target.read_bytes(), original)
+
+    def test_prepared_state_write_interrupt_is_rolled_back(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            target = root / "settings.json"
+            original = b'{"theme":"old"}\n'
+            applied = b'{"theme":"old","provider":{"openai":{}}}\n'
+            target.write_bytes(original)
+            install = ManagedConfigInstall(root / "state", "opencode", target)
+            install.apply(applied)
+            target.write_bytes(original)
+            real_write_manifest = install._write_manifest
+
+            def interrupt_after_write(manifest):
+                real_write_manifest(manifest)
+                raise KeyboardInterrupt
+
+            with (
+                mock.patch.object(
+                    install, "_write_manifest", side_effect=interrupt_after_write
+                ),
+                self.assertRaises(KeyboardInterrupt),
+            ):
+                install.apply(applied)
+
+            self.assertEqual(target.read_bytes(), original)
+            self.assertFalse(install.root.exists())
+
 
 if __name__ == "__main__":
     unittest.main()

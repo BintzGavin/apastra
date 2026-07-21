@@ -233,7 +233,7 @@ class ManagedConfigInstall:
         return install
 
     def apply(self, applied: bytes) -> bool:
-        """Apply the managed config and report whether it was already applied."""
+        """Apply the managed config and report whether it was already committed."""
         if self.manifest_path.exists():
             self.ensure_restorable()
             manifest = self._manifest()
@@ -243,10 +243,16 @@ class ManagedConfigInstall:
                 )
             current = self.target.read_bytes() if self.target.exists() else b""
             if _digest(current) == manifest["applied_digest"]:
-                return True
+                return manifest["committed"]
             if _digest(current) == manifest["original_digest"]:
-                self.target.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-                _write_atomic_private(self.target, applied)
+                try:
+                    manifest["committed"] = False
+                    self._write_manifest(manifest)
+                    self.target.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+                    _write_atomic_private(self.target, applied)
+                except BaseException:
+                    self.restore()
+                    raise
                 return False
             raise RuntimeError(
                 f"{self.target} changed while Apastra prepared request logging"
@@ -264,14 +270,12 @@ class ManagedConfigInstall:
                 "target_existed": existed,
                 "original_digest": _digest(original),
                 "applied_digest": _digest(applied),
+                "committed": False,
             }
-            _write_atomic_private(
-                self.manifest_path,
-                json.dumps(manifest, indent=2, sort_keys=True).encode("utf-8") + b"\n",
-            )
+            self._write_manifest(manifest)
             self.target.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
             _write_atomic_private(self.target, applied)
-        except Exception:
+        except BaseException:
             try:
                 current = self.target.read_bytes() if self.target.exists() else b""
                 if _digest(current) == _digest(applied):
@@ -283,6 +287,18 @@ class ManagedConfigInstall:
                 shutil.rmtree(self.root, ignore_errors=True)
             raise
         return False
+
+    def commit(self) -> None:
+        self.ensure_restorable()
+        manifest = self._manifest()
+        current = self.target.read_bytes() if self.target.exists() else b""
+        if _digest(current) != manifest["applied_digest"]:
+            raise RuntimeError(
+                f"{self.target} changed while Apastra committed request logging"
+            )
+        if not manifest["committed"]:
+            manifest["committed"] = True
+            self._write_manifest(manifest)
 
     def ensure_restorable(self) -> bool:
         if not self.manifest_path.exists():
@@ -336,9 +352,17 @@ class ManagedConfigInstall:
             or data["schema_version"] != 1
             or data["adapter"] != self.root.name
             or data["target"] != str(self.target)
+            or ("committed" in data and type(data["committed"]) is not bool)
         ):
             raise ValueError("Invalid request-log install state")
+        data.setdefault("committed", True)
         return data
+
+    def _write_manifest(self, manifest: dict) -> None:
+        _write_atomic_private(
+            self.manifest_path,
+            json.dumps(manifest, indent=2, sort_keys=True).encode("utf-8") + b"\n",
+        )
 
 
 def _validate_selection(adapter: str, providers: list[str]) -> None:
@@ -470,6 +494,10 @@ def _digest(data: bytes) -> str:
 
 def _write_atomic_private(path: Path, data: bytes) -> None:
     temp = path.with_name(f".{path.name}.{os.getpid()}.apastra.tmp")
-    _write_private(temp, data)
-    os.replace(temp, path)
-    _chmod_private(path, directory=False)
+    try:
+        _write_private(temp, data)
+        os.replace(temp, path)
+        _chmod_private(path, directory=False)
+    except BaseException:
+        temp.unlink(missing_ok=True)
+        raise

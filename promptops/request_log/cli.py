@@ -529,25 +529,34 @@ def _install(
         return 0
     install = ManagedConfigInstall(store.root / "installs", args.adapter, target)
     previous_mode = config.activation_mode
-    was_applied = install.apply(applied)
+    was_committed = install.apply(applied)
     try:
         config.activation_mode = "persistent"
         store.save(config)
-    except Exception:
-        if not was_applied:
-            install.restore()
-        raise
-    try:
-        result = _start(store, stdout, stderr, environment)
     except BaseException:
-        if not was_applied:
+        if not was_committed:
+            install.restore()
+            config.activation_mode = previous_mode
+            store.save(config)
+        raise
+    gateway_started = False
+    try:
+        gateway_was_running = _gateway_healthy(config)
+        result = _start(store, stdout, stderr, environment)
+        gateway_started = result == 0 and not gateway_was_running
+        if result == 0:
+            install.commit()
+    except BaseException:
+        if not was_committed:
+            if gateway_started:
+                _stop(store, stdout, stderr)
             install.restore()
             config.activation_mode = previous_mode
             store.save(config)
         raise
     if result == 0:
         print(f"Persistent request logging installed for {args.adapter}.", file=stdout)
-    elif not was_applied:
+    elif not was_committed:
         install.restore()
         config.activation_mode = previous_mode
         store.save(config)

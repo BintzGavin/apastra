@@ -496,6 +496,49 @@ class PersistentCliTests(unittest.TestCase):
             )
             self.assertEqual(store.load().activation_mode, "session")
 
+    def test_partial_activation_mode_save_is_rolled_back(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_home = root / "codex"
+            codex_home.mkdir()
+            target = codex_home / "config.toml"
+            original = b'model = "gpt-test"\n'
+            target.write_bytes(original)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"]},
+                    save_dir=root / "logs",
+                    activation_mode="session",
+                )
+            )
+            real_save = ConfigStore.save
+            calls = 0
+
+            def fail_after_first_save(config_store, config):
+                nonlocal calls
+                calls += 1
+                saved = real_save(config_store, config)
+                if calls == 1:
+                    raise OSError("simulated post-save failure")
+                return saved
+
+            stderr = io.StringIO()
+            with mock.patch.object(ConfigStore, "save", new=fail_after_first_save):
+                result = main(
+                    ["install", "--config-dir", str(store.root), "codex"],
+                    stdout=io.StringIO(),
+                    stderr=stderr,
+                    environment={**os.environ, "CODEX_HOME": str(codex_home)},
+                )
+
+            self.assertEqual(result, 2)
+            self.assertIn("simulated post-save failure", stderr.getvalue())
+            self.assertEqual(target.read_bytes(), original)
+            self.assertFalse((store.root / "installs" / "codex").exists())
+            self.assertEqual(store.load().activation_mode, "session")
+
     def test_failed_gateway_start_rolls_back_a_retried_prepared_install(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -536,6 +579,169 @@ class PersistentCliTests(unittest.TestCase):
             self.assertEqual(result, 1)
             self.assertEqual(target.read_bytes(), original)
             self.assertFalse(install.root.exists())
+            self.assertEqual(store.load().activation_mode, "session")
+
+    def test_failed_gateway_start_rolls_back_an_interrupted_applied_install(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_home = root / "codex"
+            codex_home.mkdir()
+            target = codex_home / "config.toml"
+            original = b'model = "gpt-test"\n'
+            target.write_bytes(original)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"]},
+                    save_dir=root / "logs",
+                    activation_mode="persistent",
+                )
+            )
+            applied = persistent_config_bytes(
+                "codex",
+                original,
+                "http://127.0.0.1:43123",
+                ["openai"],
+            )
+            install = ManagedConfigInstall(
+                store.root / "installs", "codex", target
+            )
+            install.apply(applied)
+
+            with mock.patch("promptops.request_log.cli._start", return_value=1):
+                result = main(
+                    ["install", "--config-dir", str(store.root), "codex"],
+                    stdout=io.StringIO(),
+                    stderr=io.StringIO(),
+                    environment={**os.environ, "CODEX_HOME": str(codex_home)},
+                )
+
+            self.assertEqual(result, 1)
+            self.assertEqual(target.read_bytes(), original)
+            self.assertFalse(install.root.exists())
+            self.assertEqual(store.load().activation_mode, "persistent")
+
+    def test_failed_restart_preserves_a_completed_persistent_install(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_home = root / "codex"
+            codex_home.mkdir()
+            target = codex_home / "config.toml"
+            original = b'model = "gpt-test"\n'
+            target.write_bytes(original)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"]},
+                    save_dir=root / "logs",
+                    activation_mode="session",
+                )
+            )
+            environment = {**os.environ, "CODEX_HOME": str(codex_home)}
+
+            with mock.patch("promptops.request_log.cli._start", return_value=0):
+                self.assertEqual(
+                    main(
+                        ["install", "--config-dir", str(store.root), "codex"],
+                        stdout=io.StringIO(),
+                        stderr=io.StringIO(),
+                        environment=environment,
+                    ),
+                    0,
+                )
+            applied = target.read_bytes()
+            install = ManagedConfigInstall(
+                store.root / "installs", "codex", target
+            )
+
+            with mock.patch("promptops.request_log.cli._start", return_value=1):
+                result = main(
+                    ["install", "--config-dir", str(store.root), "codex"],
+                    stdout=io.StringIO(),
+                    stderr=io.StringIO(),
+                    environment=environment,
+                )
+
+            self.assertEqual(result, 1)
+            self.assertEqual(target.read_bytes(), applied)
+            self.assertTrue(install.root.exists())
+            self.assertEqual(store.load().activation_mode, "persistent")
+
+    def test_manifest_commit_failure_stops_and_rolls_back_a_new_gateway(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_home = root / "codex"
+            codex_home.mkdir()
+            target = codex_home / "config.toml"
+            original = b'model = "gpt-test"\n'
+            target.write_bytes(original)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"]},
+                    save_dir=root / "logs",
+                    activation_mode="session",
+                )
+            )
+
+            with (
+                mock.patch("promptops.request_log.cli._start", return_value=0),
+                mock.patch(
+                    "promptops.request_log.adapters.ManagedConfigInstall.commit",
+                    side_effect=OSError("could not commit install state"),
+                ),
+                mock.patch("promptops.request_log.cli._stop", return_value=0) as stop,
+            ):
+                result = main(
+                    ["install", "--config-dir", str(store.root), "codex"],
+                    stdout=io.StringIO(),
+                    stderr=io.StringIO(),
+                    environment={**os.environ, "CODEX_HOME": str(codex_home)},
+                )
+
+            self.assertEqual(result, 2)
+            stop.assert_called_once()
+            self.assertEqual(target.read_bytes(), original)
+            self.assertFalse((store.root / "installs" / "codex").exists())
+            self.assertEqual(store.load().activation_mode, "session")
+
+    def test_gateway_preflight_interrupt_rolls_back_a_new_install(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_home = root / "codex"
+            codex_home.mkdir()
+            target = codex_home / "config.toml"
+            original = b'model = "gpt-test"\n'
+            target.write_bytes(original)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"]},
+                    save_dir=root / "logs",
+                    activation_mode="session",
+                )
+            )
+
+            with (
+                mock.patch(
+                    "promptops.request_log.cli._gateway_healthy",
+                    side_effect=KeyboardInterrupt,
+                ),
+                self.assertRaises(KeyboardInterrupt),
+            ):
+                main(
+                    ["install", "--config-dir", str(store.root), "codex"],
+                    stdout=io.StringIO(),
+                    stderr=io.StringIO(),
+                    environment={**os.environ, "CODEX_HOME": str(codex_home)},
+                )
+
+            self.assertEqual(target.read_bytes(), original)
+            self.assertFalse((store.root / "installs" / "codex").exists())
             self.assertEqual(store.load().activation_mode, "session")
 
     def test_persistent_install_honors_official_agent_config_locations(self):
@@ -591,6 +797,7 @@ class PersistentCliTests(unittest.TestCase):
                     (store.root / "installs" / adapter / "install.json").read_text()
                 )
                 self.assertEqual(manifest["target"], str(target.resolve()))
+                self.assertTrue(manifest["committed"])
 
     def test_disable_restores_the_recorded_target_when_agent_home_changes(self):
         with tempfile.TemporaryDirectory() as temp_dir:
