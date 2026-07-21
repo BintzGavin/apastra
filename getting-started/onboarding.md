@@ -85,6 +85,38 @@ If Python deps are missing (`pyyaml`, `jsonschema`), follow the setup script’s
 
 ---
 
+## Phase 0.5 — Offer provider request logging (optional, off by default)
+
+After installation, explain that Apastra can expose the complete request bodies a coding-agent harness sends to OpenAI or Anthropic. Make the boundary explicit: this can reveal system/developer prompts, session history, tools, tool results, private code, and personal data. Authentication headers are never stored, but request-body content is complete after opt-in.
+
+Ask exactly one decision:
+
+> **Question:** Do you want to configure local provider request logging now?
+>
+> **Recommended:** Skip it unless you are actively learning, debugging, or auditing the harness/model boundary.
+>
+> **Why:** The feature is powerful, but the saved request bodies can contain sensitive context.
+
+If the user says no, record that it was skipped and continue to Phase 1. Do not create request-log config or directories.
+
+If the user says yes, run the installed wizard and let **the user choose the save location**:
+
+```bash
+.agent/bin/apastra request-log configure
+```
+
+For npm-only use, the equivalent is `npx apastra request-log configure`. Do not pre-answer the wizard. It owns the adapter picker (Codex, Claude Code, OpenCode, Pi, and generic clients), save directory, session/persistent mode, and retention questions. Recommend session-only mode plus seven-day/250 MB retention. Persistent routing must remain a separate explicit install with a printed diff.
+
+After configuration, run:
+
+```bash
+.agent/bin/apastra request-log status
+```
+
+Record the selected adapters, save location, activation mode, retention, and whether persistent changes were skipped. Link the user to [`docs/guides/provider-request-logging.md`](../docs/guides/provider-request-logging.md) for run/install/disable and inspection commands.
+
+---
+
 ## Phase 1 — Lightweight inventory (orientation only)
 
 **Goal:** understand where instructional text and evaluation evidence live—not to scaffold everything at once.

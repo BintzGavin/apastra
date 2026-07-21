@@ -53,6 +53,7 @@ Apastra is a file-based protocol and skill pack for evaluating your agent's skil
 | Stay local-first                          | Agent-driven workflows with optional GitHub Actions automation     |
 | Keep things inspectable                   | Plain files, schema validation, and reviewable diffs               |
 | Debug agent behavior from traces          | Hook context, tool-call evidence, and artifact references          |
+| See the context sent to a model            | Opt-in local OpenAI/Anthropic request logging for five adapters     |
 | Version prompts like code                 | YAML prompt specs with stable IDs, variables, and output contracts |
 
 
@@ -66,6 +67,7 @@ It has gotten more capable since it started (e.g. adding GitHub Actions support 
 
 - [Getting started](docs/guides/getting-started.md)
 - [Architecture overview](docs/guides/architecture-overview.md)
+- [Provider request logging](docs/guides/provider-request-logging.md)
 - [API reference](docs/api)
 - [System vision](docs/vision.md)
 
@@ -98,6 +100,7 @@ The install writes are:
 
 - `.agent/skills/apastra/` — SKILL.md instructions your agent loads
 - `.agent/scripts/apastra/` — deterministic Python runtime + shell validators
+- `.agent/bin/apastra` — project-local CLI, including the opt-in request logger
 - `.claude/skills/apastra` and `.agents/skills/apastra` — discovery symlinks, unless `APASTRA_NO_SKILL_SYMLINKS=1`
 
 Optional writes and commands are opt-in:
@@ -107,6 +110,16 @@ Optional writes and commands are opt-in:
 - `APASTRA_ASSUME_YES=1` lets the git-clone setup run non-interactively after printing the preflight manifest.
 
 The default install posture is local and inspectable: no hosted service, no telemetry sink, no hidden database, no automatic hook config, and no cross-package-manager dependency install unless you opt in.
+
+### Optional: inspect the real provider request
+
+Provider request logging is off by default. To opt in, choose the coding-agent adapters, save directory, activation mode, and retention in the wizard:
+
+```bash
+.agent/bin/apastra request-log configure
+```
+
+It supports Codex, Claude Code, OpenCode, Pi, and generic OpenAI/Anthropic-compatible clients. Session-only launchers are the default; persistent routing is a separate reversible command. Complete request bodies are stored locally, while authentication headers are never persisted. See [Provider request logging](docs/guides/provider-request-logging.md).
 
 ### 2. Scaffold your first prompt workflow
 
@@ -280,7 +293,7 @@ derived-index/
 
 ### In this repo (what gets shipped)
 
-`promptops/` here contains the runtime source that lands in your project's `.agent/scripts/apastra/` at install time — schemas, validators, resolver, runs, harnesses. You do not copy this directory into your project directly; `setup` / `postinstall.sh` does that.
+`promptops/` here contains the runtime source that lands in your project's `.agent/scripts/apastra/` at install time — schemas, validators, resolver, runs, harnesses, and the opt-in provider request logger. The project-local CLI lands at `.agent/bin/apastra`. You do not copy these directories into your project directly; `setup` / `postinstall.sh` does that.
 
 ## How the Agent Runs Evals
 
@@ -376,6 +389,7 @@ Resolution order: local override → workspace → git ref → packaged artifact
 - **Files in Git are the source of truth** — not a database, not a platform
 - **Your agent is the harness** — no framework lock-in
 - **Trace evidence beats vibes** — tool calls, validation feedback, and stopping conditions should become inspectable evidence when they matter
+- **Provider requests can be inspected explicitly** — complete request bodies are available through an opt-in, loopback-only, credential-free local log
 - **Append-only artifacts** — never mutate old results; create new records
 - **Reproducibility by default** — content digests, environment metadata
 - **Local-first, CI-optional** — start with zero infrastructure
@@ -402,7 +416,7 @@ Shipped skills are listed under **Included Skills** above (including `apastra-re
 - **Project-level config** — **shipped at runtime:** upward-discovered `promptops.config.yaml` / `.yml` with schema and default application; documentation of precedence rules still improving
 - **MCP integration** — **partial:** MCP server and tools in `promptops/runtime/mcp_server.py` (e.g. list suites, run evaluation); richer MCP definitions inside prompt specs and packaging remain roadmap
 - **First-class cost tracking** — total cost in every run manifest, cost delta in regression reports, optional `cost_budget` on suites
-- **Opt-in persisted hook traces** — hooks already surface trace and validation signals; next step is a redacted local event log that can be converted into eval cases without copying full transcripts
+- **Opt-in persisted hook events** — provider request-body logging is shipped; lifecycle hooks still need a separate redacted event log for validation and stopping signals that never reach the provider request
 
 ## License
 

@@ -20,6 +20,7 @@ fi
 
 SKILLS_DEST="$PROJECT_ROOT/.agent/skills/apastra"
 SCRIPTS_DEST="$PROJECT_ROOT/.agent/scripts/apastra"
+BIN_DEST="$PROJECT_ROOT/.agent/bin"
 
 cat <<EOF
 Apastra npm postinstall preflight
@@ -39,6 +40,7 @@ To install Apastra into this repo from npm, rerun with:
 That opt-in setup will create or update:
   .agent/skills/apastra/         agent-facing SKILL.md files
   .agent/scripts/apastra/        runtime, schemas, validators, harnesses, hooks
+  .agent/bin/apastra             project-local CLI
   .claude/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
   .agents/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
 
@@ -67,6 +69,7 @@ done
 # Copy runtime scripts
 mkdir -p "$SCRIPTS_DEST"
 cp -r "$PACKAGE_DIR/promptops/runtime"    "$SCRIPTS_DEST/"
+cp -r "$PACKAGE_DIR/promptops/request_log" "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/runs"       "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/resolver"   "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/schemas"    "$SCRIPTS_DEST/"
@@ -74,6 +77,9 @@ cp -r "$PACKAGE_DIR/promptops/validators" "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/hooks"      "$SCRIPTS_DEST/"
 cp    "$PACKAGE_DIR/promptops/__init__.py" "$SCRIPTS_DEST/"
+mkdir -p "$BIN_DEST"
+cp    "$PACKAGE_DIR/bin/apastra" "$BIN_DEST/apastra"
+chmod +x "$BIN_DEST/apastra"
 
 find "$SCRIPTS_DEST" -type d -name "__pycache__" -prune -exec rm -rf {} +
 find "$SCRIPTS_DEST" -type f \( -name "*.pyc" -o -name "*.pyo" -o -name "*.orig" -o -name "*.rej" \) -exec rm -f {} +
@@ -141,6 +147,7 @@ fi
 echo "✅ Apastra installed"
 echo "   Skills:  .agent/skills/apastra/ (canonical)"
 echo "   Scripts: .agent/scripts/apastra/"
+echo "   CLI:     .agent/bin/apastra"
 if [ "${APASTRA_INSTALL_AGENT_HOOKS:-}" = "1" ] && [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
   echo "   Hooks:   .codex/ and .claude/settings.json"
 else

@@ -13,6 +13,14 @@ Use [`onboarding.md`](onboarding.md) when adopting Apastra in **another reposito
 
 Then iterate coverage with [`writing-evals`](../writing-evals) and scaffold `promptops/README.md` from [`templates/promptops-README.md`](templates/promptops-README.md).
 
+During onboarding, offer the opt-in provider request logger after installation. If the user chooses it, use the bundled wizard so they—not the agent—select adapters, save location, activation mode, and retention:
+
+```bash
+.agent/bin/apastra request-log configure
+```
+
+Request logging is never a prerequisite for evals and remains disabled when skipped. See [`docs/guides/provider-request-logging.md`](../docs/guides/provider-request-logging.md).
+
 ## What Is Apastra?
 
 Apastra treats AI prompts as versioned software assets. Prompts, test cases, scoring rules, and trace evidence are files or file references in your repo. Your IDE agent runs evaluations, compares results against baselines, and catches regressions — all locally. Codex and Claude Code hooks give the agent a better surface for context, validation feedback, and trace evidence while it works.

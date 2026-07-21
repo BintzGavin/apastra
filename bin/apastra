@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""Apastra command-line entry point."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+
+SCRIPT_ROOT = Path(__file__).resolve().parent.parent
+if (SCRIPT_ROOT / "promptops").is_dir():
+    IMPORT_ROOT = SCRIPT_ROOT
+    PACKAGE_NAME = "promptops"
+elif (SCRIPT_ROOT / "scripts" / "apastra" / "request_log").is_dir():
+    IMPORT_ROOT = SCRIPT_ROOT / "scripts"
+    PACKAGE_NAME = "apastra"
+else:
+    IMPORT_ROOT = SCRIPT_ROOT.parent
+    PACKAGE_NAME = SCRIPT_ROOT.name
+if str(IMPORT_ROOT) not in sys.path:
+    sys.path.insert(0, str(IMPORT_ROOT))
+
+
+def main() -> int:
+    if len(sys.argv) > 1 and sys.argv[1] == "request-log":
+        module = __import__(f"{PACKAGE_NAME}.request_log.cli", fromlist=["main"])
+
+        return module.main(sys.argv[2:])
+
+    module = __import__(f"{PACKAGE_NAME}.runtime.cli", fromlist=["main"])
+
+    result = module.main()
+    return int(result) if result is not None else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

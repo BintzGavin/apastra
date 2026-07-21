@@ -1,6 +1,6 @@
 {
   "name": "apastra",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "PromptOps — version, evaluate, and ship AI prompts as disciplined software assets",
   "keywords": [
     "apastra",
@@ -26,11 +26,15 @@
   },
   "license": "Apache-2.0",
   "author": "Gavin Bintz",
+  "bin": {
+    "apastra": "bin/apastra"
+  },
   "scripts": {
     "postinstall": "bash postinstall.sh"
   },
   "files": [
     "postinstall.sh",
+    "bin/apastra",
     "SKILL.md",
     "baseline/**/*",
     "eval/**/*",
@@ -40,8 +44,11 @@
     "scaffold/**/*",
     "setup-ci/**/*",
     "trace/**/*",
+    "docs/specs/provider-request-logging.md",
+    "docs/guides/provider-request-logging.md",
     "validate/**/*",
     "promptops/runtime/**/*.py",
+    "promptops/request_log/**/*.py",
     "promptops/hooks/**/*.py",
     "promptops/runs/**/*.py",
     "promptops/runs/**/*.sh",

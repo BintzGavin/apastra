@@ -28,6 +28,7 @@ Use `apastra-trace` when:
 1. **Locate trace sources**
 
    Check available sources in this order:
+   - Opt-in provider requests from `apastra request-log list` / `show` when the user enabled capture
    - Current agent transcript or tool history
    - Apastra hook feedback from Codex or Claude Code
    - `promptops/runs/<run-id>/cases.jsonl`
@@ -37,6 +38,8 @@ Use `apastra-trace` when:
 2. **Sanitize before storing**
 
    Remove API keys, private tokens, PII, irrelevant raw prompts, and large payloads. If raw material must be retained, store it outside Git and record only URI, digest, media type, and retention notes in `artifact_refs.json`.
+
+   Apastra provider request logs are a deliberate exception only at their user-selected private location: after explicit opt-in, `request.body` stays byte-exact so it represents the real model context. Never copy that body into Git. Extract or redact the minimum evidence needed for an eval.
 
 3. **Extract behavioral evidence**
 
