@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 import shutil
+import threading
 import time
 import uuid
 from dataclasses import dataclass
@@ -35,12 +36,15 @@ class RequestArtifact:
 
     @property
     def size_on_disk(self) -> int:
-        return sum(path.stat().st_size for path in self.directory.iterdir() if path.is_file())
+        return sum(
+            path.stat().st_size for path in self.directory.iterdir() if path.is_file()
+        )
 
 
 class RequestArtifactStore:
     def __init__(self, root: Path | str):
         self.root = Path(root).expanduser().resolve()
+        self._retention_lock = threading.RLock()
 
     def begin_request(
         self,
@@ -87,16 +91,36 @@ class RequestArtifactStore:
         return artifact
 
     def complete_request(self, request_id: str, status: int, duration_ms: int) -> None:
-        artifact = self._find(request_id)
-        metadata = self._load_metadata(artifact.metadata_path)
-        metadata.update({"response_status": status, "duration_ms": duration_ms, "error_class": None})
-        self._write_metadata(artifact.metadata_path, metadata)
+        with self._retention_lock:
+            artifact = self._find(request_id)
+            metadata = self._load_metadata(artifact.metadata_path)
+            metadata.update(
+                {
+                    "response_status": status,
+                    "duration_ms": duration_ms,
+                    "error_class": None,
+                }
+            )
+            self._write_metadata(artifact.metadata_path, metadata)
 
-    def fail_request(self, request_id: str, error_class: str, duration_ms: int, status: int | None = None) -> None:
-        artifact = self._find(request_id)
-        metadata = self._load_metadata(artifact.metadata_path)
-        metadata.update({"response_status": status, "duration_ms": duration_ms, "error_class": error_class})
-        self._write_metadata(artifact.metadata_path, metadata)
+    def fail_request(
+        self,
+        request_id: str,
+        error_class: str,
+        duration_ms: int,
+        status: int | None = None,
+    ) -> None:
+        with self._retention_lock:
+            artifact = self._find(request_id)
+            metadata = self._load_metadata(artifact.metadata_path)
+            metadata.update(
+                {
+                    "response_status": status,
+                    "duration_ms": duration_ms,
+                    "error_class": error_class,
+                }
+            )
+            self._write_metadata(artifact.metadata_path, metadata)
 
     def list_requests(self) -> list[dict[str, Any]]:
         rows: list[dict[str, Any]] = []
@@ -122,29 +146,50 @@ class RequestArtifactStore:
         return {"metadata": metadata, "body": body, "raw_body": raw_body}
 
     def prune(self, retention_days: int, max_bytes: int) -> list[str]:
+        with self._retention_lock:
+            return self._prune(retention_days, max_bytes)
+
+    def _prune(self, retention_days: int, max_bytes: int) -> list[str]:
         artifacts = list(self._iter_artifacts())
         removed: list[str] = []
         cutoff = time.time() - retention_days * 86400 if retention_days else None
         survivors: list[RequestArtifact] = []
-        for artifact in sorted(artifacts, key=lambda item: item.directory.stat().st_mtime):
-            if cutoff is not None and artifact.directory.stat().st_mtime < cutoff:
+        for artifact in sorted(
+            artifacts, key=lambda item: item.directory.stat().st_mtime
+        ):
+            if self._is_pending(artifact):
+                survivors.append(artifact)
+            elif cutoff is not None and artifact.directory.stat().st_mtime < cutoff:
                 self._remove_marked(artifact)
                 removed.append(artifact.request_id)
             else:
                 survivors.append(artifact)
 
         if max_bytes:
-            total = sum(artifact.size_on_disk for artifact in survivors if artifact.directory.exists())
+            total = sum(
+                artifact.size_on_disk
+                for artifact in survivors
+                if artifact.directory.exists()
+            )
             for artifact in survivors:
                 if total <= max_bytes:
                     break
                 if not artifact.directory.exists():
+                    continue
+                if self._is_pending(artifact):
                     continue
                 size = artifact.size_on_disk
                 self._remove_marked(artifact)
                 total -= size
                 removed.append(artifact.request_id)
         return removed
+
+    def _is_pending(self, artifact: RequestArtifact) -> bool:
+        metadata = self._load_metadata(artifact.metadata_path)
+        return (
+            metadata.get("response_status") is None
+            and metadata.get("error_class") is None
+        )
 
     def _write_metadata(self, path: Path, metadata: dict[str, Any]) -> None:
         payload = json.dumps(metadata, indent=2, sort_keys=True).encode("utf-8") + b"\n"
@@ -165,15 +210,21 @@ class RequestArtifactStore:
             return
         for marker in self.root.glob(f"*/*/{MARKER}"):
             directory = marker.parent
-            if (directory / BODY_FILE).is_file() and (directory / METADATA_FILE).is_file():
+            if (directory / BODY_FILE).is_file() and (
+                directory / METADATA_FILE
+            ).is_file():
                 try:
-                    request_id = self._load_metadata(directory / METADATA_FILE)["request_id"]
+                    request_id = self._load_metadata(directory / METADATA_FILE)[
+                        "request_id"
+                    ]
                 except (OSError, KeyError, ValueError, json.JSONDecodeError):
                     continue
                 yield RequestArtifact(str(request_id), directory)
 
     def _find(self, request_id: str) -> RequestArtifact:
-        if not request_id or any(character not in "0123456789abcdef" for character in request_id.lower()):
+        if not request_id or any(
+            character not in "0123456789abcdef" for character in request_id.lower()
+        ):
             raise KeyError(f"Unknown request ID: {request_id}")
         for artifact in self._iter_artifacts():
             if artifact.request_id == request_id:
@@ -184,7 +235,9 @@ class RequestArtifactStore:
     def _remove_marked(artifact: RequestArtifact) -> None:
         marker = artifact.directory / MARKER
         if not marker.is_file():
-            raise RuntimeError(f"Refusing to remove unmarked directory: {artifact.directory}")
+            raise RuntimeError(
+                f"Refusing to remove unmarked directory: {artifact.directory}"
+            )
         shutil.rmtree(artifact.directory)
 
 
@@ -193,4 +246,8 @@ def _extract_model(body: bytes) -> str | None:
         data = json.loads(body)
     except (json.JSONDecodeError, UnicodeDecodeError):
         return None
-    return str(data["model"]) if isinstance(data, dict) and data.get("model") is not None else None
+    return (
+        str(data["model"])
+        if isinstance(data, dict) and data.get("model") is not None
+        else None
+    )

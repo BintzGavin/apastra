@@ -14,7 +14,11 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Callable, TextIO
 
-from .adapters import ManagedConfigInstall, build_session_launch, persistent_config_bytes
+from .adapters import (
+    ManagedConfigInstall,
+    build_session_launch,
+    persistent_config_bytes,
+)
 from .artifacts import RequestArtifactStore
 from .config import (
     DEFAULT_MAX_BYTES,
@@ -27,7 +31,7 @@ from .config import (
     _write_private,
     default_log_dir,
 )
-from .gateway import GatewayServer
+from .gateway import GatewayServer, format_gateway_origin
 
 
 _BACKGROUND_PROCESSES: dict[int, subprocess.Popen] = {}
@@ -74,13 +78,23 @@ def main(
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="apastra request-log", description="Opt-in local provider request logging")
+    parser = argparse.ArgumentParser(
+        prog="apastra request-log", description="Opt-in local provider request logging"
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    configure = subparsers.add_parser("configure", aliases=["onboard", "enable"], help="Configure request logging")
+    configure = subparsers.add_parser(
+        "configure", aliases=["onboard", "enable"], help="Configure request logging"
+    )
     _config_dir_argument(configure)
-    configure.add_argument("--yes", action="store_true", help="Explicitly accept storage of complete request bodies")
-    configure.add_argument("--adapters", help="Comma-separated adapter:provider selections")
+    configure.add_argument(
+        "--yes",
+        action="store_true",
+        help="Explicitly accept storage of complete request bodies",
+    )
+    configure.add_argument(
+        "--adapters", help="Comma-separated adapter:provider selections"
+    )
     configure.add_argument("--save-dir")
     configure.add_argument("--mode", choices=["session", "persistent"])
     configure.add_argument("--retention-days", type=int)
@@ -92,23 +106,33 @@ def _parser() -> argparse.ArgumentParser:
     _config_dir_argument(status)
     status.add_argument("--json", action="store_true")
 
-    for name, help_text in (("serve", "Run the local logging gateway"), ("start", "Start the gateway in the background"), ("stop", "Stop the background gateway")):
+    for name, help_text in (
+        ("serve", "Run the local logging gateway"),
+        ("start", "Start the gateway in the background"),
+        ("stop", "Stop the background gateway"),
+    ):
         command = subparsers.add_parser(name, help=help_text)
         _config_dir_argument(command)
 
-    run = subparsers.add_parser("run", help="Launch an agent through a session-only gateway")
+    run = subparsers.add_parser(
+        "run", help="Launch an agent through a session-only gateway"
+    )
     _config_dir_argument(run)
     run.add_argument("adapter", choices=sorted(SUPPORTED_ADAPTERS))
     run.add_argument("--provider", action="append", choices=["openai", "anthropic"])
     run.add_argument("agent_args", nargs="*")
 
-    install = subparsers.add_parser("install", help="Persistently route an adapter through the gateway")
+    install = subparsers.add_parser(
+        "install", help="Persistently route an adapter through the gateway"
+    )
     _config_dir_argument(install)
     install.add_argument("adapter", choices=sorted(SUPPORTED_ADAPTERS))
     install.add_argument("--provider", action="append", choices=["openai", "anthropic"])
     install.add_argument("--dry-run", action="store_true")
 
-    disable = subparsers.add_parser("disable", help="Disable one adapter or all request logging")
+    disable = subparsers.add_parser(
+        "disable", help="Disable one adapter or all request logging"
+    )
     _config_dir_argument(disable)
     disable.add_argument("adapter", nargs="?", choices=sorted(SUPPORTED_ADAPTERS))
 
@@ -131,7 +155,9 @@ def _config_dir_argument(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--config-dir", type=Path)
 
 
-def _configure(args, store: ConfigStore, input_fn, stdout: TextIO, stderr: TextIO) -> int:
+def _configure(
+    args, store: ConfigStore, input_fn, stdout: TextIO, stderr: TextIO
+) -> int:
     existing = store.load()
     installed = _installed_adapters(store)
     if installed:
@@ -146,12 +172,24 @@ def _configure(args, store: ConfigStore, input_fn, stdout: TextIO, stderr: TextI
         file=stdout,
     )
     if not args.yes:
-        answer = input_fn("Enable complete provider request logging? Type 'yes' to continue [y/N]: ").strip().lower()
+        answer = (
+            input_fn(
+                "Enable complete provider request logging? Type 'yes' to continue [y/N]: "
+            )
+            .strip()
+            .lower()
+        )
         if answer != "yes":
             if existing.enabled:
-                print("Request logging remains enabled with its existing configuration; use 'disable' to turn it off.", file=stdout)
+                print(
+                    "Request logging remains enabled with its existing configuration; use 'disable' to turn it off.",
+                    file=stdout,
+                )
             else:
-                print("Request logging remains disabled; no agent configuration was changed.", file=stdout)
+                print(
+                    "Request logging remains disabled; no agent configuration was changed.",
+                    file=stdout,
+                )
             return 0
 
     adapters_text = args.adapters
@@ -164,8 +202,17 @@ def _configure(args, store: ConfigStore, input_fn, stdout: TextIO, stderr: TextI
     adapters = _parse_adapters(adapters_text)
     if args.yes and not args.save_dir:
         raise ValueError("--save-dir is required with --yes")
-    save_text = args.save_dir or input_fn(f"Save directory [{default_log_dir()}]: ").strip() or str(default_log_dir())
-    mode = args.mode or ("session" if args.yes else input_fn("Activation mode (session/persistent) [session]: ").strip() or "session")
+    save_text = (
+        args.save_dir
+        or input_fn(f"Save directory [{default_log_dir()}]: ").strip()
+        or str(default_log_dir())
+    )
+    mode = args.mode or (
+        "session"
+        if args.yes
+        else input_fn("Activation mode (session/persistent) [session]: ").strip()
+        or "session"
+    )
     retention_days = args.retention_days
     if retention_days is None:
         if args.yes:
@@ -184,8 +231,16 @@ def _configure(args, store: ConfigStore, input_fn, stdout: TextIO, stderr: TextI
     if retention_days == 0 or max_mb == 0:
         if not indefinite:
             if args.yes:
-                raise ValueError("--indefinite-retention is required when a retention limit is zero with --yes")
-            answer = input_fn("This creates indefinite retention. Type 'keep forever' to confirm: ").strip().lower()
+                raise ValueError(
+                    "--indefinite-retention is required when a retention limit is zero with --yes"
+                )
+            answer = (
+                input_fn(
+                    "This creates indefinite retention. Type 'keep forever' to confirm: "
+                )
+                .strip()
+                .lower()
+            )
             indefinite = answer == "keep forever"
 
     config = RequestLogConfig(
@@ -200,13 +255,16 @@ def _configure(args, store: ConfigStore, input_fn, stdout: TextIO, stderr: TextI
     ).normalized()
     config.validate()
     config.save_dir.mkdir(parents=True, exist_ok=True, mode=0o700)
-    _chmod_private(config.save_dir, directory=True)
     _exclude_from_git(config.save_dir)
+    _chmod_private(config.save_dir, directory=True)
     store.save(config)
     print("Request logging enabled.", file=stdout)
     print(f"Save directory: {config.save_dir}", file=stdout)
     print(f"Adapters: {_format_adapters(config.adapters)}", file=stdout)
-    print(f"Retention: {config.retention_days or 'unlimited'} days / {_format_bytes(config.max_bytes)}", file=stdout)
+    print(
+        f"Retention: {config.retention_days or 'unlimited'} days / {_format_bytes(config.max_bytes)}",
+        file=stdout,
+    )
     first = next(iter(config.adapters))
     if config.activation_mode == "session":
         print(f"Next: apastra request-log run {first} --", file=stdout)
@@ -225,7 +283,7 @@ def _status(args, store: ConfigStore, stdout: TextIO) -> int:
         "activation_mode": config.activation_mode,
         "retention_days": config.retention_days,
         "max_bytes": config.max_bytes,
-        "gateway_url": f"http://{config.bind_host}:{config.bind_port}",
+        "gateway_url": format_gateway_origin(config.bind_host, config.bind_port),
         "gateway_running": _gateway_healthy(config),
         "persistent_installs": _installed_adapters(store),
         "generic_environment": _generic_environment(store),
@@ -233,21 +291,38 @@ def _status(args, store: ConfigStore, stdout: TextIO) -> int:
     if args.json:
         print(json.dumps(payload, indent=2, sort_keys=True), file=stdout)
     else:
-        print(f"Request logging: {'enabled' if config.enabled else 'disabled'}", file=stdout)
-        print(f"Gateway: {'running' if payload['gateway_running'] else 'stopped'}", file=stdout)
-        print(f"Adapters: {_format_adapters(config.adapters) if config.adapters else 'none'}", file=stdout)
+        print(
+            f"Request logging: {'enabled' if config.enabled else 'disabled'}",
+            file=stdout,
+        )
+        print(
+            f"Gateway: {'running' if payload['gateway_running'] else 'stopped'}",
+            file=stdout,
+        )
+        print(
+            f"Adapters: {_format_adapters(config.adapters) if config.adapters else 'none'}",
+            file=stdout,
+        )
         print(f"Config directory: {store.root}", file=stdout)
         print(f"Save directory: {config.save_dir}", file=stdout)
-        print(f"Retention: {config.retention_days or 'unlimited'} days / {_format_bytes(config.max_bytes)}", file=stdout)
+        print(
+            f"Retention: {config.retention_days or 'unlimited'} days / {_format_bytes(config.max_bytes)}",
+            file=stdout,
+        )
     return 0
 
 
 def _serve(store: ConfigStore, stderr: TextIO) -> int:
     config = store.load()
     if not config.enabled:
-        raise RuntimeError("Request logging is disabled; run 'apastra request-log configure' first")
+        raise RuntimeError(
+            "Request logging is disabled; run 'apastra request-log configure' first"
+        )
     gateway = GatewayServer(config, RequestArtifactStore(config.save_dir))
-    print(f"Apastra request logger listening on http://{config.bind_host}:{config.bind_port}", file=stderr)
+    print(
+        f"Apastra request logger listening on {format_gateway_origin(config.bind_host, config.bind_port)}",
+        file=stderr,
+    )
     try:
         gateway.serve_forever()
     except KeyboardInterrupt:
@@ -257,7 +332,9 @@ def _serve(store: ConfigStore, stderr: TextIO) -> int:
     return 0
 
 
-def _start(store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: dict[str, str]) -> int:
+def _start(
+    store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: dict[str, str]
+) -> int:
     config = store.load()
     if not config.enabled:
         raise RuntimeError("Request logging is disabled")
@@ -273,8 +350,17 @@ def _start(store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: dict
     import_root = Path(__file__).resolve().parents[2]
     child_environment = dict(environment)
     existing_pythonpath = child_environment.get("PYTHONPATH")
-    child_environment["PYTHONPATH"] = str(import_root) + (os.pathsep + existing_pythonpath if existing_pythonpath else "")
-    command = [sys.executable, "-m", module_name, "serve", "--config-dir", str(store.root)]
+    child_environment["PYTHONPATH"] = str(import_root) + (
+        os.pathsep + existing_pythonpath if existing_pythonpath else ""
+    )
+    command = [
+        sys.executable,
+        "-m",
+        module_name,
+        "serve",
+        "--config-dir",
+        str(store.root),
+    ]
     kwargs = {
         "env": child_environment,
         "stdin": subprocess.DEVNULL,
@@ -283,7 +369,9 @@ def _start(store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: dict
         "close_fds": True,
     }
     if os.name == "nt":
-        kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
+        kwargs["creationflags"] = (
+            subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
+        )
     else:
         kwargs["start_new_session"] = True
     try:
@@ -334,7 +422,10 @@ def _stop(store: ConfigStore, stdout: TextIO, stderr: TextIO) -> int:
         health = _gateway_health(store.load())
         if not health or health.get("pid") != pid:
             pid_path.unlink(missing_ok=True)
-            print("Removed stale request-log gateway state; no process was terminated.", file=stdout)
+            print(
+                "Removed stale request-log gateway state; no process was terminated.",
+                file=stdout,
+            )
             return 0
         os.kill(pid, signal.SIGTERM)
         process = _BACKGROUND_PROCESSES.pop(pid, None)
@@ -353,7 +444,13 @@ def _stop(store: ConfigStore, stdout: TextIO, stderr: TextIO) -> int:
     return 0
 
 
-def _run(args, store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: dict[str, str]) -> int:
+def _run(
+    args,
+    store: ConfigStore,
+    stdout: TextIO,
+    stderr: TextIO,
+    environment: dict[str, str],
+) -> int:
     config = store.load()
     if not config.enabled:
         raise RuntimeError("Request logging is disabled")
@@ -366,7 +463,9 @@ def _run(args, store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: 
     agent_args = list(args.agent_args)
     if agent_args and agent_args[0] == "--":
         agent_args.pop(0)
-    with GatewayServer(session_config, RequestArtifactStore(config.save_dir)) as gateway:
+    with GatewayServer(
+        session_config, RequestArtifactStore(config.save_dir)
+    ) as gateway:
         launch = build_session_launch(
             args.adapter,
             agent_args,
@@ -376,17 +475,28 @@ def _run(args, store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: 
         )
         child_environment = dict(environment)
         child_environment.update(launch.environment)
-        print(f"Request logging active at {gateway.base_url}; logs: {config.save_dir}", file=stderr)
+        print(
+            f"Request logging active at {gateway.base_url}; logs: {config.save_dir}",
+            file=stderr,
+        )
         try:
             result = subprocess.run(launch.command, env=child_environment, check=False)
             return result.returncode
         except FileNotFoundError as exc:
-            raise RuntimeError(f"Could not launch {launch.command[0]}: command not found") from exc
+            raise RuntimeError(
+                f"Could not launch {launch.command[0]}: command not found"
+            ) from exc
         finally:
             launch.cleanup()
 
 
-def _install(args, store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: dict[str, str]) -> int:
+def _install(
+    args,
+    store: ConfigStore,
+    stdout: TextIO,
+    stderr: TextIO,
+    environment: dict[str, str],
+) -> int:
     config = store.load()
     if not config.enabled:
         raise RuntimeError("Request logging is disabled")
@@ -396,14 +506,25 @@ def _install(args, store: ConfigStore, stdout: TextIO, stderr: TextIO, environme
     if not set(providers).issubset(config.adapters[args.adapter]):
         raise ValueError("Requested provider is not enabled for this adapter")
     target = _adapter_target(args.adapter, store, environment)
-    original = target.read_bytes() if target.exists() else (b"" if args.adapter == "codex" else b"{}\n")
-    gateway = f"http://{config.bind_host}:{config.bind_port}"
+    original = (
+        target.read_bytes()
+        if target.exists()
+        else (b"" if args.adapter == "codex" else b"{}\n")
+    )
+    gateway = format_gateway_origin(config.bind_host, config.bind_port)
     applied = persistent_config_bytes(args.adapter, original, gateway, providers)
     print(f"Target: {target}", file=stdout)
     before = original.decode("utf-8", errors="replace").splitlines(keepends=True)
     after = applied.decode("utf-8", errors="replace").splitlines(keepends=True)
     print("Proposed change:", file=stdout)
-    print("".join(difflib.unified_diff(before, after, fromfile=str(target), tofile=str(target) + " (proposed)")), file=stdout)
+    print(
+        "".join(
+            difflib.unified_diff(
+                before, after, fromfile=str(target), tofile=str(target) + " (proposed)"
+            )
+        ),
+        file=stdout,
+    )
     if args.dry_run:
         return 0
     install = ManagedConfigInstall(store.root / "installs", args.adapter, target)
@@ -417,24 +538,49 @@ def _install(args, store: ConfigStore, stdout: TextIO, stderr: TextIO, environme
         if not was_installed:
             install.restore()
         raise
-    result = _start(store, stdout, stderr, environment)
+    try:
+        result = _start(store, stdout, stderr, environment)
+    except BaseException:
+        if not was_installed:
+            install.restore()
+            config.activation_mode = previous_mode
+            store.save(config)
+        raise
     if result == 0:
         print(f"Persistent request logging installed for {args.adapter}.", file=stdout)
     elif not was_installed:
         install.restore()
         config.activation_mode = previous_mode
         store.save(config)
-        print(f"Persistent change for {args.adapter} was rolled back because the gateway did not start.", file=stderr)
+        print(
+            f"Persistent change for {args.adapter} was rolled back because the gateway did not start.",
+            file=stderr,
+        )
     return result
 
 
-def _disable(args, store: ConfigStore, stdout: TextIO, stderr: TextIO, environment: dict[str, str]) -> int:
+def _disable(
+    args,
+    store: ConfigStore,
+    stdout: TextIO,
+    stderr: TextIO,
+    environment: dict[str, str],
+) -> int:
     config = store.load()
-    adapters = [args.adapter] if args.adapter else list(config.adapters)
+    adapters = (
+        [args.adapter]
+        if args.adapter
+        else list(dict.fromkeys([*config.adapters, *_installed_adapters(store)]))
+    )
     installs = []
     for adapter in adapters:
-        target = _adapter_target(adapter, store, environment)
-        install = ManagedConfigInstall(store.root / "installs", adapter, target)
+        state_root = store.root / "installs"
+        manifest_path = state_root / adapter / "install.json"
+        if manifest_path.exists():
+            install = ManagedConfigInstall.from_state(state_root, adapter)
+        else:
+            target = _adapter_target(adapter, store, environment)
+            install = ManagedConfigInstall(state_root, adapter, target)
         install.ensure_restorable()
         installs.append((adapter, install))
     for adapter, install in installs:
@@ -469,12 +615,17 @@ def _show(args, store: ConfigStore, stdout: TextIO) -> int:
     shown = RequestArtifactStore(config.save_dir).show_request(args.request_id)
     payload = {"metadata": shown["metadata"], "body": shown["body"]}
     if args.json:
-        print(json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=False), file=stdout)
+        print(
+            json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=False),
+            file=stdout,
+        )
     else:
         print(json.dumps(payload["metadata"], indent=2, sort_keys=True), file=stdout)
         print("\nRequest body:\n", file=stdout)
         if isinstance(payload["body"], (dict, list)):
-            print(json.dumps(payload["body"], indent=2, ensure_ascii=False), file=stdout)
+            print(
+                json.dumps(payload["body"], indent=2, ensure_ascii=False), file=stdout
+            )
         else:
             print(payload["body"], file=stdout)
     return 0
@@ -482,7 +633,9 @@ def _show(args, store: ConfigStore, stdout: TextIO) -> int:
 
 def _prune(args, store: ConfigStore, stdout: TextIO) -> int:
     config = store.load()
-    removed = RequestArtifactStore(config.save_dir).prune(config.retention_days, config.max_bytes)
+    removed = RequestArtifactStore(config.save_dir).prune(
+        config.retention_days, config.max_bytes
+    )
     payload = {"removed": removed}
     if args.json:
         print(json.dumps(payload, indent=2), file=stdout)
@@ -497,7 +650,9 @@ def _parse_adapters(text: str) -> dict[str, list[str]]:
     result: dict[str, list[str]] = {}
     for selection in text.split(","):
         if ":" not in selection:
-            raise ValueError(f"Adapter selection must use adapter:provider syntax: {selection}")
+            raise ValueError(
+                f"Adapter selection must use adapter:provider syntax: {selection}"
+            )
         adapter, provider_text = (part.strip() for part in selection.split(":", 1))
         providers = [part.strip() for part in provider_text.split("+") if part.strip()]
         if adapter not in SUPPORTED_ADAPTERS:
@@ -509,18 +664,40 @@ def _parse_adapters(text: str) -> dict[str, list[str]]:
     return result
 
 
-def _adapter_target(adapter: str, store: ConfigStore, environment: dict[str, str]) -> Path:
+def _adapter_target(
+    adapter: str, store: ConfigStore, environment: dict[str, str]
+) -> Path:
     if adapter == "codex":
-        return Path(environment.get("APASTRA_CODEX_HOME", Path.home() / ".codex")) / "config.toml"
+        root = (
+            environment.get("APASTRA_CODEX_HOME")
+            or environment.get("CODEX_HOME")
+            or Path.home() / ".codex"
+        )
+        return Path(root).expanduser() / "config.toml"
     if adapter == "claude-code":
-        return Path(environment.get("APASTRA_CLAUDE_HOME", Path.home() / ".claude")) / "settings.json"
+        root = (
+            environment.get("APASTRA_CLAUDE_HOME")
+            or environment.get("CLAUDE_CONFIG_DIR")
+            or Path.home() / ".claude"
+        )
+        return Path(root).expanduser() / "settings.json"
     if adapter == "opencode":
-        if environment.get("APASTRA_OPENCODE_CONFIG"):
-            return Path(environment["APASTRA_OPENCODE_CONFIG"])
+        explicit = environment.get("APASTRA_OPENCODE_CONFIG") or environment.get(
+            "OPENCODE_CONFIG"
+        )
+        if explicit:
+            return Path(explicit).expanduser()
         root = Path(environment.get("XDG_CONFIG_HOME", Path.home() / ".config"))
-        return root / "opencode" / "opencode.json"
+        config_root = root.expanduser() / "opencode"
+        jsonc_path = config_root / "opencode.jsonc"
+        return jsonc_path if jsonc_path.exists() else config_root / "opencode.json"
     if adapter == "pi":
-        return Path(environment.get("PI_CODING_AGENT_DIR", Path.home() / ".pi" / "agent")) / "models.json"
+        return (
+            Path(
+                environment.get("PI_CODING_AGENT_DIR", Path.home() / ".pi" / "agent")
+            ).expanduser()
+            / "models.json"
+        )
     if adapter == "generic":
         return store.root / "generic-provider-env.json"
     raise ValueError(f"Unknown adapter: {adapter}")
@@ -544,6 +721,10 @@ def _exclude_from_git(save_dir: Path) -> None:
         relative = save_dir.resolve().relative_to(git_root)
     except ValueError:
         return
+    if relative == Path("."):
+        raise ValueError(
+            "Choose a dedicated subdirectory inside the Git worktree for request logs"
+        )
     exclude_result = subprocess.run(
         ["git", "-C", str(git_root), "rev-parse", "--git-path", "info/exclude"],
         text=True,
@@ -557,13 +738,22 @@ def _exclude_from_git(save_dir: Path) -> None:
     if not exclude.is_absolute():
         exclude = git_root / exclude
     exclude.parent.mkdir(parents=True, exist_ok=True)
-    line = "/" + relative.as_posix().rstrip("/") + "/"
+    relative_text = relative.as_posix().rstrip("/")
+    if "\n" in relative_text or "\r" in relative_text:
+        raise ValueError("Git worktree request-log paths cannot contain newlines")
+    escaped_relative = "".join(
+        "\\" + character if character in {"\\", "*", "?", "["} else character
+        for character in relative_text
+    )
+    line = "/" + escaped_relative + "/"
     existing = exclude.read_text(encoding="utf-8") if exclude.exists() else ""
     if line not in existing.splitlines():
         with exclude.open("a", encoding="utf-8") as handle:
             if existing and not existing.endswith("\n"):
                 handle.write("\n")
-            handle.write("# Apastra provider request logs (local opt-in)\n" + line + "\n")
+            handle.write(
+                "# Apastra provider request logs (local opt-in)\n" + line + "\n"
+            )
 
 
 def _gateway_healthy(config: RequestLogConfig) -> bool:
@@ -574,7 +764,8 @@ def _gateway_health(config: RequestLogConfig) -> dict | None:
     if not config.enabled or not config.bind_port:
         return None
     try:
-        with urllib.request.urlopen(f"http://{config.bind_host}:{config.bind_port}/health", timeout=0.15) as response:
+        origin = format_gateway_origin(config.bind_host, config.bind_port)
+        with urllib.request.urlopen(f"{origin}/health", timeout=0.15) as response:
             payload = json.loads(response.read())
             if (
                 response.status == 200
@@ -606,11 +797,17 @@ def _generic_environment(store: ConfigStore) -> dict[str, str]:
     environment = payload.get("environment") if isinstance(payload, dict) else None
     if not isinstance(environment, dict):
         return {}
-    return {key: value for key, value in environment.items() if isinstance(key, str) and isinstance(value, str)}
+    return {
+        key: value
+        for key, value in environment.items()
+        if isinstance(key, str) and isinstance(value, str)
+    }
 
 
 def _format_adapters(adapters: dict[str, list[str]]) -> str:
-    return ", ".join(f"{adapter}:{'+'.join(providers)}" for adapter, providers in adapters.items())
+    return ", ".join(
+        f"{adapter}:{'+'.join(providers)}" for adapter, providers in adapters.items()
+    )
 
 
 def _format_bytes(value: int) -> str:

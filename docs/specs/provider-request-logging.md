@@ -168,6 +168,8 @@ body.
 Directories are mode `0700` and files are mode `0600` on platforms that support
 POSIX permissions. If the chosen directory is inside a Git worktree, Apastra adds
 the exact path to `.git/info/exclude`; it does not modify the tracked `.gitignore`.
+The worktree root is rejected as a save directory because it cannot be excluded
+as one exact path; the user must choose a dedicated subdirectory.
 
 `list` shows request ID, time, provider, adapter, model (when parseable), body
 bytes, and status. `show` prints metadata and a pretty JSON body when valid JSON,

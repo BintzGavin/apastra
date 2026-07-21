@@ -57,6 +57,8 @@ apastra request-log configure \
 
 If the chosen directory is inside a Git worktree, Apastra adds only that exact
 directory to `.git/info/exclude`. It does not edit the tracked `.gitignore`.
+Choose a dedicated subdirectory: the worktree root itself is rejected because
+Git cannot exclude it as one exact private log path.
 
 ## Use session-only logging
 
@@ -102,6 +104,11 @@ provider base URL, and starts the loopback gateway. Repeat for any other selecte
 adapter. To change the provider subset for an already-installed adapter, disable
 that adapter first and then install it again; Apastra will not silently replace
 the restore point.
+
+Persistent targets honor the clients' configured user locations, including
+`CODEX_HOME`, `CLAUDE_CONFIG_DIR`, `OPENCODE_CONFIG`, `XDG_CONFIG_HOME`, and
+`PI_CODING_AGENT_DIR`. Disable uses the exact target recorded at install time,
+even if those environment variables later change.
 
 Disable one adapter or everything:
 

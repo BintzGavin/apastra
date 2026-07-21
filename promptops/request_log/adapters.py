@@ -45,7 +45,12 @@ def build_session_launch(
 
     if adapter == "codex":
         return SessionLaunch(
-            ["codex", "-c", f'openai_base_url="{provider_base(gateway, "openai", adapter)}"', *arguments]
+            [
+                "codex",
+                "-c",
+                f'openai_base_url="{provider_base(gateway, "openai", adapter)}"',
+                *arguments,
+            ]
         )
     if adapter == "claude-code":
         return SessionLaunch(
@@ -61,21 +66,34 @@ def build_session_launch(
                     inline = parsed
             except json.JSONDecodeError as exc:
                 raise ValueError("OPENCODE_CONFIG_CONTENT is not valid JSON") from exc
-        provider_config = _object_field(inline, "provider", "OpenCode provider configuration")
+        provider_config = _object_field(
+            inline, "provider", "OpenCode provider configuration"
+        )
         for provider in providers:
-            provider_settings = _object_field(provider_config, provider, f"OpenCode {provider} provider configuration")
-            options = _object_field(provider_settings, "options", f"OpenCode {provider} provider options")
+            provider_settings = _object_field(
+                provider_config, provider, f"OpenCode {provider} provider configuration"
+            )
+            options = _object_field(
+                provider_settings, "options", f"OpenCode {provider} provider options"
+            )
             options["baseURL"] = provider_base(gateway, provider, adapter)
         return SessionLaunch(
             ["opencode", *arguments],
             {"OPENCODE_CONFIG_CONTENT": json.dumps(inline, separators=(",", ":"))},
         )
     if adapter == "pi":
-        source = (pi_agent_dir or Path(parent.get("PI_CODING_AGENT_DIR", Path.home() / ".pi" / "agent"))).expanduser()
+        source = (
+            pi_agent_dir
+            or Path(parent.get("PI_CODING_AGENT_DIR", Path.home() / ".pi" / "agent"))
+        ).expanduser()
         base_temp = temp_root.expanduser() if temp_root is not None else None
         if base_temp is not None:
             base_temp.mkdir(parents=True, exist_ok=True)
-        isolated = Path(tempfile.mkdtemp(prefix="apastra-pi-", dir=str(base_temp) if base_temp else None))
+        isolated = Path(
+            tempfile.mkdtemp(
+                prefix="apastra-pi-", dir=str(base_temp) if base_temp else None
+            )
+        )
         _chmod_private(isolated, directory=True)
         if source.exists():
             for entry in source.iterdir():
@@ -92,15 +110,24 @@ def build_session_launch(
         models: dict = {}
         models_path = source / "models.json"
         if models_path.is_file():
-            parsed = json.loads(models_path.read_text(encoding="utf-8"))
+            parsed = json.loads(
+                _strip_jsonc(models_path.read_text(encoding="utf-8-sig"))
+            )
             if not isinstance(parsed, dict):
                 raise ValueError("Pi models.json must contain a JSON object")
             models = parsed
-        model_providers = _object_field(models, "providers", "Pi providers configuration")
+        model_providers = _object_field(
+            models, "providers", "Pi providers configuration"
+        )
         for provider in providers:
-            provider_settings = _object_field(model_providers, provider, f"Pi {provider} provider configuration")
+            provider_settings = _object_field(
+                model_providers, provider, f"Pi {provider} provider configuration"
+            )
             provider_settings["baseUrl"] = provider_base(gateway, provider, adapter)
-        _write_private(isolated / "models.json", json.dumps(models, indent=2).encode("utf-8") + b"\n")
+        _write_private(
+            isolated / "models.json",
+            json.dumps(models, indent=2).encode("utf-8") + b"\n",
+        )
         return SessionLaunch(
             ["pi", *arguments],
             {"PI_CODING_AGENT_DIR": str(isolated)},
@@ -113,13 +140,21 @@ def build_session_launch(
         if "openai" in providers:
             environment["OPENAI_BASE_URL"] = provider_base(gateway, "openai", adapter)
         if "anthropic" in providers:
-            environment["ANTHROPIC_BASE_URL"] = provider_base(gateway, "anthropic", adapter)
+            environment["ANTHROPIC_BASE_URL"] = provider_base(
+                gateway, "anthropic", adapter
+            )
         return SessionLaunch(list(arguments), environment)
     raise ValueError(f"Unknown adapter: {adapter}")
 
 
-def persistent_config_bytes(adapter: str, original: bytes, gateway: str, providers: list[str]) -> bytes:
-    selected = [provider for provider in providers if provider in SUPPORTED_ADAPTERS.get(adapter, set())]
+def persistent_config_bytes(
+    adapter: str, original: bytes, gateway: str, providers: list[str]
+) -> bytes:
+    selected = [
+        provider
+        for provider in providers
+        if provider in SUPPORTED_ADAPTERS.get(adapter, set())
+    ]
     _validate_selection(adapter, selected)
     if adapter == "codex":
         return _set_toml_top_level(
@@ -130,7 +165,7 @@ def persistent_config_bytes(adapter: str, original: bytes, gateway: str, provide
 
     try:
         text = original.decode("utf-8-sig")
-        if adapter == "opencode":
+        if adapter in {"opencode", "pi"}:
             text = _strip_jsonc(text)
         data = json.loads(text) if text.strip() else {}
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
@@ -141,22 +176,34 @@ def persistent_config_bytes(adapter: str, original: bytes, gateway: str, provide
         environment = _object_field(data, "env", "Claude Code env configuration")
         environment["ANTHROPIC_BASE_URL"] = provider_base(gateway, "anthropic", adapter)
     elif adapter == "opencode":
-        provider_config = _object_field(data, "provider", "OpenCode provider configuration")
+        provider_config = _object_field(
+            data, "provider", "OpenCode provider configuration"
+        )
         for provider in selected:
-            provider_settings = _object_field(provider_config, provider, f"OpenCode {provider} provider configuration")
-            options = _object_field(provider_settings, "options", f"OpenCode {provider} provider options")
+            provider_settings = _object_field(
+                provider_config, provider, f"OpenCode {provider} provider configuration"
+            )
+            options = _object_field(
+                provider_settings, "options", f"OpenCode {provider} provider options"
+            )
             options["baseURL"] = provider_base(gateway, provider, adapter)
     elif adapter == "pi":
         provider_config = _object_field(data, "providers", "Pi providers configuration")
         for provider in selected:
-            provider_settings = _object_field(provider_config, provider, f"Pi {provider} provider configuration")
+            provider_settings = _object_field(
+                provider_config, provider, f"Pi {provider} provider configuration"
+            )
             provider_settings["baseUrl"] = provider_base(gateway, provider, adapter)
     elif adapter == "generic":
-        environment = _object_field(data, "environment", "generic environment configuration")
+        environment = _object_field(
+            data, "environment", "generic environment configuration"
+        )
         if "openai" in selected:
             environment["OPENAI_BASE_URL"] = provider_base(gateway, "openai", adapter)
         if "anthropic" in selected:
-            environment["ANTHROPIC_BASE_URL"] = provider_base(gateway, "anthropic", adapter)
+            environment["ANTHROPIC_BASE_URL"] = provider_base(
+                gateway, "anthropic", adapter
+            )
     else:
         raise ValueError(f"Unknown adapter: {adapter}")
     return json.dumps(data, indent=2, sort_keys=True).encode("utf-8") + b"\n"
@@ -169,13 +216,35 @@ class ManagedConfigInstall:
         self.backup_path = self.root / "original.bin"
         self.manifest_path = self.root / "install.json"
 
+    @classmethod
+    def from_state(cls, state_root: Path | str, adapter: str) -> "ManagedConfigInstall":
+        root = Path(state_root).expanduser().resolve() / adapter
+        manifest_path = root / "install.json"
+        try:
+            data = json.loads(manifest_path.read_text(encoding="utf-8"))
+            target = data["target"]
+        except (OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
+            raise ValueError(
+                f"Invalid request-log install state for {adapter}"
+            ) from exc
+        if not isinstance(target, str):
+            raise ValueError(f"Invalid request-log install state for {adapter}")
+        install = cls(state_root, adapter, target)
+        install._manifest()
+        return install
+
     def apply(self, applied: bytes) -> None:
         if self.manifest_path.exists():
             self.ensure_restorable()
-            if _digest(applied) != self._manifest()["applied_digest"]:
+            manifest = self._manifest()
+            if _digest(applied) != manifest["applied_digest"]:
                 raise RuntimeError(
                     f"disable request logging for {self.root.name} before changing its persistent provider routes"
                 )
+            current = self.target.read_bytes() if self.target.exists() else b""
+            if _digest(current) == manifest["original_digest"]:
+                self.target.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+                _write_atomic_private(self.target, applied)
             return
         existed = self.target.exists()
         original = self.target.read_bytes() if existed else b""
@@ -191,7 +260,10 @@ class ManagedConfigInstall:
                 "original_digest": _digest(original),
                 "applied_digest": _digest(applied),
             }
-            _write_private(self.manifest_path, json.dumps(manifest, indent=2, sort_keys=True).encode("utf-8") + b"\n")
+            _write_atomic_private(
+                self.manifest_path,
+                json.dumps(manifest, indent=2, sort_keys=True).encode("utf-8") + b"\n",
+            )
             self.target.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
             _write_atomic_private(self.target, applied)
         except Exception:
@@ -210,15 +282,24 @@ class ManagedConfigInstall:
         if not self.manifest_path.exists():
             return False
         manifest = self._manifest()
-        current = self.target.read_bytes() if self.target.exists() else b""
-        if _digest(current) != manifest["applied_digest"]:
-            raise RuntimeError(f"{self.target} changed after Apastra installed request logging")
         try:
             original = self.backup_path.read_bytes()
         except OSError as exc:
-            raise RuntimeError(f"Apastra request-log backup is unavailable for {self.target}") from exc
+            raise RuntimeError(
+                f"Apastra request-log backup is unavailable for {self.target}"
+            ) from exc
         if _digest(original) != manifest["original_digest"]:
-            raise RuntimeError(f"Apastra request-log backup is corrupted for {self.target}")
+            raise RuntimeError(
+                f"Apastra request-log backup is corrupted for {self.target}"
+            )
+        current = self.target.read_bytes() if self.target.exists() else b""
+        if _digest(current) not in {
+            manifest["applied_digest"],
+            manifest["original_digest"],
+        }:
+            raise RuntimeError(
+                f"{self.target} changed after Apastra installed request logging"
+            )
         return True
 
     def restore(self) -> None:
@@ -236,8 +317,20 @@ class ManagedConfigInstall:
         data = json.loads(self.manifest_path.read_text(encoding="utf-8"))
         if not isinstance(data, dict):
             raise ValueError("Invalid request-log install state")
-        required = {"schema_version", "adapter", "target", "target_existed", "original_digest", "applied_digest"}
-        if not required.issubset(data) or data["schema_version"] != 1 or data["target"] != str(self.target):
+        required = {
+            "schema_version",
+            "adapter",
+            "target",
+            "target_existed",
+            "original_digest",
+            "applied_digest",
+        }
+        if (
+            not required.issubset(data)
+            or data["schema_version"] != 1
+            or data["adapter"] != self.root.name
+            or data["target"] != str(self.target)
+        ):
             raise ValueError("Invalid request-log install state")
         return data
 
@@ -249,7 +342,9 @@ def _validate_selection(adapter: str, providers: list[str]) -> None:
         raise ValueError(f"No supported provider selected for {adapter}")
     unsupported = set(providers) - SUPPORTED_ADAPTERS[adapter]
     if unsupported:
-        raise ValueError(f"Adapter {adapter} does not support: {', '.join(sorted(unsupported))}")
+        raise ValueError(
+            f"Adapter {adapter} does not support: {', '.join(sorted(unsupported))}"
+        )
 
 
 def _object_field(container: dict, key: str, description: str) -> dict:
@@ -301,7 +396,7 @@ def _strip_jsonc(text: str) -> str:
 def _set_toml_top_level(original: bytes, key: str, value: str) -> bytes:
     text = original.decode("utf-8")
     lines = text.splitlines()
-    replacement = f'{key} = {json.dumps(value)}'
+    replacement = f"{key} = {json.dumps(value)}"
     found = False
     in_table = False
     output: list[str] = []
@@ -309,14 +404,25 @@ def _set_toml_top_level(original: bytes, key: str, value: str) -> bytes:
         stripped = line.strip()
         if stripped.startswith("["):
             in_table = True
-        if not in_table and stripped.split("=", 1)[0].strip() == key if "=" in stripped else False:
+        if (
+            not in_table and stripped.split("=", 1)[0].strip() == key
+            if "=" in stripped
+            else False
+        ):
             if not found:
                 output.append(replacement)
                 found = True
             continue
         output.append(line)
     if not found:
-        insert_at = next((index for index, line in enumerate(output) if line.strip().startswith("[")), len(output))
+        insert_at = next(
+            (
+                index
+                for index, line in enumerate(output)
+                if line.strip().startswith("[")
+            ),
+            len(output),
+        )
         output.insert(insert_at, replacement)
     return ("\n".join(output).rstrip("\n") + "\n").encode("utf-8")
 
