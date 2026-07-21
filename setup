@@ -10,6 +10,7 @@ set -euo pipefail
 # Installs:
 #   .agent/skills/apastra/   — skill instructions (canonical copy; only SKILL.md dirs + this setup)
 #   .agent/scripts/apastra/  — runtime scripts (Python + shell validators)
+#   .agent/bin/apastra       — project-local CLI
 #   .codex/ and .claude/     — optional project-local agent hooks
 #
 # Also symlinks that directory into .claude/skills/ and .agents/skills/ only (minimal set):
@@ -27,6 +28,7 @@ fi
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(pwd)"
 SCRIPTS_DEST="$PROJECT_ROOT/.agent/scripts/apastra"
+BIN_DEST="$PROJECT_ROOT/.agent/bin"
 
 # Safety: verify we're running from inside an apastra clone
 if [ ! -d "$SKILL_DIR/promptops/runtime" ] || [ ! -f "$SKILL_DIR/SKILL.md" ]; then
@@ -46,6 +48,7 @@ Source:
 
 Will create or update:
   .agent/scripts/apastra/        runtime, schemas, validators, harnesses, hooks
+  .agent/bin/apastra             project-local CLI
   .claude/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
   .agents/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
 
@@ -81,6 +84,7 @@ echo "🔧 Installing apastra..."
 # Copy runtime scripts to .agent/scripts/apastra/
 mkdir -p "$SCRIPTS_DEST"
 cp -r "$SKILL_DIR/promptops/runtime"    "$SCRIPTS_DEST/"
+cp -r "$SKILL_DIR/promptops/request_log" "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/runs"       "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/resolver"   "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/schemas"    "$SCRIPTS_DEST/"
@@ -88,6 +92,9 @@ cp -r "$SKILL_DIR/promptops/validators" "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/hooks"      "$SCRIPTS_DEST/"
 cp    "$SKILL_DIR/promptops/__init__.py" "$SCRIPTS_DEST/"
+mkdir -p "$BIN_DEST"
+cp    "$SKILL_DIR/bin/apastra" "$BIN_DEST/apastra"
+chmod +x "$BIN_DEST/apastra"
 
 find "$SCRIPTS_DEST" -type d -name "__pycache__" -prune -exec rm -rf {} +
 find "$SCRIPTS_DEST" -type f \( -name "*.pyc" -o -name "*.pyo" -o -name "*.orig" -o -name "*.rej" \) -exec rm -f {} +
@@ -185,6 +192,7 @@ echo ""
 echo "✅ Apastra installed"
 echo "   Skills:  .agent/skills/apastra/ (canonical)"
 echo "   Scripts: .agent/scripts/apastra/"
+echo "   CLI:     .agent/bin/apastra"
 if [ "${APASTRA_INSTALL_AGENT_HOOKS:-}" = "1" ] && [ "${APASTRA_NO_AGENT_HOOKS:-}" != "1" ]; then
   echo "   Hooks:   .codex/ and .claude/settings.json"
 else

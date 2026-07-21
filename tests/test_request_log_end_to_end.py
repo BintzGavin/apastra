@@ -1,0 +1,448 @@
+import io
+import json
+import os
+import stat
+import subprocess
+import socket
+import tempfile
+import time
+import unittest
+from pathlib import Path
+from unittest import mock
+
+from promptops.request_log import cli as request_log_cli
+from promptops.request_log.cli import main
+from promptops.request_log.config import ConfigStore, RequestLogConfig
+from tests.test_request_log_gateway import FakeProvider, FakeProviderHandler
+
+
+FAKE_AGENT = r'''#!/usr/bin/env python3
+import json
+import os
+import sys
+import urllib.request
+from pathlib import Path
+
+name = Path(sys.argv[0]).name
+routes = []
+if name == "codex":
+    value = next(arg for arg in sys.argv if arg.startswith("openai_base_url="))
+    routes.append(("openai", value.split("=", 1)[1].strip('"') + "/responses"))
+elif name == "claude":
+    routes.append(("anthropic", os.environ["ANTHROPIC_BASE_URL"] + "/v1/messages"))
+elif name == "opencode":
+    config = json.loads(os.environ["OPENCODE_CONFIG_CONTENT"])
+    for provider in ("openai", "anthropic"):
+        base = config["provider"][provider]["options"]["baseURL"]
+        routes.append((provider, base + ("/responses" if provider == "openai" else "/messages")))
+elif name == "pi":
+    config = json.loads((Path(os.environ["PI_CODING_AGENT_DIR"]) / "models.json").read_text())
+    for provider in ("openai", "anthropic"):
+        base = config["providers"][provider]["baseUrl"]
+        routes.append((provider, base + ("/responses" if provider == "openai" else "/messages")))
+else:
+    routes.append(("openai", os.environ["OPENAI_BASE_URL"] + "/responses"))
+    routes.append(("anthropic", os.environ["ANTHROPIC_BASE_URL"] + "/v1/messages"))
+
+for provider, url in routes:
+    body = json.dumps({"model": name + "-" + provider, "messages": [{"role": "user", "content": "hello"}]}, separators=(",", ":")).encode()
+    request = urllib.request.Request(
+        url,
+        data=body,
+        headers={"Content-Type": "application/json", "Authorization": "Bearer subprocess-secret"},
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=5) as response:
+        response.read()
+'''
+
+
+class AdapterEndToEndTests(unittest.TestCase):
+    def test_cli_run_routes_every_adapter_and_provider_through_gateway(self):
+        with tempfile.TemporaryDirectory() as temp_dir, FakeProvider() as upstream:
+            root = Path(temp_dir)
+            bin_dir = root / "bin"
+            bin_dir.mkdir()
+            for command in ("codex", "claude", "opencode", "pi", "generic-agent"):
+                path = bin_dir / command
+                path.write_text(FAKE_AGENT)
+                path.chmod(path.stat().st_mode | stat.S_IXUSR)
+            pi_home = root / "pi-home"
+            pi_home.mkdir()
+            (pi_home / "auth.json").write_text('{"token":"preserved"}\n')
+            config_store = ConfigStore(root / "config")
+            config_store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={
+                        "codex": ["openai"],
+                        "claude-code": ["anthropic"],
+                        "opencode": ["openai", "anthropic"],
+                        "pi": ["openai", "anthropic"],
+                        "generic": ["openai", "anthropic"],
+                    },
+                    save_dir=root / "logs",
+                    bind_port=0,
+                    upstreams={"openai": upstream.origin, "anthropic": upstream.origin},
+                )
+            )
+            environment = {
+                **os.environ,
+                "PATH": str(bin_dir) + os.pathsep + os.environ.get("PATH", ""),
+                "PI_CODING_AGENT_DIR": str(pi_home),
+            }
+
+            commands = [
+                ["run", "--config-dir", str(config_store.root), "codex"],
+                ["run", "--config-dir", str(config_store.root), "claude-code"],
+                ["run", "--config-dir", str(config_store.root), "opencode"],
+                ["run", "--config-dir", str(config_store.root), "pi"],
+                ["run", "--config-dir", str(config_store.root), "generic", "--", "generic-agent"],
+            ]
+            for command in commands:
+                with self.subTest(command=command):
+                    result = main(command, stdout=io.StringIO(), stderr=io.StringIO(), environment=environment)
+                    self.assertEqual(result, 0)
+
+            self.assertEqual(len(FakeProviderHandler.requests), 8)
+            rows = __import__("promptops.request_log.artifacts", fromlist=["RequestArtifactStore"]).RequestArtifactStore(root / "logs").list_requests()
+            self.assertEqual(len(rows), 8)
+            pairs = {(row["adapter"], row["provider"]) for row in rows}
+            self.assertEqual(
+                pairs,
+                {
+                    ("codex", "openai"),
+                    ("claude-code", "anthropic"),
+                    ("opencode", "openai"),
+                    ("opencode", "anthropic"),
+                    ("pi", "openai"),
+                    ("pi", "anthropic"),
+                    ("generic", "openai"),
+                    ("generic", "anthropic"),
+                },
+            )
+            persisted = b"\n".join(path.read_bytes() for path in root.rglob("*") if path.is_file() and "bin" not in path.parts)
+            self.assertNotIn(b"subprocess-secret", persisted)
+
+
+class PersistentCliTests(unittest.TestCase):
+    def test_start_terminates_child_if_pid_state_cannot_be_written(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"generic": ["openai"]},
+                    save_dir=root / "logs",
+                    bind_port=65533,
+                )
+            )
+            process = mock.Mock(pid=43210)
+            process.poll.return_value = None
+            process.wait.return_value = 0
+            stderr = io.StringIO()
+
+            try:
+                with (
+                    mock.patch("promptops.request_log.cli.subprocess.Popen", return_value=process),
+                    mock.patch("promptops.request_log.cli._write_private", side_effect=OSError("disk full")),
+                ):
+                    result = main(
+                        ["start", "--config-dir", str(store.root)],
+                        stdout=io.StringIO(),
+                        stderr=stderr,
+                    )
+
+                self.assertEqual(result, 2)
+                self.assertIn("disk full", stderr.getvalue())
+                process.terminate.assert_called_once_with()
+                process.wait.assert_called_once_with(timeout=5)
+                self.assertNotIn(process.pid, request_log_cli._BACKGROUND_PROCESSES)
+                self.assertFalse((store.root / "gateway.pid").exists())
+            finally:
+                request_log_cli._BACKGROUND_PROCESSES.pop(process.pid, None)
+
+    def test_background_gateway_start_status_and_stop(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            with socket.socket() as probe:
+                probe.bind(("127.0.0.1", 0))
+                port = probe.getsockname()[1]
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"generic": ["openai"]},
+                    save_dir=root / "logs",
+                    bind_port=port,
+                )
+            )
+            try:
+                start_out = io.StringIO()
+                self.assertEqual(
+                    main(["start", "--config-dir", str(store.root)], stdout=start_out, stderr=io.StringIO()),
+                    0,
+                )
+                self.assertIn("started", start_out.getvalue())
+                status_out = io.StringIO()
+                self.assertEqual(main(["status", "--config-dir", str(store.root), "--json"], stdout=status_out, stderr=io.StringIO()), 0)
+                self.assertTrue(json.loads(status_out.getvalue())["gateway_running"])
+                self.assertEqual(main(["stop", "--config-dir", str(store.root)], stdout=io.StringIO(), stderr=io.StringIO()), 0)
+                for _ in range(40):
+                    status_out = io.StringIO()
+                    main(["status", "--config-dir", str(store.root), "--json"], stdout=status_out, stderr=io.StringIO())
+                    if not json.loads(status_out.getvalue())["gateway_running"]:
+                        break
+                    time.sleep(0.05)
+                self.assertFalse(json.loads(status_out.getvalue())["gateway_running"])
+            finally:
+                main(["stop", "--config-dir", str(store.root)], stdout=io.StringIO(), stderr=io.StringIO())
+
+    def test_stop_removes_stale_pid_without_killing_any_process(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            store = ConfigStore(root / "config")
+            store.save(RequestLogConfig(enabled=True, adapters={"generic": ["openai"]}, save_dir=root / "logs", bind_port=65534))
+            (store.root / "gateway.pid").write_text(str(os.getpid()))
+
+            with mock.patch("promptops.request_log.cli.os.kill") as kill:
+                output = io.StringIO()
+                result = main(["stop", "--config-dir", str(store.root)], stdout=output, stderr=io.StringIO())
+
+            self.assertEqual(result, 0)
+            kill.assert_not_called()
+            self.assertIn("stale", output.getvalue())
+
+    def test_install_and_disable_all_adapters_restores_original_bytes(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            paths = {
+                "codex": root / "codex" / "config.toml",
+                "claude-code": root / "claude" / "settings.json",
+                "opencode": root / "opencode" / "opencode.json",
+                "pi": root / "pi" / "models.json",
+            }
+            originals = {
+                "codex": b'model = "gpt-test"\n',
+                "claude-code": b'{"permissions":{"allow":["Read"]}}\n',
+                "opencode": b'{"theme":"dark"}\n',
+                "pi": b'{"providers":{"anthropic":{"headers":{"x-existing":"yes"}}}}\n',
+            }
+            for adapter, path in paths.items():
+                path.parent.mkdir(parents=True)
+                path.write_bytes(originals[adapter])
+            environment = {
+                **os.environ,
+                "APASTRA_CODEX_HOME": str(paths["codex"].parent),
+                "APASTRA_CLAUDE_HOME": str(paths["claude-code"].parent),
+                "APASTRA_OPENCODE_CONFIG": str(paths["opencode"]),
+                "PI_CODING_AGENT_DIR": str(paths["pi"].parent),
+            }
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={
+                        "codex": ["openai"],
+                        "claude-code": ["anthropic"],
+                        "opencode": ["openai", "anthropic"],
+                        "pi": ["openai", "anthropic"],
+                        "generic": ["openai", "anthropic"],
+                    },
+                    save_dir=root / "logs",
+                    bind_port=43123,
+                )
+            )
+
+            with mock.patch("promptops.request_log.cli._start", return_value=0):
+                for adapter in ("codex", "claude-code", "opencode", "pi", "generic"):
+                    output = io.StringIO()
+                    result = main(
+                        ["install", "--config-dir", str(store.root), adapter],
+                        stdout=output,
+                        stderr=io.StringIO(),
+                        environment=environment,
+                    )
+                    self.assertEqual(result, 0)
+                    self.assertIn("Proposed change", output.getvalue())
+
+            for adapter, path in paths.items():
+                self.assertNotEqual(path.read_bytes(), originals[adapter])
+            self.assertTrue((store.root / "generic-provider-env.json").exists())
+            self.assertEqual(sorted(path.parent.name for path in (store.root / "installs").glob("*/install.json")), ["claude-code", "codex", "generic", "opencode", "pi"])
+            status_out = io.StringIO()
+            self.assertEqual(
+                main(
+                    ["status", "--config-dir", str(store.root), "--json"],
+                    stdout=status_out,
+                    stderr=io.StringIO(),
+                    environment=environment,
+                ),
+                0,
+            )
+            generic_environment = json.loads(status_out.getvalue())["generic_environment"]
+            self.assertEqual(
+                generic_environment,
+                {
+                    "ANTHROPIC_BASE_URL": "http://127.0.0.1:43123/anthropic/generic",
+                    "OPENAI_BASE_URL": "http://127.0.0.1:43123/openai/generic/v1",
+                },
+            )
+
+            with mock.patch("promptops.request_log.cli._stop", return_value=0):
+                result = main(
+                    ["disable", "--config-dir", str(store.root)],
+                    stdout=io.StringIO(),
+                    stderr=io.StringIO(),
+                    environment=environment,
+                )
+            self.assertEqual(result, 0)
+            for adapter, path in paths.items():
+                self.assertEqual(path.read_bytes(), originals[adapter])
+            self.assertFalse((store.root / "generic-provider-env.json").exists())
+            self.assertFalse(store.load().enabled)
+
+    def test_failed_gateway_start_rolls_back_new_persistent_install(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_home = root / "codex"
+            codex_home.mkdir()
+            target = codex_home / "config.toml"
+            original = b'model = "gpt-test"\n'
+            target.write_bytes(original)
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"]},
+                    save_dir=root / "logs",
+                    activation_mode="session",
+                )
+            )
+            environment = {**os.environ, "APASTRA_CODEX_HOME": str(codex_home)}
+
+            with mock.patch("promptops.request_log.cli._start", return_value=1):
+                result = main(
+                    ["install", "--config-dir", str(store.root), "codex"],
+                    stdout=io.StringIO(),
+                    stderr=io.StringIO(),
+                    environment=environment,
+                )
+
+            self.assertEqual(result, 1)
+            self.assertEqual(target.read_bytes(), original)
+            self.assertFalse((store.root / "installs" / "codex" / "install.json").exists())
+            self.assertEqual(store.load().activation_mode, "session")
+
+    def test_disable_preflights_all_conflicts_before_restoring_any_adapter(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            codex_target = root / "codex" / "config.toml"
+            claude_target = root / "claude" / "settings.json"
+            codex_target.parent.mkdir()
+            claude_target.parent.mkdir()
+            codex_original = b'model = "gpt-test"\n'
+            claude_original = b'{"theme":"dark"}\n'
+            codex_target.write_bytes(codex_original)
+            claude_target.write_bytes(claude_original)
+            environment = {
+                **os.environ,
+                "APASTRA_CODEX_HOME": str(codex_target.parent),
+                "APASTRA_CLAUDE_HOME": str(claude_target.parent),
+            }
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"codex": ["openai"], "claude-code": ["anthropic"]},
+                    save_dir=root / "logs",
+                )
+            )
+            with mock.patch("promptops.request_log.cli._start", return_value=0):
+                for adapter in ("codex", "claude-code"):
+                    self.assertEqual(
+                        main(
+                            ["install", "--config-dir", str(store.root), adapter],
+                            stdout=io.StringIO(),
+                            stderr=io.StringIO(),
+                            environment=environment,
+                        ),
+                        0,
+                    )
+            claude_applied = claude_target.read_bytes()
+            codex_target.write_bytes(b'model = "user-edited"\n')
+
+            stderr = io.StringIO()
+            result = main(
+                ["disable", "--config-dir", str(store.root)],
+                stdout=io.StringIO(),
+                stderr=stderr,
+                environment=environment,
+            )
+
+            self.assertEqual(result, 2)
+            self.assertIn("changed after", stderr.getvalue())
+            self.assertEqual(codex_target.read_bytes(), b'model = "user-edited"\n')
+            self.assertEqual(claude_target.read_bytes(), claude_applied)
+            self.assertTrue(store.load().enabled)
+
+    def test_install_rejects_provider_not_enabled_for_adapter_without_writing(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            target = root / "opencode.json"
+            target.write_bytes(b'{"theme":"dark"}\n')
+            store = ConfigStore(root / "config")
+            store.save(
+                RequestLogConfig(
+                    enabled=True,
+                    adapters={"opencode": ["openai"]},
+                    save_dir=root / "logs",
+                )
+            )
+            stderr = io.StringIO()
+
+            result = main(
+                ["install", "--config-dir", str(store.root), "opencode", "--provider", "anthropic"],
+                stdout=io.StringIO(),
+                stderr=stderr,
+                environment={**os.environ, "APASTRA_OPENCODE_CONFIG": str(target)},
+            )
+
+            self.assertEqual(result, 2)
+            self.assertIn("not enabled", stderr.getvalue())
+            self.assertEqual(target.read_bytes(), b'{"theme":"dark"}\n')
+
+    def test_in_repo_save_location_uses_git_info_exclude_only(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir) / "repo"
+            root.mkdir()
+            subprocess.run(["git", "init", "-q", str(root)], check=True)
+            tracked_ignore = root / ".gitignore"
+            tracked_ignore.write_text("existing-entry\n")
+            config_dir = Path(temp_dir) / "config"
+            save_dir = root / "private" / "request-logs"
+
+            result = main(
+                [
+                    "configure",
+                    "--config-dir",
+                    str(config_dir),
+                    "--yes",
+                    "--adapters",
+                    "codex:openai",
+                    "--save-dir",
+                    str(save_dir),
+                ],
+                stdout=io.StringIO(),
+                stderr=io.StringIO(),
+            )
+
+            self.assertEqual(result, 0)
+            self.assertEqual(tracked_ignore.read_text(), "existing-entry\n")
+            exclude = root / ".git" / "info" / "exclude"
+            self.assertIn("/private/request-logs/", exclude.read_text())
+
+
+if __name__ == "__main__":
+    unittest.main()
