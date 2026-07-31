@@ -35,7 +35,7 @@ Apastra is a lightweight way to run evals locally. It's language agnostic and wo
 
 Use it to test your agents' skills, review flows, planning flows, or any other AI instructions that affect how work gets done.
 
-The newer hook layer exists to make that evidence easier to see while the agent is working. Codex and Claude Code hooks can surface trace context, validation feedback, and safety signals at the moment an agent reads a prompt, runs a tool, edits a file, or tries to stop. Apastra then turns the useful parts of those traces into durable eval cases, scorecards, and artifact references.
+The hook layer makes that evidence easier to see while the agent is working. Codex and Claude Code hooks surface context, validation feedback, and safety signals when an agent reads a prompt, runs a tool, edits a file, or tries to stop. Relevant PromptOps changes also produce append-only validation receipts under `promptops/runs/hook-validations/`. Those receipts contain file paths, status, timestamps, and counts, but never prompt text, commands, file contents, or validation values.
 
 ## What is an eval actually?
 
@@ -105,7 +105,7 @@ The install writes are:
 
 Optional writes and commands are opt-in:
 
-- `APASTRA_INSTALL_AGENT_HOOKS=1` writes `.codex/config.toml`, `.codex/hooks.json`, and `.claude/settings.json` so Codex and Claude Code can surface trace/validation signals.
+- `APASTRA_INSTALL_AGENT_HOOKS=1` writes `.codex/config.toml`, `.codex/hooks.json`, `.claude/settings.json`, and a narrow `.gitignore` entry for `promptops/runs/hook-validations/` so Codex and Claude Code can surface trace and validation signals without adding local receipts to Git.
 - `APASTRA_INSTALL_PY_DEPS=1` allows setup/postinstall to invoke `pip` for `pyyaml` and `jsonschema`; otherwise Apastra only checks for them and prints manual install guidance.
 - `APASTRA_ASSUME_YES=1` lets the git-clone setup run non-interactively after printing the preflight manifest.
 
@@ -416,7 +416,7 @@ Shipped skills are listed under **Included Skills** above (including `apastra-re
 - **Project-level config** — **shipped at runtime:** upward-discovered `promptops.config.yaml` / `.yml` with schema and default application; documentation of precedence rules still improving
 - **MCP integration** — **partial:** MCP server and tools in `promptops/runtime/mcp_server.py` (e.g. list suites, run evaluation); richer MCP definitions inside prompt specs and packaging remain roadmap
 - **First-class cost tracking** — total cost in every run manifest, cost delta in regression reports, optional `cost_budget` on suites
-- **Opt-in persisted hook events** — provider request-body logging is shipped; lifecycle hooks still need a separate redacted event log for validation and stopping signals that never reach the provider request
+- **Hook receipt conversion**: provider request-body logging and redacted lifecycle validation receipts are shipped; converting selected receipts into eval cases without copying full transcripts remains roadmap work
 
 ## License
 

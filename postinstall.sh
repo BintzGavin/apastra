@@ -5,7 +5,7 @@
 # - default postinstall is disclosure-only and does not mutate the consumer repo
 # - set APASTRA_POSTINSTALL_SETUP=1 to opt into project-local setup from npm install
 # - set APASTRA_INSTALL_PY_DEPS=1 to allow pip installs
-# - set APASTRA_INSTALL_AGENT_HOOKS=1 to allow Codex/Claude hook config writes
+# - set APASTRA_INSTALL_AGENT_HOOKS=1 to allow hook config and receipt-ignore writes
 
 set -euo pipefail
 
@@ -46,7 +46,7 @@ That opt-in setup will create or update:
 
 Additional opt-in actions:
   APASTRA_INSTALL_PY_DEPS=1       allow pip install pyyaml jsonschema
-  APASTRA_INSTALL_AGENT_HOOKS=1   write .codex/config.toml, .codex/hooks.json, .claude/settings.json
+  APASTRA_INSTALL_AGENT_HOOKS=1   write hook config plus the local receipt .gitignore entry
 
 EOF
 

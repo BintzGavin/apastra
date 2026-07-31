@@ -63,7 +63,7 @@ If **no `package.json`**, use **git clone only**.
 
 **Setup switches to explain before use:**
 
-- `APASTRA_INSTALL_AGENT_HOOKS=1` — opt into Codex/Claude Code lifecycle hook config.
+- `APASTRA_INSTALL_AGENT_HOOKS=1` — opt into Codex/Claude Code lifecycle hook config and a narrow `.gitignore` entry for local validation receipts.
 - `APASTRA_INSTALL_PY_DEPS=1` — opt into setup/postinstall invoking `pip` for `pyyaml` and `jsonschema`.
 - `APASTRA_NO_SKILL_SYMLINKS=1` — skip `.claude/skills/apastra` and `.agents/skills/apastra` discovery symlinks.
 - `APASTRA_ASSUME_YES=1` — allow git-clone setup to proceed non-interactively after printing the preflight.
@@ -77,7 +77,7 @@ Before running setup, say exactly what Apastra will create or update:
 
 Optional setup actions require explicit opt-in:
 
-- `APASTRA_INSTALL_AGENT_HOOKS=1` writes `.codex/config.toml`, `.codex/hooks.json`, and `.claude/settings.json`.
+- `APASTRA_INSTALL_AGENT_HOOKS=1` writes `.codex/config.toml`, `.codex/hooks.json`, `.claude/settings.json`, and a `.gitignore` entry for `promptops/runs/hook-validations/`.
 - `APASTRA_INSTALL_PY_DEPS=1` lets setup/postinstall invoke `pip` for `pyyaml` and `jsonschema`.
 - `APASTRA_ASSUME_YES=1` lets the git-clone setup proceed non-interactively after printing its preflight.
 

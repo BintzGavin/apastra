@@ -8,9 +8,11 @@
             "type": "command",
             "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
             "timeout": 10,
-            "statusMessage": "Loading Apastra context"
+            "statusMessage": "Loading Apastra context",
+            "name": "Apastra: load session context"
           }
-        ]
+        ],
+        "name": "Apastra session context"
       }
     ],
     "UserPromptSubmit": [
@@ -20,9 +22,11 @@
             "type": "command",
             "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
             "timeout": 10,
-            "statusMessage": "Checking Apastra prompt context"
+            "statusMessage": "Checking Apastra prompt context",
+            "name": "Apastra: check prompt context"
           }
-        ]
+        ],
+        "name": "Apastra prompt context"
       }
     ],
     "PreToolUse": [
@@ -33,9 +37,11 @@
             "type": "command",
             "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
             "timeout": 10,
-            "statusMessage": "Checking Bash safety"
+            "statusMessage": "Checking Bash safety",
+            "name": "Apastra: check Bash safety"
           }
-        ]
+        ],
+        "name": "Apastra Bash safety"
       }
     ],
     "PostToolUse": [
@@ -46,9 +52,11 @@
             "type": "command",
             "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
             "timeout": 60,
-            "statusMessage": "Validating Apastra changes"
+            "statusMessage": "Validating Apastra changes",
+            "name": "Apastra: validate PromptOps changes"
           }
-        ]
+        ],
+        "name": "Apastra PromptOps validation"
       }
     ],
     "Stop": [
@@ -58,9 +66,11 @@
             "type": "command",
             "command": "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/promptops/hooks/agent_hook.py\"",
             "timeout": 60,
-            "statusMessage": "Checking Apastra validation"
+            "statusMessage": "Checking Apastra validation",
+            "name": "Apastra: check final validation"
           }
-        ]
+        ],
+        "name": "Apastra stop validation"
       }
     ]
   }

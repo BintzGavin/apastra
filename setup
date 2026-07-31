@@ -16,7 +16,8 @@ set -euo pipefail
 # Also symlinks that directory into .claude/skills/ and .agents/skills/ only (minimal set):
 # Claude Code uses the former; Cursor, Codex, OpenCode, Copilot, etc. use the latter per skills CLI.
 # Set APASTRA_NO_SKILL_SYMLINKS=1 to skip symlinks (e.g. Windows or symlink-averse environments).
-# Set APASTRA_INSTALL_AGENT_HOOKS=1 to install Codex and Claude Code hook config.
+# Set APASTRA_INSTALL_AGENT_HOOKS=1 to install Codex and Claude Code hook config
+# plus a narrow .gitignore entry for local validation receipts.
 # Set APASTRA_INSTALL_PY_DEPS=1 to allow setup to invoke pip for pyyaml/jsonschema.
 # Pass --dry-run to print the install plan without writing files.
 
@@ -61,7 +62,7 @@ Will only check by default:
 
 Opt-in actions:
   APASTRA_INSTALL_PY_DEPS=1       allow pip install pyyaml jsonschema
-  APASTRA_INSTALL_AGENT_HOOKS=1   write .codex/config.toml, .codex/hooks.json, .claude/settings.json
+  APASTRA_INSTALL_AGENT_HOOKS=1   write hook config plus the local receipt .gitignore entry
 
 EOF
 

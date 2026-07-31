@@ -3,12 +3,14 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import os
-import copy
 import re
 import subprocess
 import sys
+import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -63,6 +65,11 @@ SCHEMA_BY_PREFIX = {
     "promptops/canaries/": "canary-suite.schema.json",
 }
 
+HOOK_VALIDATION_ROOT = "promptops/runs/hook-validations"
+HOOK_OUTPUT_PREFIXES = (
+    f"{HOOK_VALIDATION_ROOT}/",
+)
+
 
 class ValidationReport:
     def __init__(self) -> None:
@@ -109,8 +116,7 @@ def main() -> int:
     event = payload.get("hook_event_name", "")
 
     if event == "SessionStart":
-        emit_context(event, APASTRA_CONTEXT)
-        return 0
+        return handle_session_start(payload)
 
     if event == "UserPromptSubmit":
         return handle_user_prompt(payload)
@@ -137,6 +143,13 @@ def read_hook_payload() -> dict[str, Any]:
         print(f"Apastra hook could not parse JSON input: {exc}", file=sys.stderr)
         return {}
     return data if isinstance(data, dict) else {}
+
+
+def handle_session_start(payload: dict[str, Any]) -> int:
+    root = find_repo_root(Path(payload.get("cwd") or os.getcwd()))
+    save_relevant_snapshot(root, payload, capture_relevant_snapshot(root))
+    emit_context("SessionStart", APASTRA_CONTEXT)
+    return 0
 
 
 def handle_user_prompt(payload: dict[str, Any]) -> int:
@@ -173,7 +186,18 @@ def handle_pre_tool(payload: dict[str, Any]) -> int:
 
 def handle_post_tool(payload: dict[str, Any]) -> int:
     root = find_repo_root(Path(payload.get("cwd") or os.getcwd()))
-    report = validate_files(root, candidate_files(root, payload))
+    previous = load_relevant_snapshot(root, payload)
+    current = capture_relevant_snapshot(root)
+    files = (
+        changed_since_snapshot(previous, current)
+        if previous is not None
+        else candidate_files(root, payload)
+    )
+    save_relevant_snapshot(root, payload, current)
+    report = validate_files(root, files)
+
+    if files:
+        persist_validation_report(root, "PostToolUse", files, report)
 
     if report.failed:
         emit(
@@ -196,7 +220,11 @@ def handle_stop(payload: dict[str, Any]) -> int:
         return 0
 
     root = find_repo_root(Path(payload.get("cwd") or os.getcwd()))
-    report = validate_files(root, changed_files(root))
+    files = [path for path in changed_files(root) if is_watchable(path)]
+    report = validate_files(root, files)
+
+    if files:
+        persist_validation_report(root, "Stop", files, report)
 
     if report.failed:
         emit({"decision": "block", "reason": "Before stopping, fix Apastra validation failures.\n\n" + report.summary()})
@@ -215,14 +243,77 @@ def tool_command(payload: dict[str, Any]) -> str:
 
 
 def candidate_files(root: Path, payload: dict[str, Any]) -> list[str]:
-    files = set(changed_files(root))
+    files: set[str] = set()
     tool_input = payload.get("tool_input")
     if isinstance(tool_input, dict):
         for key in ("file_path", "filePath", "path"):
             value = tool_input.get(key)
             if isinstance(value, str):
                 files.add(to_repo_path(root, Path(value)))
-    return sorted(path for path in files if path)
+    return sorted(path for path in files if path and is_watchable(path))
+
+
+def capture_relevant_snapshot(root: Path) -> dict[str, list[int]]:
+    snapshot: dict[str, list[int]] = {}
+    for prefix in ("promptops", ".agent/scripts/apastra"):
+        base = root / prefix
+        if not base.exists():
+            continue
+        for path in base.rglob("*"):
+            if not path.is_file():
+                continue
+            repo_path = to_repo_path(root, path)
+            if not is_watchable(repo_path):
+                continue
+            stat = path.stat()
+            snapshot[repo_path] = [stat.st_mtime_ns, stat.st_size]
+    return snapshot
+
+
+def changed_since_snapshot(
+    previous: dict[str, list[int]],
+    current: dict[str, list[int]],
+) -> list[str]:
+    paths = set(previous) | set(current)
+    return sorted(path for path in paths if previous.get(path) != current.get(path))
+
+
+def hook_state_path(root: Path, payload: dict[str, Any]) -> Path:
+    raw_session_id = str(payload.get("session_id") or "default")
+    session_id = re.sub(r"[^A-Za-z0-9_.-]", "_", raw_session_id)[:80] or "default"
+    return root / HOOK_VALIDATION_ROOT / "state" / f"{session_id}.json"
+
+
+def load_relevant_snapshot(root: Path, payload: dict[str, Any]) -> dict[str, list[int]] | None:
+    path = hook_state_path(root, payload)
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(data, dict):
+        return None
+    return {
+        str(key): value
+        for key, value in data.items()
+        if isinstance(key, str)
+        and isinstance(value, list)
+        and len(value) == 2
+        and all(isinstance(item, int) for item in value)
+    }
+
+
+def save_relevant_snapshot(
+    root: Path,
+    payload: dict[str, Any],
+    snapshot: dict[str, list[int]],
+) -> None:
+    path = hook_state_path(root, payload)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
+    temporary.write_text(json.dumps(snapshot, sort_keys=True, separators=(",", ":")) + "\n")
+    temporary.replace(path)
 
 
 def changed_files(root: Path) -> list[str]:
@@ -250,7 +341,7 @@ def all_relevant_files(root: Path) -> list[str]:
 
 def validate_files(root: Path, files: list[str]) -> ValidationReport:
     report = ValidationReport()
-    relevant = [path for path in files if is_relevant(path)]
+    relevant = [path for path in files if is_watchable(path)]
     if not relevant:
         return report
 
@@ -268,6 +359,14 @@ def validate_files(root: Path, files: list[str]) -> ValidationReport:
 
 def is_relevant(path: str) -> bool:
     return path.startswith("promptops/") or path.startswith(".agent/scripts/apastra/")
+
+
+def is_watchable(path: str) -> bool:
+    if not is_relevant(path):
+        return False
+    if any(path.startswith(prefix) for prefix in HOOK_OUTPUT_PREFIXES):
+        return False
+    return "/__pycache__/" not in f"/{path}" and not path.endswith((".pyc", ".pyo"))
 
 
 def should_schema_validate(path: str) -> bool:
@@ -289,24 +388,40 @@ def validate_python(root: Path, files: list[str], report: ValidationReport) -> N
     py_files = [path for path in files if path.endswith(".py") and (root / path).exists()]
     if not py_files:
         return
-    proc = run([sys.executable, "-m", "py_compile", *py_files], root, timeout=30)
-    if proc.returncode == 0:
-        report.checked.append(f"Python syntax for {len(py_files)} file(s)")
-    else:
-        report.errors.append("Python syntax check failed:\n" + trim_output(proc.stderr or proc.stdout))
+    passed = 0
+    for path in py_files:
+        try:
+            source = (root / path).read_text()
+            compile(source, path, "exec")
+            passed += 1
+        except SyntaxError as exc:
+            location = f"line {exc.lineno}" if exc.lineno else "unknown line"
+            report.errors.append(f"{path}: Python syntax error at {location}: {exc.msg}")
+        except (OSError, UnicodeError) as exc:
+            report.errors.append(f"{path}: Python source could not be read: {type(exc).__name__}")
+    if passed:
+        report.checked.append(f"Python syntax for {passed} file(s)")
 
 
 def load_schema_validator(root: Path, report: ValidationReport):
+    node_script = Path(__file__).with_name("schema_validator.js")
+    if node_script.exists():
+        probe = run(["node", str(node_script), "--probe"], root, timeout=10)
+        if probe.returncode == 0:
+            return "node", node_script
+
     try:
         import yaml  # type: ignore
-        from jsonschema import Draft202012Validator, RefResolver  # type: ignore
+        from jsonschema import RefResolver, validators  # type: ignore
     except Exception:
-        report.warnings.append("Schema validation skipped; install pyyaml and jsonschema with `python3 -m pip install -r requirements.txt`.")
+        report.errors.append(
+            "Schema validation unavailable: install Apastra's Node dependencies or provide pyyaml and jsonschema."
+        )
         return None
 
-    schema_dir = root / "promptops/schemas"
-    if not schema_dir.exists():
-        report.warnings.append("Schema validation skipped; promptops/schemas was not found.")
+    schema_dir = find_schema_dir(root)
+    if schema_dir is None:
+        report.errors.append("Schema validation unavailable: Apastra schemas were not found.")
         return None
 
     store: dict[str, Any] = {}
@@ -329,10 +444,20 @@ def load_schema_validator(root: Path, report: ValidationReport):
         if not schema:
             return [f"missing schema {schema_name}"]
         resolver = RefResolver.from_schema(schema, store=store)
-        validator = Draft202012Validator(schema, resolver=resolver)
-        return [error.message for error in sorted(validator.iter_errors(data), key=lambda item: list(item.path))]
+        validator_class = validators.validator_for(schema)
+        validator = validator_class(schema, resolver=resolver)
+        return [
+            safe_jsonschema_error(error)
+            for error in sorted(validator.iter_errors(data), key=lambda item: list(item.path))
+        ]
 
-    return yaml, validate
+    return "python", yaml, validate
+
+
+def safe_jsonschema_error(error: Any) -> str:
+    location = "/" + "/".join(str(item) for item in error.path) if error.path else "/"
+    validator = str(error.validator or "schema")
+    return f"{location}: failed {validator} validation"
 
 
 def validate_structured_file(root: Path, path: str, validator: Any, report: ValidationReport) -> None:
@@ -352,7 +477,11 @@ def validate_structured_file(root: Path, path: str, validator: Any, report: Vali
     if not schema_name:
         return
 
-    yaml_module, validate = validator
+    if validator[0] == "node":
+        validate_structured_file_with_node(root, path, schema_name, validator[1], report)
+        return
+
+    _, yaml_module, validate = validator
     if path.endswith(".jsonl"):
         validate_jsonl(path, full_path, schema_name, validate, report)
         return
@@ -368,6 +497,71 @@ def validate_structured_file(root: Path, path: str, validator: Any, report: Vali
         report.errors.append(f"{path}: " + "; ".join(errors[:5]))
     else:
         report.checked.append(path)
+
+
+def validate_structured_file_with_node(
+    root: Path,
+    path: str,
+    schema_name: str,
+    node_script: Path,
+    report: ValidationReport,
+) -> None:
+    schema_dir = find_schema_dir(root, schema_name)
+    if schema_dir is None:
+        report.errors.append(f"{path}: schema directory was not found")
+        return
+
+    mode = "jsonl" if path.endswith(".jsonl") else "document"
+    proc = run(
+        [
+            "node",
+            str(node_script),
+            str(schema_dir),
+            schema_name,
+            str(root / path),
+            mode,
+        ],
+        root,
+        timeout=30,
+    )
+    try:
+        result = json.loads(proc.stdout)
+    except json.JSONDecodeError:
+        result = {}
+
+    if proc.returncode == 0 and result.get("status") == "pass":
+        report.checked.append(path)
+        return
+
+    if proc.returncode == 1 and result.get("status") == "fail":
+        errors = result.get("errors")
+        messages = [
+            str(item)
+            for item in errors
+            if isinstance(item, str)
+        ] if isinstance(errors, list) else []
+        detail = "; ".join(messages[:8]) or "schema validation failed"
+        report.errors.append(f"{path}: {detail}")
+        return
+
+    report.errors.append(
+        f"{path}: schema validation backend failed; verify Apastra's Node dependencies"
+    )
+
+
+def find_schema_dir(root: Path, schema_name: str | None = None) -> Path | None:
+    candidates = [
+        root / "promptops/schemas",
+        Path(__file__).resolve().parent.parent / "schemas",
+    ]
+    for path in candidates:
+        if not path.is_dir():
+            continue
+        if schema_name is None and any(path.glob("*.schema.json")):
+            return path
+        if schema_name is not None and (path / schema_name).is_file():
+            return path
+    return None
 
 
 def validate_jsonl(path: str, full_path: Path, schema_name: str, validate: Any, report: ValidationReport) -> None:
@@ -435,6 +629,42 @@ def to_repo_path(root: Path, path: Path) -> str:
         return str(path)
 
 
+def persist_validation_report(
+    root: Path,
+    event: str,
+    files: list[str],
+    report: ValidationReport,
+) -> Path:
+    recorded_at = datetime.now(timezone.utc)
+    if report.errors:
+        status = "failed"
+    elif report.warnings:
+        status = "warning"
+    elif report.checked:
+        status = "passed"
+    else:
+        status = "skipped"
+    record = {
+        "schema_version": "1.0",
+        "record_type": "apastra-hook-validation",
+        "recorded_at": recorded_at.isoformat().replace("+00:00", "Z"),
+        "event": event,
+        "status": status,
+        "files": sorted(set(files)),
+        "counts": {
+            "checked": len(report.checked),
+            "errors": len(report.errors),
+            "warnings": len(report.warnings),
+        },
+    }
+    reports_dir = root / HOOK_VALIDATION_ROOT / "reports"
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = recorded_at.strftime("%Y%m%dT%H%M%S.%fZ")
+    path = reports_dir / f"{timestamp}-{uuid.uuid4().hex[:8]}.json"
+    path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+    return path
+
+
 def trim_output(text: str, limit: int = 2000) -> str:
     text = text.strip()
     return text if len(text) <= limit else text[:limit] + "\n... output truncated ..."
@@ -451,17 +681,30 @@ def emit_context(event: str, context: str) -> None:
 def install_agent_configs(root: Path, hook_script: Path) -> None:
     root.mkdir(parents=True, exist_ok=True)
     install_codex_config(root)
+    install_hook_gitignore(root)
+    hook_relpath = to_repo_path(root, hook_script)
     install_json_hooks(
         root / ".codex/hooks.json",
-        "PYTHONDONTWRITEBYTECODE=1 python3 \"$(git rev-parse --show-toplevel)/.agent/scripts/apastra/hooks/agent_hook.py\"",
+        f'PYTHONDONTWRITEBYTECODE=1 python3 "$(git rev-parse --show-toplevel)/{hook_relpath}"',
         codex_hooks(),
     )
     install_json_hooks(
         root / ".claude/settings.json",
-        f'PYTHONDONTWRITEBYTECODE=1 python3 "${{CLAUDE_PROJECT_DIR}}/{to_repo_path(root, hook_script)}"',
+        f'PYTHONDONTWRITEBYTECODE=1 python3 "${{CLAUDE_PROJECT_DIR}}/{hook_relpath}"',
         claude_hooks(),
     )
     print("Installed Apastra agent hooks for Codex and Claude Code.")
+
+
+def install_hook_gitignore(root: Path) -> None:
+    path = root / ".gitignore"
+    text = path.read_text() if path.exists() else ""
+    entry = f"{HOOK_VALIDATION_ROOT}/"
+    if entry in text.splitlines():
+        return
+    if text and not text.endswith("\n"):
+        text += "\n"
+    path.write_text(text + entry + "\n")
 
 
 def install_codex_config(root: Path) -> None:
@@ -498,13 +741,16 @@ def install_json_hooks(path: Path, command: str, hooks: dict[str, list[dict[str,
             for hook in candidate.get("hooks", []):
                 if isinstance(hook, dict) and hook.get("command") == "__APASTRA_COMMAND__":
                     hook["command"] = command
-            if not hook_group_exists(current, candidate):
+            existing = find_matching_hook_group(current, candidate)
+            if existing:
+                merge_hook_group_metadata(existing, candidate)
+            else:
                 current.append(candidate)
 
     path.write_text(json.dumps(data, indent=2) + "\n")
 
 
-def hook_group_exists(groups: list[Any], candidate: dict[str, Any]) -> bool:
+def find_matching_hook_group(groups: list[Any], candidate: dict[str, Any]) -> dict[str, Any] | None:
     candidate_commands = [
         hook.get("command")
         for hook in candidate.get("hooks", [])
@@ -515,17 +761,38 @@ def hook_group_exists(groups: list[Any], candidate: dict[str, Any]) -> bool:
             continue
         for hook in group.get("hooks", []):
             if isinstance(hook, dict) and hook.get("command") in candidate_commands:
-                return True
-    return False
+                return group
+    return None
+
+
+def merge_hook_group_metadata(existing: dict[str, Any], candidate: dict[str, Any]) -> None:
+    if not existing.get("name") and candidate.get("name"):
+        existing["name"] = candidate["name"]
+
+    candidate_by_command = {
+        hook.get("command"): hook
+        for hook in candidate.get("hooks", [])
+        if isinstance(hook, dict) and hook.get("command")
+    }
+    for hook in existing.get("hooks", []):
+        if not isinstance(hook, dict):
+            continue
+        candidate_hook = candidate_by_command.get(hook.get("command"))
+        if not candidate_hook:
+            continue
+        if not hook.get("name") and candidate_hook.get("name"):
+            hook["name"] = candidate_hook["name"]
 
 
 def codex_hooks() -> dict[str, list[dict[str, Any]]]:
     return {
         "SessionStart": [
             {
+                "name": "Apastra session context",
                 "matcher": "startup|resume|clear",
                 "hooks": [
                     {
+                        "name": "Apastra: load session context",
                         "type": "command",
                         "command": "__APASTRA_COMMAND__",
                         "timeout": 10,
@@ -536,8 +803,10 @@ def codex_hooks() -> dict[str, list[dict[str, Any]]]:
         ],
         "UserPromptSubmit": [
             {
+                "name": "Apastra prompt context",
                 "hooks": [
                     {
+                        "name": "Apastra: check prompt context",
                         "type": "command",
                         "command": "__APASTRA_COMMAND__",
                         "timeout": 10,
@@ -548,9 +817,11 @@ def codex_hooks() -> dict[str, list[dict[str, Any]]]:
         ],
         "PreToolUse": [
             {
+                "name": "Apastra Bash safety",
                 "matcher": "Bash",
                 "hooks": [
                     {
+                        "name": "Apastra: check Bash safety",
                         "type": "command",
                         "command": "__APASTRA_COMMAND__",
                         "timeout": 10,
@@ -561,9 +832,11 @@ def codex_hooks() -> dict[str, list[dict[str, Any]]]:
         ],
         "PostToolUse": [
             {
+                "name": "Apastra PromptOps validation",
                 "matcher": "Bash|apply_patch",
                 "hooks": [
                     {
+                        "name": "Apastra: validate PromptOps changes",
                         "type": "command",
                         "command": "__APASTRA_COMMAND__",
                         "timeout": 60,
@@ -574,8 +847,10 @@ def codex_hooks() -> dict[str, list[dict[str, Any]]]:
         ],
         "Stop": [
             {
+                "name": "Apastra stop validation",
                 "hooks": [
                     {
+                        "name": "Apastra: check final validation",
                         "type": "command",
                         "command": "__APASTRA_COMMAND__",
                         "timeout": 60,
