@@ -1,0 +1,18 @@
+id: apastra-writing-evals-design-smoke
+name: Apastra Writing Evals Design Smoke
+tier: smoke
+tags:
+  - apastra
+  - promptops
+  - writing-evals
+description: Exercises the Writing evals instruction surface as one narrow seam. The suite uses realistic seed cases because no production traces or human signoff are available in this bootstrap pass; cases should be replaced or extended with real trace/review evidence later. It focuses on evidence-first design, one target source, outcome/step/trace surfaces, cheapest faithful grader selection, starter cases, thresholds, and blind-spot disclosure.
+prompt: apastra-writing-evals-design-v1
+datasets:
+  - apastra-writing-evals-design-smoke
+evaluators:
+  - apastra-writing-evals-design-judge-v1
+model_matrix:
+  - default
+trials: 1
+thresholds:
+  eval_design_discipline: 0.85

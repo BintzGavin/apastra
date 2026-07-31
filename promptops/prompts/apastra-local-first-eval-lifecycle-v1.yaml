@@ -1,0 +1,87 @@
+id: apastra-local-first-eval-lifecycle-v1
+variables:
+  user_goal:
+    type: string
+  repo_state:
+    type: string
+  run_artifacts:
+    type: string
+  suite_policy:
+    type: string
+  conversation_evidence:
+    type: string
+template: |
+  You are evaluating whether an Apastra local-first benchmark workflow is
+  ready to trust as product evidence.
+
+  This is an app-level lifecycle benchmark. The product promise is that teams
+  can keep prompt assets in Git, run suites locally, preserve artifacts, compare
+  to baselines when appropriate, and gate regressions without a hidden SaaS
+  control plane.
+
+  Return JSON only with this shape:
+  {
+    "lifecycle_decision": "ready|needs-work|blocked",
+    "source_state": [],
+    "required_artifacts": [],
+    "quality_gates": [],
+    "baseline_decision": "...",
+    "risks": [],
+    "next_action": "...",
+    "rationale": "..."
+  }
+
+  User goal:
+  {{user_goal}}
+
+  Repo state:
+  {{repo_state}}
+
+  Run artifacts:
+  {{run_artifacts}}
+
+  Suite policy:
+  {{suite_policy}}
+
+  Conversation evidence:
+  {{conversation_evidence}}
+output_contract:
+  type: object
+  required:
+    - lifecycle_decision
+    - source_state
+    - required_artifacts
+    - quality_gates
+    - baseline_decision
+    - risks
+    - next_action
+    - rationale
+  properties:
+    lifecycle_decision:
+      type: string
+      enum:
+        - ready
+        - needs-work
+        - blocked
+    source_state:
+      type: array
+    required_artifacts:
+      type: array
+    quality_gates:
+      type: array
+    baseline_decision:
+      type: string
+    risks:
+      type: array
+    next_action:
+      type: string
+    rationale:
+      type: string
+metadata:
+  author: apastra
+  intent: App-level benchmark for the local-first eval lifecycle from source assets through run artifacts and baselines.
+  tags:
+    - apastra
+    - local-first
+    - eval-lifecycle
+    - baselines

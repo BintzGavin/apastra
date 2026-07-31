@@ -209,39 +209,45 @@ When asked something like "scaffold a complete PromptOps setup for sentiment ana
 
 For rapid iteration, scaffold a single quick eval file instead of four separate files.
 
-When asked to create a quick eval (e.g., "scaffold a quick eval for email classification"):
+When asked to create a quick eval (e.g., "scaffold a quick eval for agent-run readiness"):
 
 Create `promptops/evals/<id>.yaml`:
 
 ```yaml
-id: classify-email-quick
+id: agent-run-readiness
 prompt: |
-  Classify the following email into one of these categories: spam, support, sales, personal.
-  Respond with JSON: {"category": "<category>", "confidence": <0-1>}
+  Evaluate a completed AI-agent implementation run for release readiness.
+  Separate final outcome evidence, critical step evidence, and trace evidence.
+  Respond with JSON only:
+  {
+    "decision": "pass|needs-work",
+    "outcome_evidence": [{"id": "...", "verdict": "pass|fail", "reason": "..."}],
+    "step_evidence": [{"id": "...", "verdict": "pass|fail", "reason": "..."}],
+    "trace_evidence": [{"id": "...", "verdict": "pass|fail", "reason": "..."}],
+    "risks": [],
+    "next_action": "accept|rerun-validation|inspect-trace|revise-output"
+  }
 
-  Email: {{email}}
+  Final response: {{final_response}}
+  Outcome evidence: {{outcome_evidence}}
+  Step evidence: {{step_evidence}}
+  Trace evidence: {{trace_evidence}}
 cases:
-  - id: obvious-spam
+  - case_id: validated-change
+    metadata:
+      evidence_surfaces: [outcome, step, trace]
     inputs:
-      email: "CONGRATULATIONS! You've won $1,000,000! Click here NOW!"
+      final_response: "Updated the quick eval and validation passed."
+      outcome_evidence: "[QE-OUTCOME-001] Changed the requested eval file."
+      step_evidence: "[QE-STEP-001] Ran quick-eval validation after editing promptops/evals/."
+      trace_evidence: "[QE-TRACE-001] validation_status=passed before final response."
     assert:
-      - type: is-json
-      - type: contains
-        value: "spam"
-  - id: support-request
-    inputs:
-      email: "Hi, I'm having trouble logging in. My password reset isn't working."
-    assert:
-      - type: is-json
-      - type: contains-any
-        value: ["support", "help"]
-  - id: personal-email
-    inputs:
-      email: "Hey! Want to grab lunch on Friday?"
-    assert:
-      - type: is-json
-      - type: contains
-        value: "personal"
+      - type: is-valid-json-schema
+        value:
+          type: object
+          required: [decision, outcome_evidence, step_evidence, trace_evidence]
+      - type: contains-all
+        value: ['"outcome_evidence"', '"step_evidence"', '"trace_evidence"', QE-OUTCOME-001, QE-STEP-001, QE-TRACE-001]
 thresholds:
   pass_rate: 1.0
 ```

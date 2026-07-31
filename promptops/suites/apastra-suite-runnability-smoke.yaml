@@ -1,0 +1,19 @@
+id: apastra-suite-runnability-smoke
+name: Apastra Suite Runnability Smoke
+tier: smoke
+tags:
+  - apastra
+  - app-contract
+  - suite-mode
+  - runnability
+description: Checks whether full quartet benchmark assets can actually be loaded by Apastra suite mode, using prior integration failures as regression cases.
+prompt: apastra-suite-runnability-v1
+datasets:
+  - apastra-suite-runnability-smoke
+evaluators:
+  - apastra-suite-runnability-judge-v1
+model_matrix:
+  - default
+trials: 1
+thresholds:
+  suite_runnability_contract: 0.9

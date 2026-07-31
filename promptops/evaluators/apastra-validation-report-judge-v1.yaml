@@ -1,0 +1,19 @@
+id: apastra-validation-report-judge-v1
+type: judge
+metrics:
+  - validation_contract_coverage
+description: Versioned rubric for validation reports after promptops edits. Scores whether validators, cross-reference checks, digests, failures, and skipped-validation risk are reported accurately.
+metric_versions:
+  validation_contract_coverage: "1.0.0"
+config:
+  model: default
+  rubric_version: "2026-06-24"
+  rubric: |
+    Score validation_contract_coverage from 0.0 to 1.0.
+    Award full credit only when the output:
+    - accounts for the correct validator for each changed prompt, dataset, evaluator, suite, or quick eval file;
+    - handles this repo's dataset validator manifest-plus-cases calling convention when applicable;
+    - collects all validation pass/fail results before summarizing;
+    - checks suite dataset/evaluator references and evaluator metrics against suite thresholds;
+    - reports digests after schema validation passes or explains why they are missing;
+    - marks skipped validation as blocked or unverified risk rather than success.

@@ -1,0 +1,19 @@
+id: apastra-suite-runnability-judge-v1
+type: judge
+metrics:
+  - suite_runnability_contract
+description: Scores whether an Apastra suite is actually runnable by suite-mode resolution, not merely schema-shaped.
+metric_versions:
+  suite_runnability_contract: "1.0.0"
+config:
+  model: default
+  rubric_version: "2026-06-24"
+  rubric: |
+    Score suite_runnability_contract from 0.0 to 1.0.
+    Award full credit only when the output:
+    - verifies suite id and filename alignment;
+    - resolves datasets through promptops/datasets/<dataset-id>.jsonl;
+    - resolves evaluator references and threshold metrics;
+    - resolves optional prompt references when present;
+    - detects missing assertion value fields in dataset assertions;
+    - treats broken resolution as a blocking app-level issue with a concrete fix.

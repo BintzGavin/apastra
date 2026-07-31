@@ -1,0 +1,21 @@
+id: apastra-local-first-eval-lifecycle-smoke
+name: Apastra Local-First Eval Lifecycle Smoke
+tier: smoke
+tags:
+  - apastra
+  - app-contract
+  - local-first
+  - baseline
+description: |
+  Benchmarks the core Apastra product lifecycle: Git-native prompt assets,
+  local run artifacts, policy gates, and safe baseline promotion.
+prompt: apastra-local-first-eval-lifecycle-v1
+datasets:
+  - apastra-local-first-eval-lifecycle-smoke
+evaluators:
+  - apastra-local-first-eval-lifecycle-judge-v1
+model_matrix:
+  - default
+trials: 1
+thresholds:
+  local_first_lifecycle_readiness: 0.9

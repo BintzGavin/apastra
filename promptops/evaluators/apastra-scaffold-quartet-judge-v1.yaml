@@ -1,0 +1,20 @@
+id: apastra-scaffold-quartet-judge-v1
+type: judge
+metrics:
+  - quartet_scaffold_readiness
+description: Versioned rubric for Apastra scaffold outputs. Scores whether a settled design brief becomes a complete prompt, dataset, evaluator, and suite plan without touching unrelated files.
+metric_versions:
+  quartet_scaffold_readiness: "1.0.0"
+config:
+  model: default
+  rubric_version: "2026-06-24"
+  rubric: |
+    Score quartet_scaffold_readiness from 0.0 to 1.0.
+    Award full credit only when the output:
+    - refuses or asks for clarification when the minimum design brief is missing;
+    - emits all four quartet assets with stable new IDs and allowed promptops paths;
+    - includes case metadata.source_relpath, case types, and sharp starter cases;
+    - includes model_matrix ["default"], trials 1, suite tier, tags, and thresholds keyed to evaluator metrics;
+    - chooses deterministic or executable checks before judge rubrics when faithful;
+    - keeps dirty or explicitly excluded files out of scope;
+    - includes a validation plan for every changed file type.

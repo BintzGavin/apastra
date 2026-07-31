@@ -1,0 +1,95 @@
+id: apastra-suite-runnability-v1
+variables:
+  suite_yaml:
+    type: string
+  dataset_inventory:
+    type: string
+  evaluator_inventory:
+    type: string
+  prompt_inventory:
+    type: string
+  conversation_evidence:
+    type: string
+template: |
+  You are checking whether an Apastra benchmark suite is runnable by the
+  local-first suite-mode evaluator.
+
+  Treat this as an app-level contract, not a repo-skill review. The user cares
+  that benchmark assets created for the product can actually be loaded,
+  resolved, evaluated, and diagnosed.
+
+  Check these contract points:
+  - The suite file name should match the suite `id`.
+  - Every dataset reference should resolve to `promptops/datasets/<dataset-id>.jsonl`.
+  - Every evaluator reference should resolve to `promptops/evaluators/<evaluator-id>.yaml`.
+  - If the suite declares `prompt`, it should resolve to `promptops/prompts/<prompt-id>.yaml`.
+  - Dataset cases should have unique `case_id` values.
+  - Inline assertions should include both `type` and `value`.
+  - The suite should include `model_matrix`, `trials`, and meaningful thresholds.
+  - Any mismatch should be reported as a runnable-suite issue, not dismissed as
+    a formatting preference.
+
+  Return JSON only with this shape:
+  {
+    "status": "pass|needs-work|blocked",
+    "blocking_issues": [
+      {"issue": "...", "evidence": "...", "fix": "..."}
+    ],
+    "warnings": [],
+    "resolved_assets": {
+      "datasets": [],
+      "evaluators": [],
+      "prompt": null
+    },
+    "runnability_confidence": 0.0,
+    "rationale": "..."
+  }
+
+  Suite YAML:
+  {{suite_yaml}}
+
+  Dataset inventory:
+  {{dataset_inventory}}
+
+  Evaluator inventory:
+  {{evaluator_inventory}}
+
+  Prompt inventory:
+  {{prompt_inventory}}
+
+  Conversation evidence:
+  {{conversation_evidence}}
+output_contract:
+  type: object
+  required:
+    - status
+    - blocking_issues
+    - warnings
+    - resolved_assets
+    - runnability_confidence
+    - rationale
+  properties:
+    status:
+      type: string
+      enum:
+        - pass
+        - needs-work
+        - blocked
+    blocking_issues:
+      type: array
+    warnings:
+      type: array
+    resolved_assets:
+      type: object
+    runnability_confidence:
+      type: number
+    rationale:
+      type: string
+metadata:
+  author: apastra
+  intent: App-level benchmark for whether suite assets can actually run in Apastra suite mode.
+  tags:
+    - apastra
+    - app-contract
+    - suite-mode
+    - runnability

@@ -1,0 +1,20 @@
+id: apastra-writing-evals-design-judge-v1
+type: judge
+metrics:
+  - eval_design_discipline
+description: Versioned rubric for Writing evals outputs. Scores whether the design starts from evidence, targets one instruction surface, separates outcome/step/trace evidence, chooses the cheapest faithful grader, proposes sharp starter cases, and documents seed-case blind spots when no human signoff or production traces are available.
+metric_versions:
+  eval_design_discipline: "1.0.0"
+config:
+  model: default
+  rubric_version: "2026-06-24"
+  rubric: |
+    Score eval_design_discipline from 0.0 to 1.0.
+    Award full credit only when the output:
+    - accounts for available evidence or explicitly labels realistic seed cases as a blind spot;
+    - names one narrow target source and refuses or clarifies multi-surface scope creep;
+    - states a user-visible failure mode;
+    - identifies outcome, step, and trace evidence with one primary surface;
+    - chooses the cheapest faithful grader and explains the tradeoff;
+    - proposes at least one happy path and one edge, adversarial, or negative-control starter case;
+    - states thresholds and known blind spots.

@@ -74,7 +74,7 @@ A prompt spec has:
 Create `promptops/datasets/summarize-smoke.jsonl` — one JSON object per line:
 
 ```jsonl
-{"case_id": "short-article", "inputs": {"text": "The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet and is commonly used for typing practice.", "max_length": "20"}, "expected_outputs": {"should_contain": ["fox", "dog"]}}
+{"case_id": "incident-note", "inputs": {"text": "During the staging deploy, the checkout API returned 500 errors for 12 minutes after a feature flag was enabled. The team rolled back the flag and added a pre-deploy validation check.", "max_length": "25"}, "expected_outputs": {"should_contain": ["checkout", "rollback"]}}
 {"case_id": "technical-paragraph", "inputs": {"text": "Machine learning is a subset of artificial intelligence that enables systems to learn and improve from experience without being explicitly programmed. It focuses on developing algorithms that can access data and use it to learn for themselves.", "max_length": "30"}, "expected_outputs": {"should_contain": ["machine learning", "algorithms"]}}
 {"case_id": "empty-edge-case", "inputs": {"text": "", "max_length": "10"}, "expected_outputs": {"should_contain": []}}
 {"case_id": "long-document", "inputs": {"text": "Climate change refers to long-term shifts in temperatures and weather patterns. These shifts may be natural, but since the 1800s, human activities have been the main driver of climate change, primarily due to the burning of fossil fuels like coal, oil, and gas, which produces heat-trapping gases.", "max_length": "25"}, "expected_outputs": {"should_contain": ["climate"]}}
@@ -140,22 +140,37 @@ Or if you have the eval skill installed, your agent already knows how.
 
 ### Alternative: Quick Eval (Single File)
 
-If you want to skip creating 4 separate files, use a quick eval instead. Create `promptops/evals/summarize-quick.yaml`:
+If you want to skip creating 4 separate files, use a quick eval instead. A strong first quick eval should still separate what happened, which critical step mattered, and what trace evidence proves the path. Create `promptops/evals/agent-run-readiness.yaml`:
 
 ```yaml
-id: summarize-quick
-prompt: "Summarize in {{max_length}} words: {{text}}"
+id: agent-run-readiness
+prompt: |
+  Evaluate a completed AI-agent implementation run for release readiness.
+  Return JSON with decision, outcome_evidence, step_evidence, trace_evidence, risks, and next_action.
+
+  Final response: {{final_response}}
+  Outcome evidence: {{outcome_evidence}}
+  Step evidence: {{step_evidence}}
+  Trace evidence: {{trace_evidence}}
 cases:
-  - id: short
-    inputs: { text: "The fox jumps over the dog.", max_length: "10" }
+  - case_id: validated-promptops-change
+    metadata:
+      evidence_surfaces: [outcome, step, trace]
+    inputs:
+      final_response: "Updated the quick eval and validation passed."
+      outcome_evidence: "[QE-OUTCOME-001] Changed promptops/evals/agent-run-readiness.yaml."
+      step_evidence: "[QE-STEP-001] Ran quick-eval validation after editing promptops/evals/."
+      trace_evidence: "[QE-TRACE-001] validation_status=passed before final response."
     assert:
-      - type: icontains
-        value: "fox"
+      - type: is-valid-json-schema
+        value: { type: object, required: [decision, outcome_evidence, step_evidence, trace_evidence] }
+      - type: contains-all
+        value: ['"outcome_evidence"', '"step_evidence"', '"trace_evidence"', QE-OUTCOME-001, QE-STEP-001, QE-TRACE-001]
 thresholds:
   pass_rate: 1.0
 ```
 
-Then tell your agent: "Run the summarize-quick eval". This is the fastest way to test a prompt.
+Then tell your agent: "Run the agent-run-readiness eval". This is the fastest way to test a prompt while keeping outcome, step, and trace evidence visible.
 
 ## File Structure
 
@@ -170,7 +185,7 @@ promptops/
 ├── evaluators/
 │   └── contains-keywords.yaml  # Scoring rules (optional if using inline assertions)
 ├── evals/
-│   └── summarize-quick.yaml    # Quick eval files (prompt + cases + assertions)
+│   └── agent-run-readiness.yaml # Quick eval files (prompt + cases + assertions)
 ├── suites/
 │   └── summarize-smoke.yaml    # Test configurations
 ├── runs/                       # Run artifacts and trace references

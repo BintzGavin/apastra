@@ -1,0 +1,73 @@
+id: apastra-doc-protocol-drift-v1
+variables:
+  documented_behavior:
+    type: string
+  runtime_behavior:
+    type: string
+  affected_files:
+    type: string
+  observed_failure:
+    type: string
+template: |
+  You are auditing Apastra for app-level drift between documentation,
+  skills, schemas, validators, and runtime behavior.
+
+  The user cares that the product teaches and enforces one coherent protocol.
+  Detect drift that would cause agents to create benchmark assets that validate
+  poorly, fail to run, or fail to be tracked in Git.
+
+  Return JSON only with this shape:
+  {
+    "drift_status": "aligned|drift|unknown",
+    "user_impact": "...",
+    "source_of_truth": "...",
+    "recommended_patch": "...",
+    "regression_case": "...",
+    "evidence": []
+  }
+
+  Documented behavior:
+  {{documented_behavior}}
+
+  Runtime behavior:
+  {{runtime_behavior}}
+
+  Affected files:
+  {{affected_files}}
+
+  Observed failure:
+  {{observed_failure}}
+output_contract:
+  type: object
+  required:
+    - drift_status
+    - user_impact
+    - source_of_truth
+    - recommended_patch
+    - regression_case
+    - evidence
+  properties:
+    drift_status:
+      type: string
+      enum:
+        - aligned
+        - drift
+        - unknown
+    user_impact:
+      type: string
+    source_of_truth:
+      type: string
+    recommended_patch:
+      type: string
+    regression_case:
+      type: string
+    evidence:
+      type: array
+metadata:
+  author: apastra
+  intent: App-level benchmark for keeping Apastra docs, skills, schemas, validators, and runtime behavior aligned.
+  tags:
+    - apastra
+    - protocol
+    - docs
+    - drift

@@ -1,0 +1,83 @@
+id: apastra-scaffold-quartet-v1
+variables:
+  design_brief:
+    type: string
+  repo_constraints:
+    type: string
+  existing_inventory:
+    type: string
+template: |
+  You are turning an approved Apastra eval design brief into a full PromptOps quartet.
+
+  Apply the scaffold method:
+  - Do not scaffold from a vague request. If the design brief lacks target source, failure mode, eval surface, starter cases, grader, or threshold, return a clarification decision.
+  - Emit a prompt spec, dataset JSONL, evaluator YAML, and suite YAML plan with stable kebab-case IDs.
+  - Keep files within the allowed promptops prompt asset paths.
+  - Prefer new IDs. Do not modify unrelated existing files.
+  - Include dataset case metadata.source_relpath for every case.
+  - Prefer deterministic or executable checks before judge rubrics when they faithfully score the behavior.
+  - Include model_matrix ["default"], trials 1, tier, tags, and suite thresholds keyed to evaluator metrics.
+  - Include a validation plan for the changed promptops files.
+
+  Return JSON only with this shape:
+  {
+    "decision": "scaffold|needs-clarification|refuse",
+    "quartet": {
+      "prompt": {"id": "...", "path": "..."},
+      "dataset": {"id": "...", "path": "...", "case_count": 0},
+      "evaluator": {"id": "...", "path": "...", "metrics": []},
+      "suite": {"id": "...", "path": "...", "thresholds": {}}
+    },
+    "case_plan": [
+      {"case_id": "...", "case_type": "happy|ambiguous|adversarial|validation-required", "metadata": {"source_relpath": "..."}}
+    ],
+    "validation_plan": [],
+    "out_of_scope": [],
+    "rationale": "..."
+  }
+
+  Design brief:
+  {{design_brief}}
+
+  Repo constraints:
+  {{repo_constraints}}
+
+  Existing inventory:
+  {{existing_inventory}}
+output_contract:
+  type: object
+  required:
+    - decision
+    - quartet
+    - case_plan
+    - validation_plan
+    - out_of_scope
+    - rationale
+  properties:
+    decision:
+      type: string
+      enum:
+        - scaffold
+        - needs-clarification
+        - refuse
+    quartet:
+      type: object
+    case_plan:
+      type: array
+    validation_plan:
+      type: array
+    out_of_scope:
+      type: array
+    rationale:
+      type: string
+metadata:
+  author: apastra
+  intent: Benchmark full quartet generation from a settled eval design brief.
+  source_relpaths:
+    - scaffold/SKILL.md
+    - docs/api/suite-reference.md
+  tags:
+    - apastra
+    - promptops
+    - scaffold
+    - benchmark

@@ -1,0 +1,18 @@
+id: apastra-harness-artifact-contract-smoke
+name: Apastra Harness Artifact Contract Smoke
+tier: smoke
+tags:
+  - apastra
+  - promptops
+  - harness
+description: Exercises the BYO harness artifact contract as one narrow seam. The suite uses realistic seed cases to check run request in/run artifact out behavior, required artifact files, harness identity versus model identity, reproducible digests, per-case outputs, trace references, and vendor-agnostic BYO compute framing.
+prompt: apastra-harness-artifact-contract-v1
+datasets:
+  - apastra-harness-artifact-contract-smoke
+evaluators:
+  - apastra-harness-artifact-contract-judge-v1
+model_matrix:
+  - default
+trials: 1
+thresholds:
+  harness_artifact_contract_coverage: 0.9

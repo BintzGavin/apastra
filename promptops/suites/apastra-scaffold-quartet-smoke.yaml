@@ -1,0 +1,18 @@
+id: apastra-scaffold-quartet-smoke
+name: Apastra Scaffold Quartet Smoke
+tier: smoke
+tags:
+  - apastra
+  - promptops
+  - scaffold
+description: Exercises the scaffold instruction surface as one narrow seam. The suite uses realistic seed cases to lock down full quartet generation from an already-settled design brief, including new IDs, allowed promptops paths, metadata.source_relpath, model_matrix default, thresholds, validation planning, and ownership guardrails.
+prompt: apastra-scaffold-quartet-v1
+datasets:
+  - apastra-scaffold-quartet-smoke
+evaluators:
+  - apastra-scaffold-quartet-judge-v1
+model_matrix:
+  - default
+trials: 1
+thresholds:
+  quartet_scaffold_readiness: 0.85

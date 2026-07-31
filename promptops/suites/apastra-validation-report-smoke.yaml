@@ -1,0 +1,18 @@
+id: apastra-validation-report-smoke
+name: Apastra Validation Report Smoke
+tier: smoke
+tags:
+  - apastra
+  - promptops
+  - validation
+description: Exercises the validation instruction surface as one narrow seam. The suite uses realistic seed cases to verify that promptops edits produce concrete schema validator results, repo-specific dataset validation handling, cross-reference checks, digest reporting, complete failure collection, and explicit unverified-risk reporting when validation is skipped.
+prompt: apastra-validation-report-v1
+datasets:
+  - apastra-validation-report-smoke
+evaluators:
+  - apastra-validation-report-judge-v1
+model_matrix:
+  - default
+trials: 1
+thresholds:
+  validation_contract_coverage: 0.9

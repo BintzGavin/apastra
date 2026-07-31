@@ -233,6 +233,11 @@ id: agent-run-readiness
 prompt: |
   Evaluate a completed AI-agent implementation run for release readiness.
   Return JSON with decision, outcome_evidence, step_evidence, trace_evidence, risks, and next_action.
+
+  Final response: {{final_response}}
+  Outcome evidence: {{outcome_evidence}}
+  Step evidence: {{step_evidence}}
+  Trace evidence: {{trace_evidence}}
 cases:
   - case_id: validated-promptops-change
     metadata:

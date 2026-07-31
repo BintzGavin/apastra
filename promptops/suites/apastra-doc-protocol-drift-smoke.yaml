@@ -1,0 +1,19 @@
+id: apastra-doc-protocol-drift-smoke
+name: Apastra Docs Protocol Drift Smoke
+tier: smoke
+tags:
+  - apastra
+  - app-contract
+  - docs
+  - protocol-drift
+description: Uses integration failures and repo evidence to catch drift between Apastra's public method, skill guidance, schemas, validators, and suite runtime.
+prompt: apastra-doc-protocol-drift-v1
+datasets:
+  - apastra-doc-protocol-drift-smoke
+evaluators:
+  - apastra-doc-protocol-drift-judge-v1
+model_matrix:
+  - default
+trials: 1
+thresholds:
+  protocol_alignment: 0.9

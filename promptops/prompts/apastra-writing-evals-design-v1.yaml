@@ -1,0 +1,128 @@
+id: apastra-writing-evals-design-v1
+variables:
+  request:
+    type: string
+  evidence_summary:
+    type: string
+  candidate_sources:
+    type: string
+template: |
+  You are designing an Apastra PromptOps benchmark suite from the Writing evals method.
+
+  Follow this order:
+  1. Start from evidence. If production traces, hook feedback, logs, tickets, review comments, or failed outputs are absent, say the suite uses realistic seed cases and name that blind spot.
+  2. Target one narrow instruction surface. If the request spans multiple surfaces, recommend the narrowest coherent surface and ask for clarification before scaffolding.
+  3. Name the user-visible failure mode the suite would catch.
+  4. Choose outcome, step, and trace evidence surfaces. Mark one as primary.
+  5. Choose the cheapest faithful grader: deterministic, executable, trajectory, or judge.
+  6. Propose two starter cases before scaling: one happy path and one edge, adversarial, or negative-control case.
+  7. State thresholds and known blind spots.
+
+  Return JSON only with this shape:
+  {
+    "decision": "ready-to-scaffold|needs-clarification|blocked",
+    "target_source": "...",
+    "failure_mode": "...",
+    "eval_surface": {
+      "primary": "outcome|step|trace",
+      "secondary": ["outcome", "step", "trace"]
+    },
+    "grader": {
+      "type": "deterministic|executable|trajectory|judge",
+      "rationale": "..."
+    },
+    "starter_cases": [
+      {"case_id": "...", "case_type": "happy|ambiguous|adversarial|validation-required", "purpose": "..."}
+    ],
+    "thresholds": {},
+    "outcome_evidence": [],
+    "step_evidence": [],
+    "trace_evidence": [],
+    "blind_spots": [],
+    "rationale": "..."
+  }
+
+  Request:
+  {{request}}
+
+  Evidence summary:
+  {{evidence_summary}}
+
+  Candidate sources:
+  {{candidate_sources}}
+output_contract:
+  type: object
+  required:
+    - decision
+    - target_source
+    - failure_mode
+    - eval_surface
+    - grader
+    - starter_cases
+    - thresholds
+    - blind_spots
+    - rationale
+  properties:
+    decision:
+      type: string
+      enum:
+        - ready-to-scaffold
+        - needs-clarification
+        - blocked
+    target_source:
+      type: string
+    failure_mode:
+      type: string
+    eval_surface:
+      type: object
+      required:
+        - primary
+        - secondary
+      properties:
+        primary:
+          type: string
+          enum:
+            - outcome
+            - step
+            - trace
+        secondary:
+          type: array
+          items:
+            type: string
+    grader:
+      type: object
+      required:
+        - type
+        - rationale
+      properties:
+        type:
+          type: string
+        rationale:
+          type: string
+    starter_cases:
+      type: array
+      minItems: 2
+      items:
+        type: object
+    thresholds:
+      type: object
+    outcome_evidence:
+      type: array
+    step_evidence:
+      type: array
+    trace_evidence:
+      type: array
+    blind_spots:
+      type: array
+    rationale:
+      type: string
+metadata:
+  author: apastra
+  intent: Benchmark the Writing evals design workflow before scaffolding files.
+  source_relpaths:
+    - writing-evals/SKILL.md
+  tags:
+    - apastra
+    - promptops
+    - writing-evals
+    - benchmark

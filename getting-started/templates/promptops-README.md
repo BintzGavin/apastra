@@ -65,9 +65,11 @@ Runs should record **`harness`** in manifests (`claude-code`, `cursor`, `copilot
 
 Follow the **deterministic-first maturity ladder**:
 
-1. Start with deterministic checks (`contains`, `is-json`, `regex`, …).  
-2. Introduce **`llm-rubric` / `similar`** when nuance demands it — **version judge prompts** aggressively.  
-3. Once stable, freeze **baselines** and compare future scorecards (`apastra-baseline` + regression policies).
+1. Start with deterministic checks (`contains`, `is-json`, `regex`, `is-valid-json-schema`, …) against the final **outcome**.
+2. Add **step** checks when the route, tool, handoff, or validation command matters.
+3. Add **trace** checks when retries, required/forbidden calls, failures, costs, or stopping conditions can fail silently.
+4. Introduce **`llm-rubric` / `similar`** when nuance demands it — **version judge prompts** aggressively.
+5. Once stable, freeze **baselines** and compare future scorecards (`apastra-baseline` + regression policies).
 
 Never fork assertion evaluation logic manually — defer to **`python .agent/scripts/apastra/runs/evaluate_assertions.py`** as documented in **`apastra-eval`**.
 

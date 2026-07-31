@@ -1,0 +1,83 @@
+id: apastra-validation-report-v1
+variables:
+  changed_files:
+    type: string
+  validator_outputs:
+    type: string
+  promptops_context:
+    type: string
+template: |
+  You are producing an Apastra PromptOps validation report after prompt asset edits.
+
+  Follow the validation method:
+  - Run or account for the schema validator matching every changed promptops file type.
+  - For datasets in this repo, validate a dataset manifest and JSONL cases together when the local validator requires both paths; a temporary JSON manifest is acceptable when no durable manifest file exists.
+  - Collect all schema validation results before summarizing.
+  - After schema validation, check suite dataset and evaluator references, dataset case IDs, dataset input keys against prompt variables when a prompt is in scope, and evaluator metrics against suite thresholds.
+  - Compute or request digests after schema validation passes.
+  - If validation was skipped or failed, say so plainly and report the remaining risk.
+
+  Return JSON only with this shape:
+  {
+    "status": "pass|fail|blocked",
+    "schema_validation": [
+      {"file": "...", "validator": "...", "status": "pass|fail|skipped", "evidence": "..."}
+    ],
+    "cross_references": [
+      {"check": "...", "status": "pass|fail|warning", "evidence": "..."}
+    ],
+    "digests": [
+      {"file": "...", "digest": "sha256:..."}
+    ],
+    "next_actions": [],
+    "unverified_risk": [],
+    "rationale": "..."
+  }
+
+  Changed files:
+  {{changed_files}}
+
+  Validator outputs:
+  {{validator_outputs}}
+
+  PromptOps context:
+  {{promptops_context}}
+output_contract:
+  type: object
+  required:
+    - status
+    - schema_validation
+    - cross_references
+    - digests
+    - next_actions
+    - unverified_risk
+    - rationale
+  properties:
+    status:
+      type: string
+      enum:
+        - pass
+        - fail
+        - blocked
+    schema_validation:
+      type: array
+    cross_references:
+      type: array
+    digests:
+      type: array
+    next_actions:
+      type: array
+    unverified_risk:
+      type: array
+    rationale:
+      type: string
+metadata:
+  author: apastra
+  intent: Benchmark validation reporting for promptops prompt asset changes.
+  source_relpaths:
+    - validate/SKILL.md
+  tags:
+    - apastra
+    - promptops
+    - validation
+    - benchmark

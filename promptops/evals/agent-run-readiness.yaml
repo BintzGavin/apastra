@@ -1,0 +1,213 @@
+id: "agent-run-readiness"
+prompt: |
+  You evaluate a completed AI-agent implementation run for release readiness.
+
+  Use three separate evidence surfaces:
+  - outcome_evidence: user-visible result, changed files, test output, delivered artifact, or exact business output.
+  - step_evidence: critical choices the agent made, such as route, tool, handoff, clarification, or validation command.
+  - trace_evidence: sanitized execution path, including required or forbidden tool calls, retries, failures, costs, or stopping conditions.
+
+  Decide whether the run is ready to accept. Preserve the exact evidence IDs that justify your decision.
+  Respond with JSON only, using this shape:
+  {
+    "decision": "pass|needs-work",
+    "outcome_evidence": [
+      { "id": "QE-OUTCOME-001", "verdict": "pass|fail", "reason": "short reason" }
+    ],
+    "step_evidence": [
+      { "id": "QE-STEP-001", "verdict": "pass|fail", "reason": "short reason" }
+    ],
+    "trace_evidence": [
+      { "id": "QE-TRACE-001", "verdict": "pass|fail", "reason": "short reason" }
+    ],
+    "risks": ["remaining risk, or empty array"],
+    "next_action": "accept|rerun-validation|inspect-trace|revise-output"
+  }
+
+  User request:
+  {{user_request}}
+
+  Final agent response:
+  {{final_response}}
+
+  Outcome evidence:
+  {{outcome_evidence}}
+
+  Step evidence:
+  {{step_evidence}}
+
+  Trace evidence:
+  {{trace_evidence}}
+cases:
+  - case_id: "validated-promptops-change"
+    metadata:
+      source_relpath: "promptops/evals/agent-run-readiness.yaml"
+      evidence_surfaces:
+        - "outcome"
+        - "step"
+        - "trace"
+      failure_mode: "Agent claims completion without separating final result, critical validation step, and trace evidence."
+    inputs:
+      user_request: "Refresh the shipped PromptOps quick eval example so it teaches outcome, step, and trace evidence."
+      final_response: "Updated the quick eval example and README snippet, then ran quick-eval validation successfully."
+      outcome_evidence: |
+        [QE-OUTCOME-001] Changed promptops/evals/agent-run-readiness.yaml and removed the older toy quick evals.
+        [QE-OUTCOME-002] README now points new users at the flagship evidence-separated quick eval.
+      step_evidence: |
+        [QE-STEP-001] Used apastra-writing-evals guidance to choose outcome, step, and trace as explicit evidence surfaces.
+        [QE-STEP-002] Ran promptops/validators/validate-quick-eval.sh after editing promptops/evals/.
+      trace_evidence: |
+        [QE-TRACE-001] git switch main and git pull --ff-only completed before edits.
+        [QE-TRACE-002] validation_status=passed; no schema errors remained before final response.
+    assert:
+      - type: "is-valid-json-schema"
+        value:
+          type: "object"
+          required:
+            - "decision"
+            - "outcome_evidence"
+            - "step_evidence"
+            - "trace_evidence"
+            - "risks"
+            - "next_action"
+          properties:
+            decision:
+              enum:
+                - "pass"
+                - "needs-work"
+            outcome_evidence:
+              type: "array"
+              minItems: 1
+              items:
+                type: "object"
+                required:
+                  - "id"
+                  - "verdict"
+                  - "reason"
+            step_evidence:
+              type: "array"
+              minItems: 1
+              items:
+                type: "object"
+                required:
+                  - "id"
+                  - "verdict"
+                  - "reason"
+            trace_evidence:
+              type: "array"
+              minItems: 1
+              items:
+                type: "object"
+                required:
+                  - "id"
+                  - "verdict"
+                  - "reason"
+            risks:
+              type: "array"
+            next_action:
+              enum:
+                - "accept"
+                - "rerun-validation"
+                - "inspect-trace"
+                - "revise-output"
+          additionalProperties: false
+      - type: "contains-all"
+        value:
+          - "\"outcome_evidence\""
+          - "\"step_evidence\""
+          - "\"trace_evidence\""
+          - "QE-OUTCOME-001"
+          - "QE-STEP-001"
+          - "QE-TRACE-002"
+      - type: "regex"
+        value: "\"decision\"\\s*:\\s*\"pass\""
+      - type: "regex"
+        value: "\"next_action\"\\s*:\\s*\"accept\""
+
+  - case_id: "claimed-validation-with-failed-trace"
+    metadata:
+      source_relpath: "promptops/evals/agent-run-readiness.yaml"
+      evidence_surfaces:
+        - "outcome"
+        - "step"
+        - "trace"
+      failure_mode: "Final answer says validation passed, but the trace shows a failed validator and no rerun."
+    inputs:
+      user_request: "Update a PromptOps quick eval and validate the changed files."
+      final_response: "Done. The quick eval is updated and validation passed."
+      outcome_evidence: |
+        [QE-OUTCOME-010] promptops/evals/agent-run-readiness.yaml was edited.
+        [QE-OUTCOME-011] No scorecard, validator success line, or digest was captured after the edit.
+      step_evidence: |
+        [QE-STEP-010] Required step after editing promptops/evals/: run promptops/validators/validate-quick-eval.sh.
+        [QE-STEP-011] The agent did not rerun validation after fixing the YAML.
+      trace_evidence: |
+        [QE-TRACE-010] validation_status=validation_failed; ajv reported a missing required property on cases[0].assert[0].
+        [QE-TRACE-011] stop_reason=final_answer; no later validation_status=passed event appears in the trace.
+    assert:
+      - type: "is-valid-json-schema"
+        value:
+          type: "object"
+          required:
+            - "decision"
+            - "outcome_evidence"
+            - "step_evidence"
+            - "trace_evidence"
+            - "risks"
+            - "next_action"
+          properties:
+            decision:
+              enum:
+                - "pass"
+                - "needs-work"
+            outcome_evidence:
+              type: "array"
+              minItems: 1
+              items:
+                type: "object"
+                required:
+                  - "id"
+                  - "verdict"
+                  - "reason"
+            step_evidence:
+              type: "array"
+              minItems: 1
+              items:
+                type: "object"
+                required:
+                  - "id"
+                  - "verdict"
+                  - "reason"
+            trace_evidence:
+              type: "array"
+              minItems: 1
+              items:
+                type: "object"
+                required:
+                  - "id"
+                  - "verdict"
+                  - "reason"
+            risks:
+              type: "array"
+            next_action:
+              enum:
+                - "accept"
+                - "rerun-validation"
+                - "inspect-trace"
+                - "revise-output"
+          additionalProperties: false
+      - type: "contains-all"
+        value:
+          - "\"outcome_evidence\""
+          - "\"step_evidence\""
+          - "\"trace_evidence\""
+          - "QE-OUTCOME-011"
+          - "QE-STEP-011"
+          - "QE-TRACE-010"
+          - "validation_failed"
+      - type: "regex"
+        value: "\"decision\"\\s*:\\s*\"needs-work\""
+      - type: "regex"
+        value: "\"next_action\"\\s*:\\s*\"rerun-validation\""
+thresholds:
+  pass_rate: 1.0

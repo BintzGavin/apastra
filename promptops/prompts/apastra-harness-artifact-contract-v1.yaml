@@ -1,0 +1,90 @@
+id: apastra-harness-artifact-contract-v1
+variables:
+  run_context:
+    type: string
+  harness_output_summary:
+    type: string
+  contract_excerpt:
+    type: string
+template: |
+  You are reviewing an Apastra BYO harness run for the run request in, run artifact out contract.
+
+  Check the harness output against the contract:
+  - It must bind the revision reference to a reproducible prompt package digest.
+  - It must execute suites across the requested datasets, model matrix, trials, budgets, and timeouts.
+  - It must apply evaluators and emit consistent metrics.
+  - It must populate run_manifest.json, scorecard.json, cases.jsonl, artifact_refs.json, and failures.json when structured failures occur.
+  - run_manifest.json must include a harness identifier distinct from model IDs, harness version, model IDs, sampling configuration, timestamps, environment metadata, resolved digests, and status.
+  - cases.jsonl must include stable case IDs, per-trial outputs, evaluation outputs, and raw artifact pointers.
+  - artifact_refs.json must include URIs and digests for raw traces, text, logs, or related artifacts.
+  - Keep the review vendor-agnostic and file-contract focused.
+
+  Return JSON only with this shape:
+  {
+    "decision": "pass|needs-work|blocked",
+    "required_artifacts": [
+      {"artifact": "run_manifest.json|scorecard.json|cases.jsonl|artifact_refs.json|failures.json", "status": "present|missing|not-required", "evidence": "..."}
+    ],
+    "missing_or_invalid": [],
+    "environment_metadata": {"status": "pass|fail", "evidence": "..."},
+    "trace_artifacts": {"status": "pass|fail|not-applicable", "evidence": "..."},
+    "outcome_evidence": [],
+    "step_evidence": [],
+    "trace_evidence": [],
+    "rationale": "..."
+  }
+
+  Run context:
+  {{run_context}}
+
+  Harness output summary:
+  {{harness_output_summary}}
+
+  Contract excerpt:
+  {{contract_excerpt}}
+output_contract:
+  type: object
+  required:
+    - decision
+    - required_artifacts
+    - missing_or_invalid
+    - environment_metadata
+    - trace_artifacts
+    - outcome_evidence
+    - step_evidence
+    - trace_evidence
+    - rationale
+  properties:
+    decision:
+      type: string
+      enum:
+        - pass
+        - needs-work
+        - blocked
+    required_artifacts:
+      type: array
+    missing_or_invalid:
+      type: array
+    environment_metadata:
+      type: object
+    trace_artifacts:
+      type: object
+    outcome_evidence:
+      type: array
+    step_evidence:
+      type: array
+    trace_evidence:
+      type: array
+    rationale:
+      type: string
+metadata:
+  author: apastra
+  intent: Benchmark BYO harness artifact contract review.
+  source_relpaths:
+    - docs/guides/getting-started.md
+    - docs/guides/harness-contract.md
+  tags:
+    - apastra
+    - promptops
+    - harness
+    - benchmark
