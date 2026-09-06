@@ -7,7 +7,8 @@
   "properties": {
     "case_id": {
       "type": "string",
-      "description": "Stable identifier for the specific test case."
+      "description": "Stable identifier for the specific test case.",
+      "minLength": 1
     },
     "inputs": {
       "type": "object",
@@ -32,9 +33,39 @@
           },
           "value": {
             "description": "The value or condition the output is asserted against."
+          },
+          "threshold": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
           }
         },
-        "required": ["type", "value"]
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "is-json",
+                    "not-is-json",
+                    "contains-json",
+                    "not-contains-json"
+                  ]
+                }
+              }
+            },
+            "then": {},
+            "else": {
+              "required": [
+                "value"
+              ]
+            }
+          }
+        ]
       }
     },
     "metadata": {

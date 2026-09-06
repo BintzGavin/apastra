@@ -59,6 +59,7 @@ echo "🔧 Installing apastra..."
 # Copy skill directories (anything containing a SKILL.md)
 mkdir -p "$SKILLS_DEST"
 cp "$PACKAGE_DIR/SKILL.md" "$SKILLS_DEST/" 2>/dev/null || true
+cp -r "$PACKAGE_DIR/docs" "$SKILLS_DEST/"
 for dir in "$PACKAGE_DIR"/*/; do
   name="$(basename "$dir")"
   if [ -f "$dir/SKILL.md" ]; then
@@ -72,6 +73,7 @@ cp -r "$PACKAGE_DIR/promptops/runtime"    "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/request_log" "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/runs"       "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/resolver"   "$SCRIPTS_DEST/"
+cp -r "$PACKAGE_DIR/promptops/manifests"  "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/schemas"    "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/validators" "$SCRIPTS_DEST/"
 cp -r "$PACKAGE_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"

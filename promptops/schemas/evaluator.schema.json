@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://promptops.apastra.com/schemas/evaluator.schema.json",
+  "$id": "apastra-evaluator-v2",
   "title": "Evaluator Specification",
   "description": "Scoring definition (deterministic checks, schema validation, rubric/judge config)",
   "type": "object",
@@ -12,7 +12,12 @@
     "type": {
       "type": "string",
       "description": "The type of the evaluator.",
-      "enum": ["deterministic", "schema", "judge", "human"]
+      "enum": [
+        "deterministic",
+        "schema",
+        "judge",
+        "human"
+      ]
     },
     "metrics": {
       "type": "array",
@@ -20,7 +25,8 @@
       "items": {
         "type": "string"
       },
-      "minItems": 1
+      "minItems": 1,
+      "uniqueItems": true
     },
     "description": {
       "type": "string",
@@ -38,7 +44,45 @@
       "type": "string",
       "description": "SHA-256 hash of the evaluator content.",
       "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "metric_definitions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction": {
+            "enum": [
+              "higher_is_better",
+              "lower_is_better"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "version",
+          "direction",
+          "unit"
+        ],
+        "additionalProperties": false
+      }
     }
   },
-  "required": ["id", "type", "metrics"]
+  "required": [
+    "id",
+    "type",
+    "metrics",
+    "metric_definitions"
+  ],
+  "additionalProperties": false
 }

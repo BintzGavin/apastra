@@ -1,19 +1,2 @@
-#!/bin/bash
-set -e
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-. "$SCRIPT_DIR/lib/ajv.sh"
-
-INPUT_FILE="$1"
-
-if [ -z "$INPUT_FILE" ]; then
-  echo "Usage: $0 <regression-policy.json|yaml>"
-  exit 1
-fi
-
-if [ ! -f "$INPUT_FILE" ]; then
-  echo "File not found: $INPUT_FILE"
-  exit 1
-fi
-
-apastra_ajv_validate promptops/schemas/regression-policy.schema.json "$INPUT_FILE" --spec=draft2020 --strict=false
+#!/usr/bin/env bash
+exec bash "$(dirname "$0")/lib/validate.sh" regression-policy "$@"

@@ -101,7 +101,6 @@ class PackagedResolver:
             elif ref.startswith('github-release:'):
                 import urllib.request
                 import urllib.error
-                import json
                 # format: github-release:owner/repo@tag
                 ref_path = ref[15:]
                 if '@' not in ref_path or '/' not in ref_path:
@@ -182,31 +181,16 @@ class PackagedResolver:
 
         raise RuntimeError(f"Unresolved remote asset: {ref}")
 
-    def get_trusted_public_key(self, artifact_type):
-        import os
-        return os.environ.get('TRUSTED_PUBLIC_KEY', 'default_test_key')
-
     def verify_signature(self, asset):
-        """Verify signature metadata."""
-        signature = asset.get('metadata', {}).get('signature')
-        if not signature:
-            return True
+        """Unsigned artifacts are unverified; signed artifacts require a verifier."""
+        if "signature" in asset.get("metadata", {}):
+            raise NotImplementedError("Artifact signature verification is not supported")
+        return False
 
-        if signature == 'invalid':
-            raise RuntimeError("Signature verification failed")
-
-        artifact_type = asset.get('type')
-        public_key = self.get_trusted_public_key(artifact_type)
-        package_digest = asset.get('package_digest')
-
-        if package_digest and signature:
-            if signature == "invalid":
-                raise RuntimeError("Cryptographic signature verification failed")
-
-        return True
-
-    def resolve(self, prompt_id, ref):
+    def resolve(self, prompt_id, ref, require_verification=False):
         """Resolves a prompt package from a digest or URL."""
+        if require_verification:
+            raise NotImplementedError("Required signature verification is not implemented")
         if (prompt_id, ref) in self.cache:
             return self.cache[(prompt_id, ref)]
 
@@ -214,19 +198,20 @@ class PackagedResolver:
             raise RuntimeError(f"Failed to resolve packaged artifact '{prompt_id}' with ref '{ref}'")
 
         if ref.startswith('sha256:'):
-            if not re.match(r"^sha256:[a-f0-9]{64}$", ref) and 'invalid' not in ref and ref != "sha256:0000000000000000000000000000000000000000000000000000000000000000":
+            if not re.fullmatch(r"sha256:[a-f0-9]{64}", ref):
                 raise ValueError(f"Invalid digest format: {ref}")
 
             asset = self._fetch_remote_asset(ref)
+            self.verify_signature(asset)
+            from promptops.runtime.digest import compute_digest_from_dict
+            if compute_digest_from_dict(asset) != ref:
+                raise ValueError("Package content does not match its requested digest")
 
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            schema_path = os.path.abspath(os.path.join(current_dir, "..", "schemas", "prompt-package.schema.json"))
-            with open(schema_path, 'r') as sf:
-                schema = json.load(sf)
+            from promptops.runtime.suite import validate_asset
             try:
-                jsonschema.validate(instance=asset, schema=schema)
-            except jsonschema.exceptions.ValidationError as e:
-                raise RuntimeError(f"Prompt package failed schema validation: {e.message}")
+                validate_asset(asset, "prompt-package")
+            except ValueError as error:
+                raise RuntimeError("Prompt package failed schema validation") from error
 
             for spec in asset.get('specs', []):
                 if isinstance(spec, dict) and spec.get('id') == prompt_id:

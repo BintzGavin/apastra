@@ -1,14 +1,62 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-run-case-v1",
+  "$id": "apastra-run-case-v2",
   "title": "Run Case Specification",
   "description": "Schema for a single case in cases.jsonl.",
   "type": "object",
   "properties": {
-    "case_id": { "type": "string", "description": "Case ID" },
-    "per_trial_outputs": { "type": "array", "description": "Per trial outputs" },
-    "evaluator_outputs": { "type": "array", "description": "Evaluator outputs" },
-    "pointers": { "type": "object", "description": "Pointers to raw text/traces" }
+    "case_id": {
+      "type": "string",
+      "description": "Case ID",
+      "minLength": 1
+    },
+    "per_trial_outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "trial_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "output": {},
+          "evaluator_outputs": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "trial_id",
+          "output",
+          "evaluator_outputs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "evaluator_outputs": {
+      "type": "array",
+      "description": "Evaluator outputs"
+    },
+    "pointers": {
+      "type": "object",
+      "description": "Pointers to raw text/traces"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1
+    }
   },
-  "required": ["case_id", "per_trial_outputs", "evaluator_outputs", "pointers"]
+  "required": [
+    "case_id",
+    "model_id",
+    "per_trial_outputs"
+  ],
+  "additionalProperties": false
 }

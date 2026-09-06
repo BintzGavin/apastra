@@ -1,143 +1,80 @@
-import json
+"""Compare complete measured runs while retaining their evidence."""
+
+from copy import deepcopy
+from pathlib import Path
+import math
+import time
 import uuid
-import os
-import yaml
-import subprocess
-import tempfile
-import jsonschema
-import sys
-import shutil
 
-def load_suite(suite_id):
-    path = os.path.join("promptops", "suites", f"{suite_id}.yaml")
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Suite not found: {path}")
-    with open(path, "r") as f:
-        return yaml.safe_load(f)
+from promptops.runtime.evidence import EvidenceError, finite_number
+from promptops.runtime.digest import load_asset
+from promptops.runtime.runner import run
+from promptops.runtime.suite import build_request, validate_asset
 
-def construct_run_request(suite, model):
-    import hashlib
-    prompt_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    dataset_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    evaluator_d = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-    if 'prompt' in suite:
-        prompt_d = "sha256:" + hashlib.sha256(str(suite['prompt']).encode('utf-8')).hexdigest()
-    if 'datasets' in suite:
-        dataset_d = "sha256:" + hashlib.sha256(str(suite['datasets']).encode('utf-8')).hexdigest()
-    if 'evaluators' in suite:
-        evaluator_d = "sha256:" + hashlib.sha256(str(suite['evaluators']).encode('utf-8')).hexdigest()
 
-    return {
-        "suite_id": suite["id"],
-        "revision_ref": suite.get("digest", "sha256:" + hashlib.sha256(suite['id'].encode('utf-8')).hexdigest()),
-        "model_matrix": [model],
-        "evaluator_refs": suite.get("evaluators", []),
-        "prompt_digest": prompt_d,
-        "dataset_digest": dataset_d,
-        "evaluator_digest": evaluator_d,
-        "harness_version": "v1.0.0"
-    }
+def invoke_harness(run_request, adapter_config=None, out_dir=None, execution_timeout=None):
+    if not adapter_config:
+        raise ValueError("An evaluation adapter is required")
+    result = run(run_request, adapter_config, out_dir, execution_timeout=execution_timeout)
+    if result["status"] != "pass":
+        raise EvidenceError(f"Harness evaluation did not pass: {result['status']}")
+    return result
 
-def invoke_harness(run_req, adapter_config=None, out_dir=None):
-    if adapter_config is not None:
-        if not os.path.exists(adapter_config):
-            raise FileNotFoundError(f"Adapter config not found: {adapter_config}")
-
-        fd, req_path = tempfile.mkstemp(suffix=".json")
-        try:
-            with os.fdopen(fd, "w") as f:
-                json.dump(run_req, f)
-
-            runner_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "runner.py")
-            result = subprocess.run([sys.executable, runner_path, req_path, adapter_config, out_dir], check=False)
-            if result.returncode != 0:
-                print(f"Warning: Harness execution failed for model {run_req['model_matrix'][0]} with code {result.returncode}")
-        finally:
-            os.remove(req_path)
-    else:
-        # Generate mock scorecard for test
-        scorecard = {
-            "id": str(uuid.uuid4()),
-            "suite_id": run_req["suite_id"],
-            "baselines": [],
-            "models": run_req["model_matrix"],
-            "metrics": {
-                run_req["model_matrix"][0]: {
-                    "exact_match_score": 0.85,
-                    "latency_ms": 150
-                }
-            }
-        }
-        with open(os.path.join(out_dir, "scorecard.json"), "w") as f:
-            json.dump(scorecard, f)
-
-    return out_dir
-
-def load_scorecard(out_dir):
-    path = os.path.join(out_dir, "scorecard.json")
-    if not os.path.exists(path):
-        return None
-    try:
-        with open(path, "r") as f:
-            return json.load(f)
-    except json.JSONDecodeError as e:
-        print(f"Warning: Failed to decode scorecard at {path}: {e}")
-        return None
 
 def aggregate_scorecards(suite_id, individual_scorecards):
-    baselines = []
-    models = list(individual_scorecards.keys())
+    if not individual_scorecards:
+        raise EvidenceError("A comparison requires measured results")
     metrics = {}
-    cost_tradeoff = {}
-    quality_tradeoff = {}
-    latency_tradeoff = {}
+    tradeoffs = {"cost": {}, "quality": {}, "latency": {}}
+    for model, card in individual_scorecards.items():
+        values = card.get("normalized_metrics", {})
+        if not values or any(not finite_number(value) for value in values.values()):
+            raise EvidenceError("Comparison metrics must be nonempty finite measurements")
+        metrics[model] = values
+        for metric, axis in (("cost_usd", "cost"), ("exact_match_score", "quality"), ("latency_ms", "latency")):
+            if metric in values:
+                tradeoffs[axis][model] = values[metric]
+    if len({tuple(sorted(values)) for values in metrics.values()}) != 1:
+        raise EvidenceError("Compared runs must have the same metric set")
+    return {"suite_id": suite_id, "models": list(metrics), "metrics": metrics, "comparison_tradeoffs": tradeoffs}
 
-    for model, sc in individual_scorecards.items():
-        if not sc:
-            continue
-        model_metrics = sc.get("metrics", {}).get(model, {})
-        metrics[model] = model_metrics
-        cost_tradeoff[model] = model_metrics.get("cost_usd", 0.0)
-        quality_tradeoff[model] = model_metrics.get("exact_match_score", 0.0)
-        latency_tradeoff[model] = model_metrics.get("latency_ms", 0.0)
 
-    return {
-        "id": str(uuid.uuid4()),
-        "suite_id": suite_id,
-        "baselines": baselines,
-        "models": models,
-        "metrics": metrics,
-        "comparison_tradeoffs": {
-            "cost": cost_tradeoff,
-            "quality": quality_tradeoff,
-            "latency": latency_tradeoff
-        }
-    }
-
-def run_comparison(suite_id, models=None, adapter_config=None):
-    suite = load_suite(suite_id)
-    models_to_run = models or suite.get("model_matrix", ["default"])
-    individual_scorecards = {}
-
-    for model in models_to_run:
-        run_req = construct_run_request(suite, model)
-        out_dir = tempfile.mkdtemp()
+def run_comparison(suite_id, models=None, adapter_config=None, output_dir=None):
+    if not adapter_config:
+        raise ValueError("An evaluation adapter is required")
+    request = build_request(suite_id, models, harness_version=load_asset(adapter_config).get("version"))
+    directory = Path(output_dir or Path("promptops/runs") / f"comparison-{uuid.uuid4().hex}").resolve()
+    directory.mkdir(parents=True, exist_ok=True)
+    if any(directory.iterdir()):
+        raise EvidenceError("Comparison output directory must be empty")
+    scorecards, runs = {}, {}
+    costs = {}
+    started = time.monotonic()
+    time_budget = request.get("budgets", {}).get("time")
+    cost_budget = request.get("budgets", {}).get("cost_budget")
+    for index, model in enumerate(request["model_matrix"], 1):
+        selected = deepcopy(request)
+        selected["model_matrix"] = [model]
+        destination = directory / f"model-{index}"
         try:
-            invoke_harness(run_req, adapter_config, out_dir)
-            sc = load_scorecard(out_dir)
-            if sc:
-                individual_scorecards[model] = sc
-            else:
-                print(f"Warning: No valid scorecard generated for model {model}")
-        finally:
-            shutil.rmtree(out_dir, ignore_errors=True)
-
-    comparison_scorecard = aggregate_scorecards(suite["id"], individual_scorecards)
-
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    schema_path = os.path.abspath(os.path.join(current_dir, "..", "schemas", "comparison-scorecard.schema.json"))
-    with open(schema_path, "r") as sf:
-        schema = json.load(sf)
-    jsonschema.validate(instance=comparison_scorecard, schema=schema)
-
-    return comparison_scorecard
+            remaining = None if time_budget is None else time_budget - (time.monotonic() - started)
+            decision = invoke_harness(selected, adapter_config, destination, execution_timeout=remaining)
+        except (OSError, ValueError) as error:
+            raise EvidenceError(f"Comparison failed for {model}; evidence retained at {directory}: {error}") from error
+        scorecards[model] = {"normalized_metrics": decision["metrics"]}
+        runs[model] = str(destination)
+        manifest = load_asset(destination / "run_manifest.json")
+        if "total_cost" in manifest:
+            costs[model] = manifest["total_cost"]
+        if cost_budget is not None and (model not in costs or math.fsum(costs.values()) > cost_budget):
+            raise EvidenceError(f"Comparison exceeds the shared suite cost budget; evidence retained at {directory}")
+        if time_budget is not None and time.monotonic() - started > time_budget:
+            raise EvidenceError(f"Comparison exceeds the shared suite time budget; evidence retained at {directory}")
+    result = {"status": "pass", **aggregate_scorecards(request["suite_id"], scorecards), "runs": runs}
+    result["comparison_tradeoffs"]["cost"].update(costs)
+    if len(costs) == len(runs):
+        result["total_cost"] = math.fsum(costs.values())
+    validate_asset(result, "comparison-scorecard")
+    import json
+    (directory / "comparison.json").write_text(json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    return result

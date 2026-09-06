@@ -22,6 +22,8 @@ if str(IMPORT_ROOT) not in sys.path:
 
 
 def main() -> int:
+    if PACKAGE_NAME != "promptops":
+        sys.modules.setdefault("promptops", __import__(PACKAGE_NAME))
     if len(sys.argv) > 1 and sys.argv[1] == "request-log":
         module = __import__(f"{PACKAGE_NAME}.request_log.cli", fromlist=["main"])
 

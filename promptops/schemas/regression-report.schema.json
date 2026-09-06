@@ -1,16 +1,59 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-regression-report-v1",
+  "$id": "apastra-regression-report-v2",
   "title": "Regression Report Specification",
   "description": "Schema for a regression report output.",
   "type": "object",
   "properties": {
-    "cost_delta": { "type": "number", "description": "The difference in total cost between the candidate and the baseline" },
-    "status": { "type": "string", "description": "Pass, fail, warning status" },
-    "baseline_ref": { "type": "string", "description": "The reference digest or ID" },
-    "candidate_ref": { "type": "string", "description": "The digest or ID being tested" },
-    "cost_delta": { "type": "number", "description": "The difference in total cost between the candidate and the baseline" },
-    "evidence": { "type": "array", "description": "A list of metric deltas and comparisons", "items": { "type": "object" } }
+    "cost_delta": {
+      "type": "number",
+      "description": "The difference in total cost between the candidate and the baseline"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "warning"
+      ]
+    },
+    "baseline_ref": {
+      "type": "string",
+      "description": "The reference digest or ID"
+    },
+    "candidate_ref": {
+      "type": "string",
+      "description": "The digest or ID being tested"
+    },
+    "evidence": {
+      "type": "array",
+      "description": "A list of metric deltas and comparisons",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 1
+    },
+    "source_revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "suite_id": {
+      "type": "string"
+    },
+    "policy_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
   },
-  "required": ["status", "baseline_ref", "candidate_ref", "evidence"]
+  "required": [
+    "status",
+    "baseline_ref",
+    "candidate_ref",
+    "evidence",
+    "source_revision",
+    "suite_id",
+    "policy_digest"
+  ],
+  "additionalProperties": false
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://apastra.com/schemas/promptops/suite.schema.json",
+  "$id": "apastra-suite-v2",
   "title": "Benchmark Suite Specification",
   "description": "Benchmark suite declaring datasets, evaluators, model/provider matrix, trials, budgets, and thresholds.",
   "type": "object",
@@ -15,7 +15,12 @@
     },
     "tier": {
       "type": "string",
-      "enum": ["smoke", "regression", "full", "release-candidate"],
+      "enum": [
+        "smoke",
+        "regression",
+        "full",
+        "release-candidate"
+      ],
       "default": "smoke",
       "description": "Execution tier of the suite."
     },
@@ -53,7 +58,8 @@
       "items": {
         "type": "string"
       },
-      "minItems": 1
+      "minItems": 1,
+      "uniqueItems": true
     },
     "trials": {
       "type": "integer",
@@ -67,13 +73,16 @@
       "properties": {
         "cost_budget": {
           "type": "number",
-          "description": "Maximum allowed cost in dollars."
+          "description": "Maximum allowed cost in dollars.",
+          "minimum": 0
         },
         "time": {
           "type": "integer",
-          "description": "Maximum allowed execution time in seconds."
+          "description": "Maximum allowed execution time in seconds.",
+          "minimum": 1
         }
-      }
+      },
+      "additionalProperties": false
     },
     "thresholds": {
       "type": "object",
@@ -81,6 +90,26 @@
       "additionalProperties": {
         "type": "number"
       }
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sampling_config": {
+      "type": "object"
+    },
+    "timeouts": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "additionalProperties": false
     }
   },
   "required": [
@@ -88,6 +117,8 @@
     "name",
     "datasets",
     "evaluators",
-    "model_matrix"
-  ]
+    "model_matrix",
+    "prompt"
+  ],
+  "additionalProperties": false
 }

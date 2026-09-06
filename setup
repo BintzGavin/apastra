@@ -88,6 +88,7 @@ cp -r "$SKILL_DIR/promptops/runtime"    "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/request_log" "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/runs"       "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/resolver"   "$SCRIPTS_DEST/"
+cp -r "$SKILL_DIR/promptops/manifests"  "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/schemas"    "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/validators" "$SCRIPTS_DEST/"
 cp -r "$SKILL_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"
@@ -153,7 +154,7 @@ cd "$SKILL_DIR"
 for entry in * .[!.]*; do
   [ -e "$entry" ] || continue
   case "$entry" in
-    setup|SKILL.md|LICENSE|README.md)
+    setup|SKILL.md|LICENSE|README.md|docs)
       # Keep these top-level files
       ;;
     .git|.github|.gitignore|.gitattributes)

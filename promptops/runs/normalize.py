@@ -1,92 +1,70 @@
+"""Aggregate complete per-trial evidence with declared metric semantics."""
+
+import argparse
+from copy import deepcopy
 import json
+import math
+from pathlib import Path
 import sys
 
-def normalize_scorecard(cases):
-    if not cases:
-        return {
-            "normalized_metrics": {},
-            "metric_definitions": {},
-            "variance": {}
-        }
+if __package__ in (None, ""):
+    import importlib
+    package = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(package.parent))
+    sys.modules.setdefault("promptops", importlib.import_module(package.name))
 
-    metrics_sum = {}
-    metrics_count = {}
-    metrics_values = {}
-    metric_versions = {}
-    metrics_by_case = {}
+from promptops.runtime.digest import load_asset
+from promptops.runtime.evidence import EvidenceError, finite_number
+from promptops.runtime.suite import validate_asset
 
+
+def normalize_scorecard(cases, definitions=None):
+    if not cases or not definitions:
+        raise EvidenceError("Normalization requires cases and explicit metric definitions")
+    values = {name: [] for name in definitions}
+    seen = set()
+    trial_count = None
     for case in cases:
-        case_id = case.get("case_id", "unknown")
-        for eval_output in case.get("evaluator_outputs", []):
-            extracted_version = eval_output.get("metric_version", "1.0.0")
-            for key, value in eval_output.items():
-                if key == "metric_version":
-                    continue
-                if isinstance(value, (int, float)):
-                    metrics_sum[key] = metrics_sum.get(key, 0) + value
-                    metrics_count[key] = metrics_count.get(key, 0) + 1
-                    if key not in metrics_values:
-                        metrics_values[key] = []
-                        metric_versions[key] = extracted_version
-                        metrics_by_case[key] = {}
-                    metrics_values[key].append(value)
-
-                    if case_id not in metrics_by_case[key]:
-                        metrics_by_case[key][case_id] = []
-                    metrics_by_case[key][case_id].append(value)
-
-    normalized_metrics = {}
-    metric_definitions = {}
-    variance = {}
-    flake_rates = {}
-
-    for key, count in metrics_count.items():
-        mean = metrics_sum[key] / count
-        normalized_metrics[key] = mean
-
-        var = sum((x - mean) ** 2 for x in metrics_values[key]) / count
-        variance[key] = var
-        metric_definitions[key] = {
-            "type": "float",
-            "range": [0, 1] if normalized_metrics[key] <= 1.0 else [0, None],
-            "version": metric_versions.get(key, "1.0.0")
-        }
-
-        flaky_cases = 0
-        total_unique_cases = len(metrics_by_case[key])
-        if total_unique_cases > 0:
-            for case_id, values in metrics_by_case[key].items():
-                if max(values) - min(values) > 1e-6:
-                    flaky_cases += 1
-            flake_rates[key] = flaky_cases / total_unique_cases
-        else:
-            flake_rates[key] = 0.0
-
-    return {
-        "normalized_metrics": normalized_metrics,
-        "metric_definitions": metric_definitions,
-        "variance": variance,
-        "flake_rates": flake_rates
+        validate_asset(case, "run-case")
+        key = (case["model_id"], case["case_id"])
+        if key in seen:
+            raise EvidenceError("Duplicate model/case evidence")
+        seen.add(key)
+        outputs = case["per_trial_outputs"]
+        trial_count = len(outputs) if trial_count is None else trial_count
+        if not trial_count or len(outputs) != trial_count or {row["trial_id"] for row in outputs} != set(range(1, trial_count + 1)):
+            raise EvidenceError("Incomplete or duplicate trial coverage")
+        for row in outputs:
+            scores = row["evaluator_outputs"]
+            if set(scores) != set(definitions) or any(not finite_number(value) for value in scores.values()):
+                raise EvidenceError("Every trial must supply every declared finite metric")
+            for name, value in scores.items():
+                values[name].append(value)
+    means = {name: math.fsum(scores) / len(scores) for name, scores in values.items()}
+    result = {
+        "normalized_metrics": means,
+        "metric_definitions": deepcopy(definitions),
+        "variance": {name: math.fsum((value - means[name]) ** 2 for value in scores) / len(scores) for name, scores in values.items()},
     }
+    validate_asset(result, "scorecard")
+    return result
+
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python normalize.py <cases.jsonl> <output_scorecard.json>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("cases")
+    parser.add_argument("definitions", help="JSON metric-definition map")
+    parser.add_argument("output")
+    args = parser.parse_args()
+    try:
+        result = normalize_scorecard(load_asset(args.cases), load_asset(args.definitions))
+        with Path(args.output).open("x", encoding="utf-8") as handle:
+            json.dump(result, handle, indent=2, allow_nan=False)
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        print(json.dumps({"status": "error", "reason": str(error)}), file=sys.stderr)
+        return 1
+    return 0
 
-    cases_path = sys.argv[1]
-    scorecard_path = sys.argv[2]
-
-    cases = []
-    with open(cases_path, 'r') as f:
-        for line in f:
-            if line.strip():
-                cases.append(json.loads(line))
-
-    scorecard = normalize_scorecard(cases)
-
-    with open(scorecard_path, 'w') as f:
-        json.dump(scorecard, f, indent=2)
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

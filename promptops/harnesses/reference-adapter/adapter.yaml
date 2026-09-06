@@ -1,6 +1,7 @@
 id: reference-adapter
 type: harness_adapter
-capabilities: ["run_suite"]
+capabilities: []
+execution_mode: fixture
 entrypoint: "python3 promptops/harnesses/reference-adapter/run.py"
-description: "Reference BYO harness adapter"
+description: "Retired synthetic adapter; measured evaluation is unsupported"
 env_vars: []

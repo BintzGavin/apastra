@@ -1,25 +1,61 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-scorecard-v1",
+  "$id": "apastra-scorecard-v2",
   "title": "Scorecard Specification",
   "description": "Schema for the run artifact scorecard.",
   "type": "object",
   "properties": {
-    "normalized_metrics": { "type": "object", "description": "Mapping of metric names to their values" },
+    "normalized_metrics": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
     "metric_definitions": {
       "type": "object",
-      "description": "Metadata like metric version and description",
+      "minProperties": 1,
       "additionalProperties": {
         "type": "object",
         "properties": {
-          "version": { "type": "string" },
-          "description": { "type": "string" }
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction": {
+            "enum": [
+              "higher_is_better",
+              "lower_is_better"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          }
         },
-        "required": ["version"]
+        "required": [
+          "version",
+          "direction",
+          "unit"
+        ],
+        "additionalProperties": false
       }
     },
-    "variance": { "type": "object", "description": "Optional variance details if trials were run" },
-    "flake_rates": { "type": "object", "description": "Mapping of metric names to their flake rates" }
+    "variance": {
+      "type": "object",
+      "description": "Optional variance details if trials were run"
+    },
+    "flake_rates": {
+      "type": "object",
+      "description": "Mapping of metric names to their flake rates"
+    },
+    "extensions": {
+      "type": "object"
+    }
   },
-  "required": ["normalized_metrics", "metric_definitions"]
+  "required": [
+    "normalized_metrics",
+    "metric_definitions"
+  ],
+  "additionalProperties": false
 }

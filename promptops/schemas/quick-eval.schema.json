@@ -7,7 +7,8 @@
   "properties": {
     "id": {
       "type": "string",
-      "description": "Stable identifier for the quick eval."
+      "description": "Stable identifier for the quick eval.",
+      "minLength": 1
     },
     "prompt": {
       "type": "string",
@@ -18,12 +19,20 @@
       "description": "Array of dataset cases with inputs and inline asserts.",
       "items": {
         "$ref": "https://promptops.apastra.com/schemas/dataset-case.schema.json"
-      }
+      },
+      "minItems": 1
     },
     "thresholds": {
       "type": "object",
       "description": "Optional thresholds for the evaluation.",
-      "additionalProperties": true
+      "additionalProperties": false,
+      "properties": {
+        "pass_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
     }
   },
   "required": [

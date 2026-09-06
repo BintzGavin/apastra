@@ -1,15 +1,47 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-baseline-v1",
+  "$id": "apastra-baseline-v2",
   "title": "Baseline Specification",
   "description": "Schema definition for baseline references to unblock Evaluation.",
   "type": "object",
   "properties": {
-    "baseline_id": { "type": "string", "description": "The baseline ID" },
-    "run_digest": { "type": "string", "description": "The run digest" },
-    "created_at": { "type": "string", "format": "date-time", "description": "The creation time" },
-    "metadata": { "type": "object", "description": "The metadata" },
-    "description": { "type": "string", "description": "The description" }
+    "baseline_id": {
+      "type": "string",
+      "description": "The baseline ID"
+    },
+    "run_digest": {
+      "type": "string",
+      "description": "The run digest",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The creation time"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "The metadata"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description"
+    },
+    "run_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "suite_id": {
+      "type": "string",
+      "minLength": 1
+    }
   },
-  "required": ["baseline_id", "run_digest", "created_at"]
+  "required": [
+    "baseline_id",
+    "run_digest",
+    "created_at",
+    "run_path",
+    "suite_id"
+  ],
+  "additionalProperties": false
 }

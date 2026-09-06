@@ -3,8 +3,6 @@ type: judge
 metrics:
   - protocol_alignment
 description: Scores whether an output correctly identifies app-level drift between Apastra docs, schemas, validators, and runtime behavior.
-metric_versions:
-  protocol_alignment: "1.0.0"
 config:
   model: default
   rubric_version: "2026-06-24"
@@ -16,3 +14,8 @@ config:
     - identifies a credible source of truth or reconciliation path;
     - recommends a concrete docs, schema, validator, or runtime patch;
     - turns the observed failure into a regression case.
+metric_definitions:
+  protocol_alignment:
+    version: "1.0.0"
+    direction: higher_is_better
+    unit: ratio

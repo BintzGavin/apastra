@@ -1,6 +1,6 @@
 {
   "name": "apastra",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "PromptOps — version, evaluate, and ship AI prompts as disciplined software assets",
   "keywords": [
     "apastra",
@@ -46,6 +46,7 @@
     "trace/**/*",
     "docs/specs/provider-request-logging.md",
     "docs/guides/provider-request-logging.md",
+    "docs/guides/evaluation-trust.md",
     "validate/**/*",
     "promptops/runtime/**/*.py",
     "promptops/request_log/**/*.py",
@@ -54,6 +55,7 @@
     "promptops/runs/**/*.py",
     "promptops/runs/**/*.sh",
     "promptops/resolver/**/*.py",
+    "promptops/manifests/**/*.py",
     "promptops/schemas/**/*.json",
     "promptops/schemas/**/*.md",
     "promptops/validators/**/*.sh",
