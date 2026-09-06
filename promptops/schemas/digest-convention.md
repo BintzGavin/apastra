@@ -1,30 +1,60 @@
-# Content Digest Convention
+# Content digest convention, version 2
 
-## Objective
-Define the "Content-digest convention" spec detailing how content digests are computed and represented for apastra PromptOps assets. This unlocks Git-first resolution, durable inputs for harness adapters (EVALUATION), and provenance metadata for tracking artifacts across environments.
+The Python implementation in `runtime/digest.py` is the normative implementation.
+The CLI, shell digest helper, suite resolution, MCP, and comparison use it.
 
-## Convention Specs
+Structured files contain JSON-compatible values. JSON and YAML keys must be
+unique strings. Reject nonfinite numbers and YAML values that cannot be
+represented in JSON, including timestamp objects.
 
-### Canonicalization Rules
-1. **JSON Files (`.json`)**:
-   - The JSON content must be canonicalized.
-   - Keys must be sorted alphabetically.
-   - All insignificant whitespace (spaces, tabs, newlines outside of string values) must be removed.
-   - Canonicalization should be equivalent to running `jq -cSM . <file>`.
+Canonicalize objects by sorting keys and removing insignificant whitespace.
+Encode strings as UTF-8 without ASCII escaping. Integral floating-point values,
+including negative zero, canonicalize as integers. Booleans remain distinct from
+numbers. Other finite floats use Python's JSON numeric representation.
 
-2. **YAML Files (`.yaml`, `.yml`)**:
-   - The YAML content must first be converted into a JSON object.
-   - Once converted, the resulting JSON must follow the same canonicalization rules as JSON files.
+For JSONL, canonicalize each nonblank line and join the rows using exactly one
+newline between rows, without a trailing newline. Row order is significant.
+An empty file has a digest but is not a valid evaluation dataset.
 
-3. **JSONL Files (`.jsonl`)**:
-   - For JSON Lines files, each individual line must be parsed as JSON and canonicalized independently according to the JSON canonicalization rules.
-   - The canonicalized lines must then be rejoined using exactly one newline character (`\n`) between each line.
-   - Ensure the final joined string is used for digest computation.
+Compute SHA-256 over the canonical UTF-8 bytes and prefix its lowercase hex
+representation with `sha256:`.
 
-### Digest Computation
-- The canonicalized string representation of the file (JSON, YAML converted to JSON, or JSONL) is hashed using the **SHA-256** algorithm.
-- The resulting digest must be formatted as a string with the `sha256:` prefix followed by the hexadecimal representation of the hash.
-  - Example: `sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+For multiple datasets or evaluators, first compute each individual digest in
+the order declared by the suite. A single asset retains its individual digest.
+For two or more assets, hash the canonical object:
 
-### Storage
-- The `digest` field in all schemas (such as dataset manifests, run artifacts, etc.) must store this exact formatted string.
+```json
+{"domain":"apastra:asset-group:v2","kind":"datasets","digests":["sha256:...","sha256:..."]}
+```
+
+Use `evaluators` as the kind for evaluator groups. This domain and ordered digest
+list preserve group boundaries. Embedded dataset snapshots use the same JSONL
+rule as source files.
+
+## Fixed vector
+
+These documents have identical canonical bytes, `{"a":1,"b":"é"}`:
+
+```json
+{"b":"é","a":1.0}
+```
+
+```yaml
+a: 1
+b: é
+```
+
+Expected digest:
+
+```text
+sha256:09ad9fd2fb648cb2f62141215828ea00a62c299db05d20aa9ade2f527a301cc6
+```
+
+Version 1 examples based on raw YAML, ASCII-escaped JSON, or reference names
+cannot be treated as version 2 evidence. Retain them as historical records and
+recompute identities when producing a new run.
+
+Dataset manifest digests identify the corresponding cases file. Package identity
+is computed externally over the complete package document, which avoids a
+self-referential digest requirement. Extra artifact references identify raw file
+bytes rather than structured semantic content.

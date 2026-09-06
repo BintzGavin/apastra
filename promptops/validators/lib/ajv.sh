@@ -5,64 +5,67 @@ apastra_ajv_validate() {
   local data_file="$2"
   shift 2
 
-  local target_file="$data_file"
-  local tmp_dir=""
-  local tmp_file=""
+  # Resolve installed dependencies from the schema's package, not the caller's
+  # working directory. Validation must never install tools or contact npm.
+  local ajv_entrypoint=""
+  local ajv_command=()
+  if ajv_entrypoint="$(node -e '
+const path = require("path");
+try {
+  process.stdout.write(require.resolve("ajv-cli/dist/index.js", {
+    paths: [path.dirname(path.resolve(process.argv[1]))]
+  }));
+} catch {
+  process.exit(1);
+}
+' "$schema_file" 2>/dev/null)"; then
+    ajv_command=(node "$ajv_entrypoint")
+  elif command -v ajv >/dev/null 2>&1; then
+    ajv_entrypoint="$(command -v ajv)"
+    ajv_command=(ajv)
+  else
+    echo "Error: AJV is not installed. Install Apastra's npm dependencies or provide ajv-cli on the executable search path." >&2
+    return 1
+  fi
 
-  case "$data_file" in
-    *.yaml|*.yml)
-      tmp_dir="$(mktemp -d "${TMPDIR:-/tmp}/apastra-ajv.XXXXXX")"
-      tmp_file="$tmp_dir/data.json"
-      if command -v node >/dev/null 2>&1 && node -e 'require("js-yaml")' >/dev/null 2>&1; then
-        if ! node - "$data_file" "$tmp_file" <<'JS'
+  local tmp_dir
+  tmp_dir="$(mktemp -d "/tmp/apastra-ajv.XXXXXX")"
+  local target_file="$tmp_dir/data.json"
+  if ! node - "$schema_file" "$data_file" "$target_file" "$ajv_entrypoint" <<'JS'
 const fs = require("fs");
-const yaml = require("js-yaml");
-
-const source = process.argv[2];
-const target = process.argv[3];
-const data = yaml.load(fs.readFileSync(source, "utf8"));
-fs.writeFileSync(target, JSON.stringify(data));
+const path = require("path");
+const [schema, source, target, entrypoint] = process.argv.slice(2);
+try {
+  const search = [path.dirname(path.resolve(schema)), path.dirname(fs.realpathSync(entrypoint))];
+  const yaml = require(require.resolve("js-yaml", { paths: search }));
+  const sourceText = fs.readFileSync(source, "utf8");
+  if (source.endsWith(".json")) JSON.parse(sourceText); // Strict JSON syntax.
+  // YAML's parser also rejects duplicate keys in JSON objects.
+  const data = yaml.load(sourceText, { schema: yaml.CORE_SCHEMA });
+  const active = new Set();
+  function validate(value) {
+    if (typeof value === "number" && !Number.isFinite(value)) throw new Error("Nonfinite value");
+    if (value === undefined) throw new Error("Empty document");
+    if (value && typeof value === "object") {
+      if (active.has(value)) throw new Error("Cyclic data");
+      active.add(value);
+      for (const child of Object.values(value)) validate(child);
+      active.delete(value);
+    }
+  }
+  validate(data);
+  fs.writeFileSync(target, JSON.stringify(data));
+} catch {
+  process.stderr.write("Invalid asset: malformed data, duplicate keys, nonfinite values, or unavailable parser.\\n");
+  process.exit(1);
+}
 JS
-        then
-          rm -rf "$tmp_dir"
-          return 1
-        fi
-      elif command -v ruby >/dev/null 2>&1; then
-        if ! ruby -ryaml -rjson -e 'data = YAML.safe_load(File.read(ARGV[0]), permitted_classes: [], permitted_symbols: [], aliases: true); File.write(ARGV[1], JSON.generate(data))' "$data_file" "$tmp_file"; then
-          rm -rf "$tmp_dir"
-          return 1
-        fi
-      elif python3 -c 'import yaml' >/dev/null 2>&1; then
-        if ! python3 - "$data_file" "$tmp_file" <<'PY'
-import json
-import sys
-from pathlib import Path
-
-import yaml
-
-source = Path(sys.argv[1])
-target = Path(sys.argv[2])
-with source.open("r", encoding="utf-8") as handle:
-    data = yaml.safe_load(handle)
-with target.open("w", encoding="utf-8") as handle:
-    json.dump(data, handle, separators=(",", ":"))
-PY
-        then
-          rm -rf "$tmp_dir"
-          return 1
-        fi
-      else
-        echo "Error: YAML validation requires one YAML parser: node with js-yaml, ruby, or python with pyyaml." >&2
-        echo "Install pyyaml manually, or rerun Apastra setup with APASTRA_INSTALL_PY_DEPS=1." >&2
-        rm -rf "$tmp_dir"
-        return 1
-      fi
-      target_file="$tmp_file"
-      ;;
-  esac
-
-  npx ajv-cli validate -s "$schema_file" -d "$target_file" "$@"
-  local status=$?
-  rm -rf "$tmp_dir"
+  then
+    rm -r -- "$tmp_dir"
+    return 1
+  fi
+  local status=0
+  "${ajv_command[@]}" validate -s "$schema_file" -d "$target_file" "$@" || status=$?
+  rm -r -- "$tmp_dir"
   return "$status"
 }

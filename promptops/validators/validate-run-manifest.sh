@@ -1,3 +1,2 @@
-#!/bin/bash
-FILE=$1
-npx --yes ajv-cli validate -s promptops/schemas/run-manifest.schema.json -d "$FILE" --spec=draft2020 --strict=false
+#!/usr/bin/env bash
+exec bash "$(dirname "$0")/lib/validate.sh" run-manifest "$@"

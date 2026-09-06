@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://apastra.com/schemas/harness-adapter.schema.json",
+  "$id": "apastra-harness-adapter-v2",
   "type": "object",
   "properties": {
     "id": {
@@ -14,7 +14,9 @@
     },
     "capabilities": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "List of capabilities (e.g., ['run_suite', 'trials', 'model_matrix'])."
     },
     "entrypoint": {
@@ -27,13 +29,36 @@
     },
     "env_vars": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Required environment variables (e.g., 'OPENAI_API_KEY')."
     },
     "digest": {
       "type": "string",
       "description": "Content digest stored inline."
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "execution_mode": {
+      "enum": [
+        "measured",
+        "fixture",
+        "dry_run"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
     }
   },
-  "required": ["id", "type", "capabilities", "entrypoint"]
+  "required": [
+    "id",
+    "type",
+    "capabilities",
+    "entrypoint",
+    "execution_mode"
+  ],
+  "additionalProperties": false
 }

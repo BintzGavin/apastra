@@ -1,26 +1,77 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-regression-policy-v1",
+  "$id": "apastra-regression-policy-v2",
   "title": "Regression Policy Specification",
   "description": "Schema for regression policy definition.",
   "type": "object",
   "properties": {
-    "baseline": { "type": "string", "description": "Baseline reference rules, e.g., 'prod current'" },
+    "baseline": {
+      "type": "string",
+      "description": "Baseline reference rules, e.g., 'prod current'"
+    },
     "rules": {
       "type": "array",
       "description": "List of per-metric rules",
       "items": {
         "type": "object",
         "properties": {
-          "metric": { "type": "string", "description": "Metric to evaluate" },
-          "floor": { "type": "number", "description": "Absolute floor value" },
-          "allowed_delta": { "type": "number", "description": "Allowed delta from baseline" },
-          "direction": { "type": "string", "description": "Directionality, e.g., 'higher_is_better'" },
-          "severity": { "type": "string", "enum": ["blocker", "warning"], "description": "Severity of rule failure" }
+          "metric": {
+            "type": "string",
+            "description": "Metric to evaluate",
+            "minLength": 1
+          },
+          "floor": {
+            "type": "number",
+            "description": "Absolute floor value"
+          },
+          "allowed_delta": {
+            "type": "number",
+            "description": "Allowed delta from baseline",
+            "minimum": 0
+          },
+          "direction": {
+            "enum": [
+              "higher_is_better",
+              "lower_is_better"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "warning"
+            ],
+            "description": "Severity of rule failure"
+          }
         },
-        "required": ["metric", "severity"]
-      }
+        "required": [
+          "metric",
+          "severity",
+          "direction"
+        ],
+        "additionalProperties": false,
+        "anyOf": [
+          {
+            "required": [
+              "floor"
+            ]
+          },
+          {
+            "required": [
+              "allowed_delta"
+            ]
+          }
+        ]
+      },
+      "minItems": 1
+    },
+    "extensions": {
+      "type": "object"
     }
   },
-  "required": ["baseline", "rules"]
+  "required": [
+    "baseline",
+    "rules"
+  ],
+  "additionalProperties": false
 }

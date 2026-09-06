@@ -1,11 +1,12 @@
 import json
-import os
 import shutil
 import stat
 import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+
+from tests.test_installed_contract import isolated_environment
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -17,6 +18,7 @@ class RequestLogPackagingTests(unittest.TestCase):
             result = subprocess.run(
                 ["npm", "pack", "--json", "--ignore-scripts", "--pack-destination", temp_dir],
                 cwd=REPO_ROOT,
+                env=isolated_environment(temp_dir),
                 text=True,
                 capture_output=True,
                 check=True,
@@ -41,7 +43,7 @@ class RequestLogPackagingTests(unittest.TestCase):
                 ignore=shutil.ignore_patterns(".git", ".venv", "node_modules", "*.tgz", "__pycache__", "*.pyc"),
             )
             environment = {
-                **os.environ,
+                **isolated_environment(temp_dir),
                 "APASTRA_ASSUME_YES": "1",
                 "APASTRA_NO_SKILL_SYMLINKS": "1",
                 "APASTRA_NO_AGENT_HOOKS": "1",
@@ -52,6 +54,7 @@ class RequestLogPackagingTests(unittest.TestCase):
             result = subprocess.run(
                 [str(cli), "request-log", "status", "--config-dir", str(project / "config"), "--json"],
                 cwd=project,
+                env=environment,
                 text=True,
                 capture_output=True,
                 check=True,
@@ -60,6 +63,11 @@ class RequestLogPackagingTests(unittest.TestCase):
             self.assertFalse(payload["enabled"])
             self.assertTrue(stat.S_IMODE(cli.stat().st_mode) & stat.S_IXUSR)
             self.assertTrue((project / ".agent" / "scripts" / "apastra" / "request_log" / "gateway.py").is_file())
+            result = subprocess.run(
+                [str(cli), "--help"], cwd=project, env=environment,
+                text=True, capture_output=True, timeout=15,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_source_cli_is_executable(self):
         self.assertTrue(stat.S_IMODE((REPO_ROOT / "bin" / "apastra").stat().st_mode) & stat.S_IXUSR)

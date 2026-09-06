@@ -18,6 +18,10 @@
 etc.
 
 
+## Trust-remediation candidate
+
+The local runtime requires complete measured evidence and an explicit adapter. These repairs run locally and do not require GitHub Actions. The existing CI templates still need a separate repair before they can enforce evaluation results. See the [execution contract and migration notes](docs/guides/evaluation-trust.md).
+
 ## Quick Start
 
 **Installing Apastra into your repo with help from a coding agent?**
@@ -31,9 +35,9 @@ Have no idea what an eval even is but know you're supposed to care? Don't worry,
 
 ## Eval the prompts and skills your coding agents depend on
 
-Apastra is a lightweight way to run evals locally. It's language agnostic and works in any codebase. It includes a slim python runtime for deterministic checks, some skills, and some schemas defined in markdown, that's it. (Go version planned)
+Apastra is a Git-native EvalOps protocol and skill pack. Your chosen harness executes the target and evaluator. Apastra resolves the inputs and validates retained evidence before applying quality criteria. It fits beside execution frameworks through an explicit adapter and keeps the resulting records in your repository.
 
-Use it to test your agents' skills, review flows, planning flows, or any other AI instructions that affect how work gets done.
+Use it to test the instructions your agents depend on, including skills and review workflows.
 
 The hook layer makes that evidence easier to see while the agent is working. Codex and Claude Code hooks surface context, validation feedback, and safety signals when an agent reads a prompt, runs a tool, edits a file, or tries to stop. Relevant PromptOps changes also produce append-only validation receipts under `promptops/runs/hook-validations/`. Those receipts contain file paths, status, timestamps, and counts, but never prompt text, commands, file contents, or validation values.
 
@@ -143,15 +147,13 @@ Ask your agent:
 
 > "Use the apastra-eval skill to run the summarize-smoke suite"
 
-The agent loads the suite, renders the prompt for each case, calls the model, scores the outputs, and reports a scorecard.
+Configure a measured executable adapter before running the suite:
 
-```text
-Suite: summarize-smoke
-Status: PASS
-
-Metrics:
-  keyword_recall: 0.85 (threshold: 0.60)
+```bash
+.agent/bin/apastra eval summarize-smoke --adapter promptops/harnesses/local.yaml --output-dir promptops/runs/candidate
 ```
+
+The adapter executes each requested target and evaluator. A passing result requires complete evidence whose measured scores satisfy the suite's criteria.
 
 ### 4. Save a baseline
 
@@ -159,9 +161,9 @@ Ask your agent:
 
 > "Use the apastra-baseline skill to set the current results as the baseline"
 
-Future evals can now detect regressions automatically when prompt quality drops below the accepted threshold.
+The baseline command admits a complete passing run under an immutable name. Compare a later candidate against that run using `gate --baseline ... --policy ... --adapter ...`.
 
-That is enough to start using apastra locally. CI and release automation are available when you want them, but they are not required to get value from the repo.
+Local evaluation and admission work without CI. Automated release remains blocked until the legacy workflows are repaired and verified.
 
 > **Note for AI agents:** This README is the quickstart. For the full architectural model and design principles, start with `[docs/vision.md](docs/vision.md)`.
 
@@ -212,6 +214,8 @@ A scoring rule — deterministic checks, schema validation, or AI judge grading.
 id: keyword-check
 type: deterministic
 metrics: [keyword_recall]
+metric_definitions:
+  keyword_recall: {version: "1.0.0", direction: higher_is_better, unit: ratio}
 ```
 
 ### Inline Assertions (Quick Mode)
@@ -265,6 +269,7 @@ A test configuration that ties everything together: which datasets, which evalua
 ```yaml
 id: smoke
 name: Smoke Suite
+prompt: summarize-v1
 datasets: [summarize-smoke]
 evaluators: [keyword-check]
 model_matrix: [default]
@@ -273,7 +278,7 @@ thresholds: { keyword_recall: 0.6 }
 
 ### Baseline & Regression
 
-A baseline is a saved scorecard from a passing run. Future evals compare against it. If quality drops beyond allowed thresholds, it's a **regression**.
+A baseline records an admitted passing run and its content identity. Regression compares compatible runs under explicit rules, including metric versions and units.
 
 ## File Structure
 
@@ -302,7 +307,7 @@ derived-index/
 
 ## How the Agent Runs Evals
 
-Your IDE agent **is** the harness. When you ask it to run an eval:
+An IDE agent can provide execution through a declared adapter. The same runner admits evidence from CLI and MCP entry points:
 
 ```mermaid
 flowchart TD
@@ -329,39 +334,13 @@ When you're ready for more structure, apastra supports:
 
 ### GitHub Actions CI
 
-Apastra ships three tiers of workflows. Pick the tier that matches your governance needs.
+The local `ci-gate` command checks the tested revision and its resolved inputs.
+It supports explicit execution and previously produced evidence. Missing or
+stale evidence fails admission.
 
-**Basic CI (2 workflows)** — a minimal PR-gate + release pair for teams upgrading from local-first:
-
-
-| Workflow             | Trigger                     | What it does                                                     |
-| -------------------- | --------------------------- | ---------------------------------------------------------------- |
-| `prompt-eval.yml`    | PRs touching `promptops/`** | Delegates to `regression-gate.yml` to block merges on regression |
-| `prompt-release.yml` | Tag push                    | Delegates to `immutable-release.yml` to cut an immutable release |
-
-
-**Full CI (6 workflows)** — fine-grained control for teams needing explicit promotion, delivery, and approval records:
-
-
-| Workflow                | Trigger                  | What it does                                     |
-| ----------------------- | ------------------------ | ------------------------------------------------ |
-| `regression-gate.yml`   | Pull requests            | Blocks merge if regression is detected           |
-| `auto-merge.yml`        | CI pass                  | Auto-merges PRs that pass all checks             |
-| `promote.yml`           | Manual / release publish | Creates append-only promotion records            |
-| `deliver.yml`           | After promotion          | Syncs approved versions to delivery targets      |
-| `immutable-release.yml` | Tag push                 | Creates immutable GitHub releases                |
-| `record-approval.yml`   | Manual                   | Appends a machine-readable approval state record |
-
-
-**Canary + hygiene (3 workflows)** — post-ship drift detection and supply-chain basics:
-
-
-| Workflow                     | Trigger                                                        | What it does                                                          |
-| ---------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `canary-drift-detection.yml` | Hourly cron + manual                                           | Runs canary suites against prod baselines; catches silent model drift |
-| `schema-validation.yml`      | PRs touching `promptops/prompts/`** or `promptops/datasets/`** | Validates protocol files against JSON schemas                         |
-| `secret-scan.yml`            | PRs touching `promptops/prompts/`** or `promptops/datasets/`** | Scans prompts and datasets for leaked secrets                         |
-
+The repository workflows and templates still need the approved remediation.
+Their current presence does not establish safe merge gating or automated delivery.
+Do not copy the templates into another project until that work is complete.
 
 ### Git-First Consumption
 
@@ -372,6 +351,7 @@ Apps can pin prompts by commit SHA, tag, or semver — npm and pip both support 
 version: "1.0"
 prompts:
   summarize-v1:
+    id: summarize-v1
     pin: "abc123"  # commit SHA, tag, or semver
 ```
 
@@ -407,12 +387,12 @@ Shipped skills are listed under **Included Skills** above (including `apastra-re
 | Capability                                                         | Status                          | Today / next                                                                                                                                                                                                                   |
 | ------------------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `**apastra-audit`** — scan for hardcoded prompts and "prompt debt" | Partial — runtime               | `promptops/runtime/audit.py`, CLI `audit`, `audit-shim.sh`. **Missing:** dedicated `apastra-audit` skill.                                                                                                                      |
-| **Drift / canaries** — scheduled checks for post-ship model drift  | Partial — runtime + CI scaffold | `promptops/runtime/canary.py`, canary schemas and samples, drift report helpers, `canary-drift-detection.yml`. **Missing:** reliable alerting/rollback wiring in workflows.                                                    |
-| `**apastra-compare`** — multi-model runs and comparison scorecards | Partial — runtime               | `promptops/runtime/compare.py`, CLI `compare`, comparison scorecard schema. **Missing:** polished UX and promotion-candidate flows.                                                                                            |
-| `**apastra-review`** — strict prompt-spec review                   | Partial — CLI helper            | `apastra-review` entry point in `promptops/runtime/cli.py`. **Missing:** skill pack directory and guided agent workflow.                                                                                                       |
-| `**apastra-optimize`** — token/cost-oriented prompt tightening     | Partial — CLI helper            | `apastra-optimize` entry point in `promptops/runtime/cli.py`. **Missing:** skill pack directory and guided agent workflow.                                                                                                     |
+| **Drift / canaries** | Unsupported | The runtime returns unsupported. Scheduling, alert delivery, and rollback remain unimplemented. |
+| **Multi-model comparison** | Local runtime | An explicit adapter executes every requested model. Complete evidence and shared suite budgets are required before a comparison is persisted. |
+| **Automated prompt review** | Not implemented | The legacy `apastra-review` CLI command reports unsupported analysis. Use the Apastra skill workflows for review. |
+| **Automated prompt optimization** | Not implemented | The legacy `apastra-optimize` CLI command reports unsupported analysis. Use the Apastra skill workflows for optimization. |
 | **Community / starter packs**                                      | Partial — artifacts             | Starter pack JSON under `derived-index/starter-packs/` (summarization, extraction, classification, code review). **Missing:** curated installable repos and public registry story.                                             |
-| **Observability adapters**                                         | Partial — schema + bridge       | Adapter schema, `promptops/delivery/observability.yaml`, `promptops/runtime/observability.py`, `promptops/runs/emit_observability.py` (Langfuse / OpenTelemetry shapes). **Missing:** production-grade emission to real sinks. |
+| **Observability adapters** | Schema-only | Delivery commands return unsupported and emit no receipts. |
 
 
 ## Planned Refinements
@@ -420,7 +400,7 @@ Shipped skills are listed under **Included Skills** above (including `apastra-re
 - **Simplified minimal mode** — auto-detected when few prompt specs exist; default layout trimmed to `prompts/`, `evals/`, and `baselines/` only
 - **Project-level config** — **shipped at runtime:** upward-discovered `promptops.config.yaml` / `.yml` with schema and default application; documentation of precedence rules still improving
 - **MCP integration** — **partial:** MCP server and tools in `promptops/runtime/mcp_server.py` (e.g. list suites, run evaluation); richer MCP definitions inside prompt specs and packaging remain roadmap
-- **First-class cost tracking** — total cost in every run manifest, cost delta in regression reports, optional `cost_budget` on suites
+- **Measured cost**: cost budgets require a valid measurement. Optional cost fields remain absent when unmeasured.
 - **Hook receipt conversion**: provider request-body logging and redacted lifecycle validation receipts are shipped; converting selected receipts into eval cases without copying full transcripts remains roadmap work
 
 ## License

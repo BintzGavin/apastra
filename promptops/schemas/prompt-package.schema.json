@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-prompt-package-v1",
+  "$id": "apastra-prompt-package-v2",
   "title": "Prompt Package Manifest",
   "description": "Immutable bundle of prompt specs with a manifest and content digest.",
   "type": "object",
@@ -12,15 +12,23 @@
     "digest": {
       "type": "string",
       "pattern": "^sha256:[a-f0-9]{64}$",
-      "description": "Content digest of the package, computed over canonicalized JSON using SHA-256."
+      "description": "Legacy annotation only. Canonical package identity is computed externally over the complete document."
     },
     "specs": {
       "type": "array",
       "description": "Array of included prompt spec IDs/digests.",
       "items": {
-        "type": "string",
-        "description": "Prompt spec ID or digest."
-      }
+        "oneOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "$ref": "https://promptops.apastra.com/schemas/prompt-spec.schema.json"
+          }
+        ]
+      },
+      "minItems": 1
     },
     "version": {
       "type": "string",
@@ -59,7 +67,6 @@
   },
   "required": [
     "id",
-    "digest",
     "specs"
   ],
   "dependentRequired": {

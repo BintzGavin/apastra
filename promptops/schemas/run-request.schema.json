@@ -1,32 +1,218 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-run-request-v2",
+  "$id": "apastra-run-request-v3",
   "title": "Run Request Specification",
   "description": "Schema for a minimal BYO harness run request. Captures all metadata required for reproducible replay of an evaluation run.",
   "type": "object",
   "properties": {
-    "suite_id": { "type": "string", "description": "The benchmark suite ID" },
-    "revision_ref": { "type": "string", "description": "The revision ref (SHA/tag/digest)" },
-    "model_matrix": { "type": "array", "items": { "type": "string" }, "description": "Model matrix — list of model IDs to evaluate against" },
-    "evaluator_refs": { "type": "array", "items": { "type": "string" }, "description": "Evaluator references — list of evaluator IDs to use" },
-    "prompt_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "Content digest of the resolved prompt spec (sha256:<hex>)" },
-    "dataset_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "Content digest of the dataset used (sha256:<hex>)" },
-    "evaluator_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$", "description": "Content digest of the evaluator config used (sha256:<hex>)" },
-    "harness_version": { "type": "string", "description": "Version identifier of the harness adapter used for execution" },
+    "suite_id": {
+      "type": "string",
+      "description": "The benchmark suite ID"
+    },
+    "revision_ref": {
+      "type": "string",
+      "description": "The revision ref (SHA/tag/digest)"
+    },
+    "model_matrix": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Model matrix — list of model IDs to evaluate against",
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "evaluator_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Evaluator references — list of evaluator IDs to use"
+    },
+    "prompt_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Content digest of the resolved prompt spec (sha256:<hex>)"
+    },
+    "dataset_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Content digest of the dataset used (sha256:<hex>)"
+    },
+    "evaluator_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Content digest of the evaluator config used (sha256:<hex>)"
+    },
+    "harness_version": {
+      "type": "string",
+      "description": "Version identifier of the harness adapter used for execution"
+    },
     "sampling_config": {
       "type": "object",
       "description": "Sampling configuration for the model (temperature, top_p, etc.)",
       "properties": {
-        "temperature": { "type": "number", "description": "Sampling temperature" },
-        "top_p": { "type": "number", "description": "Nucleus sampling parameter" },
-        "max_tokens": { "type": "integer", "description": "Maximum tokens to generate" },
-        "seed": { "type": "integer", "description": "Random seed for reproducibility" }
+        "temperature": {
+          "type": "number",
+          "description": "Sampling temperature"
+        },
+        "top_p": {
+          "type": "number",
+          "description": "Nucleus sampling parameter"
+        },
+        "max_tokens": {
+          "type": "integer",
+          "description": "Maximum tokens to generate"
+        },
+        "seed": {
+          "type": "integer",
+          "description": "Random seed for reproducibility"
+        }
       }
     },
-    "trials": { "type": "integer", "description": "Number of trials per case for variance measurement" },
-    "budgets": { "type": "object", "description": "Budget limits (e.g., cost_budget in USD)" },
-    "timeouts": { "type": "object", "description": "Timeout limits per case and per run" },
-    "artifact_backend_config": { "type": "object", "description": "Configuration for the artifact storage backend" }
+    "trials": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "budgets": {
+      "type": "object",
+      "properties": {
+        "cost_budget": {
+          "type": "number",
+          "minimum": 0
+        },
+        "time": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "timeouts": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact_backend_config": {
+      "type": "object",
+      "description": "Configuration for the artifact storage backend"
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "suite_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "requested_revision": {
+      "type": "string"
+    },
+    "source_revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expected_case_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required_metrics": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction": {
+            "enum": [
+              "higher_is_better",
+              "lower_is_better"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "version",
+          "direction",
+          "unit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "prompt": {
+      "type": "object"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object"
+      }
+    },
+    "evaluators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object"
+      }
+    },
+    "suite": {
+      "type": "object"
+    },
+    "datasets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object"
+        }
+      }
+    }
   },
-  "required": ["suite_id", "revision_ref", "model_matrix", "evaluator_refs", "prompt_digest", "dataset_digest", "evaluator_digest", "harness_version"]
+  "required": [
+    "suite_id",
+    "revision_ref",
+    "model_matrix",
+    "evaluator_refs",
+    "prompt_digest",
+    "dataset_digest",
+    "evaluator_digest",
+    "harness_version",
+    "suite_digest",
+    "trials",
+    "expected_case_ids",
+    "required_metrics",
+    "prompt",
+    "cases",
+    "evaluators",
+    "suite",
+    "datasets"
+  ],
+  "additionalProperties": false
 }

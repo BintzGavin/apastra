@@ -36,179 +36,125 @@ def extract_json_blocks(text):
 
     return blocks
 
-def _invalid_assertion_result():
-    return {"assert_invalid": 0.0}
+class AssertionEvaluationError(ValueError):
+    pass
 
-def _contains_value(output, value):
-    return str(value) in output
+
+def _invalid_json_constant(_value):
+    raise ValueError("Nonfinite JSON")
+
+
+def _number(value):
+    import math
+    return type(value) in (int, float) and math.isfinite(value)
+
+
+def _evaluate(output, assertion, metadata):
+    kind = assertion["type"].removeprefix("not-")
+    value = assertion.get("value")
+    if kind not in ("is-json", "contains-json") and "value" not in assertion:
+        raise AssertionEvaluationError("missing_assertion_value")
+    if kind == "equals":
+        return output == value
+    if kind in ("contains", "icontains"):
+        return str(value) in output if kind == "contains" else str(value).lower() in output.lower()
+    if kind in ("contains-any", "contains-all"):
+        values = value if isinstance(value, list) else [value]
+        if not values:
+            raise AssertionEvaluationError("empty_assertion_values")
+        matches = (str(item) in output for item in values)
+        return any(matches) if kind == "contains-any" else all(matches)
+    if kind == "regex":
+        return bool(re.search(value, output))
+    if kind == "starts-with":
+        return output.startswith(value)
+    if kind in ("is-json", "contains-json", "is-valid-json-schema"):
+        if kind == "is-valid-json-schema":
+            jsonschema.Draft202012Validator.check_schema(value)
+        candidates = [output] if kind == "is-json" else [output, *extract_json_blocks(output)]
+        for candidate in candidates:
+            try:
+                parsed = json.loads(candidate, parse_constant=_invalid_json_constant)
+                if kind == "is-valid-json-schema":
+                    jsonschema.validate(parsed, value)
+                return True
+            except (ValueError, jsonschema.ValidationError):
+                continue
+        return False
+    if kind in ("cost", "latency"):
+        measured = metadata.get(kind)
+        if not _number(measured) or measured < 0:
+            raise AssertionEvaluationError("missing_or_invalid_measurement")
+        if not _number(value) or value < 0:
+            raise AssertionEvaluationError("invalid_measurement_threshold")
+        return measured <= value
+    if kind in ("llm-rubric", "answer-relevance", "similar", "factuality"):
+        judge = metadata.get("judge_callable")
+        if not callable(judge):
+            raise AssertionEvaluationError("judge_required")
+        threshold = assertion.get("threshold", 0.8)
+        reference = value
+        if kind == "similar" and isinstance(value, dict):
+            threshold = value.get("threshold", threshold)
+            reference = value.get("value")
+        if not reference or not _number(threshold) or not 0 <= threshold <= 1:
+            raise AssertionEvaluationError("invalid_judge_configuration")
+        # One invocation; a provider TypeError must not trigger a second paid call.
+        score = judge(output, reference)
+        if type(score) is bool:
+            return score
+        if not _number(score) or not 0 <= score <= 1:
+            raise AssertionEvaluationError("invalid_judge_result")
+        return score >= threshold
+    raise AssertionEvaluationError("unsupported_assertion")
+
 
 def evaluate_assertions(output: str, assertions: list, metadata: dict = None) -> list:
-    """
-    Evaluates a list of inline assertions against a string output.
-    Returns a list of dictionaries with scores: [{"assert_<type>": 1.0 or 0.0}, ...]
-    """
-    if metadata is None:
-        metadata = {}
+    """Return numeric verdicts, or explicit errors with no numeric score."""
+    if not isinstance(assertions, list):
+        raise ValueError("Assertions must be a list")
     results = []
-
-    if not isinstance(output, str):
-        output = str(output)
-
     for assertion in assertions:
-        if not isinstance(assertion, dict):
-            results.append(_invalid_assertion_result())
+        kind = assertion.get("type") if isinstance(assertion, dict) else None
+        if not isinstance(kind, str) or not kind:
+            results.append({"status": "error", "reason": "invalid_assertion"})
             continue
-
-        assert_type = assertion.get("type", "")
-        if not isinstance(assert_type, str) or not assert_type:
-            results.append(_invalid_assertion_result())
-            continue
-
-        assert_value = assertion.get("value")
-
-        is_negated = False
-        base_type = assert_type
-        if base_type.startswith("not-"):
-            is_negated = True
-            base_type = base_type[4:]
-
-        passed = False
-
         try:
-            if base_type == "equals":
-                passed = (output == assert_value)
-            elif base_type == "contains":
-                passed = _contains_value(output, assert_value)
-            elif base_type == "icontains":
-                passed = (str(assert_value).lower() in output.lower())
-            elif base_type == "contains-any":
-                if isinstance(assert_value, list):
-                    passed = any(_contains_value(output, val) for val in assert_value)
-                else:
-                    passed = _contains_value(output, assert_value)
-            elif base_type == "contains-all":
-                if isinstance(assert_value, list):
-                    passed = all(_contains_value(output, val) for val in assert_value)
-                else:
-                    passed = _contains_value(output, assert_value)
-            elif base_type == "regex":
-                # Ensure the regex matches anywhere in the string
-                passed = bool(re.search(assert_value, output))
-            elif base_type == "starts-with":
-                passed = output.startswith(assert_value)
-            elif base_type == "is-json":
-                try:
-                    json.loads(output)
-                    passed = True
-                except ValueError:
-                    passed = False
-            elif base_type == "contains-json":
-                blocks = extract_json_blocks(output)
-                for block in blocks:
-                    try:
-                        json.loads(block)
-                        passed = True
-                        break
-                    except ValueError:
-                        continue
-            elif base_type == "is-valid-json-schema":
-                schema = assert_value
-                try:
-                    parsed = json.loads(output)
-                    jsonschema.validate(instance=parsed, schema=schema)
-                    passed = True
-                except (ValueError, jsonschema.exceptions.ValidationError):
-                    blocks = extract_json_blocks(output)
-                    for block in blocks:
-                        try:
-                            parsed = json.loads(block)
-                            jsonschema.validate(instance=parsed, schema=schema)
-                            passed = True
-                            break
-                        except (ValueError, jsonschema.exceptions.ValidationError):
-                            continue
-            elif base_type == "latency":
-                passed = float(metadata.get("latency", 0)) <= float(assert_value)
-            elif base_type == "cost":
-                passed = float(metadata.get("cost", 0.0)) <= float(assert_value)
-            elif base_type in ("answer-relevance", "llm-rubric"):
-                if "judge_callable" in metadata:
-                    passed = metadata["judge_callable"](output, assert_value)
-                elif assert_value:
-                    if isinstance(assert_value, list):
-                        passed = all(str(v).lower() in output.lower() for v in assert_value)
-                    else:
-                        passed = str(assert_value).lower() in output.lower()
-                else:
-                    passed = True
-            elif base_type == "similar":
-                threshold = assertion.get("threshold", 0.8)
-                reference = assert_value
-                if isinstance(assert_value, dict):
-                    threshold = assert_value.get("threshold", threshold)
-                    reference = assert_value.get("value", "")
-
-                if "judge_callable" in metadata:
-                    try:
-                        score = metadata["judge_callable"](output, reference, type="similar")
-                    except TypeError:
-                        score = metadata["judge_callable"](output, reference)
-                    if isinstance(score, bool):
-                        passed = score
-                    else:
-                        try:
-                            passed = float(score) >= float(threshold)
-                        except (ValueError, TypeError):
-                            passed = bool(score)
-                else:
-                    passed = str(reference).lower() in output.lower()
-            elif base_type == "factuality":
-                if "judge_callable" in metadata:
-                    try:
-                        score = metadata["judge_callable"](output, assert_value, type="factuality")
-                    except TypeError:
-                        score = metadata["judge_callable"](output, assert_value)
-                    passed = bool(score)
-                else:
-                    if isinstance(assert_value, list):
-                        passed = all(str(v).lower() in output.lower() for v in assert_value)
-                    else:
-                        passed = str(assert_value).lower() in output.lower()
-            else:
-                # Unknown assertion type, default to fail
-                passed = False
-        except Exception as e:
-            # If assertion logic fails (e.g. invalid regex), it fails
-            passed = False
-
-        if is_negated:
+            passed = _evaluate(str(output), assertion, metadata or {})
+        except Exception as error:
+            reason = str(error) if isinstance(error, AssertionEvaluationError) else "evaluator_error"
+            results.append({"status": "error", "assertion": kind, "reason": reason})
+            continue
+        if kind.startswith("not-"):
             passed = not passed
-
-        results.append({f"assert_{assert_type}": 1.0 if passed else 0.0})
-
+        results.append({"assert_" + kind: 1.0 if passed else 0.0})
     return results
 
 
-if __name__ == "__main__":
+def main():
+    import argparse
+    from pathlib import Path
     import sys
 
-    if len(sys.argv) < 3:
-        print("Usage: python evaluate_assertions.py <output_text_file> <assertions.json> [metadata.json]")
-        print("  output_text_file: file containing the model output text")
-        print("  assertions.json:  JSON array of assertion objects")
-        print("  metadata.json:    optional JSON object with latency, cost, etc.")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Evaluate inline assertions; errors never score as passes.")
+    parser.add_argument("output_file")
+    parser.add_argument("assertions_file")
+    parser.add_argument("metadata_file", nargs="?")
+    args = parser.parse_args()
+    try:
+        results = evaluate_assertions(
+            Path(args.output_file).read_text(encoding="utf-8"),
+            json.loads(Path(args.assertions_file).read_text(encoding="utf-8")),
+            json.loads(Path(args.metadata_file).read_text(encoding="utf-8")) if args.metadata_file else {},
+        )
+    except (OSError, ValueError, TypeError):
+        print(json.dumps({"status": "error", "reason": "invalid_assertion_input"}), file=sys.stderr)
+        return 1
+    print(json.dumps(results, indent=2, allow_nan=False))
+    if not results or any(row.get("status") == "error" for row in results):
+        return 1
+    return 0 if all(all(value == 1.0 for value in row.values()) for row in results) else 2
 
-    with open(sys.argv[1], 'r') as f:
-        output_text = f.read()
 
-    with open(sys.argv[2], 'r') as f:
-        assertions = json.load(f)
-
-    metadata = {}
-    if len(sys.argv) >= 4:
-        with open(sys.argv[3], 'r') as f:
-            metadata = json.load(f)
-
-    results = evaluate_assertions(output_text, assertions, metadata)
-    print(json.dumps(results, indent=2))
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -3,8 +3,6 @@ type: judge
 metrics:
   - quartet_scaffold_readiness
 description: Versioned rubric for Apastra scaffold outputs. Scores whether a settled design brief becomes a complete prompt, dataset, evaluator, and suite plan without touching unrelated files.
-metric_versions:
-  quartet_scaffold_readiness: "1.0.0"
 config:
   model: default
   rubric_version: "2026-06-24"
@@ -18,3 +16,8 @@ config:
     - chooses deterministic or executable checks before judge rubrics when faithful;
     - keeps dirty or explicitly excluded files out of scope;
     - includes a validation plan for every changed file type.
+metric_definitions:
+  quartet_scaffold_readiness:
+    version: "1.0.0"
+    direction: higher_is_better
+    unit: ratio

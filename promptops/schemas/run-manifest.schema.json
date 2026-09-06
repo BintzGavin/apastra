@@ -1,21 +1,101 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-run-manifest-v1",
+  "$id": "apastra-run-manifest-v2",
   "title": "Run Manifest Specification",
   "description": "Schema for a run manifest.",
   "type": "object",
   "properties": {
-    "total_cost": { "type": "number", "description": "Total cost of the run in dollars (input tokens × price + output tokens × price)" },
-    "input_refs": { "type": "object", "description": "Input references" },
-    "resolved_digests": { "type": "object", "description": "Resolved digests" },
-    "timestamps": { "type": "object", "description": "Timestamps" },
-    "harness_identifier": { "type": "string", "description": "Harness identifier" },
-    "harness_version": { "type": "string", "description": "Harness version" },
-    "model_ids": { "type": "array", "items": { "type": "string" }, "description": "Model IDs" },
-    "sampling_config": { "type": "object", "description": "Sampling configuration" },
-    "environment": { "type": "object", "description": "Environment metadata" },
-    "status": { "type": "string", "description": "Run status" },
-    "total_cost": { "type": "number", "description": "Total cost of the run in dollars (input tokens × price + output tokens × price)" },
+    "total_cost": {
+      "type": "number",
+      "description": "Total cost of the run in dollars (input tokens × price + output tokens × price)",
+      "minimum": 0
+    },
+    "input_refs": {
+      "type": "object",
+      "description": "Input references"
+    },
+    "resolved_digests": {
+      "type": "object",
+      "properties": {
+        "prompt_digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "dataset_digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "evaluator_digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "suite_digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "prompt_digest",
+        "dataset_digest",
+        "evaluator_digest",
+        "suite_digest"
+      ],
+      "additionalProperties": false
+    },
+    "timestamps": {
+      "type": "object",
+      "properties": {
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "started_at",
+        "completed_at"
+      ],
+      "additionalProperties": false
+    },
+    "harness_identifier": {
+      "type": "string",
+      "description": "Harness identifier",
+      "minLength": 1
+    },
+    "harness_version": {
+      "type": "string",
+      "description": "Harness version",
+      "minLength": 1
+    },
+    "model_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Model IDs",
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "sampling_config": {
+      "type": "object",
+      "description": "Sampling configuration"
+    },
+    "environment": {
+      "type": "object",
+      "description": "Environment metadata"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "failed",
+        "cancelled",
+        "budget_exceeded",
+        "unsupported"
+      ]
+    },
     "provenance": {
       "type": "object",
       "description": "SLSA-style provenance metadata representing the invocation of the evaluation run.",
@@ -24,21 +104,58 @@
           "type": "object",
           "description": "Identifies the builder.",
           "properties": {
-            "id": { "type": "string", "description": "String URI identifying the builder." }
+            "id": {
+              "type": "string",
+              "description": "String URI identifying the builder."
+            }
           }
         },
-        "buildType": { "type": "string", "description": "String defining the build model." },
+        "buildType": {
+          "type": "string",
+          "description": "String defining the build model."
+        },
         "invocation": {
           "type": "object",
           "description": "Invocation configuration.",
           "properties": {
-            "configSource": { "type": "object", "description": "Source of the configuration." },
-            "environment": { "type": "object", "description": "Invocation environment." }
+            "configSource": {
+              "type": "object",
+              "description": "Source of the configuration."
+            },
+            "environment": {
+              "type": "object",
+              "description": "Invocation environment."
+            }
           }
         },
-        "metadata": { "type": "object", "description": "Timestamps and build metadata." }
+        "metadata": {
+          "type": "object",
+          "description": "Timestamps and build metadata."
+        }
       }
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "execution_mode": {
+      "enum": [
+        "measured",
+        "fixture",
+        "dry_run"
+      ]
     }
   },
-  "required": ["input_refs", "resolved_digests", "timestamps", "harness_identifier", "harness_version", "model_ids", "sampling_config", "environment", "status"]
+  "required": [
+    "input_refs",
+    "resolved_digests",
+    "timestamps",
+    "harness_identifier",
+    "harness_version",
+    "model_ids",
+    "sampling_config",
+    "environment",
+    "status",
+    "execution_mode"
+  ],
+  "additionalProperties": false
 }

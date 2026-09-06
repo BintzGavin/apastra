@@ -3,8 +3,6 @@ type: judge
 metrics:
   - local_first_lifecycle_readiness
 description: Scores whether a local-first Apastra eval run has trustworthy source state, artifacts, policy gates, and baseline handling.
-metric_versions:
-  local_first_lifecycle_readiness: "1.0.0"
 config:
   model: default
   rubric_version: "2026-06-24"
@@ -16,3 +14,8 @@ config:
     - applies thresholds, cost budgets, and policy gates independently;
     - refuses to baseline failing scorecards;
     - flags hidden dashboard-only state as blocked or untrusted evidence.
+metric_definitions:
+  local_first_lifecycle_readiness:
+    version: "1.0.0"
+    direction: higher_is_better
+    unit: ratio

@@ -10,6 +10,9 @@ class ResolverChain:
             validate_manifest(manifest.data)
 
         rules = manifest.get_rules(prompt_id) if hasattr(manifest, 'get_rules') else {}
+        defaults = manifest.data.get('defaults', {}) if hasattr(manifest, 'data') else {}
+        if rules.get('require_verification') or defaults.get('require_verification'):
+            raise NotImplementedError("Required signature verification is not implemented")
         target_id = rules.get('id', prompt_id)
 
         if rules and 'override' in rules:

@@ -3,8 +3,6 @@ type: judge
 metrics:
   - suite_runnability_contract
 description: Scores whether an Apastra suite is actually runnable by suite-mode resolution, not merely schema-shaped.
-metric_versions:
-  suite_runnability_contract: "1.0.0"
 config:
   model: default
   rubric_version: "2026-06-24"
@@ -17,3 +15,8 @@ config:
     - resolves optional prompt references when present;
     - detects missing assertion value fields in dataset assertions;
     - treats broken resolution as a blocking app-level issue with a concrete fix.
+metric_definitions:
+  suite_runnability_contract:
+    version: "1.0.0"
+    direction: higher_is_better
+    unit: ratio

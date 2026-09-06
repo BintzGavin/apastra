@@ -1,139 +1,86 @@
-import sys
-import os
-import subprocess
-import shlex
-import yaml
+"""Invoke a declared harness and admit only complete measured evidence."""
+
+import argparse
+from copy import deepcopy
 import json
-import jsonschema
-from promptops.runtime.config import load_project_config, apply_config_defaults
+from pathlib import Path
+import shlex
+import subprocess
+import sys
 
-def main():
-    if len(sys.argv) != 4:
-        print("Usage: python runner.py <run_request.json> <adapter_config.yaml> <output_dir>")
-        sys.exit(1)
+import yaml
 
-    request_path = sys.argv[1]
-    adapter_path = sys.argv[2]
-    output_dir = sys.argv[3]
+if __package__ in (None, ""):
+    import importlib
+    package = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(package.parent))
+    sys.modules.setdefault("promptops", importlib.import_module(package.name))
 
-    if not os.path.exists(request_path):
-        print(f"Error: Run request file not found: {request_path}")
-        sys.exit(1)
+from promptops.runtime.evidence import EvidenceError, finite_number, read_json, validate_evidence, validate_request
+from promptops.runtime.digest import compute_digest_from_dict, load_asset
 
 
-    if not os.path.exists(adapter_path):
-        print(f"Error: Adapter config file not found: {adapter_path}")
-        sys.exit(1)
-
-    # Load and apply project config
+def run(request_path, adapter_path, output_dir, execution_timeout=None):
+    request = deepcopy(request_path) if isinstance(request_path, dict) else read_json(request_path)
+    from promptops.runtime.suite import validate_asset
+    validate_request(request)
+    adapter = load_asset(adapter_path)
+    validate_asset(adapter, "harness-adapter")
+    if not isinstance(adapter, dict) or adapter.get("execution_mode") != "measured":
+        raise EvidenceError("Unsupported harness: configure an explicit measured execution adapter")
+    entrypoint = adapter.get("entrypoint")
+    if not isinstance(entrypoint, str) or not entrypoint.strip():
+        raise EvidenceError("Harness entrypoint is required")
+    if "run_suite" not in adapter["capabilities"] or adapter.get("version") != request["harness_version"]:
+        raise EvidenceError("Adapter must declare run_suite capability and the requested harness version")
+    timeout = request.get("timeouts", {}).get("run", 300)
+    if "time" in request.get("budgets", {}):
+        timeout = min(timeout, request["budgets"]["time"])
+    if not finite_number(timeout) or timeout <= 0:
+        raise EvidenceError("Run timeout must be a positive number of seconds")
+    if execution_timeout is not None:
+        if not finite_number(execution_timeout) or execution_timeout <= 0:
+            raise EvidenceError("Comparison time budget exhausted")
+        timeout = min(timeout, execution_timeout)
+    directory = Path(output_dir).resolve()
+    directory.mkdir(parents=True, exist_ok=True)
+    if any(directory.iterdir()):
+        raise EvidenceError("Output directory must be empty; existing evidence is never overwritten")
+    snapshot = directory / "run_request.json"
+    snapshot.write_text(json.dumps(request, sort_keys=True, allow_nan=False), encoding="utf-8")
+    command = shlex.split(entrypoint) + [str(snapshot), str(directory)]
     try:
-        project_config = load_project_config()
-        if project_config:
-            with open(request_path, 'r') as f:
-                run_request = json.load(f)
+        result = subprocess.run(command, capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired as error:
+        raise EvidenceError("Harness execution timed out") from error
+    if result.returncode:
+        return {"status": "error", "reason": "harness_failed", "exit_code": result.returncode}
+    if read_json(snapshot) != request:
+        raise EvidenceError("Harness modified the admitted run request")
+    decision = validate_evidence(request, directory)
+    if read_json(directory / "run_manifest.json")["harness_identifier"] != adapter["id"]:
+        raise EvidenceError("Harness identity does not match the invoked adapter")
+    invocation = {"adapter_digest": compute_digest_from_dict(adapter), "adapter_id": adapter["id"], "adapter_version": adapter["version"], "request_digest": decision["request_digest"], "exit_code": 0}
+    (directory / "invocation.json").write_text(json.dumps(invocation, indent=2) + "\n", encoding="utf-8")
+    decision["invocation_digest"] = compute_digest_from_dict(invocation)
+    (directory / "evaluation.json").write_text(json.dumps(decision, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    return decision
 
-            run_request = apply_config_defaults(run_request, project_config)
 
-            # Write the updated request to a temporary file to avoid mutating the original input
-            import tempfile
-            fd, temp_path = tempfile.mkstemp(suffix=".json")
-            with os.fdopen(fd, 'w') as f:
-                json.dump(run_request, f, indent=2)
-            request_path = temp_path
-    except Exception as e:
-        print(f"Error processing project config: {e}")
-        sys.exit(1)
-
-
-    with open(adapter_path, 'r') as f:
-        adapter_config = yaml.safe_load(f)
-
-    entrypoint = adapter_config.get("entrypoint")
-    if not entrypoint:
-        print(f"Error: No entrypoint defined in {adapter_path}")
-        sys.exit(1)
-
-    # Required env vars
-    env_vars = adapter_config.get("env_vars", [])
-    for var in env_vars:
-        if var not in os.environ:
-            print(f"Warning: Required environment variable {var} not set.")
-
-    # Execute
-    cmd_args = shlex.split(entrypoint)
-    cmd_args.extend([request_path, output_dir])
-    print(f"Executing: {' '.join(cmd_args)}")
-
-    result = subprocess.run(cmd_args)
-    if result.returncode != 0:
-        print(f"Error: Adapter execution failed with code {result.returncode}")
-        sys.exit(result.returncode)
-
-    # Validate output
-    schema_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "schemas")
-
-    required_files = {
-        "run_manifest.json": "run-manifest.schema.json",
-        "scorecard.json": "scorecard.schema.json",
-        "cases.jsonl": "run-case.schema.json",
-        "artifact_refs.json": "artifact-refs.schema.json"
-    }
-
-    for filename, schema_file in required_files.items():
-        filepath = os.path.join(output_dir, filename)
-        schema_path = os.path.join(schema_dir, schema_file)
-
-        if not os.path.exists(filepath):
-            print(f"Error: Required output file not found: {filepath}")
-            sys.exit(1)
-
-        with open(schema_path, 'r') as sf:
-            schema = json.load(sf)
-
-        try:
-            if filename.endswith(".jsonl"):
-                with open(filepath, 'r') as f:
-                    for line_num, line in enumerate(f, 1):
-                        line = line.strip()
-                        if not line:
-                            continue
-                        instance = json.loads(line)
-                        jsonschema.validate(instance=instance, schema=schema)
-            else:
-                with open(filepath, 'r') as f:
-                    instance = json.load(f)
-                jsonschema.validate(instance=instance, schema=schema)
-        except jsonschema.ValidationError as e:
-            print(f"Error: Schema validation failed for {filename}: {e.message}")
-            sys.exit(1)
-        except json.JSONDecodeError as e:
-            print(f"Error: Invalid JSON in {filename}: {str(e)}")
-            sys.exit(1)
-
-    # Optional failures.json
-    failures_path = os.path.join(output_dir, "failures.json")
-    if os.path.exists(failures_path):
-        failures_schema_path = os.path.join(schema_dir, "run-failures.schema.json")
-        with open(failures_schema_path, 'r') as sf:
-            failures_schema = json.load(sf)
-        try:
-            with open(failures_path, 'r') as f:
-                failures_instance = json.load(f)
-            jsonschema.validate(instance=failures_instance, schema=failures_schema)
-        except jsonschema.ValidationError as e:
-            print(f"Error: Schema validation failed for failures.json: {e.message}")
-            sys.exit(1)
-        except json.JSONDecodeError as e:
-            print(f"Error: Invalid JSON in failures.json: {str(e)}")
-            sys.exit(1)
-
-    from promptops.runtime.observability import emit_artifacts
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("run_request")
+    parser.add_argument("adapter")
+    parser.add_argument("output_dir")
+    args = parser.parse_args(argv)
     try:
-        emit_artifacts(output_dir)
-    except Exception as e:
-        print(f"Warning: Failed to emit observability artifacts: {e}")
+        decision = run(args.run_request, args.adapter, args.output_dir)
+    except (OSError, ValueError, TypeError, KeyError, yaml.YAMLError) as error:
+        print(json.dumps({"status": "error", "reason": str(error)}), file=sys.stderr)
+        return 1
+    print(json.dumps(decision, sort_keys=True))
+    return 0 if decision["status"] == "pass" else decision.get("exit_code", 2)
 
-    print(f"Success: Run artifacts generated and validated at {output_dir}")
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

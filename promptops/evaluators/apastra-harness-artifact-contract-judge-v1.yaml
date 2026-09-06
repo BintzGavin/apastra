@@ -3,8 +3,6 @@ type: judge
 metrics:
   - harness_artifact_contract_coverage
 description: Versioned rubric for BYO harness artifact contract reviews. Scores whether a run artifact set satisfies Apastra's file-based execution contract.
-metric_versions:
-  harness_artifact_contract_coverage: "1.0.0"
 config:
   model: default
   rubric_version: "2026-06-24"
@@ -18,3 +16,8 @@ config:
     - checks stable case IDs, per-trial outputs, evaluation outputs, and raw artifact pointers;
     - checks trace/log/text artifact_refs URIs and digests;
     - preserves the BYO compute, vendor-agnostic contract.
+metric_definitions:
+  harness_artifact_contract_coverage:
+    version: "1.0.0"
+    direction: higher_is_better
+    unit: ratio

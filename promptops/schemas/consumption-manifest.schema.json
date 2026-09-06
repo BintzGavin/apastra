@@ -4,7 +4,10 @@
   "title": "Consumption Manifest Schema",
   "description": "Schema for the apastra PromptOps consumption manifest.",
   "type": "object",
-  "required": ["version", "prompts"],
+  "required": [
+    "version",
+    "prompts"
+  ],
   "properties": {
     "version": {
       "type": "string",
@@ -15,7 +18,9 @@
       "description": "Mapping of local names to resolution configurations.",
       "additionalProperties": {
         "type": "object",
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -32,6 +37,9 @@
           "model": {
             "type": "string",
             "description": "Model to use for this prompt."
+          },
+          "require_verification": {
+            "type": "boolean"
           }
         }
       }
@@ -47,6 +55,9 @@
         "provider": {
           "type": "string",
           "description": "Default provider."
+        },
+        "require_verification": {
+          "type": "boolean"
         }
       }
     }

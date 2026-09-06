@@ -1,3 +1,2 @@
-#!/bin/bash
-FILE=$1
-npx ajv-cli validate -s promptops/schemas/run-artifact.schema.json -d "$FILE" --spec=draft2020 --strict=false
+#!/usr/bin/env bash
+exec bash "$(dirname "$0")/lib/validate.sh" run-artifact "$@"

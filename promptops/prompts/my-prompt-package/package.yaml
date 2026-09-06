@@ -1,7 +1,12 @@
 id: my-first-package
-digest: sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 specs:
   - my-prompt
 version: 1.0.0
+public_interface:
+  prompt_id: my-prompt
+  variables_schema:
+    type: object
+    properties: {}
+    additionalProperties: false
 metadata:
   author: Contracts Team

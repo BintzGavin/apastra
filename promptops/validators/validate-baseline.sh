@@ -1,3 +1,2 @@
-#!/bin/bash
-FILE=$1
-npx ajv-cli validate -s promptops/schemas/baseline.schema.json -d "$FILE" --spec=draft2020 --strict=false
+#!/usr/bin/env bash
+exec bash "$(dirname "$0")/lib/validate.sh" baseline "$@"
