@@ -1,0 +1,10 @@
+{
+  "id": "local-text-assistant",
+  "type": "harness_adapter",
+  "capabilities": [
+    "run_suite"
+  ],
+  "version": "1.0.0",
+  "execution_mode": "measured",
+  "entrypoint": "python3 promptops/harnesses/local_assistant.py"
+}

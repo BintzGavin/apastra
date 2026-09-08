@@ -1,0 +1,3 @@
+{"case_id": "greeting", "inputs": {"text": "Hello world"}, "expected_outputs": {"text": "HELLO WORLD"}}
+{"case_id": "mixed", "inputs": {"text": "Keep THIS Clear"}, "expected_outputs": {"text": "KEEP THIS CLEAR"}}
+{"case_id": "empty", "inputs": {"text": ""}, "expected_outputs": {"text": ""}}

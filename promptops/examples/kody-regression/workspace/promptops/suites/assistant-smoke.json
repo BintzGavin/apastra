@@ -1,0 +1,22 @@
+{
+  "id": "assistant-smoke",
+  "name": "Local assistant regression demo",
+  "description": "Measures a deterministic local text assistant; no model API calls.",
+  "prompt": "assistant",
+  "datasets": [
+    "cases"
+  ],
+  "evaluators": [
+    "exact"
+  ],
+  "model_matrix": [
+    "local:text-assistant"
+  ],
+  "trials": 1,
+  "thresholds": {
+    "exact_match_score": 1.0
+  },
+  "timeouts": {
+    "run": 10
+  }
+}

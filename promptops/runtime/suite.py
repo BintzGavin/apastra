@@ -26,14 +26,17 @@ def safe_reference(ref):
     return ref
 
 
-def asset_directory(kind):
-    primary = Path("promptops") / kind
-    return primary if primary.is_dir() else Path(kind)
+def asset_directory(kind, workspace=None):
+    root = Path(workspace) if workspace is not None else Path(".")
+    primary = root / "promptops" / kind
+    return primary if workspace is not None or primary.is_dir() else root / kind
 
 
-def resolve_asset(kind, ref):
+def resolve_asset(kind, ref, workspace=None):
     safe_reference(ref)
-    base = asset_directory(kind).resolve()
+    base = asset_directory(kind, workspace).resolve()
+    if workspace is not None and not base.is_relative_to(Path(workspace).resolve()):
+        raise UnsafeReferenceError("Asset directory escapes workspace")
     candidates = [base / ref]
     if not Path(ref).suffix:
         candidates += [base / (ref + suffix) for suffix in (".jsonl", ".json", ".yaml", ".yml")]
@@ -86,9 +89,11 @@ def validate_asset(data, kind):
         raise EvidenceError(f"Invalid {kind}: {error.validator} at {location}") from error
 
 
-def load_suite(suite_id):
-    path = resolve_asset("suites", suite_id)
+def load_suite(suite_id, workspace=None):
+    path = resolve_asset("suites", suite_id, workspace)
     suite = load_asset(path)
+    if not isinstance(suite, dict):
+        raise EvidenceError("Suite must be an object")
     for kind in ("datasets", "evaluators"):
         for ref in suite.get(kind, []):
             safe_reference(ref)
@@ -96,17 +101,17 @@ def load_suite(suite_id):
     return suite, path
 
 
-def build_request(suite_id, models=None, revision_ref="workspace", harness_version="1.0.0"):
+def build_request(suite_id, models=None, revision_ref="workspace", harness_version="1.0.0", workspace=None):
     if revision_ref not in ("workspace", "latest"):
         raise EvidenceError("Historical revision execution is unsupported; check out the revision and evaluate the workspace")
-    suite, suite_path = load_suite(suite_id)
+    suite, suite_path = load_suite(suite_id, workspace)
     if not suite.get("prompt"):
         raise EvidenceError("Suite must declare its prompt")
-    prompt_path = resolve_asset("prompts", suite["prompt"])
+    prompt_path = resolve_asset("prompts", suite["prompt"], workspace)
     prompt = load_asset(prompt_path)
     validate_asset(prompt, "prompt-spec")
-    dataset_paths = [resolve_asset("datasets", ref) for ref in suite["datasets"]]
-    evaluator_paths = [resolve_asset("evaluators", ref) for ref in suite["evaluators"]]
+    dataset_paths = [resolve_asset("datasets", ref, workspace) for ref in suite["datasets"]]
+    evaluator_paths = [resolve_asset("evaluators", ref, workspace) for ref in suite["evaluators"]]
     cases = []
     for path in dataset_paths:
         if path.suffix != ".jsonl":
@@ -137,7 +142,7 @@ def build_request(suite_id, models=None, revision_ref="workspace", harness_versi
     selected_models = models if models is not None else suite["model_matrix"]
     if not selected_models or any(not isinstance(model, str) or not model for model in selected_models) or len(set(selected_models)) != len(selected_models):
         raise EvidenceError("Model selection must be nonempty and unique")
-    source = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True)
+    source = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=workspace)
     request = {
         "suite_id": suite["id"], "revision_ref": "workspace",
         "requested_revision": revision_ref,

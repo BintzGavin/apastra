@@ -1,0 +1,14 @@
+{
+  "id": "exact",
+  "type": "deterministic",
+  "metrics": [
+    "exact_match_score"
+  ],
+  "metric_definitions": {
+    "exact_match_score": {
+      "version": "1.0.0",
+      "direction": "higher_is_better",
+      "unit": "ratio"
+    }
+  }
+}

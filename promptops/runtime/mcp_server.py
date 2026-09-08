@@ -7,24 +7,6 @@ import yaml
 from promptops.runtime.digest import load_asset
 from promptops.runtime.suite import UnsafeReferenceError, asset_directory, evaluate_suite
 
-try:
-    from mcp.server.fastmcp import FastMCP
-except ImportError:
-    class FastMCP:
-        def __init__(self, name):
-            self.name = name
-
-        def tool(self):
-            return lambda function: function
-
-        def run(self):
-            raise RuntimeError("Install the optional mcp package to start the MCP server")
-
-
-mcp = FastMCP("promptops")
-
-
-@mcp.tool()
 def list_suites() -> list:
     """List suite identities in this workspace."""
     result = []
@@ -40,7 +22,6 @@ def list_suites() -> list:
     return result
 
 
-@mcp.tool()
 def run_evaluation(suite_id: str, revision_ref: str = "workspace", adapter_config: str | None = None, output_dir: str | None = None) -> str:
     """Execute a declared harness; retain evidence and report its evaluation verdict."""
     try:
@@ -55,4 +36,5 @@ def run_evaluation(suite_id: str, revision_ref: str = "workspace", adapter_confi
 
 
 def start_mcp_server():
-    mcp.run()
+    from promptops.runtime.mcp_launcher import main
+    return main(sys.argv[2:])

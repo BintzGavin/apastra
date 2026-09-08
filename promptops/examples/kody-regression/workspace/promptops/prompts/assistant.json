@@ -1,0 +1,9 @@
+{
+  "id": "assistant",
+  "variables": {
+    "text": {
+      "type": "string"
+    }
+  },
+  "template": "Uppercase {{text}}"
+}
