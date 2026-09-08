@@ -83,9 +83,8 @@ def _main():
         return 0 if result["status"] == "pass" else 2
 
     if len(sys.argv) > 1 and sys.argv[1] == "mcp":
-        from promptops.runtime.mcp_server import start_mcp_server
-        start_mcp_server()
-        return
+        from promptops.runtime.mcp_launcher import main as mcp_main
+        return mcp_main(sys.argv[2:])
 
     if len(sys.argv) > 1 and sys.argv[1] == "canary":
         parser = argparse.ArgumentParser(prog="promptops.runtime.cli canary")

@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 import re
 
-from promptops.runtime.digest import compute_digest, load_asset, read_json
+from promptops.runtime.digest import compute_digest_from_dict, compute_digest, load_asset, read_json
 from promptops.runtime.evidence import EvidenceError, finite_number, validate_evidence
 from promptops.runtime.suite import build_request, validate_asset
 
@@ -88,10 +88,14 @@ def regression(candidate_dir, baseline_dir, policy_path, adapter_path, expected_
     baseline = admit_run(baseline_dir, adapter_path, expected_suite=expected_suite)
     if baseline["decision"]["status"] != "pass":
         raise EvidenceError("Baseline is not an eligible passing evaluation")
-    for field in ("suite_id", "dataset_digest", "evaluator_digest", "required_metrics", "model_matrix", "sampling_config", "trials"):
+    for field in ("suite_id", "dataset_digest", "evaluator_digest", "required_metrics", "model_matrix", "sampling_config", "trials", "harness_version", "expected_case_ids", "thresholds", "budgets", "timeouts"):
         if candidate["request"][field] != baseline["request"][field]:
             raise EvidenceError(f"Incompatible regression inputs: {field}")
-    report = evaluate_policy(candidate["scorecard"], baseline["scorecard"], load_asset(policy_path))
+    for field in set(candidate["request"]["suite"]) | set(baseline["request"]["suite"]):
+        if field not in {"prompt", "name", "description"} and candidate["request"]["suite"].get(field) != baseline["request"]["suite"].get(field):
+            raise EvidenceError(f"Incompatible regression suite configuration: {field}")
+    policy = policy_path if isinstance(policy_path, dict) else load_asset(policy_path)
+    report = evaluate_policy(candidate["scorecard"], baseline["scorecard"], policy)
     if candidate["decision"]["status"] != "pass":
         report["status"] = "fail"
     c_cost, b_cost = candidate["manifest"].get("total_cost"), baseline["manifest"].get("total_cost")
@@ -100,7 +104,7 @@ def regression(candidate_dir, baseline_dir, policy_path, adapter_path, expected_
     report.update({
         "candidate_ref": compute_digest(Path(candidate_dir) / "evaluation.json"),
         "baseline_ref": compute_digest(Path(baseline_dir) / "evaluation.json"),
-        "policy_digest": compute_digest(policy_path), "source_revision": candidate["request"].get("source_revision"),
+        "policy_digest": compute_digest_from_dict(policy), "source_revision": candidate["request"].get("source_revision"),
         "suite_id": candidate["request"]["suite_id"],
     })
     validate_asset(report, "regression-report")

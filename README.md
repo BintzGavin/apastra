@@ -406,3 +406,10 @@ Shipped skills are listed under **Included Skills** above (including `apastra-re
 ## License
 
 Apache-2.0
+
+## Evaluate assistant changes from Kody
+
+Use the [supported workspace MCP workflow](docs/guides/kody-evaluation-workflow.md)
+for authenticated HTTP startup, asynchronous evaluations, explicit baseline
+comparison, inspectable case evidence, and a deterministic regression/fix demo.
+The reusable Kody package source ships in `promptops/integrations/kody/apastra/`.

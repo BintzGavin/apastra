@@ -1,0 +1,20 @@
+{
+  "name": "@your-scope/apastra",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./suites": "./suites.ts",
+    "./start": "./start.ts",
+    "./resume": "./resume.ts",
+    "./evidence": "./evidence.ts"
+  },
+  "kody": {
+    "description": "Check assistant changes against an explicit Apastra baseline and inspect the cases that changed.",
+    "tags": [
+      "apastra",
+      "evaluation",
+      "regression"
+    ],
+    "category": "integrations"
+  }
+}

@@ -20,7 +20,7 @@ from promptops.runtime.evidence import EvidenceError, finite_number, read_json, 
 from promptops.runtime.digest import compute_digest_from_dict, load_asset
 
 
-def run(request_path, adapter_path, output_dir, execution_timeout=None):
+def run(request_path, adapter_path, output_dir, execution_timeout=None, cwd=None):
     request = deepcopy(request_path) if isinstance(request_path, dict) else read_json(request_path)
     from promptops.runtime.suite import validate_asset
     validate_request(request)
@@ -50,7 +50,7 @@ def run(request_path, adapter_path, output_dir, execution_timeout=None):
     snapshot.write_text(json.dumps(request, sort_keys=True, allow_nan=False), encoding="utf-8")
     command = shlex.split(entrypoint) + [str(snapshot), str(directory)]
     try:
-        result = subprocess.run(command, capture_output=True, text=True, timeout=timeout)
+        result = subprocess.run(command, capture_output=True, text=True, timeout=timeout, cwd=cwd)
     except subprocess.TimeoutExpired as error:
         raise EvidenceError("Harness execution timed out") from error
     if result.returncode:

@@ -1,6 +1,7 @@
 """Exercise the published layout from an unrelated consumer, without network access."""
 
 import json
+import asyncio
 from pathlib import Path
 import shlex
 import shutil
@@ -107,7 +108,11 @@ class InstalledContractTests(unittest.TestCase):
                     cli = consumer / "node_modules/.bin/apastra"
                     runtime = consumer / "node_modules/apastra/promptops"
                     self.assertTrue((consumer / "node_modules/apastra/docs/guides/evaluation-trust.md").is_file())
+                self.assertTrue((runtime / "runtime/mcp_launcher.py").is_file())
+                self.assertTrue((consumer / "node_modules/apastra/requirements-mcp.txt").is_file())
+                self.assertTrue((consumer / "node_modules/apastra/promptops/integrations/kody/apastra/start.ts").is_file())
                 workspace, adapter = make_workspace(consumer)
+                asyncio.run(verify_installed_mcp(cli, workspace, environment))
                 harness = consumer / "deterministic_target.py"
                 shutil.copyfile(HARNESS, harness)
                 configuration = json.loads(adapter.read_text())
@@ -162,6 +167,23 @@ class InstalledContractTests(unittest.TestCase):
                         )
                         self.assertEqual(result.returncode, 0 if valid else 1, result.stdout + result.stderr)
                         self.assertNotIn("Unexpected package-manager invocation", result.stderr)
+
+
+async def verify_installed_mcp(cli, workspace, environment):
+    """The packed launcher must serve MCP independently of this source checkout."""
+    from mcp import ClientSession, StdioServerParameters
+    from mcp.client.stdio import stdio_client
+    parameters = StdioServerParameters(command=sys.executable, args=["-I", str(cli), "mcp", "--workspace", str(workspace), "--workspace-id", "installed"], env=environment)
+    with (workspace / "mcp-diagnostics.txt").open("w") as diagnostics:
+        async with stdio_client(parameters, errlog=diagnostics) as streams:
+            async with ClientSession(*streams) as client:
+                await client.initialize()
+                names = {tool.name for tool in (await client.list_tools()).tools}
+                if not {"start_evaluation", "compare_runs", "get_case"} <= names:
+                    raise AssertionError("Installed tools are missing")
+                info = await client.call_tool("workspace_info", {})
+                if info.isError or info.structuredContent["workspace_id"] != "installed":
+                    raise AssertionError("Installed workspace selection failed")
 
 
 if __name__ == "__main__":
