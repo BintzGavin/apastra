@@ -18,10 +18,6 @@
 etc.
 
 
-## Trust-remediation candidate
-
-The local runtime requires complete measured evidence and an explicit adapter. These repairs run locally and do not require GitHub Actions. The existing CI templates still need a separate repair before they can enforce evaluation results. See the [execution contract and migration notes](docs/guides/evaluation-trust.md).
-
 ## Quick Start
 
 **Installing Apastra into your repo with help from a coding agent?**
@@ -303,8 +299,6 @@ Ask your agent:
 
 The baseline command admits a complete passing run under an immutable name. Compare a later candidate against that run using `gate --baseline ... --policy ... --adapter ...`.
 
-Local evaluation and admission work without CI. Automated release remains blocked until the legacy workflows are repaired and verified.
-
 > **Note for AI agents:** This README is the quickstart. For the full architectural model and design principles, start with `[docs/vision.md](docs/vision.md)`.
 
 ## Included Skills
@@ -453,13 +447,14 @@ When you're ready for more structure, apastra supports:
 
 ### GitHub Actions CI
 
-The local `ci-gate` command checks the tested revision and its resolved inputs.
+The `ci-gate` command checks the tested revision and its resolved inputs.
 It supports explicit execution and previously produced evidence. Missing or
 stale evidence fails admission.
 
-The repository workflows and templates still need the approved remediation.
-Their current presence does not establish safe merge gating or automated delivery.
-Do not copy the templates into another project until that work is complete.
+Included workflows: schema validation on prompt and dataset PRs, regression
+gating against a `promptops-artifacts` branch, immutable release packaging
+with build-provenance attestation, promotion with approval enforcement, and
+delivery sync. Install the CI layer with the `apastra-setup-ci` skill.
 
 ### Git-First Consumption
 
@@ -498,37 +493,6 @@ Resolution order: local override → workspace → git ref → packaged artifact
 - **Reproducibility by default** — content digests, environment metadata
 - **Local-first, CI-optional** — start with zero infrastructure
 
-## Roadmap (beyond included skills)
-
-Shipped skills are listed under **Included Skills** above (including `apastra-red-team`). Everything here is **extra surface area**: some pieces already exist in the runtime or as schemas, while the agent-facing skill or production hardening is still to come. For depth and evolving status, see [docs/vision.md](docs/vision.md) (expansion backlog).
-
-
-| Capability                                                         | Status                          | Today / next                                                                                                                                                                                                                   |
-| ------------------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `**apastra-audit`** — scan for hardcoded prompts and "prompt debt" | Partial — runtime               | `promptops/runtime/audit.py`, CLI `audit`, `audit-shim.sh`. **Missing:** dedicated `apastra-audit` skill.                                                                                                                      |
-| **Drift / canaries** | Unsupported | The runtime returns unsupported. Scheduling, alert delivery, and rollback remain unimplemented. |
-| **Multi-model comparison** | Local runtime | An explicit adapter executes every requested model. Complete evidence and shared suite budgets are required before a comparison is persisted. |
-| **Automated prompt review** | Not implemented | The legacy `apastra-review` CLI command reports unsupported analysis. Use the Apastra skill workflows for review. |
-| **Automated prompt optimization** | Not implemented | The legacy `apastra-optimize` CLI command reports unsupported analysis. Use the Apastra skill workflows for optimization. |
-| **Community / starter packs**                                      | Partial — artifacts             | Starter pack JSON under `derived-index/starter-packs/` (summarization, extraction, classification, code review). **Missing:** curated installable repos and public registry story.                                             |
-| **Observability adapters** | Schema-only | Delivery commands return unsupported and emit no receipts. |
-
-
-## Planned Refinements
-
-- **Simplified minimal mode** — auto-detected when few prompt specs exist; default layout trimmed to `prompts/`, `evals/`, and `baselines/` only
-- **Project-level config** — **shipped at runtime:** upward-discovered `promptops.config.yaml` / `.yml` with schema and default application; documentation of precedence rules still improving
-- **MCP integration** — **partial:** MCP server and tools in `promptops/runtime/mcp_server.py` (e.g. list suites, run evaluation); richer MCP definitions inside prompt specs and packaging remain roadmap
-- **Measured cost**: cost budgets require a valid measurement. Optional cost fields remain absent when unmeasured.
-- **Hook receipt conversion**: provider request-body logging and redacted lifecycle validation receipts are shipped; converting selected receipts into eval cases without copying full transcripts remains roadmap work
-
 ## License
 
 Apache-2.0
-
-## Evaluate assistant changes from Kody
-
-Use the [supported workspace MCP workflow](docs/guides/kody-evaluation-workflow.md)
-for authenticated HTTP startup, asynchronous evaluations, explicit baseline
-comparison, inspectable case evidence, and a deterministic regression/fix demo.
-The reusable Kody package source ships in `promptops/integrations/kody/apastra/`.

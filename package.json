@@ -67,7 +67,6 @@
     "LICENSE",
     "requirements.txt",
     "requirements-mcp.txt",
-    "docs/guides/kody-evaluation-workflow.md",
     "promptops/integrations/kody/**/*",
     "promptops/examples/kody-regression/**/*"
   ],

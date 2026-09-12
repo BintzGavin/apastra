@@ -153,7 +153,7 @@ same workspace is refused. Keep the process under your normal service manager.
 ## Compare and inspect from Kody
 
 The maintained source template lives in
-[`promptops/integrations/kody/apastra`](../../promptops/integrations/kody/apastra).
+[`promptops/integrations/kody/apastra`](./apastra).
 Copy it into a private Kody package using Kody's package-authoring guide. Replace
 `@your-scope/apastra` with your authorized scope. It has root README/AGENTS files,
 manifest exports and JSDoc; it is not a published community listing. Run the
@@ -195,7 +195,7 @@ not a statistical test or a guarantee of real-world assistant quality.
 
 ## Real measured execution
 
-Use the existing [harness adapter contract](../api/harness-adapter-reference.md).
+Use the existing [harness adapter contract](../../../docs/api/harness-adapter-reference.md).
 The owner selects an adapter within the workspace at startup. That adapter
 invokes the real target, calculates scores from actual outputs, and retains
 request, cases, scorecard, manifest and artifact references. Declare model
