@@ -66,7 +66,7 @@ def create_server(workspace, workspace_id, adapter=None, port=8000, verifier=Non
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="apastra mcp", description=__doc__)
     parser.add_argument("--workspace", required=True, type=Path, help="Absolute owner-trusted workspace containing promptops/suites")
-    parser.add_argument("--workspace-id", required=True, help="Public identity Kody verifies before executing")
+    parser.add_argument("--workspace-id", required=True, help="Public identity the MCP client verifies before executing")
     parser.add_argument("--adapter", help="Owner-approved adapter path inside the workspace")
     parser.add_argument("--transport", choices=("stdio", "streamable-http"), default="stdio")
     parser.add_argument("--port", type=int, default=8000)

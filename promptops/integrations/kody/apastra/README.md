@@ -27,8 +27,8 @@ access tokens into chat, package files, or shell examples.
 
 Start the provider with an explicit workspace ID and owner-approved adapter,
 then add its protected HTTPS URL to Kody as `apastra`. The provider guide at
-`docs/guides/kody-evaluation-workflow.md` in the Apastra checkout contains the
-launcher, authentication contract, and local demo.
+`promptops/integrations/kody/evaluation-workflow.md` in the Apastra checkout
+contains the launcher, authentication contract, and local demo.
 
 1. Call `./suites` with the MCP connection name and expected workspace ID.
 2. Obtain a passing baseline run ID using the provider's `start_evaluation` and
