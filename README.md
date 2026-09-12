@@ -26,7 +26,7 @@ Paste this:
 ```
 Go to https://github.com/BintzGavin/apastra and start onboarding
 ```
-Apastra is an eval protocol and skill pack. Bring your own harness and save the results as files in your repo, that's about it.
+Apastra is an eval protocol and skill pack. Bring your own harness and save the results as yaml files in your repo, that's about it.
 
 Use it to test the instructions your agents depend on.
 
