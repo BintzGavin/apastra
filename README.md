@@ -26,20 +26,15 @@ Paste this:
 ```
 Go to https://github.com/BintzGavin/apastra and start onboarding
 ```
+Apastra is an eval protocol and skill pack. Bring your own harness and save the results as files in your repo, that's about it.
 
-Have no idea what an eval even is but know you're supposed to care? Don't worry, it'll walk you through everything step by step and explain how to write good ones. Your agent will stop multiple times to ask clarifying questions about what you actually care about. The flow is partly inspired by `gstack` by Garry Tan and by the `/grill-me` skill from Matt Pocock so it's very interactive.
+Use it to test the instructions your agents depend on.
 
-## Eval the prompts and skills your coding agents depend on
-
-Apastra is a Git-native EvalOps protocol and skill pack. Your chosen harness executes the target and evaluator. Apastra resolves the inputs and validates retained evidence before applying quality criteria. It fits beside execution frameworks through an explicit adapter and keeps the resulting records in your repository.
-
-Use it to test the instructions your agents depend on, including skills and review workflows.
-
-The hook layer makes that evidence easier to see while the agent is working. Codex and Claude Code hooks surface context, validation feedback, and safety signals when an agent reads a prompt, runs a tool, edits a file, or tries to stop. Relevant PromptOps changes also produce append-only validation receipts under `promptops/runs/hook-validations/`. Those receipts contain file paths, status, timestamps, and counts, but never prompt text, commands, file contents, or validation values.
+Have no idea what an eval even is but know you're supposed to care? Don't worry, it'll walk you through everything step by step and explain how to write good ones. Your agent will stop multiple times to ask clarifying questions about what you actually care about. The flow is partly inspired by `gstack` by Garry Tan and by the `/grill-me` skill from Matt Pocock, it's very interactive.
 
 ## What is an eval actually?
 
-An eval is a repeatable test for an AI instruction: a prompt, a skill, a review flow, a planning flow. You write down concrete inputs, what each output must satisfy, and a threshold. An adapter you control runs the instruction on every input and scores the outputs. Apastra checks that the evidence is complete, recomputes the numbers, applies your threshold, and leaves a run directory you can commit and diff.
+An eval is a repeatable test for an AI instruction: a prompt, a skill, a review flow, a planning flow. You write down concrete inputs, what each output must satisfy, and a threshold. An adapter you control runs the instruction on every input and scores the outputs. Apastra checks that the evidence is complete, recomputes the numbers, applies your threshold, ad leaves a run directory you can commit and diff.
 
 It is the unit-test idea applied to prompts, with one difference: the thing under test is non-deterministic. So evals lean on tolerant checks (contains this, is valid JSON, matches this schema, never mentions that) and pass rates instead of exact string equality.
 
