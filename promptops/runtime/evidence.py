@@ -108,6 +108,7 @@ def validate_evidence(request, directory):
     expected = {(model, case) for model in models for case in expected_cases}
     seen = set()
     values = {name: [] for name in required}
+    model_values = {model: {name: [] for name in required} for model in models}
     with (directory / "cases.jsonl").open(encoding="utf-8") as handle:
         for line in handle:
             if not line.strip():
@@ -129,6 +130,7 @@ def validate_evidence(request, directory):
                     if not finite_number(value):
                         raise EvidenceError(f"Invalid trial metric: {name}")
                     values[name].append(value)
+                    model_values[key[0]][name].append(value)
     if seen != expected:
         raise EvidenceError("Incomplete case/model coverage")
     for name, measured in values.items():
@@ -136,15 +138,22 @@ def validate_evidence(request, directory):
         if not math.isclose(mean, metrics[name], rel_tol=1e-12, abs_tol=1e-12):
             raise EvidenceError(f"Scorecard does not match case evidence: {name}")
     thresholds = request.get("thresholds", {})
-    failures = []
     for name, threshold in thresholds.items():
         if name not in metrics or not finite_number(threshold):
             raise EvidenceError(f"Invalid or missing threshold metric: {name}")
-        direction = required[name]["direction"]
-        if direction not in ("higher_is_better", "lower_is_better"):
+        if required[name]["direction"] not in ("higher_is_better", "lower_is_better"):
             raise EvidenceError(f"Unknown metric direction: {name}")
-        if (direction == "higher_is_better" and metrics[name] < threshold) or (direction == "lower_is_better" and metrics[name] > threshold):
-            failures.append(name)
+    model_results = {}
+    for model, measurements in model_values.items():
+        model_metrics = {name: math.fsum(measured) / len(measured) for name, measured in measurements.items()}
+        failed = [name for name, threshold in thresholds.items()
+                  if (required[name]["direction"] == "higher_is_better" and model_metrics[name] < threshold)
+                  or (required[name]["direction"] == "lower_is_better" and model_metrics[name] > threshold)]
+        model_results[model] = {
+            "status": "fail" if failed else "pass" if thresholds else "not_evaluated",
+            "metrics": model_metrics, "failed_criteria": failed,
+        }
+    failures = [name for name in thresholds if any(name in result["failed_criteria"] for result in model_results.values())]
     budget = request.get("budgets", {}).get("cost_budget")
     if budget is not None:
         cost = manifest.get("total_cost")
@@ -154,7 +163,8 @@ def validate_evidence(request, directory):
             failures.append("cost_budget")
     return {
         "status": "fail" if failures else "pass" if thresholds else "not_evaluated",
-        "execution_status": "completed", "suite_id": request["suite_id"],
+        "schema_version": "3.0", "execution_status": "completed", "suite_id": request["suite_id"],
+        "model_results": model_results,
         "metrics": metrics, "failed_criteria": failures,
         "artifact_digests": {name: compute_digest(str(directory / name)) for name in names},
         "request_digest": compute_digest(str(directory / "run_request.json")),

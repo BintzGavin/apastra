@@ -34,7 +34,7 @@ The harness receives:
 
 The execution environment must accomplish the following:
 
-1. **Resolve Revisions:** Identify and bind the revision reference to a concrete, reproducible prompt package digest.
+1. **Honor Resolved Inputs:** Use the immutable input snapshots and digests in the request produced by Apastra.
 2. **Execute Suites:** Process the benchmark suite across the specified datasets and model matrix.
 3. **Apply Evaluators:** Evaluate the outputs and produce consistent metrics.
 4. **Emit Run Artifacts:** Populate the structured run artifact directory.
@@ -49,7 +49,7 @@ The harness must generate the following standard structures inside the artifact 
 A comprehensive metadata record. It must contain the harness identifier (e.g., `claude-code`, `antigravity`, `cursor`, `api`, `github-actions`), resolved digests, timestamps, harness version, model IDs, sampling configs, environment data, and the overall status.
 
 ### `scorecard.json`
-The normalized evaluation results. This file holds the metrics, metric definitions, metric versioning, and trial variance data.
+The normalized evaluation results. This file holds the metrics, metric definitions, metric versioning, and optional descriptive trial variance data (the runtime recomputes means, not variance).
 
 ### `cases.jsonl`
 A detailed per-case record file. It must include stable case IDs, per-trial outputs, evaluation outputs, and pointers to raw artifacts (traces, text).
@@ -59,3 +59,7 @@ A manifest of URIs and corresponding digests referencing the generated raw artif
 
 ### `failures.json`
 If any structured failures occurred during the execution, they must be recorded here.
+
+## Version 3 decisions
+
+See [evaluation trust](evaluation-trust.md) for the authoritative current admission contract. New decisions are per model; a pooled mean cannot hide a failing model. Complete failed comparisons retain their evidence. Adapter invocation identity is explicitly configuration-only unless `implementation.files` pins declared local files. Pins do not cover undeclared dependencies or authenticate execution. Baseline JSON records now resolve run paths relative to the record.

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-baseline-v2",
+  "$id": "apastra-baseline-v3",
   "title": "Baseline Specification",
   "description": "Schema definition for baseline references to unblock Evaluation.",
   "type": "object",
@@ -29,7 +29,8 @@
     },
     "run_path": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "Run directory relative to this baseline record file; parent segments are permitted. Legacy absolute references remain readable."
     },
     "suite_id": {
       "type": "string",

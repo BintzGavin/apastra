@@ -18,6 +18,7 @@ if __package__ in (None, ""):
 
 from promptops.runtime.evidence import EvidenceError, finite_number, read_json, validate_evidence, validate_request
 from promptops.runtime.digest import compute_digest_from_dict, load_asset
+from promptops.runtime.adapter_identity import implementation_identity
 
 
 def run(request_path, adapter_path, output_dir, execution_timeout=None, cwd=None):
@@ -42,6 +43,7 @@ def run(request_path, adapter_path, output_dir, execution_timeout=None, cwd=None
         if not finite_number(execution_timeout) or execution_timeout <= 0:
             raise EvidenceError("Comparison time budget exhausted")
         timeout = min(timeout, execution_timeout)
+    identity = implementation_identity(adapter_path, adapter)
     directory = Path(output_dir).resolve()
     directory.mkdir(parents=True, exist_ok=True)
     if any(directory.iterdir()):
@@ -53,6 +55,9 @@ def run(request_path, adapter_path, output_dir, execution_timeout=None, cwd=None
         result = subprocess.run(command, capture_output=True, text=True, timeout=timeout, cwd=cwd)
     except subprocess.TimeoutExpired as error:
         raise EvidenceError("Harness execution timed out") from error
+    finally:
+        if implementation_identity(adapter_path, adapter) != identity:
+            raise EvidenceError("Adapter implementation identity changed during execution")
     if result.returncode:
         return {"status": "error", "reason": "harness_failed", "exit_code": result.returncode}
     if read_json(snapshot) != request:
@@ -60,7 +65,7 @@ def run(request_path, adapter_path, output_dir, execution_timeout=None, cwd=None
     decision = validate_evidence(request, directory)
     if read_json(directory / "run_manifest.json")["harness_identifier"] != adapter["id"]:
         raise EvidenceError("Harness identity does not match the invoked adapter")
-    invocation = {"adapter_digest": compute_digest_from_dict(adapter), "adapter_id": adapter["id"], "adapter_version": adapter["version"], "request_digest": decision["request_digest"], "exit_code": 0}
+    invocation = {"adapter_digest": compute_digest_from_dict(adapter), "adapter_id": adapter["id"], "adapter_version": adapter["version"], "request_digest": decision["request_digest"], "exit_code": 0, "implementation_identity": identity}
     (directory / "invocation.json").write_text(json.dumps(invocation, indent=2) + "\n", encoding="utf-8")
     decision["invocation_digest"] = compute_digest_from_dict(invocation)
     (directory / "evaluation.json").write_text(json.dumps(decision, indent=2, allow_nan=False) + "\n", encoding="utf-8")

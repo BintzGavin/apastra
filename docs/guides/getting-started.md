@@ -13,6 +13,53 @@ Apastra treats prompts as versioned software assets with a declared interface, a
 
 This guide provides a conceptual overview of the key concepts and workflows you'll interact with.
 
+## Installation
+
+For a Python CLI without Node.js, install Apastra in a virtual environment:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install apastra
+.venv/bin/apastra --help
+```
+
+Use `pip install 'apastra[mcp]'` in that environment when you need the MCP server.
+From a source checkout, `python -m pip install .` builds the same Python package.
+Schemas and runtime tools ship with the package; evaluation evidence does not.
+
+For agent skills and a project-local CLI, run the clone's setup from your consumer
+project root:
+
+```bash
+git clone --single-branch --depth 1 https://github.com/BintzGavin/apastra.git .agent/skills/apastra
+.agent/skills/apastra/setup --dry-run
+.agent/skills/apastra/setup
+.agent/bin/apastra --help
+```
+
+Setup preserves the clone, its Git metadata, and unrelated files. Update the clone
+with `git -C .agent/skills/apastra pull --ff-only`, then rerun setup from the project
+root. Runtime files are copied to `.agent/scripts/apastra`; only runtime tools,
+schemas, and required assets are included. Historical runs and experimental result
+files are excluded. The installer records copied-file digests in
+`.agent/.apastra-install.json`. Updates stop before copying when an untracked file
+would be overwritten or an installed file has been edited. Move or back up the
+conflicting file, then retry. Existing skill paths are preserved.
+
+`npm install apastra` provides the CLI and only prints setup instructions by
+default. To also install project-local skills and runtime files, opt in with
+`APASTRA_POSTINSTALL_SETUP=1 npm install apastra`. This uses the same copy path as
+clone setup and never invokes pip unless requested.
+
+Setup checks Python dependencies by default. Set `APASTRA_INSTALL_PY_DEPS=1` to
+allow pip to install PyYAML and jsonschema, or install those dependencies in your
+chosen Python environment first. Set `APASTRA_INSTALL_AGENT_HOOKS=1` to install
+agent hook configuration and the local validation-receipt ignore entry;
+`APASTRA_NO_AGENT_HOOKS=1` overrides that opt-in. Set
+`APASTRA_NO_SKILL_SYMLINKS=1` to skip `.claude/skills/apastra` and
+`.agents/skills/apastra` links. For unattended clone setup, use
+`APASTRA_ASSUME_YES=1`.
+
 ## Key Concepts
 
 ### Prompt Specs

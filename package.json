@@ -1,7 +1,7 @@
 {
   "name": "apastra",
-  "version": "2.0.1",
-  "description": "PromptOps — version, evaluate, and ship AI prompts as disciplined software assets",
+  "version": "3.0.0",
+  "description": "Portable evaluation evidence and revision-bound regression gates for your existing harness",
   "keywords": [
     "apastra",
     "promptops",
@@ -68,7 +68,11 @@
     "requirements.txt",
     "requirements-mcp.txt",
     "promptops/integrations/kody/**/*",
-    "promptops/examples/kody-regression/**/*"
+    "promptops/examples/kody-regression/**/*",
+    "setup",
+    "scripts/install.py",
+    "pyproject.toml",
+    "docs/guides/getting-started.md"
   ],
   "publishConfig": {
     "access": "public"

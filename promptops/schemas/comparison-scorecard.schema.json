@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-comparison-scorecard-v2",
+  "$id": "apastra-comparison-scorecard-v3",
   "title": "Comparison Scorecard Specification",
   "description": "Schema for multi-model evaluation scorecards with cost/quality/latency tradeoffs.",
   "type": "object",
@@ -56,7 +56,11 @@
       }
     },
     "status": {
-      "const": "pass"
+      "enum": [
+        "pass",
+        "fail",
+        "not_evaluated"
+      ]
     },
     "runs": {
       "type": "object",
@@ -69,6 +73,49 @@
     "total_cost": {
       "type": "number",
       "minimum": 0
+    },
+    "schema_version": {
+      "const": "3.0"
+    },
+    "execution_status": {
+      "const": "completed"
+    },
+    "model_results": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Authoritative per-model threshold policy results.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "pass",
+              "fail",
+              "not_evaluated"
+            ]
+          },
+          "metrics": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "failed_criteria": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "status",
+          "metrics",
+          "failed_criteria"
+        ],
+        "additionalProperties": false
+      }
     }
   },
   "required": [
@@ -77,7 +124,10 @@
     "models",
     "metrics",
     "comparison_tradeoffs",
-    "runs"
+    "runs",
+    "schema_version",
+    "execution_status",
+    "model_results"
   ],
   "additionalProperties": false
 }

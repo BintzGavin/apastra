@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "apastra-harness-adapter-v2",
+  "$id": "apastra-harness-adapter-v3",
   "type": "object",
   "properties": {
     "id": {
@@ -51,6 +51,29 @@
     "version": {
       "type": "string",
       "minLength": 1
+    },
+    "implementation": {
+      "type": "object",
+      "description": "Optional raw content pins for explicitly declared local files; does not describe dependency closure or authenticity.",
+      "properties": {
+        "files": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Safe paths relative to the adapter configuration directory mapped to raw-byte SHA-256 digests.",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      },
+      "required": [
+        "files"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [

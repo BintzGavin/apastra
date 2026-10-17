@@ -14,6 +14,10 @@ from promptops.runtime.resolve import resolve
 from promptops.runtime.audit import scan_codebase
 
 def _main():
+    if len(sys.argv) > 1 and sys.argv[1] == "ci-workflow":
+        from promptops.runtime.ci_workflow import main as workflow_main
+        return workflow_main(sys.argv[2:])
+
     if len(sys.argv) > 1 and sys.argv[1] == "ci-gate":
         from promptops.runtime.ci import ci_gate
         parser = argparse.ArgumentParser(prog="apastra ci-gate")
@@ -140,7 +144,7 @@ def _main():
     parser = argparse.ArgumentParser(
         prog="apastra",
         description="Git-native evaluation and evidence admission. Requires an explicit measured adapter for execution.",
-        epilog="Commands: resolve, eval, quick-eval, compare, gate, ci-gate, baseline, validate, digest, mcp, audit, request-log. Use COMMAND --help for its arguments. A bare prompt ID retains legacy resolution behavior.",
+        epilog="Commands: resolve, eval, quick-eval, compare, gate, ci-gate, ci-workflow, baseline, validate, digest, mcp, audit, request-log. Use COMMAND --help for its arguments. A bare prompt ID retains legacy resolution behavior.",
     )
     parser.add_argument("prompt_id")
     parser.add_argument("--ref", default=None)

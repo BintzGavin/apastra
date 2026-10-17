@@ -2,7 +2,7 @@
 title: "ADR 003: Content Digest Identity"
 description: "Architecture decision record for establishing content digests as the core identity for packages"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-04-01"
+last_verified: "2026-10-17"
 source_files:
   - "README.md"
 ---
@@ -19,11 +19,11 @@ When versioning code, tags and SHAs naturally define identity. However, when eva
 
 ## Decision
 
-Content digests are the canonical identity mechanism for packages (prompts, datasets, evaluators). These identities guarantee reproducibility ("what exactly ran" and "what exactly shipped"). They are the primary key linking runs, baselines, and promotion records. SemVer will be supported only as an optional layer when declaring a public interface.
+Content digests are the canonical identity mechanism for packages (prompts, datasets, evaluators). These identities bind records to specific input content. They do not guarantee repeatable model output or authenticate what a producer executed. They are the primary key linking runs, baselines, and promotion records. SemVer will be supported only as an optional layer when declaring a public interface.
 
 ## Consequences
 
-- **Positive:** Guarantees reproducibility and strict mapping between source and derived evaluation artifacts.
-- **Positive:** Protects against unintentional mutations or supply chain tampering when fetching artifacts.
+- **Positive:** Detects changes between retained input snapshots and current source assets.
+- **Positive:** Detects changed bytes when an independently trusted expected digest is available; authenticity requires a separate trust mechanism.
 - **Negative:** Requires rigorous normalization and deterministic canonicalization logic across different data formats (e.g., JSON, YAML) before hashing.
-- **Negative:** Small stylistic changes alter the digest unless pre-filtered, which could result in unnecessary digest churn if the canonicalization process is weak.
+- **Negative:** Structured-asset canonicalization ignores formatting-only changes; raw implementation-file and artifact digests intentionally cover every byte.

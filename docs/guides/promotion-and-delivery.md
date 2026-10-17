@@ -1,36 +1,19 @@
 ---
-title: "Promotion and Delivery"
-description: "Understanding prompt promotion and downstream delivery"
+title: "Promotion and Delivery Status"
+description: "Implemented release boundaries and deferred delivery design"
 audience: "developers | platform-teams | agents"
-last_verified: "2026-04-01"
+last_verified: "2026-10-17"
 source_files:
-  - "README.md"
+  - ".github/workflows/promote.yml"
+  - ".github/workflows/deliver.yml"
 ---
 
-# Promotion and Delivery
+# Promotion and Delivery Status
 
-The PromptOps system leverages a governed release workflow that transitions approved prompt packages from their evaluated Git state to downstream delivery targets.
+Apastra's supported release boundary is an evidence admission or regression decision. It does not implement downstream delivery, alerting or rollback.
 
-## The Promotion Workflow
+The repository retains approval/promotion schemas and workflows as design scaffolding. Recording a promotion does not prove a target was updated. `deliver.yml` now fails explicitly, so callers cannot mistake an echo-only job for completed synchronization. The canary workflow likewise has no scheduled trigger and fails when manually invoked.
 
-Promotion is an explicit state transition managed within the repository's control plane. Floating prompts (e.g., "latest") are strongly discouraged; production systems must pin specific content digests to guarantee predictability and enable auditable rollbacks.
+Use the admitted result as input to your existing deployment system. Keep its approvals, destination verification and rollback logic in that system until a tested Apastra integration exists. Signature verification is also unsupported; a digest alone is not an authenticated producer identity.
 
-1. **Evaluation and Approval**: A candidate PR passes all required CI checks, generating a regression report.
-2. **Merge and Release**: The PR is merged, and optionally, a release candidate run generates a new Git tag and immutable GitHub Release asset.
-3. **Promotion Record Creation**: An append-only promotion record binds the approved prompt package (by digest) to a specific delivery channel (e.g., "prod").
-4. **Delivery Target Synchronization**: A declarative delivery worker reads the promotion record and executes the sync logic to push the asset downstream.
-
-## Delivery Targets
-
-The system abstracts the delivery mechanism. Because PromptOps doesn't enforce a specific SaaS platform or distribution network, delivery targets are declarative configuration files that dictate the destination of the promoted asset.
-
-Examples of typical delivery targets include:
-
-- **Git-Native PR**: Opening a pull request against a downstream application repository to update its `consumption.yaml` manifest with the new pinned digest.
-- **OCI Registry Sync**: Publishing a tagged OCI image digest to an internal enterprise registry.
-- **Config Store Update**: Syncing the approved prompt definition to a distributed key-value store or edge cache accessed by runtime services.
-- **Release Descriptor API**: Posting a signed manifest or release descriptor to a proprietary internal API.
-
-## Rollback
-
-A rollback in this model is simply a promotion to a prior, previously approved digest. It is managed identically to a forward promotion, leveraging the same verifiable promotion records and downstream delivery automation.
+A future delivery integration must demonstrate an actual destination update, a verifiable receipt and failure behavior before its workflow can report success. No such integration is claimed by this candidate.

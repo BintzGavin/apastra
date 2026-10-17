@@ -5,9 +5,7 @@ inputs, invokes an adapter selected by the operator, and checks the resulting
 evidence before applying a policy. Execution belongs to the adapter. A provider
 SDK, another evaluation framework, or an agent can supply that adapter.
 
-The current acceptance target runs deterministic uppercase/lowercase functions.
-Those tests prove the protocol. Live-provider integrations have not been tested
-for this candidate, and Apastra ships no production provider adapter.
+Acceptance tests exercise deterministic targets and the real Promptfoo CLI with a local Python provider. The [Promptfoo bridge](../../promptops/harnesses/promptfoo/README.md) supports quick evals within its documented limits. These checks prove integration behavior, not live-provider reliability or model quality.
 
 ## Commands
 
@@ -21,14 +19,14 @@ installation exposes `node_modules/.bin/apastra`. Python needs `pyyaml` and
 .agent/bin/apastra quick-eval promptops/evals/smoke.yaml --adapter promptops/harnesses/local.yaml --models model-a --output-dir promptops/runs/quick
 .agent/bin/apastra gate promptops/runs/candidate --adapter promptops/harnesses/local.yaml
 .agent/bin/apastra baseline smoke accepted-001 promptops/runs/candidate --adapter promptops/harnesses/local.yaml
-.agent/bin/apastra gate promptops/runs/candidate --baseline promptops/runs/accepted --policy promptops/policies/regression.yaml --adapter promptops/harnesses/local.yaml
+.agent/bin/apastra gate promptops/runs/candidate --baseline derived-index/baselines/smoke-accepted-001.json --policy promptops/policies/regression.yaml --adapter promptops/harnesses/local.yaml
 .agent/bin/apastra validate suite promptops/suites/smoke.yaml
 .agent/bin/apastra digest promptops/suites/smoke.yaml
 ```
 
 Each output directory must be empty. Baseline names are immutable, so create a
 new name when accepting a later run. Baseline records retain the run path and its
-digest; moving evidence requires an explicit migration.
+digest. New paths are relative to the baseline record; move the record, workspace and evidence together while preserving their relative layout. `gate --baseline` accepts that JSON record or an existing run directory, and verifies the record’s suite and run digest. Older absolute references remain readable when their evidence meets the current contract.
 
 Evaluation commands exit zero only for `pass`. A failed criterion exits nonzero
 even when the target executed successfully. `error` indicates invalid inputs,
@@ -54,7 +52,7 @@ entrypoint: 'python tools/team_harness.py'
 
 The request contains the resolved prompt and all dataset cases. Evaluator
 definitions and the suite policy are embedded beside their canonical digests.
-An adapter must use the requested model IDs and preserve its declared version.
+An adapter must use the requested model IDs and preserve its declared version. A comparison retains complete `fail` and `not_evaluated` runs, reports all model decisions and exits nonzero. Execution errors or incomplete evidence still abort the comparison.
 Historical execution requires checking out the desired revision first.
 
 The adapter writes these files:
@@ -91,12 +89,24 @@ metric_definitions:
 
 For quick evals, the declared metric is `pass_rate`: each trial scores 1 only
 when all its inline assertions pass, followed by an arithmetic mean across
-trials. The adapter must implement those assertions. The built-in assertion
+trials for each model. Every model must meet the threshold; pooled metrics are descriptive. The adapter must implement those assertions. The built-in assertion
 helper requires a callable judge for model-assisted assertions, and missing cost
 or latency measurements produce an evaluator error. Negation applies only after
 a valid evaluation, so errors never become numeric passes.
 
 ## Identity and budgets
+
+New invocations declare `implementation_identity.mode` as `configuration_only` or `pinned_files`. To pin implementation files, add this optional block to the adapter config:
+
+```yaml
+implementation:
+  files:
+    run.py: sha256:<64 lowercase hex characters from the raw file bytes>
+```
+
+Paths are relative to the adapter config directory. Absolute paths, parent traversal, symlinks and missing files are rejected. Apastra checks declared file hashes before execution, after termination and on later admission; the invocation stores a canonical digest of that declaration. A changed pin set requires new evidence. Regression requires the same approved adapter configuration and implementation identity for both runs.
+
+This is an explicit file boundary, not a hermetic build, a process sandbox or a dependency lock. Undeclared imports, provider services and transient changes restored between checks are outside it. Configuration-only mode remains supported and is labeled honestly.
 
 The [digest convention](../../promptops/schemas/digest-convention.md) defines
 semantic identity for structured assets. Formatting-only edits preserve those
@@ -116,7 +126,7 @@ responsibility.
 
 Regression policies need at least one explicit metric rule. A rule declares its
 direction and severity plus a floor/ceiling or allowed delta. Boundaries are
-inclusive. Metric versions and units must match between runs, and a claimed
+inclusive. Rules apply to each model, and any blocking failure fails the run. Metric versions and units must match between runs, and a claimed
 flake rate does not waive a blocking rule. Warnings exit nonzero.
 
 Hashes detect changed content. They do not authenticate a producer or prove that
@@ -138,18 +148,13 @@ It checks the checkout revision and compares retained input digests against the
 current workspace. Missing evidence blocks admission. Regression mode also
 requires `--baseline` and `--policy` together.
 
-CI is optional. Local evaluation and comparison use the runtime checks without
-installing a workflow. This candidate leaves repository workflows and distributed
-templates unchanged, including their check names and release permissions.
+CI is optional. The repository workflow and distributed template now invoke the same runtime admission code. Relevant changes include prompt, case, evaluator, suite, policy and executable code changes. Missing suite/adapter/mode/run-directory configuration fails; docs-only changes can return an explicit success. The workflow never searches for a global “latest report.”
 
-The existing report gate can pass without evidence and does not bind a report to
-the tested revision. Treat those templates as unsuitable for required evaluation
-checks until the separate repair is complete. Passing local software tests does
-not establish that GitHub enforces evaluation results.
+Configure the inputs or repository variables documented in [setup-ci](../../setup-ci/SKILL.md). Evidence mode requires checked-out evidence in a path containing the tested SHA. Execution mode runs the selected adapter for that SHA. No demo adapter is chosen automatically, and no provider credentials or hosted branch protection are configured by these source changes. Local subprocess tests exercise both repository and installed CLI layouts; hosted GitHub execution remains unverified.
 
 ## Migration and scope
 
-Version 2.0.0 changes the execution protocol incompatibly. Legacy `success`
+Version 3.0.0 changes the decision contract incompatibly. `evaluation.json`, comparison and regression results carry `schema_version: "3.0"` and per-model decisions; new invocations carry explicit implementation identity. Older evidence must be rerun, not relabeled. The v2 execution request and per-case formats remain unchanged. Version 2.0.0 had already changed the execution protocol incompatibly. Legacy `success`
 manifests, empty scorecards, and scorecard-only baselines remain historical
 records. They cannot acquire trusted status through relabeling. Re-execute the
 target to produce complete current evidence.
