@@ -1,0 +1,13 @@
+id: promptfoo
+type: harness_adapter
+version: 1.0.0
+execution_mode: measured
+capabilities:
+  - run_suite
+  - model_matrix
+  - trials
+entrypoint: python3 promptops/harnesses/promptfoo/run.py --promptfoo-executable promptfoo
+description: Executes Promptfoo 0.124.1 providers and scores actual responses for inline quick evals.
+implementation:
+  files:
+    run.py: sha256:902744e060062b14b490e2a47b049d37405b4407ecfca7651871acc6bf807587

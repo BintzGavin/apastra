@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apastra"
+version = "3.0.0"
+description = "Git-native prompt evaluation and evidence admission"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = ["PyYAML", "jsonschema"]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.30,<2"]
+
+[project.scripts]
+apastra = "promptops.runtime.entrypoint:main"
+
+[tool.setuptools]
+include-package-data = false
+packages = ["promptops", "promptops.runtime", "promptops.request_log", "promptops.resolver",
+            "promptops.runs", "promptops.manifests", "promptops.hooks", "promptops.harnesses"]
+
+[tool.setuptools.package-data]
+promptops = ["schemas/*.schema.json", "schemas/*.md", "validators/*.sh", "validators/lib/*.sh", "runs/*.sh", "hooks/*.js",
+             "manifests/consumption-example.yaml", "harnesses/*.sh", "harnesses/reference-adapter/run.py",
+             "harnesses/reference-adapter/adapter.yaml", "harnesses/reference-adapter/README.md",
+             "harnesses/promptfoo/run.py", "harnesses/promptfoo/adapter.yaml", "harnesses/promptfoo/README.md"]

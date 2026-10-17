@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import yaml
 from unittest import mock
 
 from promptops.resolver.packaged import PackagedResolver
@@ -50,6 +51,19 @@ class CapabilityTests(unittest.TestCase):
         result = subprocess.run([sys.executable, str(ROOT / "bin/apastra"), "canary", "unused"], capture_output=True, text=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(json.loads(result.stdout)["status"], "unsupported")
+
+    def test_unsupported_delivery_and_canary_workflows_cannot_report_success(self):
+        for name in ("deliver.yml", "canary-drift-detection.yml"):
+            with self.subTest(workflow=name):
+                workflow = yaml.safe_load((ROOT / ".github/workflows" / name).read_text())
+                triggers = workflow.get("on", workflow.get(True, {}))
+                self.assertNotIn("schedule", triggers)
+                scripts = [step["run"] for job in workflow["jobs"].values()
+                           for step in job["steps"] if "run" in step]
+                result = subprocess.run(["bash", "-e", "-c", "\n".join(scripts)],
+                                        env={"PATH": "/usr/bin:/bin"}, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("not implemented", result.stdout)
 
     def test_community_generator_cannot_write_passing_baselines(self):
         with tempfile.TemporaryDirectory() as directory:

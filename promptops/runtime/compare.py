@@ -16,8 +16,10 @@ def invoke_harness(run_request, adapter_config=None, out_dir=None, execution_tim
     if not adapter_config:
         raise ValueError("An evaluation adapter is required")
     result = run(run_request, adapter_config, out_dir, execution_timeout=execution_timeout)
-    if result["status"] != "pass":
-        raise EvidenceError(f"Harness evaluation did not pass: {result['status']}")
+    if result.get("execution_status") != "completed" or result["status"] not in {"pass", "fail", "not_evaluated"}:
+        raise EvidenceError(f"Harness execution did not complete: {result['status']}")
+    if "cost_budget" in result["failed_criteria"]:
+        raise EvidenceError("Harness execution exceeds the suite cost budget")
     return result
 
 
@@ -47,7 +49,7 @@ def run_comparison(suite_id, models=None, adapter_config=None, output_dir=None):
     directory.mkdir(parents=True, exist_ok=True)
     if any(directory.iterdir()):
         raise EvidenceError("Comparison output directory must be empty")
-    scorecards, runs = {}, {}
+    scorecards, runs, model_results = {}, {}, {}
     costs = {}
     started = time.monotonic()
     time_budget = request.get("budgets", {}).get("time")
@@ -62,6 +64,7 @@ def run_comparison(suite_id, models=None, adapter_config=None, output_dir=None):
         except (OSError, ValueError) as error:
             raise EvidenceError(f"Comparison failed for {model}; evidence retained at {directory}: {error}") from error
         scorecards[model] = {"normalized_metrics": decision["metrics"]}
+        model_results[model] = decision["model_results"][model]
         runs[model] = str(destination)
         manifest = load_asset(destination / "run_manifest.json")
         if "total_cost" in manifest:
@@ -70,7 +73,12 @@ def run_comparison(suite_id, models=None, adapter_config=None, output_dir=None):
             raise EvidenceError(f"Comparison exceeds the shared suite cost budget; evidence retained at {directory}")
         if time_budget is not None and time.monotonic() - started > time_budget:
             raise EvidenceError(f"Comparison exceeds the shared suite time budget; evidence retained at {directory}")
-    result = {"status": "pass", **aggregate_scorecards(request["suite_id"], scorecards), "runs": runs}
+    statuses = {result["status"] for result in model_results.values()}
+    result = {
+        "schema_version": "3.0", "execution_status": "completed",
+        "status": "fail" if "fail" in statuses else "not_evaluated" if "not_evaluated" in statuses else "pass",
+        **aggregate_scorecards(request["suite_id"], scorecards), "runs": runs, "model_results": model_results,
+    }
     result["comparison_tradeoffs"]["cost"].update(costs)
     if len(costs) == len(runs):
         result["total_cost"] = math.fsum(costs.values())

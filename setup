@@ -8,7 +8,7 @@ set -euo pipefail
 #   .agent/skills/apastra/setup
 #
 # Installs:
-#   .agent/skills/apastra/   — skill instructions (canonical copy; only SKILL.md dirs + this setup)
+#   .agent/skills/apastra/   — skill instructions and upgradeable source checkout
 #   .agent/scripts/apastra/  — runtime scripts (Python + shell validators)
 #   .agent/bin/apastra       — project-local CLI
 #   .codex/ and .claude/     — optional project-local agent hooks
@@ -29,7 +29,6 @@ fi
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(pwd)"
 SCRIPTS_DEST="$PROJECT_ROOT/.agent/scripts/apastra"
-BIN_DEST="$PROJECT_ROOT/.agent/bin"
 
 # Safety: verify we're running from inside an apastra clone
 if [ ! -d "$SKILL_DIR/promptops/runtime" ] || [ ! -f "$SKILL_DIR/SKILL.md" ]; then
@@ -53,9 +52,8 @@ Will create or update:
   .claude/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
   .agents/skills/apastra         symlink, unless APASTRA_NO_SKILL_SYMLINKS=1
 
-Will remove from this cloned skill directory after copying runtime:
-  .git, .github, promptops/, package files, and other non-skill source files
-  (keeps setup, SKILL.md, LICENSE, README.md, and subdirectories with SKILL.md)
+Source checkout and Git metadata are preserved. Runtime copies exclude run evidence.
+Existing user files are preserved; conflicting files stop setup with an explanation.
 
 Will only check by default:
   Python modules pyyaml and jsonschema
@@ -82,26 +80,17 @@ fi
 
 echo "🔧 Installing apastra..."
 
-# Copy runtime scripts to .agent/scripts/apastra/
-mkdir -p "$SCRIPTS_DEST"
-cp -r "$SKILL_DIR/promptops/runtime"    "$SCRIPTS_DEST/"
-cp -r "$SKILL_DIR/promptops/request_log" "$SCRIPTS_DEST/"
-cp -r "$SKILL_DIR/promptops/runs"       "$SCRIPTS_DEST/"
-cp -r "$SKILL_DIR/promptops/resolver"   "$SCRIPTS_DEST/"
-cp -r "$SKILL_DIR/promptops/manifests"  "$SCRIPTS_DEST/"
-cp -r "$SKILL_DIR/promptops/schemas"    "$SCRIPTS_DEST/"
-cp -r "$SKILL_DIR/promptops/validators" "$SCRIPTS_DEST/"
-cp -r "$SKILL_DIR/promptops/harnesses"  "$SCRIPTS_DEST/"
-cp -r "$SKILL_DIR/promptops/hooks"      "$SCRIPTS_DEST/"
-cp    "$SKILL_DIR/promptops/__init__.py" "$SCRIPTS_DEST/"
-mkdir -p "$BIN_DEST"
-cp    "$SKILL_DIR/bin/apastra" "$BIN_DEST/apastra"
-chmod +x "$BIN_DEST/apastra"
-
-find "$SCRIPTS_DEST" -type d -name "__pycache__" -prune -exec rm -rf {} +
-find "$SCRIPTS_DEST" -type f \( -name "*.pyc" -o -name "*.pyo" -o -name "*.orig" -o -name "*.rej" \) -exec rm -f {} +
-find "$SCRIPTS_DEST" -name "*.sh" -exec chmod +x {} \;
-find "$SCRIPTS_DEST/hooks" -name "*.py" -exec chmod +x {} \; 2>/dev/null || true
+# A single copy path serves direct setup and npm's opt-in setup.
+PY="$(command -v python3 || command -v python || true)"
+if [ -z "$PY" ]; then
+  echo "Python 3 is required. Install Python, then rerun setup."
+  exit 1
+fi
+if [ "${APASTRA_NO_SKILL_SYMLINKS:-}" = "1" ]; then
+  "$PY" "$SKILL_DIR/scripts/install.py" "$SKILL_DIR" "$PROJECT_ROOT" --no-links
+else
+  "$PY" "$SKILL_DIR/scripts/install.py" "$SKILL_DIR" "$PROJECT_ROOT"
+fi
 
 # Check Python dependencies. Installing them is opt-in because setup should not
 # invoke another package manager unless the user explicitly allowed it.
@@ -145,49 +134,6 @@ if [ "${APASTRA_INSTALL_AGENT_HOOKS:-}" = "1" ] && [ "${APASTRA_NO_AGENT_HOOKS:-
   fi
 else
   echo "🪝 Skipping agent hooks. Set APASTRA_INSTALL_AGENT_HOOKS=1 to install them."
-fi
-
-# Clean up the clone — keep only skill directories and this setup script
-# Skill directories are identified by containing a SKILL.md file
-echo "🧹 Cleaning up installation..."
-cd "$SKILL_DIR"
-for entry in * .[!.]*; do
-  [ -e "$entry" ] || continue
-  case "$entry" in
-    setup|SKILL.md|LICENSE|README.md|docs)
-      # Keep these top-level files
-      ;;
-    .git|.github|.gitignore|.gitattributes)
-      # Remove git/GitHub metadata
-      rm -rf "$entry"
-      ;;
-    *)
-      # Keep directories that contain a SKILL.md (these are individual skills)
-      if [ -d "$entry" ] && [ -f "$entry/SKILL.md" ]; then
-        continue
-      fi
-      # Remove everything else (promptops/, package.json, postinstall.sh, etc.)
-      rm -rf "$entry"
-      ;;
-  esac
-done
-
-# Symlink canonical skills into agent-specific dirs so harnesses discover them without extra steps.
-# Layout aligns with vercel-labs/skills "Supported Agents" paths (npm package `skills` / `npx skills`).
-# Canonical copy stays at .agent/skills/apastra; plural .agents/ is what Cursor, Codex, OpenCode, etc. expect.
-_symlink_target_rel="../../.agent/skills/apastra"
-if [ "${APASTRA_NO_SKILL_SYMLINKS:-}" != "1" ]; then
-  echo "🔗 Linking skills → .claude/skills/ and .agents/skills/"
-  for _root in .claude .agents; do
-    _parent="$PROJECT_ROOT/$_root/skills"
-    mkdir -p "$_parent"
-    if [ -e "$_parent/apastra" ] && [ ! -L "$_parent/apastra" ]; then
-      echo "   ⚠️  Skip $_parent/apastra (exists and is not a symlink — remove or move it to retry)"
-      continue
-    fi
-    ln -sfn "$_symlink_target_rel" "$_parent/apastra"
-    echo "   → $_parent/apastra"
-  done
 fi
 
 echo ""

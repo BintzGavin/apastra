@@ -3,52 +3,66 @@ on:
   pull_request:
     branches: [main]
   workflow_call:
+    inputs:
+      base:
+        description: Full base commit SHA (required for callers outside pull_request)
+        type: string
+        default: ''
+      suite:
+        type: string
+        default: ''
+      adapter:
+        type: string
+        default: ''
+      mode:
+        description: Explicit execute or evidence
+        type: string
+        default: ''
+      run-directory:
+        description: Checkout-relative path containing {revision} as a directory component
+        type: string
+        default: ''
+      baseline:
+        type: string
+        default: ''
+      policy:
+        type: string
+        default: ''
+permissions:
+  contents: read
 jobs:
   gate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout tested revision
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          fetch-depth: 2
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v44
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
-          files: |
-            promptops/harnesses/**
-            promptops/prompts/**
-            promptops/datasets/**
-            promptops/policies/**
-      - name: Skip Regression Gate
-        if: steps.changed-files.outputs.any_changed == 'false'
-        run: echo "Skipping regression gate for non-evaluable changes."
-      - name: Fetch Artifacts Branch
-        if: steps.changed-files.outputs.any_changed == 'true'
+          python-version: '3.12'
+      - name: Install validation dependencies
+        run: python3 -m pip install pyyaml jsonschema
+      - name: Admit tested revision
+        env:
+          ci_base: ${{ inputs.base || github.event.pull_request.base.sha }}
+          ci_revision: ${{ github.sha }}
+          ci_suite: ${{ inputs.suite || vars.APASTRA_CI_SUITE }}
+          ci_adapter: ${{ inputs.adapter || vars.APASTRA_CI_ADAPTER }}
+          ci_mode: ${{ inputs.mode || vars.APASTRA_CI_MODE }}
+          ci_run_directory: ${{ inputs.run-directory || vars.APASTRA_CI_RUN_DIRECTORY }}
+          ci_baseline: ${{ inputs.baseline || vars.APASTRA_CI_BASELINE }}
+          ci_policy: ${{ inputs.policy || vars.APASTRA_CI_POLICY }}
         run: |
-          git fetch origin promptops-artifacts || true
-          git checkout origin/promptops-artifacts -- reports/regression_report.json || true
-      - name: Check Regression Report Status
-        if: steps.changed-files.outputs.any_changed == 'true'
-        run: |
-          REPORT="reports/regression_report.json"
-          if [ ! -f "$REPORT" ]; then
-            echo "::error::Regression report missing. Merges are blocked."
-            exit 1
-          fi
-
-          echo "## Regression Report Evidence" >> $GITHUB_STEP_SUMMARY
-          echo "| Metric | Status | Candidate | Baseline | Delta | Message |" >> $GITHUB_STEP_SUMMARY
-          echo "|---|---|---|---|---|---|" >> $GITHUB_STEP_SUMMARY
-          jq -r '.evidence[]? | "| \(.metric) | \(.status) | \(.candidate) | \(.baseline) | \(.delta) | \(.message) |"' "$REPORT" >> $GITHUB_STEP_SUMMARY
-
-          jq -r '.evidence[]? | select(.status == "fail") | "::error title=Regression Failed::Metric \(.metric): \(.message)"' "$REPORT"
-
-          STATUS=$(jq -r .status "$REPORT")
-          if [ "$STATUS" = "pass" ]; then
-            echo "Regression passed."
-            exit 0
+          if [ -f .agent/bin/apastra ]; then
+            cli=.agent/bin/apastra
           else
-            echo "Regression failed or warning."
-            exit 1
+            cli=bin/apastra
           fi
+          python3 "$cli" ci-workflow gate \
+            --base "$ci_base" --revision "$ci_revision" \
+            --suite "$ci_suite" --adapter "$ci_adapter" --mode "$ci_mode" \
+            --run-dir "$ci_run_directory" --baseline "$ci_baseline" --policy "$ci_policy"

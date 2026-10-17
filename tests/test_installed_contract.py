@@ -8,6 +8,9 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import sysconfig
+import venv
+import zipfile
 import unittest
 
 from tests.test_evaluation_contract import HARNESS, make_workspace
@@ -109,6 +112,14 @@ class InstalledContractTests(unittest.TestCase):
                     runtime = consumer / "node_modules/apastra/promptops"
                     self.assertTrue((consumer / "node_modules/apastra/docs/guides/evaluation-trust.md").is_file())
                 self.assertTrue((runtime / "runtime/mcp_launcher.py").is_file())
+                for name in ("run.py", "adapter.yaml", "README.md"):
+                    self.assertTrue((runtime / "harnesses/promptfoo" / name).is_file())
+                bridge = runtime / "harnesses/promptfoo/run.py"
+                imported = subprocess.run([sys.executable, "-I", "-c",
+                                           "import runpy, sys; module = runpy.run_path(sys.argv[1], run_name='installed_bridge'); "
+                                           "assert callable(module['main'])", str(bridge)], cwd=consumer,
+                                          env=environment, text=True, capture_output=True, timeout=15)
+                self.assertEqual(imported.returncode, 0, imported.stdout + imported.stderr)
                 self.assertTrue((consumer / "node_modules/apastra/requirements-mcp.txt").is_file())
                 self.assertTrue((consumer / "node_modules/apastra/promptops/integrations/kody/apastra/start.ts").is_file())
                 workspace, adapter = make_workspace(consumer)
@@ -167,6 +178,90 @@ class InstalledContractTests(unittest.TestCase):
                         )
                         self.assertEqual(result.returncode, 0 if valid else 1, result.stdout + result.stderr)
                         self.assertNotIn("Unexpected package-manager invocation", result.stderr)
+
+
+class PythonInstalledContractTests(unittest.TestCase):
+    def test_wheel_runs_without_node_from_an_unrelated_consumer(self):
+        with tempfile.TemporaryDirectory(prefix="apastra-wheel-") as directory:
+            directory = Path(directory)
+            environment = isolated_environment(directory)
+            source = directory / "source"
+            shutil.copytree(ROOT, source, ignore=shutil.ignore_patterns(
+                ".git", ".venv", "node_modules", "*.tgz", "__pycache__", "*.pyc", "build", "*.egg-info"))
+            self.assertTrue((source / "pyproject.toml").is_file(), "A normal Python package is required")
+            (source / "promptops/manifests/experimental-results.yaml").write_text("score: 0.5\n")
+            (source / "promptops/harnesses/promptfoo/experimental-results.yaml").write_text("score: 0.5\n")
+            (source / "promptops/schemas/experimental-results.json").write_text('{"score": 0.5}')
+            wheelhouse = directory / "wheelhouse"
+            wheelhouse.mkdir()
+            # Prefer the running interpreter; accept a system backend only when
+            # it supports the PEP 621 metadata declared by this package.
+            backend = None
+            for candidate in (sys.executable, "/usr/bin/python3"):
+                check = subprocess.run([candidate, "-c", "import setuptools, wheel; assert int(setuptools.__version__.split('.')[0]) >= 61"], env=environment,
+                                       capture_output=True, text=True)
+                if check.returncode == 0:
+                    backend = candidate
+                    break
+            self.assertIsNotNone(backend, "Offline setuptools and wheel are required for wheel acceptance")
+            built = subprocess.run([backend, "-c", "from setuptools.build_meta import build_wheel; "
+                                    "import sys; build_wheel(sys.argv[1])", str(wheelhouse)],
+                                   cwd=source, env=environment, text=True, capture_output=True, timeout=60)
+            self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
+            wheel, = wheelhouse.glob("*.whl")
+            with zipfile.ZipFile(wheel) as archive:
+                names = set(archive.namelist())
+                self.assertIn("promptops/schemas/run-manifest.schema.json", names)
+                self.assertIn("promptops/runtime/entrypoint.py", names)
+                for name in ("run.py", "adapter.yaml", "README.md"):
+                    self.assertIn(f"promptops/harnesses/promptfoo/{name}", names)
+                self.assertFalse(any("/runs/" in name and name.endswith((".json", ".jsonl")) for name in names))
+                self.assertFalse(any("experimental" in name or "node_modules" in name for name in names))
+            consumer = directory / "consumer"
+            venv.EnvBuilder(with_pip=False).create(consumer)
+            python = consumer / "bin/python"
+            # Reuse existing interpreter dependencies without a network resolver.
+            site = subprocess.run([str(python), "-c", "import sysconfig; print(sysconfig.get_path('purelib'))"],
+                                  env=environment, text=True, capture_output=True, check=True).stdout.strip()
+            (Path(site) / "existing-dependencies.pth").write_text(sysconfig.get_path("purelib") + "\n")
+            installed = subprocess.run([sys.executable, "-m", "pip", "--python", str(python), "install",
+                                        "--no-deps", "--no-index", str(wheel)], cwd=directory,
+                                       env=environment, capture_output=True, text=True, timeout=60)
+            self.assertEqual(installed.returncode, 0, installed.stdout + installed.stderr)
+            shutil.rmtree(source)
+            unrelated = directory / "unrelated"
+            unrelated.mkdir()
+            bridge = Path(site) / "promptops/harnesses/promptfoo/run.py"
+            imported = subprocess.run([str(python), "-I", "-c",
+                                       "import runpy, sys; module = runpy.run_path(sys.argv[1], run_name='installed_bridge'); "
+                                       "assert callable(module['main'])", str(bridge)], cwd=unrelated,
+                                      env=environment, text=True, capture_output=True, timeout=15)
+            self.assertEqual(imported.returncode, 0, imported.stdout + imported.stderr)
+            cli = consumer / "bin/apastra"
+            node_guard = directory / "node-guard"
+            node_guard.mkdir()
+            for command in ("node", "npm", "npx"):
+                stub = node_guard / command
+                stub.write_text("#!/bin/sh\necho 'Unexpected Node invocation' >&2\nexit 93\n")
+                stub.chmod(0o755)
+            environment["PATH"] = f"{node_guard}:/usr/bin:/bin"
+            for arguments in (["--help"], ["request-log", "status", "--config-dir", str(unrelated / "config"), "--json"]):
+                result = subprocess.run([str(cli), *arguments], cwd=unrelated, env=environment,
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            workspace, adapter = make_workspace(unrelated)
+            harness = unrelated / "deterministic_target.py"
+            shutil.copyfile(HARNESS, harness)
+            configuration = json.loads(adapter.read_text())
+            configuration["entrypoint"] = shlex.join([str(python), "-I", str(harness), "valid"])
+            adapter.write_text(json.dumps(configuration))
+            result = subprocess.run([str(cli), "eval", "demo", "--adapter", str(adapter), "--output-dir", str(unrelated / "evidence")],
+                                    cwd=workspace, env=environment, capture_output=True, text=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertEqual(json.loads(result.stdout)["metrics"], {"exact_match_score": 1.0})
+            result = subprocess.run([str(cli), "validate", "run-manifest", str(unrelated / "evidence/run_manifest.json")],
+                                    cwd=workspace, env=environment, capture_output=True, text=True, timeout=15)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 
 async def verify_installed_mcp(cli, workspace, environment):

@@ -18,7 +18,22 @@
 etc.
 
 
+## Independently check the evidence behind an eval pass
+
+Apastra validates retained results from your existing evaluation harness and applies release criteria to every model. Use it when reviewers or CI need a portable, inspectable decision that survives moving the results to another checkout.
+
+It does not replace an eval runner. If your existing tool already gives you the evidence retention and gate semantics you need, use that tool directly. Apastra earns its place only when its shared admission contract replaces fragile custom verification scripts. See the [architecture](docs/guides/architecture-overview.md) and the [product hypothesis](docs/vision.md).
+
 ## Quick Start
+
+For the runtime alone, install this checkout in a Python virtual environment:
+
+```bash
+python3 -m pip install .
+apastra --help
+```
+
+Node is unnecessary for the Python runtime. The optional `.[mcp]` extra adds MCP support. For a working quick-eval integration, follow the [Promptfoo bridge guide](promptops/harnesses/promptfoo/README.md); the bridge delegates execution to Promptfoo and retains its raw export alongside the normalized evidence.
 
 **Installing Apastra into your repo with help from a coding agent?**
 Paste this:
@@ -85,7 +100,7 @@ Apastra never calls a model itself. Execution belongs to an **adapter**: an exec
 3. **The adapter executes and scores.** This is the only step where a language model is involved. For every requested model, case, and trial the adapter renders the prompt, calls the model, and records the output plus a score for every declared metric. For inline assertions it should call the built-in scorer, `runs/evaluate_assertions.py`: a script that imports only `json`, `re`, and `jsonschema`, has no model or network access, and reports an error instead of a score whenever it cannot evaluate an assertion.
 4. **The adapter writes four files.** `run_manifest.json` (execution mode, status, input digests, adapter identity and version, model IDs, sampling config, timestamps), `cases.jsonl` (one record per model and case with every trial's output and scores), `scorecard.json` (means plus metric definitions with version, direction, and unit), and `artifact_refs.json` (relative paths and digests of any extra files kept with the run).
 5. **Apastra admits or rejects the evidence.** It checks that the request file was not modified, that the manifest names the adapter it invoked and the models it asked for, that the input digests match, that every requested model, case, and trial appears exactly once with a finite score for every declared metric, and that the scorecard means equal the means it recomputes from `cases.jsonl`. Any gap is an `error`, never a pass. It then writes `invocation.json` and `evaluation.json` next to the adapter's files.
-6. **Apply the criteria.** The suite's thresholds, or `pass_rate` for a quick eval (a trial scores 1 only when all of its assertions pass), decide `pass` or `fail`. No thresholds means `not_evaluated`, which cannot become a baseline. No adapter means `unsupported`. Only `pass` exits zero. With `gate --baseline --policy`, a candidate run is compared with a baseline run under explicit per-metric rules; metric versions and units must match, and a flaky metric does not waive a blocking rule.
+6. **Apply the criteria.** Each model must independently meet the suite's thresholds, or `pass_rate` for a quick eval (a trial scores 1 only when all of its assertions pass). Pooled means are descriptive; they cannot hide a failing model. No thresholds means `not_evaluated`, which cannot become a baseline. No adapter means `unsupported`. Only `pass` exits zero. With `gate --baseline --policy`, a candidate run is compared with a baseline run under explicit per-metric rules; metric versions and units must match, each model is checked separately, and a flaky metric does not waive a blocking rule.
 7. **Everything stays on disk.** Running `gate` on a stored run directory recomputes the whole verdict from the files, so anyone with the repo can check a result without re-executing the model.
 
 ```mermaid
@@ -108,14 +123,14 @@ flowchart TD
 | --- | --- | --- |
 | Per-assertion score for `equals`, `contains`, `icontains`, `contains-any`, `contains-all`, `regex`, `starts-with`, `is-json`, `contains-json`, `is-valid-json-schema`, and their `not-` forms | `runs/evaluate_assertions.py` | Yes |
 | `latency` and `cost` assertions | The same script, from measurements the adapter supplies; a missing measurement is an error, not a pass | Yes, given the measurement |
-| Scorecard means and variance | Recomputed by Apastra from every trial in `cases.jsonl`; a mismatch rejects the run | Yes |
+| Scorecard means | Recomputed by Apastra from every trial in `cases.jsonl`; a mismatch rejects the run | Yes |
 | Regression verdict against a baseline | `gate`, from explicit per-metric rules with matching versions and units | Yes |
 | Input digests and schema validation of every file | `runtime/digest.py` and the validators | Yes |
 | Suite evaluator metrics such as `keyword_recall` | Your adapter, applying the evaluator definition to each trial | Apastra checks coverage and arithmetic, not the adapter's scoring logic |
 | `llm-rubric`, `similar`, `factuality`, `answer-relevance` | A judge callable your adapter passes to the scorer; without one the scorer returns an error | No |
 | The model output itself | The model, called by your adapter | No |
 
-The deterministic rows are the trustworthy core. The model-assisted rows are a second model's opinion about the first model's output: useful, non-deterministic, and only as good as the rubric. The scorer refuses to grade them without a judge, so a rubric assertion can never quietly pass on a keyword match. One more thing to know: Apastra ships no production provider adapter yet. Its own acceptance tests drive the protocol with deterministic stand-in targets, which proves the plumbing and claims nothing about any model's quality.
+The deterministic rows are the mechanically checkable core. The model-assisted rows are a second model's opinion about the first model's output: useful, non-deterministic, and only as good as the rubric. The scorer refuses to grade them without a judge, so a rubric assertion can never quietly pass on a keyword match. The Promptfoo bridge is tested against its real CLI with a local deterministic provider. Paid model providers and provider credentials have not been exercised in these tests, and no model-quality claim follows from them.
 
 ### Check the scorer yourself
 
@@ -141,9 +156,9 @@ In this repo the script lives at `promptops/runs/evaluate_assertions.py`; `setup
 
 ### What a PASS proves, and what it does not
 
-A PASS means the adapter you named ran, every requested model, case, and trial has an output and a finite score for every declared metric, the means in the scorecard are the means of those scores, the inputs are pinned by digest, and the criteria you wrote were met.
+A PASS means the adapter you named ran, every requested model, case, and trial has an output and a finite score for every declared metric, the means in the scorecard are the means of those scores, the inputs are pinned by digest, and every model met the criteria you wrote.
 
-A PASS does not mean the model is good in general. It means the model passed your cases, which is why the cases are the thing to invest in (next section). It does not authenticate the adapter either: digests detect changed files, but they cannot prove that an adapter honestly called the model it claims, so only admit runs from an adapter you have reviewed. If you want to see exactly what was sent to a provider, the opt-in [provider request logger](docs/guides/provider-request-logging.md) stores complete request bodies locally. And a judge score is the judge's opinion until you have calibrated the rubric against your own review.
+A PASS does not mean the model is good in general. It means the model passed your cases, which is why the cases are the thing to invest in (next section). Optional `implementation.files` pins also detect changes to declared adapter files; without them the identity binds only the adapter configuration. These checks do not cover the complete dependency tree or transient changes restored between checks. Neither mode authenticates the adapter: digests detect changed files, but they cannot prove that an adapter honestly called the model it claims, so only admit runs from an adapter you have reviewed. If you want to see exactly what was sent to a provider, the opt-in [provider request logger](docs/guides/provider-request-logging.md) stores complete request bodies locally. And a judge score is the judge's opinion until you have calibrated the rubric against your own review.
 
 ## How evals get written
 
@@ -195,11 +210,11 @@ Apastra is a file-based protocol and skill pack for evaluating your agent's skil
 | Version prompts like code                 | YAML prompt specs with stable IDs, variables, and output contracts |
 
 
-## Is this actually lightweight?
+## What adoption costs
 
-Yes. It just sits in a folder and the agent calls it when it feels like it or when you tell it to. It uses some python scripts to run deterministic evals, but otherwise it's just yaml files. The only cost is when you run the evals, which is opt-in. So you can use it as much or as little as you want.
+The runtime requires Python, YAML/JSON Schema dependencies, an executable adapter and retained run files. Start with one quick eval and a supported bridge. Skills, hooks, request logging, MCP and GitHub Actions are optional. Model execution can incur provider charges; cost budgets are checked after an invocation and are not a prepaid spending cap.
 
-It has gotten more capable since it started (e.g. adding GitHub Actions support for automated regression testing). But the initial install and first eval are still very slim and you incrementally opt-in to everything else from there. You can also just ignore it and never use it and it will have no impact on you. Until you decide to opt into the GitHub actions CI at least.
+Version 3 changes decision semantics. Re-execute old runs to obtain per-model decisions and explicit adapter implementation identity. See [migration and limits](docs/guides/evaluation-trust.md#migration-and-scope).
 
 ## Documentation
 
@@ -235,6 +250,8 @@ APASTRA_POSTINSTALL_SETUP=1 npm install apastra
 ```
 
 Plain `npm install apastra` is disclosure-only: it installs the package and prints the setup plan, but does not create project files. Set `APASTRA_POSTINSTALL_SETUP=1` only when you want npm's postinstall step to copy Apastra into the current project.
+
+Setup preserves the cloned repository, including `.git`, and records managed file digests. Re-running it updates unchanged managed files and refuses to overwrite unknown or user-edited files. Runtime copying excludes retained runs and local experiments.
 
 The install writes are:
 
@@ -297,9 +314,9 @@ Ask your agent:
 
 > "Use the apastra-baseline skill to set the current results as the baseline"
 
-The baseline command admits a complete passing run under an immutable name. Compare a later candidate against that run using `gate --baseline ... --policy ... --adapter ...`.
+The baseline command admits a complete passing run under an immutable name. Pass the returned baseline JSON record to `gate --baseline ... --policy ... --adapter ...`. Its run path is relative to the record, so the workspace and retained evidence can move together. Comparisons retain failed candidates and report their per-model decisions instead of aborting merely because a threshold was missed.
 
-> **Note for AI agents:** This README is the quickstart. For the full architectural model and design principles, start with `[docs/vision.md](docs/vision.md)`.
+> **Note for AI agents:** This README is the quickstart. For implemented boundaries, read [architecture-overview.md](docs/guides/architecture-overview.md); [vision.md](docs/vision.md) describes the remaining product hypothesis.
 
 ## Included Skills
 
@@ -431,7 +448,7 @@ promptops/                # Created by the scaffold skill on first use
 ├── suites/               # Test configurations (YAML)
 └── policies/             # Regression policies (allowed thresholds)
 derived-index/
-├── baselines/            # Known-good scorecards
+├── baselines/            # References to admitted passing runs
 └── regressions/          # Regression reports
 ```
 
@@ -451,10 +468,7 @@ The `ci-gate` command checks the tested revision and its resolved inputs.
 It supports explicit execution and previously produced evidence. Missing or
 stale evidence fails admission.
 
-Included workflows: schema validation on prompt and dataset PRs, regression
-gating against a `promptops-artifacts` branch, immutable release packaging
-with build-provenance attestation, promotion with approval enforcement, and
-delivery sync. Install the CI layer with the `apastra-setup-ci` skill.
+The supported evaluation workflows validate changed assets and invoke revision-bound admission. Configure suite, adapter, execution/evidence mode and a revision-scoped output directory explicitly using [setup-ci](setup-ci/SKILL.md). Relevant changes without that configuration fail. Delivery and canary workflows are unsupported entry points and fail explicitly; their schemas do not provide a working service.
 
 ### Git-First Consumption
 
@@ -471,26 +485,20 @@ prompts:
 
 Resolution order: local override → workspace → git ref → packaged artifact.
 
-### Governed Releases
+### Release boundaries
 
-
-| Packaging            | When to use                                  |
-| -------------------- | -------------------------------------------- |
-| Git ref (tag/SHA)    | Default — zero publishing overhead           |
-| GitHub Release asset | Governed releases with optional immutability |
-| OCI artifact         | Org-wide digest-addressed distribution       |
-
+A passing gate is input to your existing release process. Apastra does not configure hosted branch protection, authenticate evidence producers, deliver packages to downstream targets, or roll them back. See [promotion and delivery status](docs/guides/promotion-and-delivery.md).
 
 ---
 
 ## Principles
 
 - **Files in Git are the source of truth** — not a database, not a platform
-- **Your agent is the harness** — no framework lock-in
+- **Execution belongs to a reviewed harness** — an agent qualifies only when it implements the measured execution contract
 - **Trace evidence beats vibes** — tool calls, validation feedback, and stopping conditions should become inspectable evidence when they matter
 - **Provider requests can be inspected explicitly** — complete request bodies are available through an opt-in, loopback-only, credential-free local log
 - **Append-only artifacts** — never mutate old results; create new records
-- **Reproducibility by default** — content digests, environment metadata
+- **Explicit content identity** — input digests and optional declared implementation-file pins, without promises of repeatable model output
 - **Local-first, CI-optional** — start with zero infrastructure
 
 ## License
